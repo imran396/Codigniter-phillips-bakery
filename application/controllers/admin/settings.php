@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 
-class Dashboard extends Crud_Controller
+class Settings extends Crud_Controller
 {
     public function __construct()
     {
@@ -48,8 +48,8 @@ class Dashboard extends Crud_Controller
         $this->data['api'] = curl_exec($ch);*/
 
         //var_dump($this->data['api']); die;
-        $this->data['active']='dashboard';
-        $this->layout->view('admin/dashboard', $this->data);
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->layout->view('admin/settings_view', $this->data);
 
     }
 

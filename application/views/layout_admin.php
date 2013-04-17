@@ -4,7 +4,7 @@
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html> <!--<![endif]-->
 <head>
-	<title>St. Phillips Bakery Admin Panel</title>
+	<title><?php echo $this->lang->line('site_title');?></title>
 	
 	<!-- Meta -->
 	<meta charset="UTF-8" />
@@ -64,9 +64,9 @@
 	
 	<!-- Start Content -->
 	<div class="container-fluid">
-		
+
 		<div class="navbar main">
-			<a href="http://www.bakery.local" class="appbrand"><span>St. P. Bakery <span>Admin Panel</span></span></a>
+			<a href="http://www.bakery.local" class="appbrand"><span><?php echo $this->lang->line('site_name');?><span><?php echo $this->lang->line('admin_panel');?></span></span></a>
 			
 						<button type="button" class="btn btn-navbar">
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
@@ -75,12 +75,12 @@
 			<ul class="topnav pull-right">
 
 				<li class="account">
-					<a data-toggle="dropdown" href="form_demo.html?lang=en" class="glyphicons logout lock"><span class="hidden-phone text">User</span><i></i></a>
+					<a data-toggle="dropdown" href="form_demo.html?lang=en" class="glyphicons logout lock"><span class="hidden-phone text"><?php echo $this->lang->line('user');?></span><i></i></a>
 					<ul class="dropdown-menu pull-right">
-						<li><a href="form_demo.html?lang=en" class="glyphicons cogwheel">Settings<i></i></a></li>
+						<li><a href="form_demo.html?lang=en" class="glyphicons cogwheel"><?php echo $this->lang->line('settings');?><i></i></a></li>
 						<li>
 							<span>
-								<a class="btn btn-default btn-small pull-right" style="padding: 2px 10px; background: #fff;" href="/auth/logout">Sign Out</a>
+								<a class="btn btn-default btn-small pull-right" style="padding: 2px 10px; background: #fff;" href="/auth/logout"><?php echo $this->lang->line('sing_out');?></a>
 							</span>
 						</li>
 					</ul>
@@ -90,31 +90,52 @@
 		
 				<div id="wrapper">
 		<div id="menu" class="hidden-phone">
-			<div id="menuInner">
-				<div id="search">
-					<input type="text" placeholder="Quick search ..." />
-					<button class="glyphicons search"><i></i></button>
-				</div>
-				<ul>
-					<li class="heading"><span>Menu</span></li>
-					<li class="glyphicons home active"><a href="/admin/dashboard"><i></i><span>Dashboard</span></a></li>
-<!--					<li class="glyphicons coins"><a href="/admin/openingBalance"><i></i><span>Opening Balance</span></a></li>-->
-<!--					<li class="glyphicons calendar"><a href="/admin/sop"><i></i><span>SOP</span></a></li>-->
-<!--                    <li class="glyphicons calendar"><a href="/admin/distribution_houses"><i></i><span>Distribution House</span></a></li>-->
-<!--                    <li class="glyphicons calendar"><a href="/admin/distribution_points"><i></i><span>Distribution Point</span></a></li>-->
-<!--                    <li class="glyphicons calendar"><a href="/admin/routes"><i></i><span>Rout</span></a></li>-->
-
-
-				</ul>
-<!--				<ul>-->
-<!--					<li class="heading"><span>Reports</span></li>-->
-<!--					<li class="glyphicons coins"><a href="finances.html?lang=en"><i></i><span>Daily Sales Report</span></a></li>-->
-<!--				</ul>-->
-			</div>
+            <div id="menuInner">
+                <div id="search">
+                    <input type="text" placeholder="Quick search ..." />
+                    <button class="glyphicons search"><i></i></button>
+                </div>
+                <ul>
+                    <li class="heading"><span><?php echo $this->lang->line('menu_level');?></span></li>
+                    <li class="glyphicons home <?php echo (!empty($active) && $active == 'dashboard') ? 'active' : ''; ?>"><a href="/admin/dashboard"><i></i><span><?php echo $this->lang->line('dashboard');  ?></span></a></li>
+                    <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'settings') ? 'active' : ''; ?>"><a href="/admin/settings"><i></i><span><?php echo $this->lang->line('settings');  ?></span></a></li>
+                    <li class="glyphicons cogwheels"><a href="/admin/settings"><i></i><span><?php echo $this->lang->line('manage_cakes');  ?></span></a></li>
+                    <li class="glyphicons cogwheels"><a href="ui.html?lang=en"><i></i><span>UI Elements</span></a></li>
+                    <li class="glyphicons charts"><a href="charts.html?lang=en"><i></i><span>Charts</span></a></li>
+                    <li class="hasSubmenu">
+                        <a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_forms"><i></i><span>Forms</span></a>
+                        <ul class="collapse" id="menu_forms">
+                            <li class=""><a href="form_demo.html?lang=en"><span>My Account</span></a></li>
+                            <li class=""><a href="form_elements.html?lang=en"><span>Form Elements</span></a></li>
+                            <li class=""><a href="form_validator.html?lang=en"><span>Form Validator</span></a></li>
+                            <li class=""><a href="file_managers.html?lang=en"><span>File Managers</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a class="glyphicons table" href="tables.html?lang=en"><i></i><span>Tables</span></a>
+                    </li>
+                    <li class="glyphicons calendar"><a href="calendar.html?lang=en"><i></i><span>Calendar</span></a></li>
+                    <li class="glyphicons user"><a href="login.html?lang=en"><i></i><span>Login</span></a></li>
+                </ul>
+  <!--              <ul>
+                    <li class="heading"><span>Sections</span></li>
+                    <li class="glyphicons coins"><a href="finances.html?lang=en"><i></i><span>Finances</span></a></li>
+                    <li class="hasSubmenu">
+                        <a data-toggle="collapse" class="glyphicons shopping_cart" href="#menu_ecommerce"><i></i><span>Online Shop</span></a>
+                        <ul class="collapse" id="menu_ecommerce">
+                            <li class=""><a href="products.html?lang=en"><span>Products</span></a></li>
+                            <li class=""><a href="product_edit.html?lang=en"><span>Add product</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="glyphicons sort"><a href="pages.html?lang=en"><i></i><span>Site Pages</span></a></li>
+                    <li class="glyphicons picture"><a href="gallery.html?lang=en"><i></i><span>Photo Gallery</span></a></li>
+                    <li class="glyphicons adress_book"><a href="bookings.html?lang=en"><i></i><span>Bookings</span></a></li>
+                </ul>-->
+            </div>
 		</div>
 
 		<div id="content">
-            <strong><b style="color:red;"><?php echo (empty($message)) ? "" : $message ?></b></strong>
+
         <?php echo $content_for_layout; ?>
 
 		</div>
