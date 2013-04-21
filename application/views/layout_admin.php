@@ -13,6 +13,9 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	
 	<!-- Bootstrap -->
+
+
+
 	<link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="/assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
 	
@@ -98,17 +101,41 @@
                 <ul>
                     <li class="heading"><span><?php echo $this->lang->line('menu_level');?></span></li>
                     <li class="glyphicons home <?php echo (!empty($active) && $active == 'dashboard') ? 'active' : ''; ?>"><a href="/admin/dashboard"><i></i><span><?php echo $this->lang->line('dashboard');  ?></span></a></li>
-                    <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'settings') ? 'active' : ''; ?>"><a href="/admin/settings"><i></i><span><?php echo $this->lang->line('settings');  ?></span></a></li>
-                    <li class="glyphicons cogwheels"><a href="/admin/settings"><i></i><span><?php echo $this->lang->line('manage_cakes');  ?></span></a></li>
+                    <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'categories') ? 'active' : ''; ?>"><a href="/admin/categories"><i></i><span><?php echo $this->lang->line('categories');  ?></span></a></li>
+
+                    <li class="glyphicons cogwheels"><a href="/admin/cakes"><i></i><span><?php echo $this->lang->line('cakes');  ?></span></a></li>
+                    <li class="glyphicons cogwheels"><a href="/admin/location"><i></i><span><?php echo $this->lang->line('location');  ?></span></a></li>
+                    <li class="glyphicons cogwheels"><a href="/admin/blackouts"><i></i><span><?php echo $this->lang->line('blackouts');  ?></span></a></li>
+                    <li class="glyphicons cogwheels"><a href="/admin/gallery"><i></i><span><?php echo $this->lang->line('gallery');  ?></span></a></li>
+                    <li class="glyphicons cogwheels"><a href="/admin/zone"><i></i><span><?php echo $this->lang->line('zone');  ?></span></a></li>
+                    <li class="glyphicons cogwheels"><a href="/admin/employee"><i></i><span><?php echo $this->lang->line('employee');  ?></span></a></li>
+                    <li class="glyphicons cogwheels"><a href="/admin/order"><i></i><span><?php echo $this->lang->line('orders');  ?></span></a></li>
                     <li class="glyphicons cogwheels"><a href="ui.html?lang=en"><i></i><span>UI Elements</span></a></li>
                     <li class="glyphicons charts"><a href="charts.html?lang=en"><i></i><span>Charts</span></a></li>
                     <li class="hasSubmenu">
-                        <a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_forms"><i></i><span>Forms</span></a>
+                        <a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_forms"><i></i><span><?php echo $this->lang->line('manage_flavors');  ?></span></a>
                         <ul class="collapse" id="menu_forms">
-                            <li class=""><a href="form_demo.html?lang=en"><span>My Account</span></a></li>
-                            <li class=""><a href="form_elements.html?lang=en"><span>Form Elements</span></a></li>
-                            <li class=""><a href="form_validator.html?lang=en"><span>Form Validator</span></a></li>
-                            <li class=""><a href="file_managers.html?lang=en"><span>File Managers</span></a></li>
+
+                            <li class=""><a href="/admin/manage_flavors/sheps"><span><?php echo $this->lang->line('sheps'); ?></span></a></li>
+                            <li class=""><a href="/admin/manage_flavors/flavors"><span><?php echo $this->lang->line('flavors'); ?></span></a></li>
+                            <li class=""><a href="/admin/manage_flavors/fondants"><span><?php echo $this->lang->line('fondants'); ?></span></a></li>
+                            <li class=""><a href="/admin/manage_flavors/servings"><span><?php echo $this->lang->line('servings'); ?></span></a></li>
+                            <li class=""><a href="/admin/manage_flavors/sizes"><span><?php echo $this->lang->line('sizes'); ?></span></a></li>
+                            <li class=""><a href="/admin/manage_flavors/tires"><span><?php echo $this->lang->line('tires'); ?></span></a></li>
+
+                        </ul>
+                    </li>
+                    <li class="hasSubmenu">
+                        <a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_access"><i></i><span><?php echo $this->lang->line('manage_flavors');  ?></span></a>
+                        <ul class="collapse" id="menu_access">
+
+                            <li class=""><a href="/admin/manage_flavors/sheps"><span><?php echo $this->lang->line('sheps'); ?></span></a></li>
+                            <li class=""><a href="/admin/manage_flavors/flavors"><span><?php echo $this->lang->line('flavors'); ?></span></a></li>
+                            <li class=""><a href="/admin/manage_flavors/fondants"><span><?php echo $this->lang->line('fondants'); ?></span></a></li>
+                            <li class=""><a href="/admin/manage_flavors/servings"><span><?php echo $this->lang->line('servings'); ?></span></a></li>
+                            <li class=""><a href="/admin/manage_flavors/sizes"><span><?php echo $this->lang->line('sizes'); ?></span></a></li>
+                            <li class=""><a href="/admin/manage_flavors/tires"><span><?php echo $this->lang->line('tires'); ?></span></a></li>
+
                         </ul>
                     </li>
                     <li class="">
@@ -242,11 +269,11 @@
 	
 	<!-- Layout Options -->
 	<script src="/assets/theme/scripts/layout.js"></script>
-	
+
 	<script>
 	//Load the Visualization API and the piechart package.
 	google.load('visualization', '1.0', {'packages':['table', 'corechart']});
-	
+
 	// Set a callback to run when the Google Visualization API is loaded.
 	google.setOnLoadCallback(charts.traffic_sources_dataTables.init);
 	</script>
