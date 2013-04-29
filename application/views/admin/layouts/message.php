@@ -7,7 +7,7 @@
                     <td>
             <div class="alert">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <?php echo $this->session->flashdata('duplicate_msg')?>
+                <?php echo $this->session->flashdata('delete_msg')?>
             </div>
                     </td>
                 </tr>
@@ -60,3 +60,19 @@
                 </tbody>
                 </table>
             <?php } ?>
+            <?php if(validation_errors()){?>
+                <table class="table table-bordered">
+
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="alert alert-error">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <?php echo validation_errors(); ?>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            <?php } ?>
+
