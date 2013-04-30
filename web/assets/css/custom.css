@@ -1,0 +1,67 @@
+
+/*for validation*/
+.validation p{
+    color:red;
+    display: inline!important;
+    text-transform: uppercase;
+    margin-left: 6px;
+}
+/*for success message*/
+
+.success_msg{
+    color:green;
+    text-align:center!important;
+}
+
+input[type="text"]{
+    color:#000000 !important;
+}
+
+select{
+    color: #000000 !important;
+}
+textarea{
+    color: #000000 !important;
+}
+
+.error{
+    color:red!important;
+
+    display: inline;
+    margin-left:15px;
+}
+
+.contact-separator
+
+{
+margin: 25px 0  5px 1px!important;
+}
+/*.alert{*/
+    /*height:30px!important;*/
+    /*text-align:center;*/
+    /*padding: 1px!important;*/
+/*}*/
+
+.alert.alert-error p {
+    background-image: url("/assets/images/bullet-red.gif");
+    background-position: 0 7px;
+    background-repeat: no-repeat;
+    display: inline;
+    height: 10px;
+    padding-left: 10px;
+    width: 10px;
+}
+
+
+.glyphicons-edit {
+    float: left;
+    margin-top: -6px;
+}
+.glyphicons-delete {
+    float: left;
+    margin-top: -5px;
+}
+.glyphicons-ok {
+    float: left;
+    margin-top: -2px;
+}
