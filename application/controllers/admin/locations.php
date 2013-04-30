@@ -6,12 +6,7 @@ class Locations extends Crud_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('ion_auth');
-        $this->load->library('form_validation');
-        $this->load->library("pagination");
-        $this->load->library('session');
         $this->layout->setLayout('layout_admin');
-        $this->load->helper('url');
         $this->load->model('locations_model');
 
     }
