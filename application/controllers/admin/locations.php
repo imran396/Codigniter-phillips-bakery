@@ -18,7 +18,6 @@ class Locations extends Crud_Controller
 
     public function index()
     {
-
         $group = $this->session->userdata('group');
 
         if (!$this->ion_auth->logged_in())
