@@ -110,15 +110,17 @@ $lang['country'] 		 	    = 'Country';
 $lang['surcharge'] 		 	    = 'Sur-charge';
 $lang['pos_api'] 		 	    = 'POS api';
 
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
+/* Cakes */
+
+$lang['category_id'] 		 	    = 'Cake Category';
+$lang['location_id'] 		 	    = 'Location Name';
+$lang['cake_title'] 		 	    = 'Cake Title';
+$lang['description'] 		 	    = 'Description';
+$lang['meta_tag'] 		 	    = 'Meta Tag';
+$lang['price'] 		 	    = 'Price';
+$lang['select_one'] 		 	    = 'Select One';
+$lang['upload_image'] 		 	    = 'Upload Image';
+$lang['create_cake'] 		 	    = 'Create Cake';
 $lang['location_name'] 		 	    = 'Location Name';
 $lang['location_name'] 		 	    = 'Location Name';
 $lang['location_name'] 		 	    = 'Location Name';
