@@ -8,15 +8,23 @@
             <li class="heading"><span><?php echo $this->lang->line('menu_level');?></span></li>
             <li class="glyphicons home <?php echo (!empty($active) && $active == 'dashboard') ? 'active' : ''; ?>"><a href="/admin/dashboard"><i></i><span><?php echo $this->lang->line('dashboard'); ?></span></a></li>
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'categories') ? 'active' : ''; ?>"><a href="/admin/categories"><i></i><span><?php echo $this->lang->line('categories'); ?></span></a></li>
-            <li class="glyphicons cogwheels"><a href="/admin/cakes"><i></i><span><?php echo $this->lang->line('cakes'); ?></span></a></li>
+            <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'flavours') ? 'active' : ''; ?>"><a href="/admin/flavours"><i></i><span><?php echo $this->lang->line('flavours'); ?></span></a></li>
+            <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'servings') ? 'active' : ''; ?>"><a href="/admin/servings"><i></i><span><?php echo $this->lang->line('servings'); ?></span></a></li>
+            <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'shapes') ? 'active' : ''; ?>"><a href="/admin/shapes"><i></i><span><?php echo $this->lang->line('shapes'); ?></span></a></li>
+            <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'price_matrix') ? 'active' : ''; ?>"><a href="/admin/price_matrix"><i></i><span><?php echo $this->lang->line('price_matrix'); ?></span></a></li>
+            <li class="hasSubmenu <?php echo (!empty($active) && ($active == 'cakes' || $active == 'gallery' )) ? 'active' : ''; ?>">
+                <a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#cake_menu"><i></i><span onclick="window.location='/admin/cakes'"><?php echo $this->lang->line('cakes'); ?></span></a>
+                <ul class="collapse <?php echo (!empty($active) && ($active == 'cakes' || $active == 'gallery' )) ? 'in' : ''; ?>" id="cake_menu">
+                    <li class="<?php echo (!empty($active) && $active == 'cakes') ? 'active' : ''; ?>"><a href="/admin/cakes"><span><?php echo $this->lang->line('cakes'); ?></span></a></li>
+                    <li class="<?php echo (!empty($active) && $active == 'gallery') ? 'active' : ''; ?>"><a href="/admin/gallery"><span><?php echo $this->lang->line('gallery'); ?></span></a></li>
+                </ul>
+            </li>
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'locations') ? 'active' : ''; ?>"><a href="/admin/locations"><i></i><span><?php echo $this->lang->line('locations'); ?></span></a></li>
-            <li class="glyphicons cogwheels"><a href="/admin/blackouts"><i></i><span><?php echo $this->lang->line('blackouts'); ?></span></a></li>
-            <li class="glyphicons cogwheels"><a href="/admin/gallery"><i></i><span><?php echo $this->lang->line('gallery'); ?></span></a></li>
-            <li class="glyphicons cogwheels"><a href="/admin/zone"><i></i><span><?php echo $this->lang->line('zone'); ?></span></a></li>
-            <li class="glyphicons cogwheels"><a href="/admin/employee"><i></i><span><?php echo $this->lang->line('employee'); ?></span></a></li>
-            <li class="glyphicons cogwheels"><a href="/admin/order"><i></i><span><?php echo $this->lang->line('orders'); ?></span></a></li>
-            <li class="glyphicons cogwheels"><a href="ui.html?lang=en"><i></i><span>UI Elements</span></a></li>
-            <li class="glyphicons charts"><a href="charts.html?lang=en"><i></i><span>Charts</span></a></li>
+            <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'blackouts') ? 'active' : ''; ?>" ><a href="/admin/blackouts"><i></i><span><?php echo $this->lang->line('blackouts'); ?></span></a></li>
+            <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'zones') ? 'active' : ''; ?>"><a href="/admin/zones"><i></i><span><?php echo $this->lang->line('zone'); ?></span></a></li>
+            <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'employees') ? 'active' : ''; ?>"><a href="/admin/employees"><i></i><span><?php echo $this->lang->line('employee'); ?></span></a></li>
+            <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'orders') ? 'active' : ''; ?>"><a href="/admin/orders"><i></i><span><?php echo $this->lang->line('orders'); ?></span></a></li>
+            <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'employees') ? 'active' : ''; ?>"><a href="ui.html?lang=en"><i></i><span>UI Elements</span></a></li>
             <li class="hasSubmenu">
                 <a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_forms"><i></i><span><?php echo $this->lang->line('manage_flavors'); ?></span></a>
                 <ul class="collapse" id="menu_forms">

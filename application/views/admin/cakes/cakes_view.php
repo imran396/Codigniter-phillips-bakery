@@ -42,11 +42,21 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label"><?php echo $this->lang->line('price');?></label>
+                                    <label class="control-label"><?php echo $this->lang->line('start_price');?></label>
                                     <div class="controls">
                                         <div class="input-prepend input-append">
                                             <span class="add-on">$</span>
-                                            <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('price');?>" value="<?php echo(isset($queryup[0]->price))? $queryup[0]->price:set_value('price'); ?>"   class="validate[required] span10" name="price" id="appendedPrependedInput" class="span12">
+                                            <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('start_price');?>" value="<?php echo(isset($queryup[0]->start_price))? $queryup[0]->start_price:set_value('start_price'); ?>"   class="span10" name="start_price" id="appendedPrependedInput" class="span12">
+                                            <span class="add-on">.00</span>
+                                        </div>
+
+
+                                    </div>
+                                    <label class="control-label"><?php echo $this->lang->line('to');?> <?php echo $this->lang->line('end_price');?></label>
+                                    <div class="controls">
+                                        <div class="input-prepend input-append">
+                                            <span class="add-on">$</span>
+                                            <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('end_price');?>" value="<?php echo(isset($queryup[0]->end_price))? $queryup[0]->end_price:set_value('end_price'); ?>"   class=" span10" name="end_price" id="appendedPrependedInput" class="span12">
                                             <span class="add-on">.00</span>
                                         </div>
 
@@ -58,36 +68,38 @@
                                     <label class="control-label"><?php echo $this->lang->line('category_id');?></label>
                                     <div class="controls">
                                         <div class="row-fluid">
-                                            <select style="width: 100%;" id="category_id" name="category_id">
+                                            <select class="validate[required] " style="width: 100%;"  name="category_id">
+                                                <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
                                                 <?php
                                                 $category_id = (isset($queryup[0]->category_id))? $queryup[0]->category_id:set_value('category_id');
-                                                foreach($catresult as $type):
+                                                foreach($catresult as $category):
                                                 ?>
-                                                    <option value="<?php echo $type->category_id;  ?>" <?php if($category_id == $type->category_id){ echo "selected='selected'"; } ?> ><?php echo $type->title; ?></option>
+                                                    <option value="<?php echo $category->category_id;  ?>" <?php if($category_id == $category->category_id){ echo "selected='selected'"; } ?> ><?php echo $category->title; ?></option>
                                                 <?php endforeach; ?>
 
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="control-group">
-                                    <label class="control-label"><?php echo $this->lang->line('location_id');?></label>
+                                    <label class="control-label"><?php echo $this->lang->line('flavour_id');?></label>
                                     <div class="controls">
                                         <div class="row-fluid">
-                                            <select style="width: 100%;" id="select2_1" id="location_id" name="location_id">
-
+                                            <select class="validate[required] " style="width: 100%;"  name="flavour_id">
+                                                <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
                                                 <?php
-                                                $location_id = (isset($queryup[0]->location_id))? $queryup[0]->location_id:set_value('location_id');
-                                                foreach($locresult as $location):
+                                                $flavour_id = (isset($queryup[0]->flavour_id))? $queryup[0]->flavour_id:set_value('flavour_id');
+                                                foreach($flvresult as $flavour):
                                                 ?>
-                                                    <option value="<?php echo $location->location_id;  ?>" <?php if($location_id == $location->location_id){ echo "selected='selected'"; } ?> ><?php echo $location->title; ?></option>
+                                                    <option value="<?php echo $flavour->flavour_id;  ?>" <?php if($flavour_id == $flavour->flavour_id){ echo "selected='selected'"; } ?> ><?php echo $flavour->title; ?></option>
                                                 <?php endforeach; ?>
 
                                             </select>
                                         </div>
                                     </div>
                                 </div>
+
+
 
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('meta_tag');?></label>

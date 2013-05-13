@@ -7,7 +7,6 @@ class Cakes_model extends Crud_Model
     {
         parent::__construct();
         $this->load->library('image_lib');
-        $this->load->library('upload');
         $this->loadTable('cakes','cake_id');
 
 
@@ -16,8 +15,8 @@ class Cakes_model extends Crud_Model
     public function create($data)
     {
         $id = $this->insert($data);
-        if($this->upload->do_upload()){
-        $this->doUpload($id);
+        if(!empty($_FILES["image_name"]["name"])){
+            $this->doUpload($id);
         }
 
     }
@@ -26,7 +25,7 @@ class Cakes_model extends Crud_Model
     {
         $this->update($data, $id);
 
-       if(!$_FILES["image_name"]["name"]){
+       if(!empty($_FILES["image_name"]["name"])){
             $this->doUpload($id);
        }
 
@@ -117,7 +116,13 @@ class Cakes_model extends Crud_Model
     public function getListing()
     {
 
-        return $this->db->select('*')->get('cakes')->result();
+
+            $this->db->select('cakes.* , categories.title AS categories_name , flavours.title AS flavours_name');
+            $this->db->from('cakes');
+            $this->db->join('categories', 'categories.category_id = cakes.category_id','left');
+            $this->db->join('flavours', 'flavours.flavour_id = cakes.flavour_id','left');
+            $query=$this->db->get();
+            return $query->result();
 
     }
     public function getCategories()
@@ -126,10 +131,10 @@ class Cakes_model extends Crud_Model
         return $this->db->select('*')->where('status',1)->get('categories')->result();
 
     }
-    public function getLocations()
+    public function getFlavours()
     {
 
-        return $this->db->select('*')->where('status',1)->get('locations')->result();
+        return $this->db->select('*')->where('status',1)->get('flavours')->result();
 
     }
 

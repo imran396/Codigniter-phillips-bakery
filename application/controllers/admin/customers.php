@@ -1,17 +1,13 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 
-class Cakes extends Crud_Controller
+class Customers extends Crud_Controller
 {
     public function __construct()
     {
         parent::__construct();
-
-        $this->load->library('image_lib');
         $this->layout->setLayout('layout_admin');
-        $this->load->model('cakes_model');
-        $this->load->helper('string');
-
+        $this->load->model('customers_model');
 
     }
 
@@ -33,23 +29,18 @@ class Cakes extends Crud_Controller
             $this->data['users'] = $this->ion_auth->get_users_array();
         }
 
-        $this->data['catresult'] = $this->cakes_model->getCategories();
-        $this->data['flvresult'] = $this->cakes_model->getFlavours();
-
         $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/cakes/cakes_view', $this->data);
+        $this->layout->view('admin/customers/customers_view', $this->data);
 
     }
 
     public function listing(){
 
-        $this->data['result'] = $this->cakes_model->getListing();
+        $this->data['result'] = $this->customers_model->getListing();
         $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/cakes/listing_view', $this->data);
+        $this->layout->view('admin/customers/listing_view', $this->data);
 
     }
-
-
 
     public function save()
     {
@@ -58,7 +49,7 @@ class Cakes extends Crud_Controller
             $this->addValidation();
             if ($this->form_validation->run()) {
                 $this->saveData();
-                $id =$this->input->post('cake_id');
+                $id =$this->input->post('location_id');
                 if(!empty($id)) {
                     $this->redirectToHome('edit/'.$id);
                 }else{
@@ -73,28 +64,26 @@ class Cakes extends Crud_Controller
     }
 
 
-
-
-
     public function edit($id)
     {
 
-        $this->data['queryup'] = $this->cakes_model->getcakes($id);
+        $this->data['queryup'] = $this->customers_model->getcustomers($id);
         $this->data['active']=$this->uri->segment(2,0);
-        $this->data['catresult'] = $this->cakes_model->getCategories();
-        $this->data['flvresult'] = $this->cakes_model->getFlavours();
-        $this->layout->view('admin/cakes/cakes_view', $this->data);
+        $this->layout->view('admin/customers/customers_view', $this->data);
     }
 
     private function addValidation()
     {
         $this->form_validation->set_rules('title', 'Location Title','required|trim|xss_clean|callback_checkTitle');
-        $this->form_validation->set_rules('cake_id');
-        $this->form_validation->set_rules('cake_id');
-        $this->form_validation->set_rules('category_id');
-        $this->form_validation->set_rules('description');
-        $this->form_validation->set_rules('meta_tag');
-        $this->form_validation->set_rules('price');
+        $this->form_validation->set_rules('location_id');
+        $this->form_validation->set_rules('address1');
+        $this->form_validation->set_rules('address2');
+        $this->form_validation->set_rules('city');
+        $this->form_validation->set_rules('province');
+        $this->form_validation->set_rules('postal_code');
+        $this->form_validation->set_rules('country');
+        $this->form_validation->set_rules('surcharge');
+        $this->form_validation->set_rules('pos_api');
         $this->form_validation->set_rules('status');
 
     }
@@ -104,23 +93,22 @@ class Cakes extends Crud_Controller
     {
 
         $data = $this->input->post();
-        if (empty($data['cake_id'])) {
+        if (empty($data['location_id'])) {
 
-            $this->cakes_model->create($data);
+            $this->customers_model->create($data);
+
             $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
         } else {
-            $this->cakes_model->save($data, $data['cake_id']);
+            $this->customers_model->save($data, $data['location_id']);
 
             $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         }
 
     }
 
-
-
     public function status($id){
 
-        $this->data['category'] = $this->cakes_model->statusChange($id);
+        $this->data['category'] = $this->customers_model->statusChange($id);
         $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         $this->redirectToHome("listing");
 
@@ -129,7 +117,7 @@ class Cakes extends Crud_Controller
 
     public function remove($id)
     {
-        $this->data['category'] = $this->cakes_model->delete($id);
+        $this->data['category'] = $this->customers_model->delete($id);
         $this->redirectToHome("listing");
 
     }
@@ -138,7 +126,7 @@ class Cakes extends Crud_Controller
 
 
         $data = $this->input->post();
-        return  $this->cakes_model->checkcakes($data['cake_id'],$title);
+        return  $this->customers_model->checkcustomers($data['location_id'],$title);
 
 
     }
@@ -146,7 +134,7 @@ class Cakes extends Crud_Controller
 
     private function redirectToHome($redirect = NULL)
     {
-        redirect('admin/cakes/'.$redirect);
+        redirect('admin/customers/'.$redirect);
     }
 
 }

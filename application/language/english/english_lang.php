@@ -36,8 +36,8 @@ $lang['access_control'] 		 	                = 'Access Control';
 $lang['users'] 		 	                            = 'Manage Users';
 $lang['access_roles'] 		 	                    = 'Access Roles';
 $lang['manage_flavors'] 		 	                = 'Manage Flavors';
-$lang['sheps'] 		 	                            = 'Sheps';
-$lang['flavors'] 		 	                        = 'Flavors';
+$lang['shapes'] 		 	                            = 'Shapes';
+$lang['flavours'] 		 	                        = 'Flavours';
 $lang['fondants'] 		 	                        = 'Fondants';
 $lang['servings'] 		 	                        = 'Servings';
 $lang['sizes'] 		 	                            = 'Sizes';
@@ -66,7 +66,7 @@ $lang['image_delete_msg']="Image has been deleted successfully";
 $lang['duplicate_msg']="is already taken";
 $lang['admin_delete_msg']="Administer not delete";
 $lang['no_records_msg']="Sorry - No listings founds";
-
+$lang['no_location_msg']="Must be need location select";
 
 
 /* User Settings */
@@ -113,24 +113,47 @@ $lang['pos_api'] 		 	    = 'POS api';
 /* Cakes */
 
 $lang['category_id'] 		 	    = 'Cake Category';
+$lang['flavour_id'] 		 	    = 'Flavour Name';
 $lang['location_id'] 		 	    = 'Location Name';
 $lang['cake_title'] 		 	    = 'Cake Title';
 $lang['description'] 		 	    = 'Description';
 $lang['meta_tag'] 		 	    = 'Meta Tag';
-$lang['price'] 		 	    = 'Price';
+$lang['start_price'] 		 	    = 'Start Price';
+$lang['end_price'] 		 	    = 'End Price';
+$lang['to'] 		 	    = 'To';
+$lang['add_gallery'] 		 	    = 'Add Gallery';
+
+
+
 $lang['select_one'] 		 	    = 'Select One';
 $lang['upload_image'] 		 	    = 'Upload Image';
 $lang['create_cake'] 		 	    = 'Create Cake';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['location_name'] 		 	    = 'Location Name';
+$lang['gallery_image'] 		 	    = 'Gallery Image';
+
+/* Flavours */
+$lang['add_flavours'] 		 	    = 'Add Flavours';
+$lang['flavour_name'] 		 	    = 'Flavour Name';
+$lang['cake_shape'] 		 	    = 'Cake Shape';
+$lang['fondant'] 		 	    = 'Fondant';
+
+
+$lang['add_servings'] 		 	    = 'Add Servings';
+$lang['serving_name'] 		 	    = 'Serving Name';
+$lang['size'] 		 	    = 'Size';
+
+/* price matrix */
+$lang['price_matrix'] 		 	    = 'Price Matrix';
+
+$lang['manage_price_matrix'] 		= 'Manage Price Matrix';
+$lang['yes'] 		 	    = 'Yes';
+$lang['no'] 		 	    = 'No';
+
+/* Delivery zone */
+
+$lang['add_zones'] 		 	    = 'Add Zones';
+$lang['zone_name'] 		 	    = 'Zone Name';
+$lang['description'] 		 	    = 'Description';
+
+$lang['add_shapes'] 		 	    = 'Add Shapes';
+$lang['shape_name'] 		 	    = 'Shape Name';
 $lang['location_name'] 		 	    = 'Location Name';
