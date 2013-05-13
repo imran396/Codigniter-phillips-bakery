@@ -65,3 +65,22 @@ margin: 25px 0  5px 1px!important;
     float: left;
     margin-top: -2px;
 }
+
+.midium-textarea{
+    width: 475px;
+    height: 90px;
+}
+
+#matrix-flavour{
+    font-weight: bold;
+    line-height: 70px;
+    padding-left: 20px;
+    width: 212px;
+}
+.matrix-flavour-name {
+    font-size: 12px;
+    font-weight: bold;
+    height: 39px;
+    line-height: 32px !important;
+
+}
