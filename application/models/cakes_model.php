@@ -1,16 +1,18 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 
-class Cakes_model extends Crud_Model
+class Cakes_model extends Ci_Model
 {
     public function __construct()
     {
         parent::__construct();
         $this->load->library('image_lib');
-        $this->loadTable('cakes','cake_id');
+       // $this->loadTable('cakes','cake_id');
 
 
     }
+
+
 
     public function create($data)
     {
@@ -21,6 +23,13 @@ class Cakes_model extends Crud_Model
 
     }
 
+    private function insert($data){
+
+
+        $this->db->set(array('title'=>$data['title'],'description'=> $data['description'],'start_price'=>$data['start_price'],'end_price'=> $data['end_price'],'category_id'=> $data['category_id'],'flavour_id'=>$data['flavour_id'],'shape_id'=> serialize($data['shape_id']),'meta_tag'=> $data['meta_tag'],'status'=>$data['status']))->insert('cakes');
+
+    }
+
     public function save($data, $id)
     {
         $this->update($data, $id);
@@ -28,6 +37,13 @@ class Cakes_model extends Crud_Model
        if(!empty($_FILES["image_name"]["name"])){
             $this->doUpload($id);
        }
+
+    }
+
+    private function update($data,$id){
+
+
+        $this->db->set(array('title'=>$data['title'],'description'=> $data['description'],'start_price'=>$data['start_price'],'end_price'=> $data['end_price'],'category_id'=> $data['category_id'],'flavour_id'=>$data['flavour_id'],'shape_id'=> serialize($data['shape_id']),'meta_tag'=> $data['meta_tag'],'status'=>$data['status']))->where(array('cake_id'=>$id))->update('cakes');
 
     }
 
@@ -113,18 +129,27 @@ class Cakes_model extends Crud_Model
 
     }
 
-    public function getListing()
+    public function getListing($start)
     {
 
-
-            $this->db->select('cakes.* , categories.title AS categories_name , flavours.title AS flavours_name');
-            $this->db->from('cakes');
-            $this->db->join('categories', 'categories.category_id = cakes.category_id','left');
-            $this->db->join('flavours', 'flavours.flavour_id = cakes.flavour_id','left');
-            $query=$this->db->get();
-            return $query->result();
-
+        $per_page=10;
+        $num_link=3;
+        $page   = intval($start);
+        if($page<=0)  $page  = 1;
+        $limit=($page-1)*$per_page;
+        $base_url = site_url('admin/cakes/listing');
+        $total_rows = $this->db->count_all_results('cakes');
+        $paging = paginate($base_url, $total_rows,$start,$per_page);
+        $this->db->select('cakes.* , categories.title AS categories_name , flavours.title AS flavours_name');
+        $this->db->from('cakes');
+        $this->db->join('categories', 'categories.category_id = cakes.category_id','left');
+        $this->db->join('flavours', 'flavours.flavour_id = cakes.flavour_id','left');
+        $this->db->limit($per_page,$limit);
+        $this->db->order_by("cakes.cake_id", "desc");
+        $query =$this->db->get();
+        return array($query,$paging,$total_rows,$limit);
     }
+
     public function getCategories()
     {
 
@@ -135,6 +160,12 @@ class Cakes_model extends Crud_Model
     {
 
         return $this->db->select('*')->where('status',1)->get('flavours')->result();
+
+    }
+    public function getShapes()
+    {
+
+        return $this->db->select('*')->where('status',1)->get('shapes')->result();
 
     }
 

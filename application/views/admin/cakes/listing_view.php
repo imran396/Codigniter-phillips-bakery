@@ -23,9 +23,9 @@
 
 
 <div class="innerLR">
-        <div class="widget widget-gray widget-body-white">
+        <div class="widget widget-body-white">
             <div class="widget-head">
-                <h4 class="heading"><?php echo $this->lang->line('list_of').' '.$this->lang->line('list'); ?></h4>
+                <h4 class="heading"><?php echo $this->lang->line('list_of').' '.$this->lang->line('cakes'); ?></h4>
             </div>
             <div class="widget-body" style="padding: 10px 0;">
                 <table class="table table-bordered table-primary">
@@ -41,8 +41,10 @@
                     <tbody>
 
                     <?php
-                    $i=1;
-                    foreach($result as  $rows ) :?>
+
+                    $var = ($paging[3] != '0')  ? ($paging[3]+1) : 1;
+                    $i=$var;
+                    foreach($paging[0]->result() as  $rows ) :?>
                     <tr>
                         <td class="center"><?php echo $i; ?></td>
                         <td><?php echo $rows->title; ?></td>
@@ -57,7 +59,11 @@
                     <?php $i++; endforeach; ?>
                     </tbody>
                 </table>
+
             </div>
+            <?php if($paging[1]){ ?>
+                <div class="row-fluid"><div class="span6" style="width: 300px"><div class="dataTables_info" id="DataTables_Table_0_info">Showing 1 to <?php echo ($i-1); ?> of <?php echo $paging[2]; ?> entries</div></div><div class="span6" style="width: 65%; float: right"><div class="dataTables_paginate paging_bootstrap pagination"><?php echo $paging[1]; ?></div></div></div>
+            <?php } ?>
         </div>
 
 </div>

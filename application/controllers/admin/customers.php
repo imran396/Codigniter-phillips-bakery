@@ -34,9 +34,9 @@ class Customers extends Crud_Controller
 
     }
 
-    public function listing(){
+    public function listing($start=0){
 
-        $this->data['result'] = $this->customers_model->getListing();
+        $this->data['paging'] = $this->customers_model->getListing($start);
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/customers/listing_view', $this->data);
 
@@ -49,7 +49,7 @@ class Customers extends Crud_Controller
             $this->addValidation();
             if ($this->form_validation->run()) {
                 $this->saveData();
-                $id =$this->input->post('location_id');
+                $id =$this->input->post('customer_id');
                 if(!empty($id)) {
                     $this->redirectToHome('edit/'.$id);
                 }else{
@@ -74,16 +74,17 @@ class Customers extends Crud_Controller
 
     private function addValidation()
     {
-        $this->form_validation->set_rules('title', 'Location Title','required|trim|xss_clean|callback_checkTitle');
-        $this->form_validation->set_rules('location_id');
+        $this->form_validation->set_rules('first_name');
+        $this->form_validation->set_rules('last_name');
+        $this->form_validation->set_rules('email');
+        $this->form_validation->set_rules('phone_number', 'Phone Number Title','required|trim|xss_clean');
+        $this->form_validation->set_rules('customer_id');
         $this->form_validation->set_rules('address1');
         $this->form_validation->set_rules('address2');
         $this->form_validation->set_rules('city');
         $this->form_validation->set_rules('province');
         $this->form_validation->set_rules('postal_code');
         $this->form_validation->set_rules('country');
-        $this->form_validation->set_rules('surcharge');
-        $this->form_validation->set_rules('pos_api');
         $this->form_validation->set_rules('status');
 
     }
@@ -93,13 +94,13 @@ class Customers extends Crud_Controller
     {
 
         $data = $this->input->post();
-        if (empty($data['location_id'])) {
+        if (empty($data['customer_id'])) {
 
             $this->customers_model->create($data);
 
             $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
         } else {
-            $this->customers_model->save($data, $data['location_id']);
+            $this->customers_model->save($data, $data['customer_id']);
 
             $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         }
@@ -126,7 +127,7 @@ class Customers extends Crud_Controller
 
 
         $data = $this->input->post();
-        return  $this->customers_model->checkcustomers($data['location_id'],$title);
+        return  $this->customers_model->checkcustomers($data['customer_id'],$title);
 
 
     }

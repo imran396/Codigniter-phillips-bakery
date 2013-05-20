@@ -24,25 +24,12 @@
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'zones') ? 'active' : ''; ?>"><a href="/admin/zones"><i></i><span><?php echo $this->lang->line('zone'); ?></span></a></li>
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'employees') ? 'active' : ''; ?>"><a href="/admin/employees"><i></i><span><?php echo $this->lang->line('employee'); ?></span></a></li>
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'orders') ? 'active' : ''; ?>"><a href="/admin/orders"><i></i><span><?php echo $this->lang->line('orders'); ?></span></a></li>
-            <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'employees') ? 'active' : ''; ?>"><a href="ui.html?lang=en"><i></i><span>UI Elements</span></a></li>
-            <li class="hasSubmenu">
-                <a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_forms"><i></i><span><?php echo $this->lang->line('manage_flavors'); ?></span></a>
-                <ul class="collapse" id="menu_forms">
+            <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'customers') ? 'active' : ''; ?>"><a href="/admin/customers"><i></i><span><?php echo $this->lang->line('customers'); ?></span></a></li>
+            <li class="hasSubmenu <?php echo (!empty($active) && ($active == 'users' || $active == 'roles' )) ? 'active' : ''; ?>">
+                <a data-toggle="collapse " class="glyphicons show_thumbnails_with_lines " href="#menu_access"><i></i><span onclick="window.location='/admin/users'" ><?php echo $this->lang->line('manage_users'); ?></span></a>
+                <ul class="collapse <?php echo (!empty($active) && ($active == 'users' || $active == 'roles' )) ? 'in' : ''; ?>" id="menu_access">
 
-                    <li class=""><a href="/admin/manage_flavors/sheps"><span><?php echo $this->lang->line('sheps'); ?></span></a></li>
-                    <li class=""><a href="/admin/manage_flavors/flavors"><span><?php echo $this->lang->line('flavors'); ?></span></a></li>
-                    <li class=""><a href="/admin/manage_flavors/fondants"><span><?php echo $this->lang->line('fondants'); ?></span></a></li>
-                    <li class=""><a href="/admin/manage_flavors/servings"><span><?php echo $this->lang->line('servings'); ?></span></a></li>
-                    <li class=""><a href="/admin/manage_flavors/sizes"><span><?php echo $this->lang->line('sizes'); ?></span></a></li>
-                    <li class=""><a href="/admin/manage_flavors/tires"><span><?php echo $this->lang->line('tires'); ?></span></a></li>
-
-                </ul>
-            </li>
-            <li class="hasSubmenu">
-                <a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#menu_access"><i></i><span><?php echo $this->lang->line('manage_users'); ?></span></a>
-                <ul class="collapse" id="menu_access">
-
-                    <li class=""><a href="/admin/manage_flavors/sheps"><span><?php echo $this->lang->line('users'); ?></span></a></li>
+                    <li class=""><a href="/admin/users"><span><?php echo $this->lang->line('users'); ?></span></a></li>
                     <li class=""><a href="/admin/roles"><span><?php echo $this->lang->line('roles'); ?></span></a></li>
                     <li class=""><a href="/admin/access"><span><?php echo $this->lang->line('access'); ?></span></a></li>
                     <li class=""><a href="/admin/access_control"><span><?php echo $this->lang->line('access_control'); ?></span></a></li>

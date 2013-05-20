@@ -77,14 +77,6 @@
                                         <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('pos_api');?>" value="<?php echo(isset($queryup[0]->pos_api))? $queryup[0]->pos_api:set_value('pos_api'); ?>"   class="span12" name="pos_api" id="pos_api"  />
                                     </div>
                                 </div>
-                                <div class="control-group">
-                                    <label class="control-label"><?php echo $this->lang->line('surcharge');?></label>
-                                    <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('country');?>" value="<?php echo(isset($queryup[0]->surcharge))? $queryup[0]->surcharge:set_value('surcharge'); ?>"   class="span10" name="surcharge" id="surcharge"  />
-                                    </div>
-                                </div>
-
-
                                 <div class="control-group uniformjs">
                                     <label class="control-label"><?php echo $this->lang->line('status');?></label>
                                     <div class="separator"></div>

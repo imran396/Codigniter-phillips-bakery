@@ -99,7 +99,22 @@
                                     </div>
                                 </div>
 
+                                <div class="control-group uniformjs">
+                                    <label class="control-label"><?php echo $this->lang->line('shapes');?></label>
+                                    <div class="separator"></div>
+                                    <?php
+                                    $shape_id = (isset($queryup[0]->shape_id))? $queryup[0]->shape_id:serialize(array());
+                                    $shapeid=(unserialize($shape_id));
+                                    foreach($sapresult as $shapes):
+                                    ?>
 
+                                    <label class="radio">
+                                        <input type="checkbox" class="radio" name="shape_id[]" value="<?php echo $shapes->shape_id;?>" <?php if( in_array($shapes->shape_id, $shapeid) ){?> checked="checked" <?php } ?> />
+                                        <?php echo $shapes->title;?>
+                                    </label>
+                                    <?php endforeach; ?>
+
+                                </div>
 
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('meta_tag');?></label>

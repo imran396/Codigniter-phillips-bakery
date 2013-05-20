@@ -47,6 +47,7 @@ $lang['cakes'] 		 	                            = 'Cakes';
 $lang['gallery'] 		 	                    = 'Cake Gallery';
 $lang['zone'] 		 	                    = 'Delivery zone';
 $lang['employee'] 		 	                        = 'Employee';
+$lang['customers'] 		 	                        = 'Customers';
 $lang['orders'] 		 	                    = 'Cake Orders';
 $lang['manage_users'] 		 	                = 'Manage Employers';
 $lang['users'] 		 	                = 'Employers';
@@ -156,4 +157,29 @@ $lang['description'] 		 	    = 'Description';
 
 $lang['add_shapes'] 		 	    = 'Add Shapes';
 $lang['shape_name'] 		 	    = 'Shape Name';
-$lang['location_name'] 		 	    = 'Location Name';
+
+
+$lang['first_name'] 		 	    = 'First Name';
+$lang['last_name'] 		 	    = 'Last Name';
+$lang['phone_number'] 		 	    = 'Phone No';
+$lang['email'] 		 	    = 'Email Address';
+$lang['address_1'] 		 	    = 'Address1';
+$lang['address_2'] 		 	    = 'Address2';
+$lang['city'] 		 	    = 'City';
+$lang['province'] 		 	    = 'Province';
+$lang['postal_code'] 		 	    = 'Postal Code';
+$lang['country'] 		 	    = 'Country';
+$lang['notes'] 		 	    = 'Notes';
+$lang['email_notification'] 		 	    = 'Email Notification';
+$lang['create_customer'] 		 	    = 'Create Customer';
+
+/*  Users */
+
+$lang['create_users'] 		 	    = 'Create Users';
+$lang['name'] 		 	    = 'Name';
+$lang['username'] 		 	    = 'User Name';
+$lang['password'] 		 	    = 'Password';
+$lang['con_password'] 		 	    = 'Re-Password';
+$lang['role'] 		 	    = 'Users Role';
+$lang['active'] 		 	    = 'Active';
+$lang['inactive'] 		 	    = 'Inactive';

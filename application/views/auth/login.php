@@ -63,7 +63,7 @@
             <div style="text-align: center">
 
 <!--                <img src="/assets/img/bat_logo.png" />-->
-                <h2 style="text-align: center; margin-bottom: 30px; margin-top: 20px;">St. Phillips Bakery</h2>
+                <h2 style="text-align: center; margin-bottom: 30px; margin-top: 20px;"><?php echo $this->lang->line('site_name');?></h2>
 
             </div>
 
@@ -73,7 +73,7 @@
                 <h4 class="form-signin-heading">&nbsp;</h4>
 
                 <div class="uniformjs">
-                    <input type="text" class="input-block-level" placeholder="Email" name="email">
+                    <input type="text" class="input-block-level" placeholder="username" name="username">
                     <input type="password" class="input-block-level" placeholder="Password" name="password">
                     <label class="checkbox"><input type="checkbox" value="1" name="remember">Remember me</label>
                 </div>

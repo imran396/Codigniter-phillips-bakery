@@ -63,7 +63,7 @@ $autoload['libraries'] = array('database', 'session','xmlrpc','form_validation',
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','file','form','security');
+$autoload['helper'] = array('url','file','form','security','string','paging');
 
 /*
 | -------------------------------------------------------------------
