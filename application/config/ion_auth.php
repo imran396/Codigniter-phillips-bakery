@@ -54,13 +54,13 @@
 	 * Columns in your meta table,
 	 * id not required.
 	 **/
-	$config['columns']             = array('first_name', 'last_name', 'company', 'phone');
+	$config['columns']             = array('first_name', 'last_name');
 	
 	/**
 	 * A database column which is used to
 	 * login with.
 	 **/
-	$config['identity']            = 'email';
+	$config['identity']            = 'username';
 		 
 	/**
 	 * Minimum Required Length of Password
