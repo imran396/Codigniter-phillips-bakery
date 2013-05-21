@@ -1,14 +1,14 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 
-class Roles extends Crud_Controller
+class Controls extends Crud_Controller
 {
     public function __construct()
     {
         parent::__construct();
 
         $this->layout->setLayout('layout_admin');
-        $this->load->model('roles_model');
+        $this->load->model('controls_model');
 
     }
 
@@ -30,19 +30,12 @@ class Roles extends Crud_Controller
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
             $this->data['users'] = $this->ion_auth->get_users_array();
         }
-        $this->data['result'] = $this->roles_model->getListing();
+        $this->data['result'] = $this->controls_model->getListing();
         $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/roles/roles_view', $this->data);
+        $this->layout->view('admin/controls/controls_view', $this->data);
 
     }
 
-    public function listing(){
-
-        $this->data['result'] = $this->roles_model->getListing();
-        $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/roles/listing_view', $this->data);
-
-    }
 
     public function save()
     {
@@ -69,17 +62,16 @@ class Roles extends Crud_Controller
     public function edit($id)
     {
 
-        $this->data['queryup'] = $this->roles_model->getroles($id);
-        $this->data['result'] = $this->roles_model->getListing();
+        $this->data['queryup'] = $this->controls_model->getcontrols($id);
+        $this->data['result'] = $this->controls_model->getListing();
         $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/roles/roles_view', $this->data);
+        $this->layout->view('admin/controls/controls_view', $this->data);
     }
 
     private function addValidation()
     {
-        $this->form_validation->set_rules('name', 'User role name', 'required|trim|xss_clean|callback_checkname');
-        $this->form_validation->set_rules('description', 'Description', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('id');
+        $this->form_validation->set_rules('controller_name', 'Controller name', 'required|trim|xss_clean|callback_checkname');
+        $this->form_validation->set_rules('control_id');
         $this->form_validation->set_rules('status');
 
     }
@@ -89,13 +81,13 @@ class Roles extends Crud_Controller
     {
 
         $data = $this->input->post();
-        if (empty($data['id'])) {
+        if (empty($data['control_id'])) {
 
-            $this->roles_model->create($data);
+            $this->controls_model->create($data);
 
             $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
         } else {
-            $this->roles_model->save($data, $data['id']);
+            $this->controls_model->save($data, $data['control_id']);
 
             $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         }
@@ -104,7 +96,7 @@ class Roles extends Crud_Controller
 
     public function status($id){
 
-        $this->data['category'] = $this->roles_model->statusChange($id);
+        $this->controls_model->statusChange($id);
         $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         $this->redirectToHome();
 
@@ -113,7 +105,7 @@ class Roles extends Crud_Controller
 
     public function remove($id)
     {
-        $this->data['category'] = $this->roles_model->delete($id);
+        $this->controls_model->delete($id);
         $this->redirectToHome();
 
     }
@@ -122,14 +114,14 @@ class Roles extends Crud_Controller
 
 
         $data = $this->input->post();
-        return  $this->roles_model->checkRoles($data['id'],$title);
+        return  $this->controls_model->checkcontrols($data['control_id'],$title);
 
 
     }
 
     private function redirectToHome($redirect = NULL)
     {
-        redirect('admin/roles/'.$redirect);
+        redirect('admin/controls/'.$redirect);
     }
 
 }

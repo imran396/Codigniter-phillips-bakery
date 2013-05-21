@@ -68,6 +68,7 @@ $lang['duplicate_msg']="is already taken";
 $lang['admin_delete_msg']="Administer not delete";
 $lang['no_records_msg']="Sorry - No listings founds";
 $lang['no_location_msg']="Must be need location select";
+$lang['no_group_msg']="Must be need group select";
 
 
 /* User Settings */
@@ -183,3 +184,10 @@ $lang['con_password'] 		 	    = 'Re-Password';
 $lang['role'] 		 	    = 'Users Role';
 $lang['active'] 		 	    = 'Active';
 $lang['inactive'] 		 	    = 'Inactive';
+$lang['inactive'] 		 	    = 'Inactive';
+
+
+$lang['controller_name'] 		 	    = 'Controller name';
+$lang['inactive'] 		 	    = 'Inactive';
+
+
