@@ -323,7 +323,7 @@ class Auth extends Controller {
 		else
 		{ //display the create user form
 			//set the flash data error message if there is one
-			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			$this->data['success_msg'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
 			$this->data['first_name'] = array('name' => 'first_name',
 				'id' => 'first_name',
@@ -370,7 +370,10 @@ class Auth extends Controller {
 				'type' => 'password',
 				'value' => $this->form_validation->set_value('password_confirm'),
 			);
-			$this->load->view('auth/create_user', $this->data);
+			//$this->load->view('auth/create_user', $this->data);
+           // $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
+            redirect('admin/users', 'refresh');
+           // $this->layout->view('admin/users/users_view', $this->data);
 		}
 	}
 

@@ -29,7 +29,7 @@
 
                 </div>
                 <div class="control-group">
-                    <label class="control-label"><?php echo $this->lang->line('location_id');?></label>
+                    <label class="control-label"><?php echo $this->lang->line('list_cakes');?></label>
                     <div class="controls">
                         <div class="row-fluid">
                             <select style="width: 100%;" id="select2_1" id="cake_id" name="cake_id">

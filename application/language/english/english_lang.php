@@ -124,6 +124,7 @@ $lang['start_price'] 		 	    = 'Start Price';
 $lang['end_price'] 		 	    = 'End Price';
 $lang['to'] 		 	    = 'To';
 $lang['add_gallery'] 		 	    = 'Add Gallery';
+$lang['list_cakes'] 		 	    = 'List of Cakes';
 
 
 
@@ -184,9 +185,10 @@ $lang['con_password'] 		 	    = 'Re-Password';
 $lang['role'] 		 	    = 'Users Role';
 $lang['active'] 		 	    = 'Active';
 $lang['inactive'] 		 	    = 'Inactive';
-$lang['inactive'] 		 	    = 'Inactive';
-
-
+$lang['my_profile'] 		 	    = 'Edit My Profile';
+$lang['account_details'] 		 	    = 'Account Details';
+$lang['account_settings'] 		 	    = 'Account Settings';
+$lang['account_settings_info'] 		 	    = 'Account settings instruction';
 $lang['controller_name'] 		 	    = 'Controller name';
 $lang['inactive'] 		 	    = 'Inactive';
 

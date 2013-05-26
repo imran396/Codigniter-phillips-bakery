@@ -84,10 +84,14 @@ class Users_model extends Crud_Model
 
     }
 
-    public function getusers($id)
+    public function getusers($username)
     {
 
-        return $this->db->select('*')->where(array('id'=>$id))->get('users')->result();
+        return $this->db
+            ->select('users.username,users.email,meta.first_name,meta.last_name')
+            ->join('meta','users.id =meta.user_id')
+            ->join('groups','users.group_id =groups.id')
+            ->where(array('username'=>$username))->get('users')->result();
 
     }
 

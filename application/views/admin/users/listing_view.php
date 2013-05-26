@@ -11,6 +11,7 @@
             <li><a href="/admin/users"><?php echo $this->lang->line('create_users'); ?></a></li>
             <li class="divider"></li>
             <li><a href="/admin/users/listing"><?php echo $this->lang->line('list'); ?></a></li>
+
         </ul>
     </div>
     <?php $this->load->view('admin/layouts/message'); ?>
@@ -50,9 +51,9 @@
                         <td><?php echo $rows->first_name.' '.$rows->last_name; ?></td>
                         <td><?php echo $rows->description; ?></td>
                         <td>
-                            <a class="glyphicons no-js glyphicons-ok <?php if($rows->active ==1 ){ echo 'ok'; }else{ echo 'ban';}?>" href="/admin/users/status/<?php echo $rows->id; ?>"><i></i></a>
-                            <a class="glyphicons no-js edit glyphicons-edit" href="/admin/users/edit/<?php echo $rows->id; ?>"><i></i></a>
-                            <a class="glyphicons no-js remove_2 glyphicons-delete" href="/admin/users/remove/<?php echo $rows->id; ?>"><i></i></a>
+                            <a class="glyphicons no-js glyphicons-ok <?php if($rows->active ==1 ){ echo 'ok'; }else{ echo 'ban';}?>" href="/admin/users/status/<?php echo $rows->username; ?>"><i></i></a>
+                            <a class="glyphicons no-js edit glyphicons-edit" href="/admin/users/edit/<?php echo $rows->username; ?>"><i></i></a>
+                            <a class="glyphicons no-js remove_2 glyphicons-delete" href="/admin/users/remove/<?php echo $rows->username; ?>"><i></i></a>
                         </td>
                     </tr>
                     <?php $i++; endforeach; ?>

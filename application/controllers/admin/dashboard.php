@@ -53,5 +53,12 @@ class Dashboard extends Crud_Controller
 
     }
 
+    function theme(){
+
+        $this->data['active']='Admin Theme';
+        $this->layout->view('admin/theme_html', $this->data);
+
+    }
+
 
 }
