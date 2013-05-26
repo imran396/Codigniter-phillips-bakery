@@ -25,7 +25,7 @@ class Locations extends API_Controller
                 'surcharge'   => 10.00
             ),
             array(
-                'id'          => 1,
+                'id'          => 2,
                 'name'        => "Maple",
                 'address1'    => "2563 Major Mackenzie Drive",
                 'address2'    => "",
@@ -34,7 +34,7 @@ class Locations extends API_Controller
                 'postal_code' => "L6A 2E8",
                 'country'     => "Canada",
                 'pos_api'     => "",
-                'surcharge'   => 10.00
+                'surcharge'   => 15.00
             )
         );
 
