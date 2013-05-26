@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 22, 2013 at 12:28 PM
--- Server version: 5.5.29
+-- Generation Time: May 26, 2013 at 04:16 PM
+-- Server version: 5.5.31
 -- PHP Version: 5.4.6-1ubuntu1.2
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
@@ -234,20 +234,6 @@ INSERT INTO `flavours` (`flavour_id`, `title`, `cake_shape`, `fondant`, `status`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `fondants`
---
-
-CREATE TABLE IF NOT EXISTS `fondants` (
-  `fondant_id` mediumint(5) NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `fondant` tinyint(1) NOT NULL DEFAULT '1',
-  `price` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`fondant_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `groups`
 --
 
@@ -303,35 +289,6 @@ INSERT INTO `locations` (`location_id`, `title`, `address1`, `address2`, `city`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `magic_cake`
---
-
-CREATE TABLE IF NOT EXISTS `magic_cake` (
-  `magic_cake_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `magic_cake_name` varchar(100) NOT NULL,
-  `description` text NOT NULL,
-  `surcharge` decimal(10,2) NOT NULL,
-  `magic_cake_image` varchar(255) NOT NULL,
-  `status` tinyint(1) NOT NULL,
-  PRIMARY KEY (`magic_cake_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `magic_cake_orders`
---
-
-CREATE TABLE IF NOT EXISTS `magic_cake_orders` (
-  `magic_cake_order_id` int(10) NOT NULL AUTO_INCREMENT,
-  `order_id` bigint(20) NOT NULL,
-  `magic_cake_id` int(10) NOT NULL,
-  PRIMARY KEY (`magic_cake_order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `meta`
 --
 
@@ -345,7 +302,7 @@ CREATE TABLE IF NOT EXISTS `meta` (
   `postal_code` varchar(100) NOT NULL,
   `address` tinytext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `meta`
@@ -353,7 +310,9 @@ CREATE TABLE IF NOT EXISTS `meta` (
 
 INSERT INTO `meta` (`id`, `user_id`, `first_name`, `last_name`, `company`, `phone`, `postal_code`, `address`) VALUES
 (1, 1, 'Admin', 'istrator', 'ADMIN', '0', '', ''),
-(2, 2, 'M Shafiq', 'Islam', NULL, NULL, '', '');
+(2, 2, 'M Shafiq', 'Islam', NULL, NULL, '', ''),
+(3, 3, 'M Shafiq', 'Islam', NULL, NULL, '', ''),
+(4, 4, 'fhjf', 'gfhfgh', NULL, NULL, '', '');
 
 -- --------------------------------------------------------
 
@@ -363,38 +322,39 @@ INSERT INTO `meta` (`id`, `user_id`, `first_name`, `last_name`, `company`, `phon
 
 CREATE TABLE IF NOT EXISTS `orders` (
   `order_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `cake_id` bigint(20) NOT NULL,
-  `order_date` int(11) NOT NULL,
-  `delivery_date` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
-  `employee_id` int(11) NOT NULL,
-  `manager_id` int(11) NOT NULL,
-  `discount_price` decimal(10,2) NOT NULL,
-  `baker_id` int(11) NOT NULL,
-  `order_status` int(11) NOT NULL,
+  `cake_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `order_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `delivery_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `customer_id` bigint(20) NOT NULL,
+  `employee_id` mediumint(8) NOT NULL DEFAULT '0',
+  `manager_id` mediumint(8) NOT NULL,
+  `discount_price` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `order_status` varchar(100) NOT NULL,
   `hst` varchar(100) NOT NULL,
-  `payment_status` varchar(150) NOT NULL,
-  `bread_burn` tinyint(1) NOT NULL,
+  `payment_status` varchar(100) NOT NULL,
+  `bread_burn` tinyint(1) NOT NULL DEFAULT '0',
   `inscription` text NOT NULL,
   `sepecial_instruction` text NOT NULL,
   `location_id` mediumint(5) NOT NULL,
-  `zone_id` mediumint(9) NOT NULL,
-  `delivery_zone_surcharge` decimal(10,2) NOT NULL,
-  `serving_id` mediumint(5) NOT NULL,
-  `serving_price` decimal(10,0) NOT NULL,
-  `fondant_id` mediumint(5) NOT NULL,
-  `fondant_price` decimal(10,2) NOT NULL,
-  `flavor_id` mediumint(5) NOT NULL,
-  `flavor_price` decimal(10,2) NOT NULL,
-  `size_id` mediumint(5) NOT NULL,
-  `size_price` decimal(10,2) NOT NULL,
-  `tier_id` mediumint(5) NOT NULL,
-  `tier_price` decimal(10,2) NOT NULL,
-  `magic_cake_id` mediumint(5) NOT NULL,
-  `magic_surcharge` decimal(10,2) NOT NULL,
+  `zone_id` mediumint(5) NOT NULL DEFAULT '0',
+  `delivery_zone_surcharge` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `flavour_id` mediumint(5) NOT NULL,
+  `flavour_price` decimal(10,2) NOT NULL,
+  `magic_cake_id` mediumint(5) NOT NULL DEFAULT '0',
+  `magic_surcharge` decimal(10,2) NOT NULL DEFAULT '0.00',
   `total_amount` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  PRIMARY KEY (`order_id`),
+  KEY `order_status` (`order_status`),
+  KEY `bread_burn` (`bread_burn`),
+  KEY `payment_status` (`payment_status`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `cake_id`, `order_date`, `delivery_date`, `customer_id`, `employee_id`, `manager_id`, `discount_price`, `order_status`, `hst`, `payment_status`, `bread_burn`, `inscription`, `sepecial_instruction`, `location_id`, `zone_id`, `delivery_zone_surcharge`, `flavour_id`, `flavour_price`, `magic_cake_id`, `magic_surcharge`, `total_amount`) VALUES
+(2, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 2, 2, 0.00, 'Production', '', '', 0, '', '', 0, 0, 0.00, 0, 0.00, 0, 0.00, 0.00);
 
 -- --------------------------------------------------------
 
@@ -418,24 +378,18 @@ CREATE TABLE IF NOT EXISTS `order_notes` (
 --
 
 CREATE TABLE IF NOT EXISTS `order_status` (
-  `order_status_id` tinyint(2) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  PRIMARY KEY (`order_status_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payment_amount`
---
-
-CREATE TABLE IF NOT EXISTS `payment_amount` (
-  `payment_amount_id` bigint(20) NOT NULL,
-  `order_id` bigint(20) NOT NULL,
-  `employee_id` int(11) NOT NULL,
-  `payment_amount` decimal(10,2) NOT NULL
+  PRIMARY KEY (`title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `order_status`
+--
+
+INSERT INTO `order_status` (`title`, `status`) VALUES
+('Production', 1),
+('Reject', 1);
 
 -- --------------------------------------------------------
 
@@ -624,14 +578,14 @@ INSERT INTO `price_matrix` (`location_id`, `flavour_id`, `serving_id`, `price`) 
 (4, 16, 6, 0.00),
 (4, 16, 7, 0.00),
 (4, 16, 8, 0.00),
-(5, 1, 2, 0.00),
-(5, 1, 3, 0.00),
+(5, 1, 2, 1.00),
+(5, 1, 3, 2.00),
 (5, 1, 4, 0.00),
 (5, 1, 5, 0.00),
 (5, 1, 6, 0.00),
 (5, 1, 7, 0.00),
 (5, 1, 8, 0.00),
-(5, 4, 2, 0.00),
+(5, 4, 2, 2.00),
 (5, 4, 3, 0.00),
 (5, 4, 4, 0.00),
 (5, 4, 5, 0.00),
@@ -751,15 +705,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_login` int(11) unsigned DEFAULT NULL,
   `active` tinyint(1) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `group_id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `remember_code`, `created_on`, `last_login`, `active`) VALUES
-(1, 1, '127.0.0.1', 'administrator', '59beecdf7fc966e2f17fd8f65a4a9aeb09d4a3d4', '9462e8eee0', 'admin@admin.com', '', NULL, '9d029802e28cd9c768e8e62277c0df49ec65c48c', 1268889823, 1369201001, 1),
-(2, 2, '127.0.0.1', 'admin', '3e082c38a4f0eacf970adf483f31fc17630ac754', NULL, '0', NULL, NULL, '66e272b8635eee519049ae53b7b0c89612763d9c', 1368551217, 1368591499, 1);
+(1, 1, '127.0.0.1', 'administrator', '59beecdf7fc966e2f17fd8f65a4a9aeb09d4a3d4', '9462e8eee0', 'admin@admin.com', '', NULL, '9d029802e28cd9c768e8e62277c0df49ec65c48c', 1268889823, 1369546936, 1),
+(2, 2, '127.0.0.1', 'admin', '3e082c38a4f0eacf970adf483f31fc17630ac754', NULL, '0', NULL, NULL, '66e272b8635eee519049ae53b7b0c89612763d9c', 1368551217, 1368591499, 1),
+(3, 2, '127.0.0.1', 'sislam', 'a53c3ffeb3daca8e568e424ce3ad5b10ddc916fc', NULL, '0', NULL, NULL, NULL, 1369204334, 1369204348, 1),
+(4, 2, '127.0.0.1', 'admin2', 'af71faa19ef5029f247e88803f3d46225002198b', NULL, '', NULL, NULL, NULL, 1369216210, 1369216210, 1);
 
 -- --------------------------------------------------------
 
@@ -805,6 +761,16 @@ CREATE TABLE IF NOT EXISTS `zones` (
 INSERT INTO `zones` (`zone_id`, `title`, `description`, `surcharge`, `status`) VALUES
 (1, 'Toronto Opera House', 'Toronto Opera House', 12.00, 1),
 (2, 'Cappuccino Meringue', 'ggfgghh', 23.00, 1);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`order_status`) REFERENCES `order_status` (`title`) ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
