@@ -46,10 +46,11 @@ margin: 25px 0  5px 1px!important;
     background-image: url("/assets/images/bullet-red.gif");
     background-position: 0 7px;
     background-repeat: no-repeat;
-    display: inline;
+    clear: both;
+    display: block;
     height: 10px;
     padding-left: 10px;
-    width: 10px;
+    width: 100%;
 }
 
 
@@ -83,4 +84,10 @@ margin: 25px 0  5px 1px!important;
     height: 39px;
     line-height: 32px !important;
 
+}
+
+div.dataTables_info {
+    margin-left: 10px;
+    margin-top: 5px;
+    padding-top: 0;
 }
