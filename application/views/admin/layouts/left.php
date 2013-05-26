@@ -37,7 +37,7 @@
                 </ul>
             </li>
 
-            <li class="glyphicons user"><a href="login.html?lang=en"><i></i><span>Login</span></a></li>
+
         </ul>
 
     </div>
