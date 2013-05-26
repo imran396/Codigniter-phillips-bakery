@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 26, 2013 at 04:16 PM
+-- Generation Time: May 26, 2013 at 05:28 PM
 -- Server version: 5.5.31
 -- PHP Version: 5.4.6-1ubuntu1.2
 
@@ -339,6 +339,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `zone_id` mediumint(5) NOT NULL DEFAULT '0',
   `delivery_zone_surcharge` decimal(10,2) NOT NULL DEFAULT '0.00',
   `flavour_id` mediumint(5) NOT NULL,
+  `serving_id` mediumint(5) NOT NULL DEFAULT '0',
   `flavour_price` decimal(10,2) NOT NULL,
   `magic_cake_id` mediumint(5) NOT NULL DEFAULT '0',
   `magic_surcharge` decimal(10,2) NOT NULL DEFAULT '0.00',
@@ -353,8 +354,8 @@ CREATE TABLE IF NOT EXISTS `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `cake_id`, `order_date`, `delivery_date`, `customer_id`, `employee_id`, `manager_id`, `discount_price`, `order_status`, `hst`, `payment_status`, `bread_burn`, `inscription`, `sepecial_instruction`, `location_id`, `zone_id`, `delivery_zone_surcharge`, `flavour_id`, `flavour_price`, `magic_cake_id`, `magic_surcharge`, `total_amount`) VALUES
-(2, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 2, 2, 0.00, 'Production', '', '', 0, '', '', 0, 0, 0.00, 0, 0.00, 0, 0.00, 0.00);
+INSERT INTO `orders` (`order_id`, `cake_id`, `order_date`, `delivery_date`, `customer_id`, `employee_id`, `manager_id`, `discount_price`, `order_status`, `hst`, `payment_status`, `bread_burn`, `inscription`, `sepecial_instruction`, `location_id`, `zone_id`, `delivery_zone_surcharge`, `flavour_id`, `serving_id`, `flavour_price`, `magic_cake_id`, `magic_surcharge`, `total_amount`) VALUES
+(2, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 2, 2, 0.00, 'Production', '', '', 0, '', '', 0, 0, 0.00, 0, 0, 0.00, 0, 0.00, 0.00);
 
 -- --------------------------------------------------------
 
