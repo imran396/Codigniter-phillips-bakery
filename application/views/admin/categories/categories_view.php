@@ -1,24 +1,30 @@
 <div id="content">
 
-        <ul class="breadcrumb">
-            <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
-            <li class="divider"></li>
-            <li><?php echo $this->lang->line('categories');?></li>
-        </ul>
+    <ul class="breadcrumb">
+        <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
+        <li class="divider"></li>
+        <li><?php echo $this->lang->line('categories');?></li>
+    </ul>
     <br/>
-    <div class="menubar">
-        <ul>
-            <li><a href="/admin/categories"><?php echo $this->lang->line('add_categories'); ?></a></li>
-            <li class="divider"></li>
-            <li><a href="/admin/categories/listing"><?php echo $this->lang->line('list'); ?></a></li>
-        </ul>
-    </div>
+
     <?php $this->load->view('admin/layouts/message'); ?>
     <br/>
+    <div class="separator"></div>
+
+    <div class="heading-buttons">
+        <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('categories');?></h3>
+        <div class="buttons pull-right">
+            <a href="/admin/categories" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add page</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="separator"></div>
+    <!-- End Content -->
+    <div class="separator"></div>
     <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/categories/save" name="form1" id="form1">
  <div class="innerLR">
      <input type="hidden" name="category_id" id="category_id" value="<?php echo(isset($queryup[0]->category_id))? $queryup[0]->category_id : set_value('category_id'); ?>" />
-     <div class="tab-content" style="padding: 0;">
+     <div class="tab-content tab-content-custom" >
             <div class="tab-pane active" id="account-details">
 
                 <div class="widget widget-2">

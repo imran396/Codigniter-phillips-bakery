@@ -1,34 +1,50 @@
 <div id="content">
 
-        <ul class="breadcrumb">
-            <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
-            <li class="divider"></li>
-            <li><?php echo $this->lang->line('categories');?></li>
-        </ul>
-    <br/>
-    <div class="menubar">
-        <ul>
-            <li><a href="/admin/categories"><?php echo $this->lang->line('add_categories'); ?></a></li>
-            <li class="divider"></li>
-            <li><a href="/admin/categories/listing"><?php echo $this->lang->line('list'); ?></a></li>
-        </ul>
-    </div>
-    <?php $this->load->view('admin/layouts/message'); ?>
+    <ul class="breadcrumb">
+        <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
+        <li class="divider"></li>
+        <li><?php echo $this->lang->line('categories');?></li>
+    </ul>
     <br/>
 
-<!-- End Content -->
-<div class="separator"></div>
+    <?php $this->load->view('admin/layouts/message'); ?>
+    <br/>
+    <div class="separator"></div>
+
+    <div class="heading-buttons">
+        <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('categories');?></h3>
+        <div class="buttons pull-right">
+            <a href="/admin/categories" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add page</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="separator"></div>
+<style>
+    .btn-danger:hover, .btn-danger:active, .btn-danger.active, .btn-danger.disabled, .btn-danger[disabled] {
+        background-color: #BD362F;
+        color: #FFFFFF;
+    }
+    .icon-ok-custom {
+        background-position: -289px 4px;
+        height: 18px;
+    }
+</style>
 
 <div class="innerLR">
 
         <div class="widget widget-gray widget-body-white">
 
             <div class="widget-body" style="padding: 10px 0;">
-                <table class="table table-bordered table-primary">
+
+                <div data-toggle="buttons-radio" class="btn-group">
+
+                </div>
+                <table class="table table-bordered table-primary js-table-sortable">
                     <thead>
                     <tr>
                         <th class="center">No.</th>
                         <th><?php echo $this->lang->line('categories');?></th>
+                        <th style="width: 1%;" class="center">Drag</th>
                         <th><?php echo $this->lang->line('action');?></th>
                     </tr>
                     </thead>
@@ -37,16 +53,17 @@
                     <?php
                     $i=1;
                     foreach($result as  $rows ) :?>
-                    <tr>
+                    <tr class="selectable" id="listItem_<?php echo $rows->category_id; ?>" >
                         <td class="center"><?php echo $i; ?></td>
                         <td><?php echo $rows->title; ?></td>
+                        <td class="center js-sortable-handle"><span  class="glyphicons btn-action single move" style="margin-right: 0;"><i></i></span></td>
                         <td>
-                            <a class="glyphicons no-js glyphicons-ok <?php if($rows->status ==1 ){ echo 'ok'; }else{ echo 'ban';}?>" href="/admin/categories/status/<?php echo $rows->category_id; ?>"><i></i></a>
+                            <a href="/admin/categories/status/<?php echo $rows->category_id; ?>" class="btn-action glyphicons btn <?php if($rows->status ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
                             <a class="btn-action glyphicons pencil btn-success" href="/admin/categories/edit/<?php echo $rows->category_id; ?>"><i></i></a>
                             <a class="btn-action glyphicons remove_2 btn-danger" href="/admin/categories/remove/<?php echo $rows->category_id; ?>"><i></i></a>
 
 
-                        </td>
+                         </td>
                     </tr>
                     <?php $i++; endforeach; ?>
                     </tbody>

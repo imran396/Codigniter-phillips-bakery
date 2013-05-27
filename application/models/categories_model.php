@@ -22,7 +22,8 @@ class Categories_model extends Crud_Model
         $this->update($data, $id);
     }
 
-    public function deleteDataExisting($data=0){
+    public function deleteDataExisting($data=0)
+    {
 
         $sql=sprintf("SELECT COUNT(category_id) AS countValue FROM cakes  WHERE (category_id = '{$data}' )");
         return $count=$this->db->query($sql)->result()[0]->countValue;
@@ -42,7 +43,8 @@ class Categories_model extends Crud_Model
 
     }
 
-    public function  checkUniqueTitle($id){
+    public function  checkUniqueTitle($id)
+    {
 
         if(!empty($id)){
             return $dbcatid = $this->db->select('title')
@@ -63,11 +65,12 @@ class Categories_model extends Crud_Model
     public function getListing()
     {
 
-        return $this->db->select('*')->get('categories')->result();
+        return $this->db->select('*')->order_by('ordering','asc')->get('categories')->result();
 
     }
 
-    public function statusChange($id){
+    public function statusChange($id)
+    {
 
         $row=$this->getCategories($id);
         if($row[0]->status == 1 ){
@@ -77,6 +80,18 @@ class Categories_model extends Crud_Model
         }
         $this->db->where(array('category_id'=>$id))->set(array('status'=>$status))->update('categories');
 
+    }
+
+    public function sortingList()
+    {
+
+        foreach ($_POST['listItem'] as $position => $item) :
+            $array=array('ordering'=>$position);
+            $this->db->set($array);
+            $this->db->where(array('category_id'=>$item));
+            $this->db->update('categories');
+
+        endforeach;
     }
 
     public function checkCategories($id,$title)

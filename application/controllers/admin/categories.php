@@ -55,7 +55,7 @@ class Categories extends Crud_Controller
                 if(!empty($id)) {
                     $this->redirectToHome('edit/'.$id);
                 }else{
-                    $this->redirectToHome();
+                    $this->redirectToHome('listing');
                 }
 
 
@@ -105,6 +105,12 @@ class Categories extends Crud_Controller
         $this->data['category'] = $this->categories_model->statusChange($id);
         $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         $this->redirectToHome("listing");
+
+    }
+    public function sorting($id){
+
+        $this->data['category'] = $this->categories_model->sortingList($id);
+        echo $this->lang->line('update_msg');
 
     }
 
