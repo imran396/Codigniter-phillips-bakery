@@ -48,9 +48,10 @@ class Categories_model extends Crud_Model
     {
 
         if(!empty($id)){
-            return $dbcatid = $this->db->select('title')
+             $dbcatid = $this->db->select('title')
                 ->where('category_id',$id)
-                ->get('categories')->result()[0]->title;
+                ->get('categories')->result();
+                return $dbcatid[0]->title;
 
         }
 
