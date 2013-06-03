@@ -26,7 +26,8 @@ class Categories_model extends Crud_Model
     {
 
         $sql=sprintf("SELECT COUNT(category_id) AS countValue FROM cakes  WHERE (category_id = '{$data}' )");
-        return $count=$this->db->query($sql)->result()[0]->countValue;
+        return $count=$this->db->query($sql)->num_rows();
+
     }
 
     public function delete($id)
