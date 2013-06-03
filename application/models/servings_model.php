@@ -57,8 +57,20 @@ class Servings_model extends Crud_Model
     public function getListing()
     {
 
-        return $this->db->select('*')->get('servings')->result();
+        return $this->db->select('*')->order_by('ordering','asc')->get('servings')->result();
 
+    }
+
+    public function sortingList()
+    {
+
+        foreach ($_POST['listItem'] as $position => $item) :
+            $array=array('ordering'=>$position);
+            $this->db->set($array);
+            $this->db->where(array('serving_id'=>$item));
+            $this->db->update('servings');
+
+        endforeach;
     }
 
     public function statusChange($id){

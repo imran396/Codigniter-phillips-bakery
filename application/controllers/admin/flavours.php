@@ -108,6 +108,12 @@ class Flavours extends Crud_Controller
 
     }
 
+    public function sorting(){
+
+        $this->data['category'] = $this->flavours_model->sortingList();
+        echo $this->lang->line('update_msg');
+
+    }
 
     public function remove($id)
     {

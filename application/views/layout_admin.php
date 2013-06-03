@@ -161,26 +161,7 @@ jQuery(document).ready(function(){
     $("#category_id , #location_id , #flavour_id  ").select2();
 
 });
-$(document).ready(function() {
-    $(".js-table-sortable").sortable({
-        opacity: '0.5',
-        axis:'vertically',
-        handle : '.js-sortable-handle',
-        update : function () {
-            var order = $(this).sortable('serialize');
-            console.log(order);
-            $.ajax({
-                type: "POST",
-                url:"<?php echo site_url('admin/categories/sorting')?>",
-                data:order,
-                cache: false,
-                success: function(html){
-                    $('#loader').html(html);
-                }
-            });
-        }
-    });
-});
+
 </script>
 </body>
 </html>

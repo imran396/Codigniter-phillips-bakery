@@ -127,7 +127,7 @@ class Cakes_model extends CI_Model
         $this->db->join('categories', 'categories.category_id = cakes.category_id', 'left');
         $this->db->join('flavours', 'flavours.flavour_id = cakes.flavour_id', 'left');
         $this->db->limit($per_page, $limit);
-        $this->db->order_by("cakes.cake_id", "desc");
+        $this->db->order_by("cakes.ordering", "asc");
 
         $query = $this->db->get();
 
@@ -136,17 +136,29 @@ class Cakes_model extends CI_Model
 
     public function getCategories()
     {
-        return $this->db->select('*')->where('status', 1)->get('categories')->result();
+        return $this->db->select('*')->where('status', 1)->order_by('ordering','asc')->get('categories')->result();
     }
 
     public function getFlavours()
     {
-        return $this->db->select('*')->where('status', 1)->get('flavours')->result();
+        return $this->db->select('*')->where('status', 1)->order_by('ordering','asc')->get('flavours')->result();
     }
 
     public function getShapes()
     {
-        return $this->db->select('*')->where('status', 1)->get('shapes')->result();
+        return $this->db->select('*')->where('status', 1)->order_by('ordering','asc')->get('shapes')->result();
+    }
+
+    public function sortingList()
+    {
+
+        foreach ($_POST['listItem'] as $position => $item) :
+            $array=array('ordering'=>$position);
+            $this->db->set($array);
+            $this->db->where(array('cake_id'=>$item));
+            $this->db->update('cakes');
+
+        endforeach;
     }
 
     public function statusChange($id)

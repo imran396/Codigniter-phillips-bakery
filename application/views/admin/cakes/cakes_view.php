@@ -6,14 +6,15 @@
             <li><?php echo $this->lang->line('cakes');?></li>
         </ul>
     <br/>
-    <div class="menubar">
-        <ul>
-            <li><a href="/admin/cakes"><?php echo $this->lang->line('create_cake'); ?></a></li>
-            <li class="divider"></li>
-            <li><a href="/admin/cakes/listing"><?php echo $this->lang->line('list'); ?></a></li>
-        </ul>
-    </div>
     <?php $this->load->view('admin/layouts/message'); ?>
+    <br/>
+    <div class="separator"></div>
+    <div class="heading-buttons">
+        <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('cakes');?></h3>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="separator"></div>
     <br/>
     <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/cakes/save" name="form1" id="form1" enctype="multipart/form-data" >
  <div class="innerLR">

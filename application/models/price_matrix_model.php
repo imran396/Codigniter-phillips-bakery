@@ -60,19 +60,19 @@ class Price_matrix_model extends Ci_Model
     public function getServings()
     {
 
-        return $this->db->select('*')->where('status',1)->order_by("serving_id", "asc") ->get('servings')->result();
+        return $this->db->select('*')->where('status',1)->order_by("ordering", "asc") ->get('servings')->result();
 
     }
     public function getLocations()
     {
 
-        return $this->db->select('*')->where('status',1)->order_by("location_id", "asc")->get('locations')->result();
+        return $this->db->select('*')->where('status',1)->order_by("ordering", "asc")->get('locations')->result();
 
     }
     public function getFlavours()
     {
 
-        return $this->db->select('*')->where('status',1)->order_by("flavour_id", "asc")->get('flavours')->result();
+        return $this->db->select('*')->where('status',1)->order_by("ordering", "asc")->get('flavours')->result();
 
     }
 

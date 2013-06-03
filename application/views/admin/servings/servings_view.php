@@ -6,15 +6,17 @@
             <li><?php echo $this->lang->line('servings');?></li>
         </ul>
     <br/>
-    <div class="menubar">
-        <ul>
-            <li><a href="/admin/servings"><?php echo $this->lang->line('add_servings'); ?></a></li>
-            <li class="divider"></li>
-            <li><a href="/admin/servings/listing"><?php echo $this->lang->line('list'); ?></a></li>
-        </ul>
-    </div>
     <?php $this->load->view('admin/layouts/message'); ?>
     <br/>
+    <div class="separator"></div>
+
+    <div class="heading-buttons">
+        <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('servings');?></h3>
+        <div class="clearfix"></div>
+    </div>
+    <br/>
+    <!-- End Content -->
+    <div class="separator"></div>
     <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/servings/save" name="form1" id="form1">
  <div class="innerLR">
      <input type="hidden" name="serving_id" id="serving_id" value="<?php echo(isset($queryup[0]->serving_id))? $queryup[0]->serving_id : set_value('serving_id'); ?>" />

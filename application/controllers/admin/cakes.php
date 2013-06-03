@@ -116,11 +116,16 @@ class Cakes extends Crud_Controller
 
     }
 
+    public function sorting(){
 
+        $this->cakes_model->sortingList();
+        echo $this->lang->line('update_msg');
+
+    }
 
     public function status($id){
 
-        $this->data['category'] = $this->cakes_model->statusChange($id);
+        $this->cakes_model->statusChange($id);
         $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         $this->redirectToHome("listing");
 
@@ -129,7 +134,7 @@ class Cakes extends Crud_Controller
 
     public function remove($id)
     {
-        $this->data['category'] = $this->cakes_model->delete($id);
+        $this->cakes_model->delete($id);
         $this->redirectToHome("listing");
 
     }

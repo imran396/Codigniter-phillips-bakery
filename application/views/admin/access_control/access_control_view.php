@@ -3,15 +3,9 @@
         <ul class="breadcrumb">
             <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
             <li class="divider"></li>
-            <li><?php echo $this->lang->line('price_matrix');?></li>
+            <li><?php echo $this->lang->line('access_control');?></li>
         </ul>
     <br/>
-    <div class="menubar">
-        <ul>
-            <li><a href="/admin/price_matrix"><?php echo $this->lang->line('manage_price_matrix'); ?></a></li>
-
-        </ul>
-    </div>
     <?php $this->load->view('admin/layouts/message'); ?>
     <br/>
     <div class="innerLR">

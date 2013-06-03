@@ -6,14 +6,14 @@
             <li><?php echo $this->lang->line('users');?></li>
         </ul>
     <br/>
-    <div class="menubar">
-        <ul>
-            <li><a href="/admin/users"><?php echo $this->lang->line('create_users'); ?></a></li>
-            <li class="divider"></li>
-            <li><a href="/admin/users/listing"><?php echo $this->lang->line('list'); ?></a></li>
-           </ul>
-    </div>
     <?php $this->load->view('admin/layouts/message'); ?>
+    <br/>
+    <div class="separator"></div>
+
+    <div class="heading-buttons">
+        <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('users');?></h3>
+        <div class="clearfix"></div>
+    </div>
     <br/>
     <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/users/password" name="form2" id="form2">
         <div class="widget widget-2">
@@ -48,7 +48,7 @@
                         <div class="separator"></div>
                     </div>
                 </div>
-                <hr class="separator bottom" />
+
 
                 <div class="form-actions" style="margin: 0; padding-right: 0;">
                     <button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok pull-right"><i></i>Save changes</button>
@@ -114,7 +114,6 @@
                 </div>
             </div>
 
-            <hr class="separator" />
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><?php echo $this->lang->line('save_changes');?></button>

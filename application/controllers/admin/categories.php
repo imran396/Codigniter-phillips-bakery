@@ -107,9 +107,9 @@ class Categories extends Crud_Controller
         $this->redirectToHome("listing");
 
     }
-    public function sorting($id){
+    public function sorting(){
 
-        $this->data['category'] = $this->categories_model->sortingList($id);
+        $this->data['category'] = $this->categories_model->sortingList();
         echo $this->lang->line('update_msg');
 
     }

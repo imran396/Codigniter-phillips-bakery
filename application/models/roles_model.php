@@ -24,7 +24,7 @@ class Roles_model extends Crud_Model
 
     public function deleteDataExisting($data=0){
 
-        $sql=sprintf("SELECT COUNT(id) AS countValue FROM users  WHERE (group_id = '{$data}' )");
+        $sql="SELECT COUNT(id) AS countValue FROM users  WHERE (group_id = '$data' )";
         return $count=$this->db->query($sql)->result()[0]->countValue;
     }
 
@@ -63,20 +63,32 @@ class Roles_model extends Crud_Model
     public function getListing()
     {
 
-        return $this->db->select('*')->get('groups')->result();
+        return $this->db->select('*')->order_by('ordering','asc')->get('groups')->result();
 
     }
 
+    public function sortingList()
+    {
+
+        foreach ($_POST['listItem'] as $position => $item) :
+            $array=array('ordering'=>$position);
+            $this->db->set($array);
+            $this->db->where(array('id'=>$item));
+            $this->db->update('groups');
+
+        endforeach;
+    }
+
+
     public function statusChange($id){
 
-        $row=$this->getgroups($id);
+        $row=$this->getroles($id);
         if($row[0]->status == 1 ){
             $status=0;
         }else{
             $status=1;
         }
         $this->db->where(array('id'=>$id))->set(array('status'=>$status))->update('groups');
-
     }
 
     public function checkRoles($id,$name)

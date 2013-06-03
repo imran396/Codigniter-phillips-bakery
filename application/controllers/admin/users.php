@@ -89,6 +89,7 @@ class users extends Crud_Controller
     {
 
         $this->data['queryup'] = $this->users_model->getusers($username);
+        $this->data['groupresult'] = $this->users_model->getGroup();
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/users/edit_user_view', $this->data);
     }

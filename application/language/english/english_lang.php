@@ -23,6 +23,7 @@ $lang['list'] 		 	    = 'List';
 $lang['add_new'] 		 	    = 'Add new';
 $lang['action'] 		 	    = 'Action';
 $lang['list_of'] 		 	    = 'List of';
+$lang['drag'] 		 	    = 'Drag';
 
 /* Left menu level*/
 
@@ -153,6 +154,7 @@ $lang['no'] 		 	    = 'No';
 
 /* Delivery zone */
 
+$lang['zones'] 		 	    = 'Zones';
 $lang['add_zones'] 		 	    = 'Add Zones';
 $lang['zone_name'] 		 	    = 'Zone Name';
 $lang['description'] 		 	    = 'Description';

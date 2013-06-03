@@ -6,14 +6,16 @@
             <li><?php echo $this->lang->line('customers');?></li>
         </ul>
     <br/>
-    <div class="menubar">
-        <ul>
-            <li><a href="/admin/customers"><?php echo $this->lang->line('create_customer'); ?></a></li>
-            <li class="divider"></li>
-            <li><a href="/admin/customers/listing"><?php echo $this->lang->line('list'); ?></a></li>
-        </ul>
-    </div>
+
     <?php $this->load->view('admin/layouts/message'); ?>
+    <br/>
+    <div class="separator"></div>
+    <div class="heading-buttons">
+        <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('customers');?></h3>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="separator"></div>
     <br/>
     <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/customers/save" name="form1" id="form1">
  <div class="innerLR">

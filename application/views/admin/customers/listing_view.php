@@ -6,16 +6,16 @@
             <li><?php echo $this->lang->line('customers');?></li>
         </ul>
     <br/>
-    <div class="menubar">
-        <ul>
-            <li><a href="/admin/customers"><?php echo $this->lang->line('create_customer'); ?></a></li>
-            <li class="divider"></li>
-            <li><a href="/admin/customers/listing"><?php echo $this->lang->line('list'); ?></a></li>
-        </ul>
-    </div>
+
     <?php $this->load->view('admin/layouts/message'); ?>
     <br/>
-
+    <div class="heading-buttons">
+        <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('customers');?></h3>
+        <div class="buttons pull-right">
+            <a href="/admin/customers" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add page</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
 <!-- End Content -->
 <div class="separator"></div>
 
@@ -24,9 +24,7 @@
 
 <div class="innerLR">
         <div class="widget widget-gray widget-body-white">
-            <div class="widget-head">
-                <h4 class="heading"><?php echo $this->lang->line('list_of').' '.$this->lang->line('list'); ?></h4>
-            </div>
+
             <div class="widget-body" style="padding: 10px 0;">
                 <table class="table table-bordered table-primary">
                     <thead>
@@ -48,9 +46,10 @@
                         <td><?php echo $rows->first_name.' '.$rows->last_name; ?></td>
                         <td><?php echo $rows->phone_number; ?></td>
                         <td>
-                            <a class="glyphicons no-js glyphicons-ok <?php if($rows->status ==1 ){ echo 'ok'; }else{ echo 'ban';}?>" href="/admin/customers/status/<?php echo $rows->customer_id; ?>"><i></i></a>
-                            <a class="glyphicons no-js edit glyphicons-edit" href="/admin/customers/edit/<?php echo $rows->customer_id; ?>"><i></i></a>
-                            <a class="glyphicons no-js remove_2 glyphicons-delete" href="/admin/customers/remove/<?php echo $rows->customer_id; ?>"><i></i></a>
+                            <a href="/admin/customers/status/<?php echo $rows->customer_id; ?>" class="btn-action glyphicons btn <?php if($rows->status ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
+                            <a class="btn-action glyphicons pencil btn-success" href="/admin/customers/edit/<?php echo $rows->customer_id; ?>"><i></i></a>
+                            <a class="btn-action glyphicons remove_2 btn-danger" href="/admin/customers/remove/<?php echo $rows->customer_id; ?>"><i></i></a>
+
                         </td>
                     </tr>
                     <?php $i++; endforeach; ?>

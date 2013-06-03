@@ -100,9 +100,16 @@ class Zones extends Crud_Controller
 
     }
 
+    public function sorting(){
+
+        $this->zones_model->sortingList();
+        echo $this->lang->line('update_msg');
+
+    }
+
     public function status($id){
 
-        $this->data['category'] = $this->zones_model->statusChange($id);
+        $this->zones_model->statusChange($id);
         $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         $this->redirectToHome("listing");
 
@@ -111,7 +118,7 @@ class Zones extends Crud_Controller
 
     public function remove($id)
     {
-        $this->data['category'] = $this->zones_model->delete($id);
+        $this->zones_model->delete($id);
         $this->redirectToHome("listing");
 
     }

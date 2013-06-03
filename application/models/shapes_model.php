@@ -63,8 +63,20 @@ class Shapes_model extends Crud_Model
     public function getListing()
     {
 
-        return $this->db->select('*')->get('shapes')->result();
+        return $this->db->select('*')->order_by('ordering','asc')->get('shapes')->result();
 
+    }
+
+    public function sortingList()
+    {
+
+        foreach ($_POST['listItem'] as $position => $item) :
+            $array=array('ordering'=>$position);
+            $this->db->set($array);
+            $this->db->where(array('shape_id'=>$item));
+            $this->db->update('shapes');
+
+        endforeach;
     }
 
     public function statusChange($id){

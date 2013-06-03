@@ -6,17 +6,15 @@
             <li><?php echo $this->lang->line('users');?></li>
         </ul>
     <br/>
-    <div class="menubar">
-        <ul>
-            <li><a href="/admin/users"><?php echo $this->lang->line('create_users'); ?></a></li>
-            <li class="divider"></li>
-            <li><a href="/admin/users/listing"><?php echo $this->lang->line('list'); ?></a></li>
-
-        </ul>
-    </div>
     <?php $this->load->view('admin/layouts/message'); ?>
     <br/>
-
+    <div class="heading-buttons">
+        <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('users');?></h3>
+        <div class="buttons pull-right">
+            <a href="/admin/users" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add page</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
 <!-- End Content -->
 <div class="separator"></div>
 
@@ -25,9 +23,6 @@
 
 <div class="innerLR">
         <div class="widget widget-gray widget-body-white">
-            <div class="widget-head">
-                <h4 class="heading"><?php echo $this->lang->line('list_of').' '.$this->lang->line('users'); ?></h4>
-            </div>
             <div class="widget-body" style="padding: 10px 0;">
                 <table class="table table-bordered table-primary">
                     <thead>
@@ -51,9 +46,11 @@
                         <td><?php echo $rows->first_name.' '.$rows->last_name; ?></td>
                         <td><?php echo $rows->description; ?></td>
                         <td>
-                            <a class="glyphicons no-js glyphicons-ok <?php if($rows->active ==1 ){ echo 'ok'; }else{ echo 'ban';}?>" href="/admin/users/status/<?php echo $rows->username; ?>"><i></i></a>
-                            <a class="glyphicons no-js edit glyphicons-edit" href="/admin/users/edit/<?php echo $rows->username; ?>"><i></i></a>
-                            <a class="glyphicons no-js remove_2 glyphicons-delete" href="/admin/users/remove/<?php echo $rows->username; ?>"><i></i></a>
+                            <a href="/admin/users/status/<?php echo $rows->username; ?>" class="btn-action glyphicons btn <?php if($rows->active ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
+                            <a class="btn-action glyphicons pencil btn-success" href="/admin/users/edit/<?php echo $rows->username; ?>"><i></i></a>
+                            <a class="btn-action glyphicons remove_2 btn-danger" href="/admin/users/remove/<?php echo $rows->username; ?>"><i></i></a>
+
+
                         </td>
                     </tr>
                     <?php $i++; endforeach; ?>

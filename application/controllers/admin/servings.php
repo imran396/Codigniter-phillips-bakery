@@ -108,6 +108,14 @@ class Servings extends Crud_Controller
 
     }
 
+    public function sorting(){
+
+        $this->servings_model->sortingList();
+        echo $this->lang->line('update_msg');
+
+    }
+
+
 
     public function remove($id)
     {

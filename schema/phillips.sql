@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 26, 2013 at 05:28 PM
+-- Generation Time: Jun 03, 2013 at 04:45 PM
 -- Server version: 5.5.31
 -- PHP Version: 5.4.6-1ubuntu1.2
 
@@ -81,6 +81,7 @@ CREATE TABLE IF NOT EXISTS `cakes` (
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `start_price` decimal(10,2) NOT NULL,
   `end_price` decimal(10,2) NOT NULL,
+  `ordering` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`cake_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
 
@@ -88,35 +89,35 @@ CREATE TABLE IF NOT EXISTS `cakes` (
 -- Dumping data for table `cakes`
 --
 
-INSERT INTO `cakes` (`cake_id`, `category_id`, `flavour_id`, `title`, `description`, `shape_id`, `meta_tag`, `image`, `status`, `create_date`, `start_price`, `end_price`) VALUES
-(1, 16, 16, 'ppp xx yy', 'sdfsdfs', '', 'sdfsdf', 'assets/uploads/cakes/182703_499959052911_507262911_6298707_4183197_n_(1).jpg', 1, '2013-05-12 06:56:35', 100.00, 0.00),
-(2, 4, 0, 'Ovaltin', 'fgdfg', '', '', '', 1, '2013-04-30 09:57:58', 200.00, 0.00),
-(3, 14, 0, 'xcvxcv', 'xcv', '', '', '', 1, '2013-04-30 09:59:39', 44.00, 0.00),
-(4, 14, 0, 'xcvxcvxx', 'xcv', '', '', '', 1, '2013-04-30 10:04:09', 44.00, 0.00),
-(5, 14, 0, 'xcvxcvxx asa', 'xcv', '', '', '', 1, '2013-04-30 10:06:06', 44.00, 0.00),
-(6, 14, 0, 'sss', 'xcv', '', '', '', 1, '2013-04-30 10:08:02', 200.00, 0.00),
-(7, 14, 0, 'black ofrest', 'xcv', '', '', '', 1, '2013-04-30 10:09:41', 200.00, 0.00),
-(8, 14, 0, 'black ofrest1', 'xcv', '', '', '', 1, '2013-04-30 10:17:21', 200.00, 0.00),
-(9, 14, 0, 'black ofrest2', 'xcv', '', '', '', 1, '2013-04-30 10:17:58', 200.00, 0.00),
-(10, 14, 0, 'black ofrest3', 'xcv', '', '', '', 1, '2013-04-30 10:41:37', 200.00, 0.00),
-(11, 14, 0, 'black ofrest4', 'xcv', '', '', '', 1, '2013-04-30 10:43:35', 200.00, 0.00),
-(12, 14, 0, 'black ofrest5', 'xcv', '', '', '', 1, '2013-04-30 10:44:16', 200.00, 0.00),
-(13, 14, 0, 'black ofrest6', 'xcv', '', '', 'assets/uploads/cakes/168978_499959572911_507262911_6298725_176522_n.jpg', 1, '2013-04-30 12:43:21', 200.00, 0.00),
-(14, 9, 0, 'New Cake', 'New Cake', '', 'test', '', 1, '2013-04-30 11:18:19', 200.00, 0.00),
-(15, 4, 0, 'sadas', 'sadasd', '', '', '', 1, '2013-04-30 11:18:46', 200.00, 0.00),
-(16, 4, 0, 'fdgf', 'dfgdfg', '', '', '', 1, '2013-04-30 11:19:17', 56.00, 0.00),
-(17, 4, 0, 'dfgdfgdf', 'dfgdfg', '', '', '', 1, '2013-04-30 11:20:45', 5.00, 0.00),
-(18, 4, 0, 'cvcxx', 'xcvxc', '', '', '', 1, '2013-04-30 11:22:13', 200.00, 0.00),
-(19, 4, 0, 'cxvc', 'xcv', '', '', '', 1, '2013-04-30 11:22:59', 3.00, 0.00),
-(20, 4, 0, 'cvxcv', 'xcv', '', '', '', 1, '2013-04-30 11:23:24', 3.00, 0.00),
-(21, 4, 0, 'New Cake Black', 'dsfsdf', '', '', '', 1, '2013-04-30 11:29:10', 3.00, 0.00),
-(22, 4, 0, 'ddsadas tst', '', '', '', '', 1, '2013-04-30 11:30:56', 100.00, 0.00),
-(23, 4, 0, 'ddsadas test', '', '', '', '', 1, '2013-04-30 11:33:18', 100.00, 0.00),
-(24, 4, 0, 'ddsadas test1', '', '', '', 'web/assets/uploads/cakes/181939_499958062911_507262911_6298674_1752039_n.jpg', 1, '2013-04-30 11:39:37', 100.00, 0.00),
-(25, 13, 0, 'newxx', 'dsfsdf', '', '', '', 1, '2013-04-30 11:58:34', 3.00, 0.00),
-(26, 15, 1, 'New Cake Black Forest', 'New Cake Black Forest', '', '', '', 1, '2013-05-08 15:34:39', 2000.00, 3000.00),
-(27, 15, 16, 'Raspberry Chocolate Mousse', 'Raspberry Chocolate Mousse', '', '', 'assets/uploads/cakes/shafiq-pic.jpg', 1, '2013-05-12 06:36:14', 120.00, 320.00),
-(28, 15, 4, 'Cake Title', 'Cake Title', 'a:2:{i:0;s:1:"2";i:1;s:1:"3";}', '', '', 1, '2013-05-15 05:58:24', 2.00, 4.00);
+INSERT INTO `cakes` (`cake_id`, `category_id`, `flavour_id`, `title`, `description`, `shape_id`, `meta_tag`, `image`, `status`, `create_date`, `start_price`, `end_price`, `ordering`) VALUES
+(1, 16, 16, 'ppp xx yy', 'sdfsdfs', '', 'sdfsdf', 'assets/uploads/cakes/182703_499959052911_507262911_6298707_4183197_n_(1).jpg', 1, '2013-06-03 07:04:42', 100.00, 0.00, 1),
+(2, 4, 0, 'Ovaltin', 'fgdfg', '', '', '', 1, '2013-06-03 07:04:42', 200.00, 0.00, 3),
+(3, 14, 0, 'xcvxcv', 'xcv', '', '', '', 1, '2013-06-03 07:04:42', 44.00, 0.00, 4),
+(4, 14, 0, 'xcvxcvxx', 'xcv', '', '', '', 1, '2013-06-03 07:04:34', 44.00, 0.00, 7),
+(5, 14, 0, 'xcvxcvxx asa', 'xcv', '', '', '', 1, '2013-06-03 07:04:42', 44.00, 0.00, 5),
+(6, 14, 0, 'sss', 'xcv', '', '', '', 1, '2013-06-03 07:04:42', 200.00, 0.00, 8),
+(7, 14, 0, 'black ofrest', 'xcv', '', '', '', 1, '2013-06-03 07:01:49', 200.00, 0.00, 6),
+(8, 14, 0, 'black ofrest1', 'xcv', '', '', '', 1, '2013-06-03 07:01:49', 200.00, 0.00, 7),
+(9, 14, 0, 'black ofrest2', 'xcv', '', '', '', 1, '2013-06-03 07:01:49', 200.00, 0.00, 8),
+(10, 14, 0, 'black ofrest3', 'xcv', '', '', '', 1, '2013-06-03 07:01:49', 200.00, 0.00, 9),
+(11, 14, 0, 'black ofrest4', 'xcv', '', '', '', 1, '2013-06-03 07:04:42', 200.00, 0.00, 2),
+(12, 14, 0, 'black ofrest5', 'xcv', '', '', '', 1, '2013-06-03 07:04:42', 200.00, 0.00, 9),
+(13, 14, 0, 'black ofrest6', 'xcv', '', '', 'assets/uploads/cakes/168978_499959572911_507262911_6298725_176522_n.jpg', 1, '2013-06-03 07:04:34', 200.00, 0.00, 8),
+(14, 9, 0, 'New Cake', 'New Cake', '', 'test', '', 1, '2013-06-03 07:04:42', 200.00, 0.00, 6),
+(15, 4, 0, 'sadas', 'sadasd', '', '', '', 1, '2013-06-03 07:02:12', 200.00, 0.00, 5),
+(16, 4, 0, 'fdgf', 'dfgdfg', '', '', '', 1, '2013-06-03 07:02:12', 56.00, 0.00, 6),
+(17, 4, 0, 'dfgdfgdf', 'dfgdfg', '', '', '', 1, '2013-06-03 07:02:12', 5.00, 0.00, 7),
+(18, 4, 0, 'cvcxx', 'xcvxc', '', '', '', 1, '2013-06-03 07:02:12', 200.00, 0.00, 8),
+(19, 4, 0, 'cxvc', 'xcv', '', '', '', 1, '2013-06-03 07:00:44', 3.00, 0.00, 9),
+(20, 4, 0, 'cvxcv', 'xcv', '', '', '', 1, '2013-06-03 07:00:44', 3.00, 0.00, 8),
+(21, 4, 0, 'New Cake Black', 'dsfsdf', '', '', '', 1, '2013-06-03 07:00:44', 3.00, 0.00, 7),
+(22, 4, 0, 'ddsadas tst', '', '', '', '', 1, '2013-06-03 07:00:44', 100.00, 0.00, 6),
+(23, 4, 0, 'ddsadas test', '', '', '', '', 1, '2013-06-03 07:00:44', 100.00, 0.00, 5),
+(24, 4, 0, 'ddsadas test1', '', '', '', 'web/assets/uploads/cakes/181939_499958062911_507262911_6298674_1752039_n.jpg', 1, '2013-06-03 07:04:34', 100.00, 0.00, 9),
+(25, 13, 0, 'newxx', 'dsfsdf', '', '', '', 1, '2013-06-03 07:04:34', 3.00, 0.00, 6),
+(26, 15, 1, 'New Cake Black Forest', 'New Cake Black Forest', '', '', '', 1, '2013-06-03 07:04:34', 2000.00, 3000.00, 0),
+(27, 15, 16, 'Raspberry Chocolate Mousse', 'Raspberry Chocolate Mousse', '', '', 'assets/uploads/cakes/shafiq-pic.jpg', 1, '2013-06-03 07:02:12', 120.00, 320.00, 9),
+(28, 15, 4, 'Cake Title', 'Cake Title', 'a:2:{i:0;s:1:"2";i:1;s:1:"3";}', '', '', 1, '2013-06-03 07:04:42', 2.00, 4.00, 7);
 
 -- --------------------------------------------------------
 
@@ -151,24 +152,28 @@ INSERT INTO `cake_gallery` (`gallery_id`, `cake_id`, `image`, `status`) VALUES
 CREATE TABLE IF NOT EXISTS `categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(200) CHARACTER SET utf8 NOT NULL,
+  `ordering` tinyint(5) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`category_id`, `title`, `status`) VALUES
-(1, 'dsfsdfsdfs', 0),
-(3, 'fghfghfgh', 0),
-(4, 'wqweqwe', 1),
-(8, 'test', 1),
-(9, 'test2', 1),
-(13, 'xczxczx', 1),
-(14, 'test new', 1),
-(15, 'New add category', 1),
-(16, 'New add category1', 1);
+INSERT INTO `categories` (`category_id`, `title`, `ordering`, `status`) VALUES
+(1, 'dsfsdfsdfs', 1, 1),
+(3, 'fghfghfgh', 4, 0),
+(4, 'wqweqwe', 5, 0),
+(8, 'test', 2, 1),
+(9, 'test2', 6, 1),
+(13, 'xczxczx', 7, 1),
+(14, 'test new', 8, 1),
+(15, 'New add category', 0, 1),
+(16, 'New add category1', 9, 1),
+(17, 'tet', 3, 1),
+(18, 'New add category 5', 10, 1),
+(19, 'New add category 54', 11, 1);
 
 -- --------------------------------------------------------
 
@@ -212,6 +217,7 @@ CREATE TABLE IF NOT EXISTS `flavours` (
   `title` varchar(200) CHARACTER SET utf8 NOT NULL,
   `cake_shape` varchar(50) NOT NULL,
   `fondant` tinyint(1) NOT NULL DEFAULT '1',
+  `ordering` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`flavour_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
@@ -220,16 +226,16 @@ CREATE TABLE IF NOT EXISTS `flavours` (
 -- Dumping data for table `flavours`
 --
 
-INSERT INTO `flavours` (`flavour_id`, `title`, `cake_shape`, `fondant`, `status`) VALUES
-(1, 'Banana Chocolate', 'Round', 1, 1),
-(3, 'Black Forest', '', 1, 0),
-(4, 'Cappuccino Meringue', '', 1, 1),
-(8, 'test', '', 1, 1),
-(9, 'test2', '', 1, 1),
-(13, 'xczxczx', '', 1, 1),
-(14, 'test new', '', 1, 1),
-(15, 'dfvdsfgg', '', 1, 1),
-(16, 'Raspberry Chocolate Mousse', '', 1, 1);
+INSERT INTO `flavours` (`flavour_id`, `title`, `cake_shape`, `fondant`, `ordering`, `status`) VALUES
+(1, 'Banana Chocolate', 'Round', 1, 3, 1),
+(3, 'Black Forest', '', 1, 0, 0),
+(4, 'Cappuccino Meringue', '', 1, 1, 1),
+(8, 'test', '', 1, 2, 1),
+(9, 'test2', '', 1, 4, 1),
+(13, 'xczxczx', '', 1, 5, 1),
+(14, 'test new', '', 1, 6, 1),
+(15, 'dfvdsfgg', '', 1, 7, 1),
+(16, 'Raspberry Chocolate Mousse', '', 1, 8, 1);
 
 -- --------------------------------------------------------
 
@@ -241,6 +247,7 @@ CREATE TABLE IF NOT EXISTS `groups` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   `description` varchar(100) NOT NULL,
+  `ordering` mediumint(8) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
@@ -249,10 +256,9 @@ CREATE TABLE IF NOT EXISTS `groups` (
 -- Dumping data for table `groups`
 --
 
-INSERT INTO `groups` (`id`, `name`, `description`, `status`) VALUES
-(1, 'admin', 'Administrator', 1),
-(2, 'members', 'General User', 1),
-(4, 'adminx', 'adminx', 1);
+INSERT INTO `groups` (`id`, `name`, `description`, `ordering`, `status`) VALUES
+(1, 'admin', 'Administrator', 0, 1),
+(2, 'members', 'General User', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -271,6 +277,7 @@ CREATE TABLE IF NOT EXISTS `locations` (
   `country` varchar(50) CHARACTER SET utf8 NOT NULL,
   `pos_api` text CHARACTER SET utf8 NOT NULL,
   `surcharge` decimal(10,2) NOT NULL,
+  `ordering` mediumint(5) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`location_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
@@ -279,12 +286,12 @@ CREATE TABLE IF NOT EXISTS `locations` (
 -- Dumping data for table `locations`
 --
 
-INSERT INTO `locations` (`location_id`, `title`, `address1`, `address2`, `city`, `province`, `postal_code`, `country`, `pos_api`, `surcharge`, `status`) VALUES
-(1, 'Test new', 'sdasd', 'asdas', 'sadsa', '0', '3123', 'Canada', 'xyz', 100.00, 0),
-(2, 'Toronto Opera House', 'Toronto Opera House', 'Toronto Opera House', 'Toronto Opera House', 'Toronto Opera House', 'Toronto Opera House', 'Toronto Opera House', 'Toronto Opera House', 100.00, 1),
-(3, 'Dhanmondi', 'Dhanmondi', 'Dhanmondi', '', '', '', '', '', 0.00, 1),
-(4, 'Framgate', '', '', '', '', '', '', '', 0.00, 1),
-(5, 'Gulshan', '', '', '', '', '', '', '', 0.00, 1);
+INSERT INTO `locations` (`location_id`, `title`, `address1`, `address2`, `city`, `province`, `postal_code`, `country`, `pos_api`, `surcharge`, `ordering`, `status`) VALUES
+(1, 'Test new', 'sdasd', 'asdas', 'sadsa', '0', '3123', 'Canada', 'xyz', 100.00, 1, 0),
+(2, 'Toronto Opera House', 'Toronto Opera House', 'Toronto Opera House', 'Toronto Opera House', 'Toronto Opera House', 'Toronto Opera House', 'Toronto Opera House', 'Toronto Opera House', 100.00, 2, 1),
+(3, 'Dhanmondi', 'Dhanmondi', 'Dhanmondi', '', '', '', '', '', 0.00, 0, 1),
+(4, 'Framgate', '', '', '', '', '', '', '', 0.00, 3, 1),
+(5, 'Gulshan', '', '', '', '', '', '', '', 0.00, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -646,6 +653,7 @@ CREATE TABLE IF NOT EXISTS `servings` (
   `serving_id` mediumint(5) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) CHARACTER SET utf8 NOT NULL,
   `size` varchar(100) CHARACTER SET utf8 NOT NULL,
+  `ordering` mediumint(5) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`serving_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
@@ -654,14 +662,14 @@ CREATE TABLE IF NOT EXISTS `servings` (
 -- Dumping data for table `servings`
 --
 
-INSERT INTO `servings` (`serving_id`, `title`, `size`, `status`) VALUES
-(2, '6-8', '6 round', 1),
-(3, '20-30', '1/4 slab', 1),
-(4, '10-12', '8" round', 1),
-(5, '12-15', '9" round', 1),
-(6, '15-20', '10" round', 1),
-(7, '40-50', '1/2 slab', 1),
-(8, '60-80', 'Full slab', 1);
+INSERT INTO `servings` (`serving_id`, `title`, `size`, `ordering`, `status`) VALUES
+(2, '6-8', '6 round', 1, 1),
+(3, '20-30', '1/4 slab', 2, 1),
+(4, '10-12', '8" round', 5, 1),
+(5, '12-15', '9" round', 0, 1),
+(6, '15-20', '10" round', 3, 1),
+(7, '40-50', '1/2 slab', 4, 1),
+(8, '60-80', 'Full slab', 6, 1);
 
 -- --------------------------------------------------------
 
@@ -672,6 +680,7 @@ INSERT INTO `servings` (`serving_id`, `title`, `size`, `status`) VALUES
 CREATE TABLE IF NOT EXISTS `shapes` (
   `shape_id` mediumint(2) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
+  `ordering` mediumint(2) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`shape_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
@@ -680,10 +689,10 @@ CREATE TABLE IF NOT EXISTS `shapes` (
 -- Dumping data for table `shapes`
 --
 
-INSERT INTO `shapes` (`shape_id`, `title`, `status`) VALUES
-(1, 'Round', 1),
-(2, 'Square', 1),
-(3, 'Rectangle', 1);
+INSERT INTO `shapes` (`shape_id`, `title`, `ordering`, `status`) VALUES
+(1, 'Round', 1, 0),
+(2, 'Square', 0, 1),
+(3, 'Rectangle', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -713,7 +722,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `group_id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `remember_code`, `created_on`, `last_login`, `active`) VALUES
-(1, 1, '127.0.0.1', 'administrator', '59beecdf7fc966e2f17fd8f65a4a9aeb09d4a3d4', '9462e8eee0', 'admin@admin.com', '', NULL, '9d029802e28cd9c768e8e62277c0df49ec65c48c', 1268889823, 1369546936, 1),
+(1, 1, '127.0.0.1', 'administrator', '59beecdf7fc966e2f17fd8f65a4a9aeb09d4a3d4', '9462e8eee0', 'admin@admin.com', '', NULL, '9d029802e28cd9c768e8e62277c0df49ec65c48c', 1268889823, 1370233992, 1),
 (2, 2, '127.0.0.1', 'admin', '3e082c38a4f0eacf970adf483f31fc17630ac754', NULL, '0', NULL, NULL, '66e272b8635eee519049ae53b7b0c89612763d9c', 1368551217, 1368591499, 1),
 (3, 2, '127.0.0.1', 'sislam', 'a53c3ffeb3daca8e568e424ce3ad5b10ddc916fc', NULL, '0', NULL, NULL, NULL, 1369204334, 1369204348, 1),
 (4, 2, '127.0.0.1', 'admin2', 'af71faa19ef5029f247e88803f3d46225002198b', NULL, '', NULL, NULL, NULL, 1369216210, 1369216210, 1);
@@ -751,6 +760,7 @@ CREATE TABLE IF NOT EXISTS `zones` (
   `title` varchar(200) CHARACTER SET utf8 NOT NULL,
   `description` text CHARACTER SET utf8 NOT NULL,
   `surcharge` decimal(10,2) NOT NULL,
+  `ordering` mediumint(5) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`zone_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
@@ -759,9 +769,9 @@ CREATE TABLE IF NOT EXISTS `zones` (
 -- Dumping data for table `zones`
 --
 
-INSERT INTO `zones` (`zone_id`, `title`, `description`, `surcharge`, `status`) VALUES
-(1, 'Toronto Opera House', 'Toronto Opera House', 12.00, 1),
-(2, 'Cappuccino Meringue', 'ggfgghh', 23.00, 1);
+INSERT INTO `zones` (`zone_id`, `title`, `description`, `surcharge`, `ordering`, `status`) VALUES
+(1, 'Toronto Opera House', 'Toronto Opera House', 12.00, 1, 1),
+(2, 'Cappuccino Meringue', 'ggfgghh', 23.00, 0, 1);
 
 --
 -- Constraints for dumped tables

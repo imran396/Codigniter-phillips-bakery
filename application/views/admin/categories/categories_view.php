@@ -13,12 +13,8 @@
 
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('categories');?></h3>
-        <div class="buttons pull-right">
-            <a href="/admin/categories" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add page</a>
-        </div>
         <div class="clearfix"></div>
     </div>
-    <div class="separator"></div>
     <!-- End Content -->
     <div class="separator"></div>
     <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/categories/save" name="form1" id="form1">

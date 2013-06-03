@@ -63,8 +63,20 @@ class Zones_model extends Crud_Model
     public function getListing()
     {
 
-        return $this->db->select('*')->get('zones')->result();
+        return $this->db->select('*')->order_by('ordering','asc')->get('zones')->result();
 
+    }
+
+    public function sortingList()
+    {
+
+        foreach ($_POST['listItem'] as $position => $item) :
+            $array=array('ordering'=>$position);
+            $this->db->set($array);
+            $this->db->where(array('zone_id'=>$item));
+            $this->db->update('zones');
+
+        endforeach;
     }
 
     public function statusChange($id){

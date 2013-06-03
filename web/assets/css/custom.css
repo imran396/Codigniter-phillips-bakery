@@ -91,3 +91,37 @@ div.dataTables_info {
     margin-top: 5px;
     padding-top: 0;
 }
+.icon-ok-custom {
+    background-position: -289px 4px;
+    height: 18px;
+}
+.tab-content-custom{
+    padding: 0; margin-top:40px
+}
+
+.table-primary thead th {
+    background-color: #37A6CD;
+    border-color: #37A6CD;
+    border-radius: 0px;
+    box-shadow: 1px 1px 1px rgba(255, 255, 255, 0.2) inset, -1px -1px 1px rgba(0, 0, 0, 0.2) inset;
+    color: #FFFFFF;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+}
+
+.table-primary thead:first-child tr:first-child > th:first-child, .table-primary thead:first-child tr:first-child > th:last-child {
+    border-radius:0px;
+}
+.table-bordered thead:first-child tr:first-child > th:first-child, .table-bordered tbody:first-child tr:first-child > td:first-child, .table-bordered tbody:first-child tr:first-child > th:first-child {
+    border-top-left-radius: 0px;
+}
+
+.table-bordered thead:last-child tr:last-child > th:first-child, .table-bordered tbody:last-child tr:last-child > td:first-child, .table-bordered tbody:last-child tr:last-child > th:first-child, .table-bordered tfoot:last-child tr:last-child > td:first-child, .table-bordered tfoot:last-child tr:last-child > th:first-child {
+    border-bottom-left-radius: 0px;
+}
+.table-bordered thead:last-child tr:last-child > th:last-child, .table-bordered tbody:last-child tr:last-child > td:last-child, .table-bordered tbody:last-child tr:last-child > th:last-child, .table-bordered tfoot:last-child tr:last-child > td:last-child, .table-bordered tfoot:last-child tr:last-child > th:last-child {
+    border-bottom-right-radius:0px;
+}
+.table-primary tbody tr.selectable td {
+    cursor: pointer;
+}

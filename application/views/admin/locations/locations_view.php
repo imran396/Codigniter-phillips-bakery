@@ -6,14 +6,15 @@
             <li><?php echo $this->lang->line('locations');?></li>
         </ul>
     <br/>
-    <div class="menubar">
-        <ul>
-            <li><a href="/admin/locations"><?php echo $this->lang->line('create_location'); ?></a></li>
-            <li class="divider"></li>
-            <li><a href="/admin/locations/listing"><?php echo $this->lang->line('list'); ?></a></li>
-        </ul>
-    </div>
+
     <?php $this->load->view('admin/layouts/message'); ?>
+    <br/>
+    <div class="separator"></div>
+
+    <div class="heading-buttons">
+        <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('locations');?></h3>
+        <div class="clearfix"></div>
+    </div>
     <br/>
     <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/locations/save" name="form1" id="form1">
  <div class="innerLR">

@@ -51,7 +51,7 @@ class Access_control_model extends Ci_Model
     public function getGroups()
     {
 
-        return $this->db->select('*')->where('status',1)->order_by("id", "asc")->get('groups')->result();
+        return $this->db->select('*')->where('status',1)->order_by("ordering", "asc")->get('groups')->result();
 
     }
 

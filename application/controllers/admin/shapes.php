@@ -100,9 +100,16 @@ class Shapes extends Crud_Controller
 
     }
 
+    public function sorting(){
+
+        $this->shapes_model->sortingList();
+        echo $this->lang->line('update_msg');
+
+    }
+
     public function status($id){
 
-        $this->data['category'] = $this->shapes_model->statusChange($id);
+        $this->shapes_model->statusChange($id);
         $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         $this->redirectToHome("listing");
 
@@ -111,7 +118,7 @@ class Shapes extends Crud_Controller
 
     public function remove($id)
     {
-        $this->data['category'] = $this->shapes_model->delete($id);
+        $this->shapes_model->delete($id);
         $this->redirectToHome("listing");
 
     }

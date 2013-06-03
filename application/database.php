@@ -48,10 +48,10 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'mysql.emicrodevsite.com';
-$db['default']['username'] = 'collabdevteam';
-$db['default']['password'] = 'dhaka135';
-$db['default']['database'] = 'ci_phillips';
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'root';
+$db['default']['password'] = 'dhaka1';
+$db['default']['database'] = 'phillips';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
