@@ -109,8 +109,6 @@ class Users_model extends Crud_Model
 
     public function checkshapes($id,$title)
     {
-
-
         $dbtitle = $this->checkUniqueTitle($id);
         if($title != $dbtitle ){
 
@@ -125,6 +123,13 @@ class Users_model extends Crud_Model
             }
         }
 
+    }
+
+    public function getAll(){
+        $this->db->select('users.id,users.user_code,users.first_name,users.last_name,groups.name');
+        $this->db->from('users');
+        $this->db->join('groups', 'users.group_id = groups.id');
+        return $this->db->get()->result();
     }
 
 

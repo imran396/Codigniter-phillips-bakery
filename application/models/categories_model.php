@@ -99,7 +99,6 @@ class Categories_model extends Crud_Model
     public function checkCategories($id,$title)
     {
 
-
         $dbtitle = $this->checkUniqueTitle($id);
         if($title != $dbtitle ){
 
@@ -114,6 +113,12 @@ class Categories_model extends Crud_Model
             }
         }
 
+    }
+
+
+    public function getAll()
+    {
+        return $this->db->select('category_id,title')->order_by('ordering','asc')->get('categories')->result();
     }
 
 

@@ -12,7 +12,12 @@ class Cakes extends API_Controller
 
     public function index()
     {
-        $data = array(
+
+    $data = $this->cakes_model->getApiCakes();
+
+
+
+      /*  $data1 = array(
             array(
                 'cake_id'        => 1,
                 'category_id'    => 1,
@@ -29,6 +34,8 @@ class Cakes extends API_Controller
                     "https://www.stphillipsbakery.com/image/data/birthday/Ferrari%20Scenery%20Theme.jpg"
                 )
             ),
+
+
             array(
                 'cake_id'        => 1,
                 'category_id'    => 2,
@@ -45,7 +52,7 @@ class Cakes extends API_Controller
                     "https://www.stphillipsbakery.com/image/data/birthday/Hand.jpg"
                 )
             )
-        );
+        );*/
 
         $this->sendOutput($data);
     }

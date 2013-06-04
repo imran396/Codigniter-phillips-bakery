@@ -205,4 +205,26 @@ class Cakes_model extends CI_Model
     {
         return $this->db->select('*')->where('status', 1)->get('cakes')->result_array();
     }
+
+    public function getApiCakes(){
+
+      $sql = "SELECT
+                cakes.*,
+                GROUP_CONCAT(cake_gallery.image ORDER BY cake_gallery.gallery_id ASC SEPARATOR ',') as images
+
+              FROM cakes
+              LEFT JOIN cake_gallery
+                ON ( cakes.cake_id = cake_gallery.cake_id )
+              GROUP BY cakes.cake_id";
+
+      $data = $this->db->query($sql)->result_array();
+
+      foreach($data as $key=>$row){
+          $data[$key]['images'] = explode(',', $row['images']);
+          $data[$key]['shapes'] = unserialize($row['shape_id']);
+      }
+
+       return $data;
+
+    }
 }

@@ -7,11 +7,14 @@ class Categories extends API_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('categories_model');
     }
 
     public function index()
     {
-        $data = array(
+        $data = $this->categories_model->getAll();
+
+        /*$data = array(
             array(
                 'category_id' => 1,
                 'title'       => "Birthday"
@@ -20,7 +23,7 @@ class Categories extends API_Controller
                 'category_id' => 2,
                 'title'       => "Sports"
             )
-        );
+        );*/
 
         $this->sendOutput($data);
     }

@@ -111,6 +111,12 @@ class Zones_model extends Crud_Model
 
     }
 
+    public function getAll()
+    {
+        return $this->db->select('zone_id,title,description,surcharge')->order_by('zone_id','dsc')->get('zones')->result();
+    }
+
+
 
 
 }

@@ -7,11 +7,14 @@ class Locations extends API_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('locations_model');
     }
 
     public function index()
     {
-        $data = array(
+        $data = $this->locations_model->getAll();
+
+        /*$data = array(
             array(
                 'id'          => 1,
                 'name'        => "Woodbridge",
@@ -36,7 +39,7 @@ class Locations extends API_Controller
                 'pos_api'     => "",
                 'surcharge'   => 15.00
             )
-        );
+        );*/
 
         $this->sendOutput($data);
     }
