@@ -24,8 +24,11 @@ class Shapes_model extends Crud_Model
 
     public function deleteDataExisting($data=0){
 
-        $sql=sprintf("SELECT COUNT(shape_id) AS countValue FROM cakes  WHERE (shape_id = '{$data}' )");
-        return $count=$this->db->query($sql)->result()[0]->countValue;
+
+        $id_serialize = '"'.$data.'"';
+        $SQL = sprintf("SELECT cake_id FROM cakes  WHERE shape_id LIKE  '%s%s%s'", '%',$id_serialize, '%' );
+        $count=$this->db->query($SQL)->num_rows();
+        return $count;
     }
 
     public function delete($id)
@@ -45,9 +48,10 @@ class Shapes_model extends Crud_Model
     public function  checkUniqueTitle($id){
 
         if(!empty($id)){
-            return $dbcatid = $this->db->select('title')
+             $dbcatid = $this->db->select('title')
                 ->where('shape_id',$id)
-                ->get('shapes')->result()[0]->title;
+                ->get('shapes')->result();
+                return $dbcatid[0]->title;
 
         }
 
@@ -98,9 +102,8 @@ class Shapes_model extends Crud_Model
         $dbtitle = $this->checkUniqueTitle($id);
         if($title != $dbtitle ){
 
-            $sql=sprintf("SELECT COUNT(shape_id) AS countValue FROM shapes WHERE (LOWER(title) = LOWER('{$title}'))");
-            $count=$this->db->query($sql)->result();
-            if($count[0]->countValue > 0 )
+            $count=$this->db->select('shape_id')->where(array( strtolower('title') => strtolower($title) ))->get('shapes')->num_rows();
+            if($count > 0 )
             {
                 $this->form_validation->set_message('checkTitle', $title.' %s '.$this->lang->line('duplicate_msg'));
                 return FALSE;

@@ -4,7 +4,7 @@
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html> <!--<![endif]-->
 <head>
-    <title>AdminPlus - Premium Bootstrap Admin Template (v1.1)</title>
+    <title><?php echo $this->lang->line('site_title'); ?></title>
 
     <!-- Meta -->
     <meta charset="UTF-8" />
@@ -54,12 +54,12 @@
 
     <!-- LESS 2 CSS -->
     <script src="<?php echo base_url() ?>assets/theme/scripts/less-1.3.3.min.js"></script>
-
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/style.css"/>
 </head>
 <body>
 
 <!-- Start Content -->
-<div class="container-fluid">
+<div class="container-fluid fixed container-new">
 <?php $this->load->view('admin/layouts/top'); ?>
 <div id="wrapper">
 <?php $this->load->view('admin/layouts/left'); ?>

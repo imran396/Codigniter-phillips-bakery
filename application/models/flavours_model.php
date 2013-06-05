@@ -24,8 +24,18 @@ class flavours_model extends Crud_Model
 
     public function deleteDataExisting($data=0){
 
-        $sql=sprintf("SELECT COUNT(flavour_id) AS countValue FROM cakes  WHERE (flavour_id = '{$data}' )");
-        return $count=$this->db->query($sql)->result()[0]->countValue;
+        $count=$this->db
+            ->select('flavours.flavour_id')
+            ->from('flavours')
+            ->join('cakes', 'cakes.flavour_id = flavours.flavour_id','left')
+            ->join('price_matrix', 'price_matrix.flavour_id = flavours.flavour_id','right')
+            ->where(array('flavours.flavour_id'=>$data))
+            ->group_by('price_matrix.flavour_id')
+            ->get()
+            ->num_rows();
+
+            return $count;
+
     }
 
     public function delete($id)
@@ -45,9 +55,11 @@ class flavours_model extends Crud_Model
     public function  checkUniqueTitle($id){
 
         if(!empty($id)){
-            return $dbcatid = $this->db->select('title')
+            $dbtitle = $this->db->select('title')
                 ->where('flavour_id',$id)
-                ->get('flavours')->result()[0]->title;
+                ->get('flavours')->result();
+                $title =  $dbtitle[0]->title;
+                return $title;
 
         }
 
@@ -98,9 +110,8 @@ class flavours_model extends Crud_Model
         $dbtitle = $this->checkUniqueTitle($id);
         if($title != $dbtitle ){
 
-            $sql=sprintf("SELECT COUNT(flavour_id) AS countValue FROM flavours WHERE (LOWER(title) = LOWER('{$title}'))");
-            $count=$this->db->query($sql)->result();
-            if($count[0]->countValue > 0 )
+            $count=$this->db->select('flavour_id')->where(array( strtolower('title') => strtolower($title) ))->get('flavours')->num_rows();
+            if($count > 0 )
             {
                 $this->form_validation->set_message('checkTitle', $title.' %s '.$this->lang->line('duplicate_msg'));
                 return FALSE;

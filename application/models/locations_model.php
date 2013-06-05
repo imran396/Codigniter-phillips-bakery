@@ -22,11 +22,13 @@ class Locations_model extends Crud_Model
         $this->update($data, $id);
     }
 
-    public function deleteDataExisting($data=0){
+    public function deleteDataExistingx($data=0){
 
-        $sql=sprintf("SELECT COUNT(location_id) AS countValue FROM cakes  WHERE (location_id = '{$data}' )");
-        return $count=$this->db->query($sql)->result()[0]->countValue;
+        $count=$this->db->select('location_id')->where(array('location_id'=>$data))->get('price_matrix')->num_rows();
+        return $count;
     }
+
+
 
     public function delete($id)
     {
@@ -45,9 +47,10 @@ class Locations_model extends Crud_Model
     public function  checkUniqueTitle($id){
 
         if(!empty($id)){
-            return $dbcatid = $this->db->select('title')
+            $dbcatid = $this->db->select('title')
                 ->where('location_id',$id)
-                ->get('locations')->result()[0]->title;
+                ->get('locations')->result();
+                return $dbcatid[0]->title;
 
         }
 
@@ -97,9 +100,9 @@ class Locations_model extends Crud_Model
         $dbtitle = $this->checkUniqueTitle($id);
         if($title != $dbtitle ){
 
-            $sql=sprintf("SELECT COUNT(location_id) AS countValue FROM locations WHERE (LOWER(title) = LOWER('{$title}'))");
-            $count=$this->db->query($sql)->result();
-            if($count[0]->countValue > 0 )
+
+            $count=$this->db->select('location_id')->where(array( strtolower('title') => strtolower($title) ))->get('locations')->num_rows();
+            if($count > 0 )
             {
                 $this->form_validation->set_message('checkTitle', $title.' %s '.$this->lang->line('duplicate_msg'));
                 return FALSE;

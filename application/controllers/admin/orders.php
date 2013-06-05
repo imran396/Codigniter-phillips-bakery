@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 
-class Servings extends Crud_Controller
+class Orders extends Crud_Controller
 {
     public function __construct()
     {
@@ -32,7 +32,8 @@ class Servings extends Crud_Controller
         }
 
         $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/servings/servings_view', $this->data);
+        $this->layout->view('admin/orders/order_detail_view', $this->data);
+
 
     }
 

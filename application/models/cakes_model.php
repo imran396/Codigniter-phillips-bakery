@@ -97,13 +97,8 @@ class Cakes_model extends CI_Model
 
     public function deleteDataExisting($data = 0)
     {
-        $sql = "SELECT COUNT(cake_id) AS countValue
-                FROM cakes
-                WHERE (cake_id = '{$data}')";
 
-        $query = $this->db->query($sql);
-        $count = $query->result()->countValue;
-
+        $count = $this->db->select('cake_id')->where(array('cake_id'=>$data))->get('orders')->num_rows();;
         return $count;
     }
 
@@ -180,10 +175,8 @@ class Cakes_model extends CI_Model
 
         if ($title != $dbtitle) {
 
-            $sql   = sprintf("SELECT COUNT(cake_id) AS countValue FROM cakes WHERE (LOWER(title) = LOWER('{$title}'))");
-            $count = $this->db->query($sql)->result();
-
-            if ($count[0]->countValue > 0) {
+            $count=$this->db->select('cake_id')->where(array( strtolower('title') => strtolower($title) ))->get('cakes')->num_rows();
+            if ($count > 0) {
                 $this->form_validation->set_message('checkTitle', $title . ' %s ' . $this->lang->line('duplicate_msg'));
                 return false;
             } else {
@@ -196,13 +189,13 @@ class Cakes_model extends CI_Model
     public function checkUniqueTitle($id)
     {
         if (!empty($id)) {
-            $dbcatid = $this->db->select('title')->where('cake_id', $id)->get('cakes')->result();
-            return $dbcatid[0]->title;
+            $dbtitle = $this->db->select('title')->where('cake_id', $id)->get('cakes')->result();
+            return $dbtitle[0]->title;
         }
     }
 
     public function getAll()
     {
-        return $this->db->select('*')->where('status', 1)->get('cakes')->result_array();
+        return $this->db->select('*')->where('status', 1)->order_by('ordering','asc')->get('cakes')->result_array();
     }
 }

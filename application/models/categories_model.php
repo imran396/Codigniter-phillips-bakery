@@ -25,8 +25,8 @@ class Categories_model extends Crud_Model
     public function deleteDataExisting($data=0)
     {
 
-        $sql=sprintf("SELECT COUNT(category_id) AS countValue FROM cakes  WHERE (category_id = '{$data}' )");
-        return $count=$this->db->query($sql)->num_rows();
+        $count=$this->db->select('category_id')->where(array('category_id'=>$data))->get('cakes')->num_rows();
+        return $count;
 
     }
 
@@ -51,7 +51,8 @@ class Categories_model extends Crud_Model
              $dbcatid = $this->db->select('title')
                 ->where('category_id',$id)
                 ->get('categories')->result();
-                return $dbcatid[0]->title;
+                $title = $dbcatid[0]->title;
+                return $title;
 
         }
 
@@ -101,11 +102,11 @@ class Categories_model extends Crud_Model
 
 
         $dbtitle = $this->checkUniqueTitle($id);
+
         if($title != $dbtitle ){
 
-            $sql=sprintf("SELECT COUNT(category_id) AS countValue FROM categories WHERE (LOWER(title) = LOWER('{$title}'))");
-            $count=$this->db->query($sql)->result();
-            if($count[0]->countValue > 0 )
+            $count=$this->db->select('category_id')->where(array( strtolower('title') => strtolower($title) ))->get('categories')->num_rows();
+            if($count > 0 )
             {
                 $this->form_validation->set_message('checkTitle', $title.' %s '.$this->lang->line('duplicate_msg'));
                 return FALSE;
