@@ -30,7 +30,7 @@ class Access_model extends Ci_Model
         $this->db->where(array('access_control.group_id'=>$group_id,'user_control.controller_name'=>$controller));
         $user_access=$this->db->get();
         $count=$user_access->num_rows();
-        $row=$user_access->result();
+        $row = $user_access->result();
         if($count > 0 && $row[0]->controller == 1){
 
             $array= array('listing','save','edit','delete','view','status','others');
