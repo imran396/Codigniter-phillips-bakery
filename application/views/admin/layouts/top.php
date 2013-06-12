@@ -11,14 +11,14 @@
     <ul class="topnav pull-right">
 
         <li class="account">
-            <a data-toggle="dropdown" href="form_demo.html?lang=en" class="glyphicons logout lock"><span class="hidden-phone text"><?php echo $users[0]['username']; ?></span><i></i></a>
+            <a data-toggle="dropdown" href="form_demo.html?lang=en" class="glyphicons logout lock"><span class="hidden-phone text"><?php echo $this->session->userdata('username'); ?></span><i></i></a>
             <ul class="dropdown-menu pull-right">
                 <li class="highlight profile">
 							<span>
-								<span class="heading">Profile <a href="form_demo.html?lang=en" class="pull-right">edit</a></span>
+								<span class="heading">Profile <a href="admin/users/edit/<?php echo $this->session->userdata('username'); ?>" class="pull-right">edit</a></span>
 								<span class="img"></span>
 								<span class="details">
-									<a href="form_demo.html?lang=en"><?php echo $users[0]['first_name'].' '.$users[0]['last_name']; ?></a>
+									<a href="admin/users/edit/<?php echo $this->session->userdata('username'); ?>"><?php echo $this->session->userdata('username'); ?></a>
 								</span>
 								<span class="clearfix"></span>
 							</span>

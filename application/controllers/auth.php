@@ -15,6 +15,7 @@ class Auth extends Controller {
 		$this->load->library('form_validation');
 		$this->load->database();
 		$this->load->helper('url');
+        $this->output->enable_profiler(TRUE);
 	}
 
 	//redirect if needed, otherwise display the user list
@@ -25,7 +26,7 @@ class Auth extends Controller {
 		if (!$this->ion_auth->logged_in())
 		{
 			//redirect them to the login page
-			redirect('auth/login', 'refresh');
+			redirect('login');
 		}
 		elseif (!$this->ion_auth->is_admin())
 		{
@@ -48,7 +49,8 @@ class Auth extends Controller {
 	function login()
 	{
 
-		$this->data['title'] = "Login";
+
+        $this->data['title'] = "Login";
 		
 		if ($this->ion_auth->logged_in())
 		{

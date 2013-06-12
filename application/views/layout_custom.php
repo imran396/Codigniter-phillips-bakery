@@ -45,7 +45,8 @@
 
     <!-- Modernizr -->
     <script src="<?php echo base_url() ?>assets/theme/scripts/modernizr.custom.76094.js"></script>
-
+    <!-- jCarousel -->
+    <script type="text/javascript" src="<?php echo base_url() ?>assets/theme/scripts/jquery.jcarousel.min.js"></script>
     <!-- MiniColors -->
     <link rel="stylesheet" media="screen" href="<?php echo base_url() ?>assets/theme/scripts/jquery-miniColors/jquery.miniColors.css" />
 
@@ -54,19 +55,12 @@
 
     <!-- LESS 2 CSS -->
     <script src="<?php echo base_url() ?>assets/theme/scripts/less-1.3.3.min.js"></script>
-
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/style.css"/>
 </head>
 <body>
 
 <!-- Start Content -->
-<div class="container-fluid fixed container-new">
-<?php $this->load->view('admin/layouts/top'); ?>
-<div id="wrapper">
-<?php $this->load->view('admin/layouts/left'); ?>
 <?php echo $content_for_layout; ?>
-<!-- End Wrapper -->
-</div>
-
 <!-- Sticky Footer -->
 <div id="footer" class="visible-desktop">
     <div class="wrap">
@@ -127,11 +121,13 @@
 <script src="<?php echo base_url() ?>assets/bootstrap/extend/bootbox.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/bootstrap/extend/bootstrap-wysihtml5/js/wysihtml5-0.3.0_rc2.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/bootstrap/extend/bootstrap-wysihtml5/js/bootstrap-wysihtml5-0.0.2.js" type="text/javascript"></script>
+
 <!-- Theme -->
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/custom.css?var=1" />
+
 <!-- Custom Onload Script -->
 <script src="<?php echo base_url() ?>assets/theme/scripts/load.js"></script>
-
+<script src="<?php echo base_url() ?>assets/theme/scripts/custom.js"></script>
 <!--Layout Options-->
 <!--<script src="<?php //echo base_url() ?>/assets/theme/scripts/layout.js"></script>-->
 <script type="text/javascript" language="javascript">

@@ -103,7 +103,7 @@ class Servings extends Crud_Controller
     public function status($id){
 
         $this->servings_model->statusChange($id);
-        $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
+        $this->session->set_flashdata('success_msg',$this->lang->line('status_msg'));
         $this->redirectToHome("listing");
 
     }

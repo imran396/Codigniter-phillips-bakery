@@ -45,3 +45,17 @@ $lang['update_successful'] 		 	 = 'Account Information Successfully Updated';
 $lang['update_unsuccessful'] 		 	 = 'Unable to Update Account Information';
 $lang['delete_successful'] 		 	 = 'User Deleted';
 $lang['delete_unsuccessful'] 		 	 = 'Unable to Delete User';
+
+
+// Access permission role //
+
+$lang['controller_name'] 		 	 = 'Controller name';
+$lang['listing'] 		 	 = 'Listing';
+$lang['save'] 		 	 = 'Save';
+$lang['edit'] 		 	 = 'Edit';
+$lang['delete'] 		 	 = 'Delete';
+$lang['view'] 		 	 = 'View';
+$lang['status'] 		 	 = 'Status';
+$lang['others'] 		 	 = 'Others';
+
+

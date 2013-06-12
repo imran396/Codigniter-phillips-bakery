@@ -1,39 +1,78 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 
-class Flavours extends Crud_Controller
+class Production extends Crud_Controller
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->layout->setLayout('layout_admin');
-        $this->load->model('flavours_model');
-        $log_status = $this->ion_auth->logged_in();
-        $this->access_model->logged_status($log_status);
-        $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
-        $this->output->enable_profiler(false);
+        //$this->layout->setLayout('layout_admin');
+        $this->layout->setLayout('layout_custom');
+
+        $this->load->model('servings_model');
 
     }
 
     public function index()
     {
 
+
         $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/flavours/flavours_view', $this->data);
+        $this->layout->view('admin/production/production_view', $this->data);
+
 
     }
 
-    function show(){
-        //$this->access_model->access_permission($this->uri->segment(2,NULL),'others');
-        echo "test";
+
+    public function inproduction()
+    {
+
+
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->layout->view('admin/production/inproduction_view', $this->data);
+
+
     }
+
+    public function order_details()
+    {
+
+
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->layout->view('admin/orders/order_detail_view', $this->data);
+
+
+    }
+
+    public function lookup()
+    {
+
+
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->layout->view('admin/orders/lookup_view', $this->data);
+
+
+    }
+
+
+    public function blackout()
+    {
+
+
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->layout->view('admin/orders/blackout_view', $this->data);
+
+
+    }
+
+
 
     public function listing(){
 
-        $this->data['result'] = $this->flavours_model->getListing();
+        $this->data['result'] = $this->servings_model->getListing();
         $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/flavours/listing_view', $this->data);
+        $this->layout->view('admin/servings/listing_view', $this->data);
 
     }
 
@@ -44,7 +83,7 @@ class Flavours extends Crud_Controller
             $this->addValidation();
             if ($this->form_validation->run()) {
                 $this->saveData();
-                $id =$this->input->post('flavour_id');
+                $id =$this->input->post('serving_id');
                 if(!empty($id)) {
                     $this->redirectToHome('edit/'.$id);
                 }else{
@@ -62,15 +101,15 @@ class Flavours extends Crud_Controller
     public function edit($id)
     {
 
-        $this->data['queryup'] = $this->flavours_model->getflavours($id);
+        $this->data['queryup'] = $this->servings_model->getservings($id);
         $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/flavours/flavours_view', $this->data);
+        $this->layout->view('admin/servings/servings_view', $this->data);
     }
 
     private function addValidation()
     {
         $this->form_validation->set_rules('title', 'Category', 'required|trim|xss_clean|callback_checkTitle');
-        $this->form_validation->set_rules('flavour_id');
+        $this->form_validation->set_rules('serving_id');
         $this->form_validation->set_rules('status');
 
     }
@@ -80,13 +119,13 @@ class Flavours extends Crud_Controller
     {
 
         $data = $this->input->post();
-        if (empty($data['flavour_id'])) {
+        if (empty($data['serving_id'])) {
 
-            $this->flavours_model->create($data);
+            $this->servings_model->create($data);
 
             $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
         } else {
-            $this->flavours_model->save($data, $data['flavour_id']);
+            $this->servings_model->save($data, $data['serving_id']);
 
             $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         }
@@ -95,7 +134,7 @@ class Flavours extends Crud_Controller
 
     public function status($id){
 
-        $this->data['category'] = $this->flavours_model->statusChange($id);
+        $this->servings_model->statusChange($id);
         $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         $this->redirectToHome("listing");
 
@@ -103,14 +142,16 @@ class Flavours extends Crud_Controller
 
     public function sorting(){
 
-        $this->data['category'] = $this->flavours_model->sortingList();
+        $this->servings_model->sortingList();
         echo $this->lang->line('update_msg');
 
     }
 
+
+
     public function remove($id)
     {
-        $this->data['category'] = $this->flavours_model->delete($id);
+        $this->servings_model->delete($id);
         $this->redirectToHome("listing");
 
     }
@@ -119,18 +160,14 @@ class Flavours extends Crud_Controller
 
 
         $data = $this->input->post();
-        return  $this->flavours_model->checkflavours($data['flavour_id'],$title);
+        return  $this->servings_model->checkservings($data['serving_id'],$title);
 
 
     }
 
     private function redirectToHome($redirect = NULL)
     {
-        redirect('admin/flavours/'.$redirect);
+        redirect('admin/servings/'.$redirect);
     }
 
 }
-
-
-
-

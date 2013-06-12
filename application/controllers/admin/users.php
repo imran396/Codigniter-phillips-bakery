@@ -8,29 +8,17 @@ class users extends Crud_Controller
         parent::__construct();
         $this->layout->setLayout('layout_admin');
         $this->load->model('users_model');
+        //$this->ion_auth->logged_in();
+        //$this->ion_auth->is_group($group)
 
     }
 
     public function index()
     {
-        $group = $this->session->userdata('group');
 
-        if (!$this->ion_auth->logged_in())
-        {
-            redirect('auth/login', 'refresh');
-        }
-        elseif (!$this->ion_auth->is_group($group))
-        {
-            redirect('/admin', 'refresh');
-        }
-        else
-        {
-            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            $this->ion_auth->get_users_array();
-
-        }
 
         $this->data['groupresult'] = $this->users_model->getGroup();
+        $this->data['locresult'] = $this->users_model->getLocations();
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/users/users_view', $this->data);
 
@@ -62,7 +50,8 @@ class users extends Crud_Controller
                     'first_name' => $this->input->post('first_name'),
                     'last_name' => $this->input->post('last_name'),
                     'group_id' => $this->input->post('group_id'),
-                    'status' => $this->input->post('status')
+                    'location_id' => $this->input->post('location_id'),
+                    'status' => 1
                 );
             }
 
@@ -70,10 +59,11 @@ class users extends Crud_Controller
             { //check to see if we are creating the user
                 //redirect them back to the admin page
                 $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
-                redirect('admin/users', 'refresh');
+                redirect('admin/users/listing', 'refresh');
             }else{
 
                 $this->data['groupresult'] = $this->users_model->getGroup();
+                $this->data['locresult'] = $this->users_model->getLocations();
                 $this->data['success_msg'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
                 $this->layout->view('admin/users/users_view', $this->data);
 
@@ -104,7 +94,7 @@ class users extends Crud_Controller
         $this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required');
         $this->form_validation->set_rules('email', 'E-mail', 'valid_email');
         $this->form_validation->set_rules('group_id', 'Group ', 'required');
-        $this->form_validation->set_rules('status');
+        $this->form_validation->set_rules('location_id');
 
     }
 

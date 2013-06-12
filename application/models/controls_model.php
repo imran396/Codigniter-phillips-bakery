@@ -14,12 +14,13 @@ class Controls_model extends Crud_Model
 
     public function create($data)
     {
-        $this->insert($data);
+
+        $this->db->set(array('controller_name'=>strtolower(trim($this->input->post('controller_name')))))->insert('user_control');
     }
 
     public function save($data, $id)
     {
-        $this->update($data, $id);
+        $this->db->set(array('controller_name'=>strtolower(trim($this->input->post('controller_name')))))->where(array('control_id'=>$id))->update('user_control');
     }
 
     public function deleteDataExisting($data=0){

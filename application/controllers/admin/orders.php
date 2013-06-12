@@ -7,7 +7,9 @@ class Orders extends Crud_Controller
     {
         parent::__construct();
 
-        $this->layout->setLayout('layout_admin');
+        //$this->layout->setLayout('layout_admin');
+        $this->layout->setLayout('layout_custom');
+
         $this->load->model('servings_model');
 
     }
@@ -15,27 +17,48 @@ class Orders extends Crud_Controller
     public function index()
     {
 
-        $group = $this->session->userdata('group');
-
-        if (!$this->ion_auth->logged_in())
-        {
-            redirect('auth/login', 'refresh');
-        }
-        elseif (!$this->ion_auth->is_group($group))
-        {
-            redirect('/admin', 'refresh');
-        }
-        else
-        {
-            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            $this->data['users'] = $this->ion_auth->get_users_array();
-        }
 
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/orders/order_detail_view', $this->data);
 
 
     }
+
+
+
+
+    public function details($cake_code=0)
+    {
+
+
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->layout->view('admin/orders/order_detail_view', $this->data);
+
+
+    }
+
+    public function lookup()
+    {
+
+
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->layout->view('admin/orders/lookup_view', $this->data);
+
+
+    }
+
+
+    public function blackout()
+    {
+
+
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->layout->view('admin/orders/blackout_view', $this->data);
+
+
+    }
+
+
 
     public function listing(){
 

@@ -90,6 +90,16 @@
                             </select>
                         </div>
                     </div>
+                    <select onclick="" style="width: 100%;"  name="location_id" onchange="window.location=this.value">
+                        <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
+                        <?php
+                        $location_id = (isset($queryup[0]->location_id))? $queryup[0]->location_id:set_value('location_id');
+                        foreach($locresult as $location):
+                            ?>
+                            <option value="<?php echo $location->location_id; ?>" <?php if($location_id == $location->location_id){ echo "selected='selected'"; } ?> ><?php echo $location->title; ?></option>
+                        <?php endforeach; ?>
+
+                    </select>
                 </div>
                 <div class="span6">
 

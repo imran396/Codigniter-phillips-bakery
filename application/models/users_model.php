@@ -56,7 +56,7 @@ class Users_model extends Crud_Model
     public function getGroup()
     {
 
-        return $this->db->select('*')->where(array('status'=>1))->get('groups')->result();
+        return $this->db->select('*')->where(array('status'=>1))->order_by("ordering", "asc")->get('groups')->result();
 
     }
 
@@ -95,6 +95,13 @@ class Users_model extends Crud_Model
 
     }
 
+    public function getLocations()
+    {
+
+        return $this->db->select('*')->where('status',1)->order_by("ordering", "asc")->get('locations')->result();
+
+    }
+
     public function statusChange($id){
 
         $row=$this->getusers($id);
@@ -107,25 +114,7 @@ class Users_model extends Crud_Model
 
     }
 
-    public function checkshapes($id,$title)
-    {
 
-
-        $dbtitle = $this->checkUniqueTitle($id);
-        if($title != $dbtitle ){
-
-            $sql=sprintf("SELECT COUNT(shape_id) AS countValue FROM shapes WHERE (LOWER(title) = LOWER('{$title}'))");
-            $count=$this->db->query($sql)->result();
-            if($count[0]->countValue > 0 )
-            {
-                $this->form_validation->set_message('checkTitle', $title.' %s '.$this->lang->line('duplicate_msg'));
-                return FALSE;
-            }else{
-                return TRUE;
-            }
-        }
-
-    }
 
 
 

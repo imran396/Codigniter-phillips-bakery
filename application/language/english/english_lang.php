@@ -33,6 +33,7 @@ $lang['settings'] 		 	                        = 'Settings';
 $lang['categories'] 		 	                    = 'Cake Categories';
 $lang['cakes'] 		 	                            = 'Manage Cakes';
 $lang['locations'] 		 	                        = 'Locations';
+$lang['location'] 		 	                        = 'Location';
 $lang['access_control'] 		 	                = 'Access Control';
 $lang['users'] 		 	                            = 'Manage Users';
 $lang['access_roles'] 		 	                    = 'Access Roles';
@@ -70,6 +71,7 @@ $lang['admin_delete_msg']="Administer not delete";
 $lang['no_records_msg']="Sorry - No listings founds";
 $lang['no_location_msg']="Must be need location select";
 $lang['no_group_msg']="Must be need group select";
+$lang['status_msg']="The selected flavour has been disabled.";
 
 
 /* User Settings */
@@ -147,6 +149,7 @@ $lang['size'] 		 	    = 'Size';
 
 /* price matrix */
 $lang['price_matrix'] 		 	    = 'Price Matrix';
+$lang['select_location'] 		 	    = 'Select location';
 
 $lang['manage_price_matrix'] 		= 'Manage Price Matrix';
 $lang['yes'] 		 	    = 'Yes';
@@ -194,4 +197,9 @@ $lang['account_settings_info'] 		 	    = 'Account settings instruction';
 $lang['controller_name'] 		 	    = 'Controller name';
 $lang['inactive'] 		 	    = 'Inactive';
 
+/*        ---------------Production------------------    */
+
+$lang['production'] 		 	    = 'Production';
+$lang['inproduction'] 		 	    = 'In Production';
+$lang['blackout'] 		 	    = 'Blackout';
 

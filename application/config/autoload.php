@@ -107,7 +107,7 @@ $autoload['language'] = array('english');
 |
 */
 
-$autoload['model'] = array();
+$autoload['model'] = array('access_model');
 
 
 /* End of file autoload.php */

@@ -7,11 +7,8 @@ class Dashboard extends Crud_Controller
     {
         parent::__construct();
         $this->load->library('ion_auth');
-        $this->load->library('form_validation');
-        $this->load->library("pagination");
-        $this->load->library('session');
         $this->layout->setLayout('layout_admin');
-        $this->load->helper('url');
+
 
     }
 
@@ -33,8 +30,11 @@ class Dashboard extends Crud_Controller
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
             $this->data['users'] = $this->ion_auth->get_users_array();
         }
+        $identity = $this->config->item('identity', 'ion_auth');
 
+        $this->session->userdata('id');
 
+//print_r($this->ion_auth->get_users_array());
         /*
 
         This code use for test another domain path return data function.

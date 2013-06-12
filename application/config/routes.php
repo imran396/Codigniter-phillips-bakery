@@ -39,6 +39,7 @@
 */
 
 $route['default_controller'] = "admin/dashboard";
+$route['login'] = "auth/login";
 //$route['admin/users/save'] = "auth/create_user";
 $route['admin/users/password'] = "auth/change_password";
 $route['404_override'] = '';

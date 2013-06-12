@@ -19,8 +19,8 @@
         <tr><td>
 
                 <form action="" method="get" onsubmit="location" >
-                <select onclick="" style="width: 100%;"  name="location_id" onchange="window.location=this.value">
-                     <option value="<?php echo site_url('admin/price_matrix/matrix/0')?>" >---<?php echo $this->lang->line('select_one');?>---</option>
+                <select onclick="" style="width: 100%;"  name="location_id" class="validate[required]" onchange="window.location=this.value">
+                     <option value="<?php echo site_url('admin/price_matrix/matrix/0')?>" >---<?php echo $this->lang->line('select_location');?>---</option>
                     <?php
                     foreach($locresult as $location):
                         ?>

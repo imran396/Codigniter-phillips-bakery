@@ -38,7 +38,6 @@
                     <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('username');?>" value="<?php echo(isset($queryup[0]->username))? $queryup[0]->username:set_value('username'); ?>"  class="validate[required] span12" name="username" id="username"  />
                 </div>
             </div>
-
             <div class="control-group">
 
                 <label class="control-label"><?php echo $this->lang->line('role');?></label>
@@ -55,6 +54,8 @@
                     </select>
                 </div>
             </div>
+
+
         </div>
         <div class="span6">
             <div class="control-group">
@@ -69,20 +70,22 @@
                 <label class="control-label" for="email"><?php echo $this->lang->line('email');?></label>
                 <div class="controls"><input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('email');?>" value="<?php echo(isset($queryup[0]->email))? $queryup[0]->email:set_value('email'); ?>"  class="validate[custom[email]] span12" name="email" id="email"  /></div>
             </div>
-            <div class="control-group uniformjs">
-                <label class="control-label"><?php echo $this->lang->line('status');?></label>
-                <div class="separator"></div>
-                <?php $status = (isset($queryup[0]->status))? $queryup[0]->status:1; ?>
-                <label class="radio">
-                    <input type="radio" class="radio" name="status" value="1" <?php if($status ==1){?> checked="checked" <?php } ?> />
-                    <?php echo $this->lang->line('active');?>
-                </label>
-                <label class="radio">
-                    <input type="radio" class="radio" name="status" value="0" <?php if($status !=1 ){?> checked="checked" <?php } ?>  />
-                    <?php echo $this->lang->line('inactive');?>
-                </label><br/>
+            <div class="control-group">
 
+                <label class="control-label"><?php echo $this->lang->line('location');?></label>
+                <div class="controls">
+                    <select style="width: 100%;"  name="location_id" >
+                        <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
+                        <?php
+                        foreach($locresult as $location):
+                            ?>
+                            <option value="<?php echo $location->location_id; ?>" ><?php echo $location->title; ?></option>
+                        <?php endforeach; ?>
+
+                    </select>
+                </div>
             </div>
+
         </div>
     </div>
 
