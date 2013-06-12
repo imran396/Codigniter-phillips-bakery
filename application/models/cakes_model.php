@@ -220,6 +220,7 @@ class Cakes_model extends CI_Model
       $data = $this->db->query($sql)->result_array();
 
       foreach($data as $key=>$row){
+          $data[$key]['cake_id'] = (int) $data[$key]['cake_id'];
           $data[$key]['images'] = explode(',', $row['images']);
           $data[$key]['shapes'] = unserialize($row['shape_id']);
       }
