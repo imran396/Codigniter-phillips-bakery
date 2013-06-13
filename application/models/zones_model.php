@@ -113,7 +113,13 @@ class Zones_model extends Crud_Model
 
     public function getAll()
     {
-        return $this->db->select('zone_id,title,description,surcharge')->order_by('zone_id','dsc')->get('zones')->result();
+        $data = $this->db->select('zone_id,title,description,surcharge')->order_by('zone_id','dsc')->get('zones')->result_array();
+        foreach($data as $key => $val){
+            $data[$key]['zone_id'] =  (int) $data[$key]['zone_id'];
+            $data[$key]['surcharge'] =  (float) $data[$key]['surcharge'];
+        }
+        return $data;
+
     }
 
 

@@ -206,23 +206,28 @@ class Cakes_model extends CI_Model
         return $this->db->select('*')->where('status', 1)->get('cakes')->result_array();
     }
 
-    public function getApiCakes(){
-
+    public function getAll_(){
+      $imageurlprefix = base_url().'assets';
       $sql = "SELECT
-                cakes.*,
-                GROUP_CONCAT(cake_gallery.image ORDER BY cake_gallery.gallery_id ASC SEPARATOR ',') as images
-
-              FROM cakes
-              LEFT JOIN cake_gallery
-                ON ( cakes.cake_id = cake_gallery.cake_id )
-              GROUP BY cakes.cake_id";
+                C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.start_price,C.end_price,
+              GROUP_CONCAT(G.image ORDER BY G.gallery_id ASC SEPARATOR ',') as gallery_images
+              FROM cakes As C
+              LEFT JOIN cake_gallery AS G
+                ON ( C.cake_id = G.cake_id )
+              GROUP BY C.cake_id";
 
       $data = $this->db->query($sql)->result_array();
 
       foreach($data as $key=>$row){
           $data[$key]['cake_id'] = (int) $data[$key]['cake_id'];
-          $data[$key]['images'] = explode(',', $row['images']);
-          $data[$key]['shapes'] = unserialize($row['shape_id']);
+          $data[$key]['category_id'] = (int) $data[$key]['category_id'];
+          $data[$key]['flavour_id'] = (int) $data[$key]['flavour_id'];
+          $data[$key]['image'] = !empty($data[$key]['image']) ? base_url().$data[$key]['image'] : "";
+          $data[$key]['start_price'] = (float) $data[$key]['start_price'];
+          $data[$key]['end_price'] = (float) $data[$key]['end_price'];
+          $data[$key]['gallery_images'] = explode(',', $row['gallery_images']);
+          $data[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$data[$key]['gallery_images']);
+          $data[$key]['shapes'] =  !empty($row['shapes']) ? unserialize($row['shapes']): "";
       }
 
        return $data;

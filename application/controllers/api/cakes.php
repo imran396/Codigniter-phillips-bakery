@@ -13,7 +13,7 @@ class Cakes extends API_Controller
     public function index()
     {
 
-    $data = $this->cakes_model->getApiCakes();
+    $data = $this->cakes_model->getAll_();
 
 
 

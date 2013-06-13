@@ -93,8 +93,6 @@ class Shapes_model extends Crud_Model
 
     public function checkshapes($id,$title)
     {
-
-
         $dbtitle = $this->checkUniqueTitle($id);
         if($title != $dbtitle ){
 
@@ -110,6 +108,19 @@ class Shapes_model extends Crud_Model
         }
 
     }
+
+    public function getAll()
+    {
+        $data = $this->db->select('shape_id,title')->order_by('ordering','asc')->get('shapes')->result_array();
+
+        foreach($data as $key => $val){
+            $data[$key]['shape_id'] = (int) $data[$key]['shape_id'];
+        }
+        return $data;
+    }
+
+
+
 
 
 
