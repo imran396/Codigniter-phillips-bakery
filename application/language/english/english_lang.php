@@ -30,7 +30,7 @@ $lang['drag'] 		 	    = 'Drag';
 $lang['menu_level'] 		 	                    = 'Menu Level';
 $lang['dashboard'] 		 	                        = 'Dashboard';
 $lang['settings'] 		 	                        = 'Settings';
-$lang['categories'] 		 	                    = 'Cake Categories';
+$lang['categories'] 		 	                    = 'Cake Catalogue';
 $lang['cakes'] 		 	                            = 'Manage Cakes';
 $lang['locations'] 		 	                        = 'Locations';
 $lang['location'] 		 	                        = 'Location';
@@ -38,7 +38,7 @@ $lang['access_control'] 		 	                = 'Access Control';
 $lang['users'] 		 	                            = 'Manage Users';
 $lang['access_roles'] 		 	                    = 'Access Roles';
 $lang['manage_flavors'] 		 	                = 'Manage Flavors';
-$lang['shapes'] 		 	                            = 'Shapes';
+$lang['shapes'] 		 	                        = 'Shapes';
 $lang['flavours'] 		 	                        = 'Flavours';
 $lang['fondants'] 		 	                        = 'Fondants';
 $lang['servings'] 		 	                        = 'Servings';
@@ -91,7 +91,7 @@ $lang['enter'] 		 	    = 'Enter';
 /* Categories */
 
 
-$lang['category_name'] 		 	    = 'Category Name';
+$lang['category_name'] 		 	    = 'Catalogue Name';
 $lang['slug'] 		 	    = 'Slug';
 
 /*  Role */
@@ -119,7 +119,7 @@ $lang['pos_api'] 		 	    = 'POS api';
 
 /* Cakes */
 
-$lang['category_id'] 		 	    = 'Cake Category';
+$lang['category_id'] 		 	    = 'Cake Catalogue';
 $lang['flavour_id'] 		 	    = 'Flavour Name';
 $lang['location_id'] 		 	    = 'Location Name';
 $lang['cake_title'] 		 	    = 'Cake Title';

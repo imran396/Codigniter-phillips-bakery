@@ -12,14 +12,14 @@ class Users_model extends Crud_Model
 
     }
 
-    public function create($data)
-    {
-        $this->insert($data);
-    }
 
-    public function save($data, $id)
+    public function update($data, $id)
     {
-        $this->update($data, $id);
+        $array = array('first_name'=>$data['first_name'],'last_name'=>$data['last_name'],'location_id'=>$data['location_id']);
+        $this->db->set($array)->where(array('id'=>$id))->update('meta');
+        $array = array('email'=>$data['email']);
+        $this->db->set($array)->where(array('id'=>$id))->update('users');
+
     }
 
     public function deleteDataExisting($data=0){
@@ -88,7 +88,7 @@ class Users_model extends Crud_Model
     {
 
         return $this->db
-            ->select('users.username,users.email,meta.first_name,meta.last_name')
+            ->select('users.id,users.username,users.email,meta.first_name,meta.last_name,meta.location_id, users.active')
             ->join('meta','users.id =meta.user_id')
             ->join('groups','users.group_id =groups.id')
             ->where(array('username'=>$username))->get('users')->result();
@@ -102,18 +102,45 @@ class Users_model extends Crud_Model
 
     }
 
-    public function statusChange($id){
+    public function statusChange($username){
 
-        $row=$this->getusers($id);
+        $row=$this->getusers($username);
+        echo $row[0]->active;
+
         if($row[0]->active == 1 ){
             $status=0;
         }else{
             $status=1;
         }
-        $this->db->where(array('id'=>$id))->set(array('active'=>$status))->update('users');
+        $this->db->where(array('username'=>$username))->set(array('active'=>$status))->update('users');
 
     }
 
+
+    public function checkshapes($id,$title)
+    {
+        $dbtitle = $this->checkUniqueTitle($id);
+        if($title != $dbtitle ){
+
+            $sql=sprintf("SELECT COUNT(shape_id) AS countValue FROM shapes WHERE (LOWER(title) = LOWER('{$title}'))");
+            $count=$this->db->query($sql)->result();
+            if($count[0]->countValue > 0 )
+            {
+                $this->form_validation->set_message('checkTitle', $title.' %s '.$this->lang->line('duplicate_msg'));
+                return FALSE;
+            }else{
+                return TRUE;
+            }
+        }
+
+    }
+
+    public function getAll(){
+        $this->db->select('users.id,users.user_code,users.first_name,users.last_name,groups.name');
+        $this->db->from('users');
+        $this->db->join('groups', 'users.group_id = groups.id');
+        return $this->db->get()->result();
+    }
 
 
 

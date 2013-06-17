@@ -43,29 +43,6 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label"><?php echo $this->lang->line('start_price');?></label>
-                                    <div class="controls">
-                                        <div class="input-prepend input-append">
-                                            <span class="add-on">$</span>
-                                            <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('start_price');?>" value="<?php echo(isset($queryup[0]->start_price))? $queryup[0]->start_price:set_value('start_price'); ?>"   class="span10" name="start_price" id="appendedPrependedInput" class="span12">
-                                            <span class="add-on">.00</span>
-                                        </div>
-
-
-                                    </div>
-                                    <label class="control-label"><?php echo $this->lang->line('to');?> <?php echo $this->lang->line('end_price');?></label>
-                                    <div class="controls">
-                                        <div class="input-prepend input-append">
-                                            <span class="add-on">$</span>
-                                            <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('end_price');?>" value="<?php echo(isset($queryup[0]->end_price))? $queryup[0]->end_price:set_value('end_price'); ?>"   class=" span10" name="end_price" id="appendedPrependedInput" class="span12">
-                                            <span class="add-on">.00</span>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-
-                                <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('category_id');?></label>
                                     <div class="controls">
                                         <div class="row-fluid">
@@ -121,7 +98,21 @@
                                     <?php endforeach; ?>
 
                                 </div>
+                                <div class="control-group uniformjs">
+                                    <label class="control-label"><?php echo $this->lang->line('tires');?></label>
+                                    <div class="separator"></div>
+                                    <select class=" " style="width: 100%;"  name="tire_id">
+                                        <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
+                                        <?php
+                                        $tire_id = (isset($queryup[0]->tire_id))? $queryup[0]->tire_id:set_value('tire_id');
+                                        for($i=1; 10 >= $i ; $i++ ){
+                                            ?>
+                                            <option value="<?php echo $i;  ?>" <?php if($tire_id== $i){ echo "selected='selected'"; } ?> ><?php echo $i ." Tire";  ?></option>
+                                        <?php } ?>
 
+                                    </select>
+
+                                </div>
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('meta_tag');?></label>
                                     <div class="controls">
