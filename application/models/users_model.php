@@ -139,9 +139,12 @@ class Users_model extends Crud_Model
         $this->db->select('users.id,users.user_code,users.first_name,users.last_name,groups.name');
         $this->db->from('users');
         $this->db->join('groups', 'users.group_id = groups.id');
-        return $this->db->get()->result();
+        $data = $this->db->get()->result_array();
+        foreach($data as $key => $val){
+            $data[$key]['id'] = (int)  $data[$key]['id'];
+        }
+        return $data;
     }
-
 
 
 

@@ -100,8 +100,8 @@ class Categories_model extends Crud_Model
     public function checkCategories($id,$title)
     {
 
-        $dbtitle = $this->checkUniqueTitle($id);
 
+        $dbtitle = $this->checkUniqueTitle($id);
         if($title != $dbtitle ){
 
             $count=$this->db->select('category_id')->where(array( strtolower('title') => strtolower($title) ))->get('categories')->num_rows();
@@ -119,8 +119,15 @@ class Categories_model extends Crud_Model
 
     public function getAll()
     {
-        return $this->db->select('category_id,title')->order_by('ordering','asc')->get('categories')->result();
+        $data = $this->db->select('category_id,title')->order_by('ordering','asc')->get('categories')->result_array();
+
+        foreach($data as $key=>$val){
+            $data[$key]['category_id'] = (int) $data[$key]['category_id'];
+        }
+
+        return $data;
     }
+
 
 
 
