@@ -19,7 +19,7 @@ class Cakes_model extends CI_Model
 
     private function insert($data)
     {
-        $data['shape_id'] = serialize($data['shape_id']);
+        $data['shape_id'] = ($data['shape_id'] !="") ? serialize($data['shape_id']):'';
         $this->db->set($data)->insert('cakes');
     }
 
@@ -82,7 +82,10 @@ class Cakes_model extends CI_Model
 
     private function update($data, $id)
     {
-        $this->db->set(array('title' => $data['title'], 'description' => $data['description'], 'start_price' => $data['start_price'], 'end_price' => $data['end_price'], 'category_id' => $data['category_id'], 'flavour_id' => $data['flavour_id'], 'shape_id' => serialize($data['shape_id']), 'meta_tag' => $data['meta_tag'], 'status' => $data['status']))->where(array('cake_id' => $id))->update('cakes');
+
+        $shape_arr= ($data['shape_id'] !="") ? serialize($data['shape_id']):'';
+
+        $this->db->set(array('title' => $data['title'], 'description' => $data['description'], 'start_price' => $data['start_price'], 'end_price' => $data['end_price'], 'category_id' => $data['category_id'], 'flavour_id' => $data['flavour_id'], 'shape_id' =>$shape_arr, 'meta_tag' => $data['meta_tag'], 'status' => $data['status']))->where(array('cake_id' => $id))->update('cakes');
     }
 
     public function delete($id)
@@ -197,5 +200,28 @@ class Cakes_model extends CI_Model
     public function getAll()
     {
         return $this->db->select('*')->where('status', 1)->order_by('ordering','asc')->get('cakes')->result_array();
+    }
+
+    public function getApiCakes(){
+
+      $sql = "SELECT
+                cakes.*,
+                GROUP_CONCAT(cake_gallery.image ORDER BY cake_gallery.gallery_id ASC SEPARATOR ',') as images
+
+              FROM cakes
+              LEFT JOIN cake_gallery
+                ON ( cakes.cake_id = cake_gallery.cake_id )
+              GROUP BY cakes.cake_id";
+
+      $data = $this->db->query($sql)->result_array();
+
+      foreach($data as $key=>$row){
+          $data[$key]['cake_id'] = (int) $data[$key]['cake_id'];
+          $data[$key]['images'] = explode(',', $row['images']);
+          $data[$key]['shapes'] = unserialize($row['shape_id']);
+      }
+
+       return $data;
+
     }
 }

@@ -7,11 +7,13 @@ class Customers extends API_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('customers_model');
     }
 
     public function index()
     {
-        $data = array(
+        $data = $this->customers_model->getAll();
+        /*$data = array(
             array(
                 'customer_id'  => 1,
                 'first_name'   => "Noor",
@@ -38,7 +40,7 @@ class Customers extends API_Controller
                 'postal_code'  => "AB 2342",
                 'country'      => "Canada"
             )
-        );
+        );*/
 
         $this->sendOutput($data);
     }

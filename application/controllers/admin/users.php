@@ -8,8 +8,9 @@ class users extends Crud_Controller
         parent::__construct();
         $this->layout->setLayout('layout_admin');
         $this->load->model('users_model');
-        //$this->ion_auth->logged_in();
-        //$this->ion_auth->is_group($group)
+        $log_status = $this->ion_auth->logged_in();
+        $this->access_model->logged_status($log_status);
+        $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
 
     }
 
@@ -26,6 +27,8 @@ class users extends Crud_Controller
 
     public function listing($start=0){
 
+        $this->data['groupresult'] = $this->users_model->getGroup();
+        $this->data['locresult'] = $this->users_model->getLocations();
         $this->data['paging'] = $this->users_model->getListing($start);
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/users/listing_view', $this->data);
@@ -80,6 +83,19 @@ class users extends Crud_Controller
 
         $this->data['queryup'] = $this->users_model->getusers($username);
         $this->data['groupresult'] = $this->users_model->getGroup();
+        $this->data['locresult'] = $this->users_model->getLocations();
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->layout->view('admin/users/edit_user_view', $this->data);
+    }
+
+    public function profile()
+    {
+
+        $this->access_model->access_permission($this->uri->segment(2,NULL),'others');
+        $username=  $this->session->userdata('username');
+        $this->data['queryup'] = $this->users_model->getusers($username);
+        $this->data['groupresult'] = $this->users_model->getGroup();
+        $this->data['locresult'] = $this->users_model->getLocations();
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/users/edit_user_view', $this->data);
     }
@@ -115,9 +131,18 @@ class users extends Crud_Controller
         if ($this->form_validation->run() == false)
         { //display the form
             //set the flash data error message if there is one
-            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+            $this->data['error_msg'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
             //render
-            redirect('admin/users/edit/'.$username, $this->data);
+            if($this->session->userdata('username') == $username ){
+
+                redirect('admin/users/profile');
+
+            }else{
+
+                redirect('admin/users/edit/'.$username, $this->data);
+
+            }
+
         }
         else
         {
@@ -132,35 +157,65 @@ class users extends Crud_Controller
             }
             else
             {
-                $this->session->set_flashdata('success_msg', $this->ion_auth->errors());
+                $this->session->set_flashdata('error_msg', $this->ion_auth->errors());
                // redirect('auth/change_password', 'refresh');
-                redirect('admin/users/edit/'.$username, $this->data);
+
+                if($this->session->userdata('username') == $username ){
+
+                    redirect('admin/users/profile');
+
+                }else{
+
+                    redirect('admin/users/edit/'.$username, $this->data);
+
+                }
             }
         }
     }
 
+    function update(){
+
+        $username=$this->input->post('username');
+        $this->form_validation->set_rules('first_name', 'First name', 'required');
+        $this->form_validation->set_rules('last_name', 'Last name', 'required');
+        $this->form_validation->set_rules('location_id', 'Location name', 'required');
+
+        if ($this->form_validation->run() == false)
+        {
+            if($this->session->userdata('username') == $username ){
+                $this->profile();
+            }else{
+                $this->edit($username);
+            }
+
+        }else{
+
+            $this->saveData();
+            $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
+            if($this->session->userdata('username') == $username ){
+                redirect('admin/users/profile');
+            }else{
+                redirect('admin/users/edit/'.$username);
+            }
+
+        }
+
+    }
 
     private function saveData()
     {
 
         $data = $this->input->post();
-        if (empty($data['id'])) {
-
-            $this->users_model->create($data);
-
-            $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
-        } else {
-            $this->users_model->save($data, $data['id']);
-
-            $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
+        if (!empty($data['username'])) {
+            $this->users_model->update($data, $data['id']);
         }
 
     }
 
-    public function status($id)
+    public function status($username)
     {
 
-        $this->data['category'] = $this->users_model->statusChange($id);
+        $this->users_model->statusChange($username);
         $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         $this->redirectToHome("listing");
 

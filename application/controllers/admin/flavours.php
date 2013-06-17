@@ -12,7 +12,7 @@ class Flavours extends Crud_Controller
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
-        $this->output->enable_profiler(false);
+
 
     }
 
@@ -82,11 +82,11 @@ class Flavours extends Crud_Controller
         $data = $this->input->post();
         if (empty($data['flavour_id'])) {
 
-            $this->flavours_model->create($data);
+            $this->flavours_model->insert($data);
 
             $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
         } else {
-            $this->flavours_model->save($data, $data['flavour_id']);
+            $this->flavours_model->update($data, $data['flavour_id']);
 
             $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         }

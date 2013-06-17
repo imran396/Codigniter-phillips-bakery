@@ -53,9 +53,11 @@ $lang['customers'] 		 	                        = 'Customers';
 $lang['orders'] 		 	                    = 'Cake Orders';
 $lang['manage_users'] 		 	                = 'Manage Employers';
 $lang['users'] 		 	                = 'Employers';
+$lang['manage_access'] 		 	                    = 'Manage Access Control';
 $lang['roles'] 		 	                    = 'Manage Roles';
-$lang['access'] 		 	                    = 'Access';
-$lang['access_control'] 		 	                    = 'Access Control';
+$lang['access_controller'] 		 	                    = 'Manage Controller';
+$lang['access_control'] 		 	                    = 'Manage Access';
+$lang['role_group'] 		 	                    = 'Role Group';
 
 /*################## Site Message for success  #############*/
 $lang['insert_msg']="Data has been insert successfully";

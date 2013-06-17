@@ -7,11 +7,15 @@ class Employees extends API_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('users_model');
     }
 
     public function index()
     {
-        $data = array(
+
+        $data = $this->users_model->getAll();
+
+       /* $data = array(
             array(
                 'user_id'     => 1,
                 'employee_id' => 'SP-10001',
@@ -33,7 +37,7 @@ class Employees extends API_Controller
                 'last_name'   => "Ahmed",
                 'role'        => "employee"
             )
-        );
+        );*/
 
         $this->sendOutput($data);
     }

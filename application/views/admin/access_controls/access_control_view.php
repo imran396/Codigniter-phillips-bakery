@@ -10,15 +10,16 @@
     <br/>
     <div class="innerLR">
     <table class="table table-bordered table-striped" >
+        <tr><td><?php echo $this->lang->line('role_group'); ?></td></tr>
         <tr><td>
 
                 <form action="" method="get" onsubmit="access" >
                 <select onclick="" style="width: 100%;"  name="control_id" onchange="window.location=this.value">
-                     <option value="<?php echo site_url('admin/access_control/access/0')?>" >---<?php echo $this->lang->line('select_one');?>---</option>
+                     <option value="<?php echo site_url('admin/access_controls/access/0')?>" >---<?php echo $this->lang->line('select_one');?>---</option>
                     <?php
                     foreach($groupresult as $group):
                         ?>
-                        <option value="<?php echo site_url('admin/access_control/access/'.$group->id)?>" <?php if($group_id == $group->id ){ echo "selected='selected'"; } ?> ><?php echo $group->name; ?></option>
+                        <option value="<?php echo site_url('admin/access_controls/access/'.$group->id)?>" <?php if($group_id == $group->id ){ echo "selected='selected'"; } ?> ><?php echo $group->name; ?></option>
                     <?php endforeach; ?>
 
                 </select>
@@ -28,7 +29,7 @@
 
     </table>
         </div>
-    <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/access_control/save/<?php echo $this->uri->segment(4,0)?>" name="form1" id="form1">
+    <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/access_controls/save/<?php echo $this->uri->segment(4,0)?>" name="form1" id="form1">
          <div class="innerLR">
 
      <div class="tab-content" style="padding: 0;">

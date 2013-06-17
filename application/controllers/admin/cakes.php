@@ -10,26 +10,16 @@ class Cakes extends Crud_Controller
         $this->load->library('image_lib');
         $this->layout->setLayout('layout_admin');
         $this->load->model('cakes_model');
+        $log_status = $this->ion_auth->logged_in();
+        $this->access_model->logged_status($log_status);
+        $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
 
     }
 
     public function index()
     {
-        $group = $this->session->userdata('group');
 
-        if (!$this->ion_auth->logged_in())
-        {
-            redirect('auth/login', 'refresh');
-        }
-        elseif (!$this->ion_auth->is_group($group))
-        {
-            redirect('/admin', 'refresh');
-        }
-        else
-        {
-            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            $this->data['users'] = $this->ion_auth->get_users_array();
-        }
+
 
         $this->data['catresult'] = $this->cakes_model->getCategories();
         $this->data['flvresult'] = $this->cakes_model->getFlavours();
@@ -77,6 +67,7 @@ class Cakes extends Crud_Controller
 
     public function edit($id)
     {
+
 
         $this->data['queryup'] = $this->cakes_model->getcakes($id);
         $this->data['active']=$this->uri->segment(2,0);

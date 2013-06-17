@@ -113,6 +113,11 @@ class Locations_model extends Crud_Model
 
     }
 
+    public function getAll()
+    {
+        return $this->db->select('location_id,title,address1,address2,city,province,postal_code,country,pos_api,surcharge')->order_by('location_id','DSC')->get('locations')->result();
+    }
+
 
 
 }

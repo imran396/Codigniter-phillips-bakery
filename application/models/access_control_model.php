@@ -44,7 +44,7 @@ class Access_control_model extends Ci_Model
     public function getControllers()
     {
 
-       return $this->db->select('*')->where('status',1)->order_by("control_id", "asc")->get('user_control')->result();
+       return $this->db->select('*')->where('status',1)->order_by("ordering", "asc")->get('user_control')->result();
 
     }
 

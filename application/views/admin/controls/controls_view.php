@@ -56,15 +56,14 @@
 <div class="separator"></div>
 <div class="innerLR">
     <div class="widget widget-gray widget-body-white">
-        <div class="widget-head">
-            <h4 class="heading">Primary Table</h4>
-        </div>
+
         <div class="widget-body" style="padding: 10px 0;">
-            <table class="table table-bordered table-primary">
+            <table class="table table-bordered table-primary js-table-sortable">
                 <thead>
                 <tr>
                     <th class="center">No.</th>
-                    <th><?php echo $this->lang->line('role');?></th>
+                    <th><?php echo $this->lang->line('controller_name');?></th>
+                    <th style="width: 1%;" class="center"><?php echo $this->lang->line('drag');?></th>
                     <th><?php echo $this->lang->line('action');?></th>
                 </tr>
                 </thead>
@@ -73,13 +72,18 @@
                 <?php
                 $i=1;
                 foreach($result as  $rows ) :?>
-                    <tr>
+                    <tr class="selectable" id="listItem_<?php echo $rows->control_id; ?>">
                         <td class="center"><?php echo $i; ?></td>
                         <td><?php echo $rows->controller_name; ?></td>
+                        <td class="center js-sortable-handle"><span  class="glyphicons btn-action single move" style="margin-right: 0;"><i></i></span></td>
                         <td>
-                            <a class="glyphicons no-js glyphicons-ok <?php if($rows->status ==1 ){ echo 'ok'; }else{ echo 'ban';}?>" href="/admin/controls/status/<?php echo $rows->control_id; ?>"><i></i></a>
-                            <a class="glyphicons no-js edit glyphicons-edit" href="/admin/controls/edit/<?php echo $rows->control_id; ?>"><i></i></a>
-                            <a class="glyphicons no-js remove_2 glyphicons-delete" href="/admin/controls/remove/<?php echo $rows->control_id; ?>"><i></i></a>
+
+                            <a href="/admin/controls/status/<?php echo $rows->control_id; ?>" class="btn-action glyphicons btn <?php if($rows->status ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
+                            <a class="btn-action glyphicons pencil btn-success" href=/admin/controls/edit/<?php echo $rows->control_id; ?>"><i></i></a>
+                            <a class="btn-action glyphicons remove_2 btn-danger" href="/admin/controls/remove/<?php echo $rows->control_id; ?>"><i></i></a>
+
+
+
                         </td>
                     </tr>
                     <?php $i++; endforeach; ?>
@@ -89,11 +93,30 @@
     </div>
 
 </div>
-
 <div class="separator"></div>
+</div>
+<script type="text/javascript">
 
+    $(document).ready(function() {
 
-</div>
-</div>
-<br/>
-</div>
+        $(".js-table-sortable").sortable({
+            opacity: '0.5',
+            axis:'vertically',
+            handle : '.js-sortable-handle',
+            update : function () {
+                var order = $(this).sortable('serialize');
+                console.log(order);
+                $.ajax({
+                    type: "POST",
+                    url:"<?php echo site_url('admin/controls/sorting')?>",
+                    data:order,
+                    cache: false,
+                    success: function(html){
+                        $('#loader').html(html);
+                    }
+                });
+            }
+        });
+    });
+
+</script>

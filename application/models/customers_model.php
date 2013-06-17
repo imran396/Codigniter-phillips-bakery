@@ -55,7 +55,6 @@ class Customers_model extends Crud_Model
 
     public function getcustomers($customer_id)
     {
-
         return $this->db->select('*')->where(array('customer_id'=>$customer_id))->get('customers')->result();
 
     }
@@ -110,6 +109,11 @@ class Customers_model extends Crud_Model
             }
         }
 
+    }
+
+    public function getAll()
+    {
+        return $this->db->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('customer_id','asc')->get('customers')->result();
     }
 
 

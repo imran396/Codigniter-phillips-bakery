@@ -15,10 +15,13 @@
             <ul class="dropdown-menu pull-right">
                 <li class="highlight profile">
 							<span>
-								<span class="heading">Profile <a href="admin/users/edit/<?php echo $this->session->userdata('username'); ?>" class="pull-right">edit</a></span>
+								<span class="heading">Profile <a href="/admin/users/profile" class="pull-right">edit</a></span>
 								<span class="img"></span>
 								<span class="details">
-									<a href="admin/users/edit/<?php echo $this->session->userdata('username'); ?>"><?php echo $this->session->userdata('username'); ?></a>
+									<a href="/admin/users/profile">
+                                    <?php
+                                        $user = $this->ion_auth->get_user($this->session->userdata('user_id'));
+                                       echo $user->first_name.' '.$user->last_name; ?></a>
 								</span>
 								<span class="clearfix"></span>
 							</span>

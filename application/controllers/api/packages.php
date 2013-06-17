@@ -7,11 +7,15 @@ class Packages extends API_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('packages_model');
     }
 
     public function index()
     {
-        $data = array(
+
+        $data = $this->packages_model->getAll();
+
+        /*$data = array(
             array(
                 'flavour_id'    => 1,
                 'flavour_title' => "Banana Chocolate",
@@ -34,7 +38,7 @@ class Packages extends API_Controller
                     array('serving_id' => 8, 'title' => '60-80', 'size' => 'Full slab', 'price' => 160.00),
                 )
             )
-        );
+        );*/
 
         $this->sendOutput($data);
     }

@@ -64,8 +64,21 @@ class Controls_model extends Crud_Model
     public function getListing()
     {
 
-        return $this->db->select('*')->get('user_control')->result();
+        return $this->db->select('*')->order_by('ordering','asc')->get('user_control')->result();
 
+    }
+
+    public function sortingList()
+    {
+
+        foreach ($_POST['listItem'] as $position => $item) :
+
+            $array=array('ordering'=>$position);
+            $this->db->set($array);
+            $this->db->where(array('control_id'=>$item));
+            $this->db->update('user_control');
+
+        endforeach;
     }
 
     public function statusChange($id){

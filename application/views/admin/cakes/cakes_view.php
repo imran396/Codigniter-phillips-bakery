@@ -104,7 +104,12 @@
                                     <label class="control-label"><?php echo $this->lang->line('shapes');?></label>
                                     <div class="separator"></div>
                                     <?php
-                                    $shape_id = (isset($queryup[0]->shape_id))? $queryup[0]->shape_id:serialize(array());
+                                    if(isset($queryup[0]->cake_id) > 0){
+                                        $shape_id =($queryup[0]->shape_id !="" ) ? $queryup[0]->shape_id : serialize(array());
+                                    }else{
+                                        $shape_id =(isset($queryup[0]->shape_id)) ? $queryup[0]->shape_id : serialize(array());
+                                    }
+
                                     $shapeid=(unserialize($shape_id));
                                     foreach($sapresult as $shapes):
                                     ?>

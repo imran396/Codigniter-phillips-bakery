@@ -53,7 +53,10 @@ class Access_model extends Ci_Model
 
                 redirect();
         }
+        //exit;
 
     }
+
+
 
 }

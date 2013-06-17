@@ -12,14 +12,18 @@ class flavours_model extends Crud_Model
 
     }
 
-    public function create($data)
+
+
+    public function insert($data)
     {
-        $this->insert($data);
+        $data['tire_id'] = ($data['tire_id'] !="") ? serialize($data['tire_id']):'';
+        $this->db->set($data)->insert('flavours');
     }
 
-    public function save($data, $id)
+    public function update($data, $id)
     {
-        $this->update($data, $id);
+        $data['tire_id'] = ($data['tire_id'] !="") ? serialize($data['tire_id']):'';
+        $this->db->set($data)->where(array('flavour_id'=>$id))->update('flavours');
     }
 
     public function deleteDataExisting($data=0){

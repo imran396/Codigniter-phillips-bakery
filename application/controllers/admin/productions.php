@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 
-class Production extends Crud_Controller
+class Productions extends Crud_Controller
 {
     public function __construct()
     {
@@ -11,6 +11,9 @@ class Production extends Crud_Controller
         $this->layout->setLayout('layout_custom');
 
         $this->load->model('servings_model');
+        $log_status = $this->ion_auth->logged_in();
+        $this->access_model->logged_status($log_status);
+        $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
 
     }
 

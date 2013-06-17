@@ -34,7 +34,7 @@
                         <th><?php echo $this->lang->line('category_id');?></th>
                         <th><?php echo $this->lang->line('flavour_id');?></th>
                         <th style="width: 1%;" class="center"><?php echo $this->lang->line('drag');?></th>
-                        <th><?php echo $this->lang->line('action');?></th>
+                        <th style="width: 90px"><?php echo $this->lang->line('action');?></th>
                     </tr>
                     </thead>
                     <tbody>

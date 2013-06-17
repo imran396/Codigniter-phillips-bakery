@@ -54,6 +54,28 @@
 
                                 </div>
                                 <div class="control-group uniformjs">
+                                    <label class="control-label"><?php echo $this->lang->line('tires');?></label>
+                                    <div class="separator"></div>
+                                    <?php
+
+
+                                   if(isset($queryup[0]->flavour_id) > 0){
+                                        $tire_id =($queryup[0]->tire_id !="" ) ? $queryup[0]->tire_id : serialize(array());
+                                    }else{
+                                        $tire_id =(isset($queryup[0]->tire_id)) ? $queryup[0]->tire_id : serialize(array());
+                                    }
+
+                                    $tireid=(unserialize($tire_id));
+                                    for($i=1; 10 >= $i ; $i++ ){ ?>
+
+                                        <label class="radio">
+                                            <input type="checkbox" class="radio" name="tire_id[]" value="<?php echo $i;?>" <?php if( in_array($i, $tireid) ){ ?> checked="checked"<?php } ?> />
+                                            <p style="line-height: 10px; display: inline-block "><?php echo $i;?></p>
+                                        </label>
+                                      <?php } ?>
+
+                                </div>
+                                <div class="control-group uniformjs">
                                     <label class="control-label"><?php echo $this->lang->line('status');?></label>
                                     <div class="separator"></div>
                                     <?php $status = (isset($queryup[0]->status))? $queryup[0]->status:1; ?>
