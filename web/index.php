@@ -27,7 +27,7 @@
  * Different environments will require different levels of error reporting.
  * By default development will show errors but testing and live will hide them.
  */
-error_reporting(0);
+
 ini_set('display_errors',1);
 
 if (defined('ENVIRONMENT'))
@@ -35,7 +35,7 @@ if (defined('ENVIRONMENT'))
 	switch (ENVIRONMENT)
 	{
 		case 'development':
-			error_reporting(E_ALL);
+			error_reporting(0);
 		break;
 	
 		case 'testing':
