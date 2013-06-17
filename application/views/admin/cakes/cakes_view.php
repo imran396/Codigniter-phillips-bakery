@@ -101,10 +101,10 @@
                                 <div class="control-group uniformjs">
                                     <label class="control-label"><?php echo $this->lang->line('tires');?></label>
                                     <div class="separator"></div>
-                                    <select class=" " style="width: 100%;"  name="tire_id">
+                                    <select class=" " style="width: 100%;"  name="tire">
                                         <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
                                         <?php
-                                        $tire_id = (isset($queryup[0]->tire_id))? $queryup[0]->tire_id:set_value('tire_id');
+                                        $tire_id = (isset($queryup[0]->tire))? $queryup[0]->tire:set_value('tire');
                                         for($i=1; 10 >= $i ; $i++ ){
                                             ?>
                                             <option value="<?php echo $i;  ?>" <?php if($tire_id== $i){ echo "selected='selected'"; } ?> ><?php echo $i ." Tire";  ?></option>

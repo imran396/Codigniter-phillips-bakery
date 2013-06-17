@@ -228,7 +228,7 @@ class Cakes_model extends CI_Model
     public function getAll_(){
       $imageurlprefix = base_url().'assets';
       $sql = "SELECT
-                C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.tire_id,
+                C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.tire,
               GROUP_CONCAT(G.image ORDER BY G.gallery_id ASC SEPARATOR ',') as gallery_images
               FROM cakes As C
               LEFT JOIN cake_gallery AS G
@@ -242,7 +242,7 @@ class Cakes_model extends CI_Model
           $data[$key]['category_id'] = (int) $data[$key]['category_id'];
           $data[$key]['flavour_id'] = (int) $data[$key]['flavour_id'];
           $data[$key]['image'] = !empty($data[$key]['image']) ? base_url().$data[$key]['image'] : "";
-          $data[$key]['tire_id'] = (int) $data[$key]['tire_id'];
+          $data[$key]['tire'] = (int) $data[$key]['tire'];
           $data[$key]['gallery_images'] = explode(',', $row['gallery_images']);
           $data[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$data[$key]['gallery_images']);
           $data[$key]['shapes'] =  !empty($row['shapes']) ? unserialize($row['shapes']): "";
