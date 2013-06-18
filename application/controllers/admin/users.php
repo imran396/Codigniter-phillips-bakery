@@ -48,14 +48,20 @@ class users extends Crud_Controller
                 $username = strtolower($this->input->post('username'));
                 $email = $this->input->post('email');
                 $password = $this->input->post('password');
+                $row=$this->db->select('id')->order_by('id','desc')->limit(1)->get('meta')->row();
+                $last_id = $row->id;
+                $employee_id = "SP-1000".$last_id;
 
                 $additional_data = array(
                     'first_name' => $this->input->post('first_name'),
                     'last_name' => $this->input->post('last_name'),
                     'group_id' => $this->input->post('group_id'),
                     'location_id' => $this->input->post('location_id'),
+                    'employee_id' => $employee_id,
                     'status' => 1
                 );
+                //print_r($additional_data);
+               // exit;
             }
 
             if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data))
