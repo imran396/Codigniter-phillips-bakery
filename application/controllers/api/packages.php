@@ -13,9 +13,9 @@ class Packages extends API_Controller
     public function index()
     {
 
-        $data = $this->packages_model->getAll();
+       // $data = $this->packages_model->getAll();
 
-        /*$data = array(
+        $data = array(
             array(
                 'flavour_id'    => 1,
                 'flavour_title' => "Banana Chocolate",
@@ -37,8 +37,21 @@ class Packages extends API_Controller
                     array('serving_id' => 7, 'title' => '40-50', 'size' => '1/2 slab', 'price' => 96.00),
                     array('serving_id' => 8, 'title' => '60-80', 'size' => 'Full slab', 'price' => 160.00),
                 )
-            )
-        );*/
+            ),
+             array(
+                    'flavour_id'    => 3,
+                    'flavour_title' => "Grand Marnier",
+                    'fondant'       => 0,
+                    'servings'      => array(
+                        array('serving_id' => 3, 'title' => '10-12', 'size' => '8" round', 'price' => 35.00),
+                        array('serving_id' => 4, 'title' => '12-15', 'size' => '9" round', 'price' => 45.00),
+                        array('serving_id' => 5, 'title' => '15-20', 'size' => '10" round', 'price' => 48.00),
+                        array('serving_id' => 6, 'title' => '20-30', 'size' => '1/4 slab', 'price' => 70.00),
+                        array('serving_id' => 7, 'title' => '40-50', 'size' => '1/2 slab', 'price' => 85.00),
+                        array('serving_id' => 8, 'title' => '60-80', 'size' => 'Full slab', 'price' => 120.00),
+                    )
+                )
+        );
 
         $this->sendOutput($data);
     }
