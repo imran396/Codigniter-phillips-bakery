@@ -41,8 +41,8 @@ class Cakes_model extends CI_Model
 
             $config['source_image']   = $image;
             $config['maintain_ratio'] = false;
-            $config['width']          = 350;
-            $config['height']         = 200;
+            $config['width']          = 200;
+            $config['height']         = 125;
 
             $this->image_lib->resize();
             $this->fileDelete($id);
