@@ -21,6 +21,7 @@ class Cakes_model extends CI_Model
     {
         $data['shape_id'] = ($data['shape_id'] !="") ? serialize($data['shape_id']):'';
         $this->db->set($data)->insert('cakes');
+        return $this->db->insert_id();
     }
 
     public function doUpload($id)
@@ -83,15 +84,18 @@ class Cakes_model extends CI_Model
     private function update($data, $id)
     {
 
-        $shape_arr= ($data['shape_id'] !="") ? serialize($data['shape_id']):'';
 
-        $this->db->set(array('title' => $data['title'], 'description' => $data['description'], 'start_price' => $data['start_price'], 'end_price' => $data['end_price'], 'category_id' => $data['category_id'], 'flavour_id' => $data['flavour_id'], 'shape_id' =>$shape_arr, 'meta_tag' => $data['meta_tag'], 'status' => $data['status']))->where(array('cake_id' => $id))->update('cakes');
+        $data['shape_id'] = ($data['shape_id'] !="") ? serialize($data['shape_id']):'';
+        $this->db->set($data)->where(array('cake_id' => $id))->update('cakes');
     }
 
     public function delete($id)
     {
         if (!$this->deleteDataExisting($id) > 0) {
-            $this->remove($id);
+
+            $this->fileDelete($id);
+            $this->db->where(array('cake_id'=> $id))->delete('cakes');
+
             $this->session->set_flashdata('delete_msg', $this->lang->line('delete_msg'));
         } else {
             $this->session->set_flashdata('warning_msg', $this->lang->line('existing_data_msg'));
@@ -228,7 +232,7 @@ class Cakes_model extends CI_Model
     public function getAll_(){
       $imageurlprefix = base_url().'assets';
       $sql = "SELECT
-                C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.tire,
+                C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.tiers,
               GROUP_CONCAT(G.image ORDER BY G.gallery_id ASC SEPARATOR ',') as gallery_images
               FROM cakes As C
               LEFT JOIN cake_gallery AS G
@@ -242,7 +246,7 @@ class Cakes_model extends CI_Model
           $data[$key]['category_id'] = (int) $data[$key]['category_id'];
           $data[$key]['flavour_id'] = (int) $data[$key]['flavour_id'];
           $data[$key]['image'] = !empty($data[$key]['image']) ? base_url().$data[$key]['image'] : "";
-          $data[$key]['tire'] = (int) $data[$key]['tire'];
+          $data[$key]['tiers'] = (int) $data[$key]['tiers'];
           $data[$key]['gallery_images'] = explode(',', $row['gallery_images']);
           $data[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$data[$key]['gallery_images']);
           $data[$key]['shapes'] =  !empty($row['shapes']) ? unserialize($row['shapes']): "";

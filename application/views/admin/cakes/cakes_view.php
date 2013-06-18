@@ -99,15 +99,15 @@
 
                                 </div>
                                 <div class="control-group uniformjs">
-                                    <label class="control-label"><?php echo $this->lang->line('tires');?></label>
+                                    <label class="control-label"><?php echo $this->lang->line('tiers');?></label>
                                     <div class="separator"></div>
-                                    <select class=" " style="width: 100%;"  name="tire">
+                                    <select class=" " style="width: 100%;"  name="tiers">
                                         <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
                                         <?php
-                                        $tire_id = (isset($queryup[0]->tire))? $queryup[0]->tire:set_value('tire');
+                                        $tiers = (isset($queryup[0]->tiers))? $queryup[0]->tiers:set_value('tiers');
                                         for($i=1; 10 >= $i ; $i++ ){
                                             ?>
-                                            <option value="<?php echo $i;  ?>" <?php if($tire_id== $i){ echo "selected='selected'"; } ?> ><?php echo $i ." Tire";  ?></option>
+                                            <option value="<?php echo $i;  ?>" <?php if($tiers== $i){ echo "selected='selected'"; } ?> ><?php echo $i .$this->lang->line('tiers'); ?></option>
                                         <?php } ?>
 
                                     </select>
