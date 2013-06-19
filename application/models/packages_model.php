@@ -11,20 +11,12 @@ class Packages_model extends Ci_Model
 
 
     public function getAll(){
+
         $sql = ("SELECT *
             FROM price_matrix
             LEFT JOIN servings ON price_matrix.serving_id = servings.serving_id
             LEFT JOIN flavours ON price_matrix.flavour_id = flavours.flavour_id"
         );
-
-        $this->db->select('users.id,meta.employee_id,meta.first_name,meta.last_name,groups.name as role');
-        $this->db->from('users');
-        $this->db->join('groups', ' groups.id = users.group_id');
-        $this->db->join('meta', 'meta.user_id = users.id');
-        $data = $this->db->get()->result_array();
-        foreach($data as $key => $val){
-            $data[$key]['id'] = (int)  $data[$key]['id'];
-        }
 
         $data = $this->db->query($sql)->result_array();
         $output = array();
