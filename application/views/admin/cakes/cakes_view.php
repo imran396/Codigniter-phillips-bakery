@@ -92,7 +92,7 @@
                                     ?>
 
                                     <label class="radio">
-                                        <input type="checkbox" class="radio" name="shape_id[]" value="<?php echo $shapes->shape_id;?>" <?php if( in_array($shapes->shape_id, $shapeid) ){?> checked="checked" <?php } ?> />
+                                        <input type="checkbox" class="radio" name="shape_id[]" value="<?php echo $shapes->title;?>" <?php if( in_array($shapes->title, $shapeid) ){?> checked="checked" <?php } ?> />
                                         <?php echo $shapes->title;?>
                                     </label>
                                     <?php endforeach; ?>
