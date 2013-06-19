@@ -13,9 +13,9 @@ class Packages extends API_Controller
     public function index()
     {
 
-       // $data = $this->packages_model->getAll();
+       $data = $this->packages_model->getAll();
 
-        $data = array(
+        /*$data = array(
             array(
                 'flavour_id'    => 1,
                 'flavour_title' => "Banana Chocolate",
@@ -52,6 +52,7 @@ class Packages extends API_Controller
                     )
                 )
         );
+        */
 
         $this->sendOutput($data);
     }
