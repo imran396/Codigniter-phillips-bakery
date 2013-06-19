@@ -22,14 +22,14 @@ class Packages_model extends Ci_Model
         $output = array();
         foreach($data as $key => $val){
                $flavour_id =  $val['flavour_id'];
-               $output[$flavour_id]['flavour_id'] = $flavour_id;
+               $output[$flavour_id]['flavour_id'] = (int) $flavour_id;
                $output[$flavour_id]['flavour_title']  = $val['title'];
                $output[$flavour_id]['fondant']  = $val['fondant'];
                $count = isset($output[$flavour_id]["servings"]) ? count($output[$flavour_id]["servings"]) : 0;
-               $output[$flavour_id]["servings"][$count]['serving_id'] = $val['price_matrix_id'];
+               $output[$flavour_id]["servings"][$count]['serving_id'] = (int) $val['price_matrix_id'];
                $output[$flavour_id]["servings"][$count]['title'] = $val['title'];
                $output[$flavour_id]["servings"][$count]['size'] = $val['size'];
-               $output[$flavour_id]["servings"][$count]['price'] = $val['price'];
+               $output[$flavour_id]["servings"][$count]['price'] = (float) $val['price'];
          }
 
          return $output;
