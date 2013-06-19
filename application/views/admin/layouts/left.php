@@ -19,7 +19,7 @@ $array = array('roles','controls','access_controls');
                 <a data-toggle="collapse" class="glyphicons show_thumbnails_with_lines" href="#cake_menu"><i></i><span onclick="window.location='/admin/cakes/listing'"><?php echo $this->lang->line('cakes'); ?></span></a>
                 <ul class="collapse <?php echo (!empty($active) && ($active == 'cakes' || $active == 'gallery' )) ? 'in' : ''; ?>" id="cake_menu">
                     <li class="<?php echo (!empty($active) && $active == 'cakes') ? 'active' : ''; ?>"><a href="/admin/cakes/listing"><span><?php echo $this->lang->line('cakes'); ?></span></a></li>
-                    <li class="<?php echo (!empty($active) && $active == 'gallery') ? 'active' : ''; ?>"><a href="/admin/gallery"><span><?php echo $this->lang->line('gallery'); ?></span></a></li>
+                    <li class="<?php echo (!empty($active) && $active == 'gallery') ? 'active' : ''; ?>"><a href="/admin/gallery/listing"><span><?php echo $this->lang->line('gallery'); ?></span></a></li>
                 </ul>
             </li>
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'locations') ? 'active' : ''; ?>"><a href="/admin/locations/listing"><i></i><span><?php echo $this->lang->line('locations'); ?></span></a></li>

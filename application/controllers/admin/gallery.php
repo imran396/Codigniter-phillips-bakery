@@ -161,12 +161,12 @@ class Gallery extends Crud_Controller
 
     }
 
-    public function save()
+    public function save_data()
     {
 
 
-        $this->input->post('cake_id');
-        if (!empty($_POST)) {
+        $cake_id=$this->input->post('cake_id');
+        if (!empty($cake_id)) {
             $this->addValidation();
             if ($this->form_validation->run()) {
                 $this->saveData();

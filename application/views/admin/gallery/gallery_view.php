@@ -6,16 +6,9 @@
             <li><?php echo $this->lang->line('cake_gallery');?></li>
         </ul>
     <br/>
-    <div class="menubar">
-        <ul>
-            <li><a href="/admin/gallery"><?php echo $this->lang->line('add_gallery'); ?></a></li>
-            <li class="divider"></li>
-            <li><a href="/admin/gallery/listing"><?php echo $this->lang->line('list'); ?></a></li>
-        </ul>
-    </div>
     <?php $this->load->view('admin/layouts/message'); ?>
     <br/>
-    <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/gallery/save" name="form1" id="pluploadForm">
+    <form method="post" action="/admin/gallery/save_data" name="form1" id="pluploadForm">
         <div class="innerLR">
             <div class="widget widget-2">
                 <div class="widget-head">
@@ -78,7 +71,7 @@
             unique_names : true,
 
             // Resize images on clientside if we can
-            resize : {width : 320, height : 240, quality : 90},
+            //resize : {width : 320, height : 240, quality : 90},
 
             // Specify what files to browse for
             filters : [
@@ -93,25 +86,25 @@
             silverlight_xap_url : 'theme/scripts/plupload/js/plupload.silverlight.xap'
         });
 
-        // Client side form validation
-        $('#pluploadForm').submit(function(e) {
-            var uploader = $('#pluploadUploader').pluploadQueue();
-
-            // Files in queue upload them first
-            if (uploader.files.length > 0) {
-                // When all files are uploaded submit form
-                uploader.bind('StateChanged', function() {
-                    if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
-                        $('#pluploadForm').submit();
-                    }
-                });
-
-                uploader.start();
-            } else {
-                alert('You must queue at least one file.');
-            }
-
-            return false;
-        });
+//        // Client side form validation
+//        $('#pluploadForm').submit(function(e) {
+//            var uploader = $('#pluploadUploader').pluploadQueue();
+//
+//            // Files in queue upload them first
+//            if (uploader.files.length > 0) {
+//                // When all files are uploaded submit form
+//                uploader.bind('StateChanged', function() {
+//                    if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
+//                        $('#pluploadForm').submit();
+//                    }
+//                });
+//
+//                uploader.start();
+//            } else {
+//                alert('You must queue at least one file.');
+//            }
+//
+//            return false;
+//        });
     });
 </script>
