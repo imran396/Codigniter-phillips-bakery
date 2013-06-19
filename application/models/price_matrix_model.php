@@ -15,7 +15,8 @@ class Price_matrix_model extends Ci_Model
 
         $flavour = ($this->input->post('flavour_id'));
         $this->remove($location_id);
-
+        $query="TRUNCATE TABLE `price_matrix`";
+        $this->db->query($query);
         foreach ($flavour as $flav):
             $serving = $this->input->post('serving_id_'.$flav);
             $price = $this->input->post('price_'.$flav);
