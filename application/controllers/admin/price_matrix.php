@@ -18,7 +18,7 @@ class Price_matrix extends Crud_Controller
     {
 
 
-        $this->data['location_id']=0;
+        $this->data['location_id']=1;
         $this->data['serresult'] = $this->price_matrix_model->getServings();
         $this->data['locresult'] = $this->price_matrix_model->getLocations();
         $this->data['flvresult'] = $this->price_matrix_model->getFlavours();
