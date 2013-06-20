@@ -34,7 +34,7 @@ class Packages_model extends Ci_Model
             $output[$flavours[$flavour_id]]['fondant'] = (int) $val['fondant'];
             $count = isset($output[$flavours[$flavour_id]]["servings"]) ? count($output[$flavours[$flavour_id]]["servings"]) : 0;
             $output[$flavours[$flavour_id]]["servings"][$count]['serving_id'] = (int) $val['price_matrix_id'];
-            $output[$flavours[$flavour_id]]["servings"][$count]['servings_title'] = $val['servings_title'];
+            $output[$flavours[$flavour_id]]["servings"][$count]['title'] = $val['servings_title'];
             $output[$flavours[$flavour_id]]["servings"][$count]['size'] = $val['size'];
             $output[$flavours[$flavour_id]]["servings"][$count]['price'] =(float) $val['price'];
         }
