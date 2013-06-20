@@ -11,7 +11,7 @@
     <div class="separator"></div>
 
     <div class="heading-buttons">
-        <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('flavours');?></h3>
+        <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('gallery');?></h3>
         <div class="buttons pull-right">
             <a href="/admin/gallery" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add page</a>
         </div>
