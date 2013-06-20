@@ -107,6 +107,7 @@
                                         $tiers = (isset($queryup[0]->tiers))? $queryup[0]->tiers:set_value('tiers');
                                         for($i=1; 10 >= $i ; $i++ ){
                                             ?>
+                                            <?php echo set_select('myselect', 'one', TRUE); ?>
                                             <option value="<?php echo $i;  ?>" <?php if($tiers== $i){ echo "selected='selected'"; } ?> ><?php echo $i .$this->lang->line('tiers'); ?></option>
                                         <?php } ?>
 

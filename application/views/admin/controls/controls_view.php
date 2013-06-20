@@ -27,13 +27,13 @@
 
         <div class="control-group">
             <label class="control-label" for="status"><?php echo $this->lang->line('status');?></label>
-            <?php $status = isset($queryup[0]->status) ? $queryup[0]->status :1 ?>
+            <?php $status = isset($queryup[0]->active) ? $queryup[0]->active :1 ?>
             <div class="controls">    <label class="radio" style="margin-right:20px; margin-left:10px ">
-                    <input type="radio" class="radio" controller_name="status" <?php if($status == 1 ){ ?> checked="checked" <?php } ?> value="1" />
+                    <input type="radio" class="radio" name="active" <?php if($status == 1 ){ ?> checked="checked" <?php } ?> value="1" />
                     <?php echo $this->lang->line('publish');?>
                 </label>
                 <label class="radio" >
-                    <input type="radio" class="radio" controller_name="status" value="1" <?php if($status == 0 ){ ?> checked="checked" <?php } ?> />
+                    <input type="radio" class="radio" name="active" value="1" <?php if($status == 0 ){ ?> checked="checked" <?php } ?> />
                     <?php echo $this->lang->line('unpublish');?>
                 </label></div>
 
@@ -78,7 +78,7 @@
                         <td class="center js-sortable-handle"><span  class="glyphicons btn-action single move" style="margin-right: 0;"><i></i></span></td>
                         <td>
 
-                            <a href="/admin/controls/status/<?php echo $rows->control_id; ?>" class="btn-action glyphicons btn <?php if($rows->status ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
+                            <a href="/admin/controls/status/<?php echo $rows->control_id; ?>" class="btn-action glyphicons btn <?php if($rows->active ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
                             <a class="btn-action glyphicons pencil btn-success" href=/admin/controls/edit/<?php echo $rows->control_id; ?>"><i></i></a>
                             <a class="btn-action glyphicons remove_2 btn-danger" href="/admin/controls/remove/<?php echo $rows->control_id; ?>"><i></i></a>
 
