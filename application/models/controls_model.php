@@ -84,12 +84,12 @@ class Controls_model extends Crud_Model
     public function statusChange($id){
 
         $row=$this->getcontrols($id);
-        if($row[0]->status == 1 ){
-            $status=0;
+        if($row[0]->active == 1 ){
+            $active=0;
         }else{
-            $status=1;
+            $active=1;
         }
-        $this->db->where(array('control_id'=>$id))->set(array('status'=>$status))->update('user_control');
+        $this->db->where(array('control_id'=>$id))->set(array('active'=>$active))->update('user_control');
 
     }
 

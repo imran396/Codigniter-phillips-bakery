@@ -45,7 +45,7 @@ class Access_model extends Ci_Model
                 $count=$user_access->num_rows();
                 if($count == 0 ){
 
-                    redirect('admin/'.$controller);
+                    redirect('admin/'.$controller.'/listing');
                 }
             }
 
