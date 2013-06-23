@@ -71,7 +71,7 @@
             unique_names : true,
 
             // Resize images on clientside if we can
-            //resize : {width : 320, height : 240, quality : 90},
+            resize : {width : 780, height : 480, quality : 90},
 
             // Specify what files to browse for
             filters : [

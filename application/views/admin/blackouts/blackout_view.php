@@ -1,3 +1,51 @@
+<script type="text/javascript" src="/assets/multi-datepicker/js/jquery.ui.core.js"></script>
+<script type="text/javascript" src="/assets/multi-datepicker/js/jquery.ui.datepicker.js"></script>
+<script type="text/javascript" src="/assets/multi-datepicker/js/jquery-ui.multidatespicker.js"></script>
+
+<script type="text/javascript">
+    <!--
+    var latestMDPver = $.ui.multiDatesPicker.version;
+    var lastMDPupdate = '2012-03-28';
+
+    $(function() {
+        // Version //
+        //$('title').append(' v' + latestMDPver);
+        $('.mdp-version').text('v' + latestMDPver);
+        $('#mdp-title').attr('title', 'last update: ' + lastMDPupdate);
+
+        // Documentation //
+        $('i:contains(type)').attr('title', '[Optional] accepted values are: "allowed" [default]; "disabled".');
+        $('i:contains(format)').attr('title', '[Optional] accepted values are: "string" [default]; "object".');
+        $('#how-to h4').each(function () {
+            var a = $(this).closest('li').attr('id');
+            $(this).wrap('<'+'a href="#'+a+'"></'+'a>');
+        });
+        $('#demos .demo').each(function () {
+            var id = $(this).find('.box').attr('id') + '-demo';
+            $(this).attr('id', id)
+                .find('h3').wrapInner('<'+'a href="#'+id+'"></'+'a>');
+        });
+
+        // Run Demos
+        $('.demo .code').each(function() {
+            eval($(this).attr('title','NEW: edit this code and test it!').text());
+            this.contentEditable = true;
+        }).focus(function() {
+                if(!$(this).next().hasClass('test'))
+                    $(this)
+                        .after('<button class="test">test</button>')
+                        .next('.test').click(function() {
+                            $(this).closest('.demo').find('.box').removeClass('hasDatepicker').empty();
+                            eval($(this).prev().text());
+                            $(this).remove();
+                        });
+            });
+        $('#with-altField').multiDatesPicker({
+            altField: '#altField'
+        });
+    });
+    // -->
+</script>
 <div class="container-fluid fixed container-new">
     <div class="navbar main">
         <div class="icon-wrapper"><a href="/admin" class="icon-home"></a></div>
@@ -14,26 +62,29 @@
     <div id="wrapper">
         <div class="double">
             <div class="col left-bar">
+                <form name="from" id="from" action="/admin/blackouts/save" method="post">
                 <h3>Create a New Blackout</h3>
                 <div class="box box-narrow">
-                    <div class="label">Select Flavor</div>
+                    <div class="label">Select <?php echo $this->lang->line('flavour'); ?></div>
                     <div class="row-fluid row-widest">
-                        <select class="selectpicker span12">
-                            <option>Status</option>
-                            <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>
+                        <select class="selectpicker span12" name="flavour_id">
+                           <?php foreach($blockouts as $rows):?>
+                           <option value="<?php echo $rows->flavour_id; ?>" ><?php echo $rows->title;?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="label">Select Date / Date Range</div>
                     <div class="dates">Date Sept 17 to Sept 26, 2013</div>
                     <div class="controls">
-                        <div  id="datepicker-inline"></div>
+                        <div id="with-altField"></div>
+                        <input type="hidden" id="altField" name="blackout_date">
                     </div>
                     <div class="buttons">
-                        <a href="" class="btn btn-dark">Add to blackouts</a>
+                        <input type="hidden" name="blackouts_id" value="<?php echo isset($queryup[0]->blackouts_id) ? $queryup[0]->blackouts_id :''; ?>">
+                        <input type="submit" value="Add to blackouts"  class="btn btn-dark">
                     </div>
                 </div><!-- End Box -->
+                </form>
             </div><!-- End Left-bar -->
             <div class="col right-bar">
                 <h3>Existing Blackouts</h3>
