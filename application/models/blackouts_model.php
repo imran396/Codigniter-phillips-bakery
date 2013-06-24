@@ -19,7 +19,8 @@ class Blackouts_model extends Crud_Model
 
         $flavour_id=$this->input->post('flavour_id');
         $dbBlack=$this->getBlackouts($flavour_id);
-        if (!$dbBlack[0]->blackout_id > 0 ){
+        $dbblackout = isset($dbBlack[0]->blackout_id)? $dbBlack[0]->blackout_id :0;
+        if (!$dbblackout > 0 ){
 
             $blackout_date      = explode(',',$this->input->post('blackout_date'));
             $final          = array();
