@@ -63,7 +63,7 @@
                                                 <?php foreach($serresult as $type): ?>
                                                     <td>
                                                     <input type="hidden" name="serving_id_<?php echo $flv->flavour_id; ?>[]" value="<?php echo $type->serving_id;  ?>" />
-                                                    <input type="text" class="input-mini" name="price_<?php echo $flv->flavour_id; ?>[]"  value="<?php echo $this->price_matrix_model->getPrice($location_id,$flv->flavour_id,$type->serving_id); ?>"/> </td>
+                                                    <input type="text" class="input-mini numbersOnly" name="price_<?php echo $flv->flavour_id; ?>[]"  value="<?php echo $this->price_matrix_model->getPrice($location_id,$flv->flavour_id,$type->serving_id); ?>"/> </td>
                                                 <?php endforeach; ?>
                                             </tr>
                                         <?php endforeach; ?>
