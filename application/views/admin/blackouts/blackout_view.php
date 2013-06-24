@@ -68,13 +68,14 @@
                     <div class="label">Select <?php echo $this->lang->line('flavour'); ?></div>
                     <div class="row-fluid row-widest">
                         <select class="selectpicker span12" name="flavour_id">
-                           <?php foreach($blockouts as $rows):?>
+                           <option><?php echo $this->lang->line('select_one'); ?></option>
+                            <?php foreach($blockouts as $rows):?>
                            <option value="<?php echo $rows->flavour_id; ?>" ><?php echo $rows->title;?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="label">Select Date / Date Range</div>
-                    <div class="dates">Date Sept 17 to Sept 26, 2013</div>
+                    <div class="label">Select Date / Multiple Date</div>
+<!--                    <div class="dates">Date Sept 17 to Sept 26, 2013</div>-->
                     <div class="controls">
                         <div id="with-altField"></div>
                         <input type="hidden" id="altField" name="blackout_date">
@@ -99,76 +100,22 @@
                             </tr>
                             </thead>
                             <tbody class="overflow">
+                            <?php
+                            foreach($result as $rows ):
+
+                                $blackout_date=explode(',',$rows->blackout_date);
+
+                               // $this->blackouts_model->dateFormate($blackout_date[0]);
+
+                            ?>
                             <tr>
-                                <td><strong>Name of Flavor</strong></td>
-                                <td>Aug 28, 2013</td>
-                                <td><a href="" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a><a href="" class="btn btn-green"><img src="<?php echo base_url() ?>assets/images/icon-pencil.png" alt="" /> Edit</a></td>
+                                <td><strong><?php echo $rows->title; ?></strong></td>
+                                <td><a class="remove_a" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo $rows->blackout_date; ?>" ><?php echo $this->blackouts_model->dateFormate($blackout_date[0]); ?></a></td>
+                                <td><a href="/admin/blackouts/remove/<?php echo $rows->blackout_id; ?>" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a></td>
                             </tr>
-                            <tr>
-                                <td><strong>Vanilla</strong></td>
-                                <td>May 29, 2013</td>
-                                <td><a href="" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a><a href="" class="btn btn-green"><img src="<?php echo base_url() ?>assets/images/icon-pencil.png" alt="" /> Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Chocolate</strong></td>
-                                <td>Feb 4, 2014</td>
-                                <td><a href="" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a><a href="" class="btn btn-green"><img src="<?php echo base_url() ?>assets/images/icon-pencil.png" alt="" /> Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Lemon</strong></td>
-                                <td>Aug 28, 2013</td>
-                                <td><a href="" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a><a href="" class="btn btn-green"><img src="<?php echo base_url() ?>assets/images/icon-pencil.png" alt="" /> Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Carrot</strong></td>
-                                <td>May 29, 2013</td>
-                                <td><a href="" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a><a href="" class="btn btn-green"><img src="<?php echo base_url() ?>assets/images/icon-pencil.png" alt="" /> Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Name of Flavor</strong></td>
-                                <td>Feb 4, 2014</td>
-                                <td><a href="" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a><a href="" class="btn btn-green"><img src="<?php echo base_url() ?>assets/images/icon-pencil.png" alt="" /> Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Name of Flavor</strong></td>
-                                <td>Aug 28, 2013</td>
-                                <td><a href="" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a><a href="" class="btn btn-green"><img src="<?php echo base_url() ?>assets/images/icon-pencil.png" alt="" /> Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Name of Flavor</strong></td>
-                                <td>May 29, 2013</td>
-                                <td><a href="" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a><a href="" class="btn btn-green"><img src="<?php echo base_url() ?>assets/images/icon-pencil.png" alt="" /> Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Name of Flavor</strong></td>
-                                <td>Feb 4, 2014</td>
-                                <td><a href="" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a><a href="" class="btn btn-green"><img src="<?php echo base_url() ?>assets/images/icon-pencil.png" alt="" /> Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Name of Flavor</strong></td>
-                                <td>Aug 28, 2013</td>
-                                <td><a href="" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a><a href="" class="btn btn-green"><img src="<?php echo base_url() ?>assets/images/icon-pencil.png" alt="" /> Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Name of Flavor</strong></td>
-                                <td>May 29, 2013</td>
-                                <td><a href="" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a><a href="" class="btn btn-green"><img src="<?php echo base_url() ?>assets/images/icon-pencil.png" alt="" /> Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Name of Flavor</strong></td>
-                                <td>Feb 4, 2014</td>
-                                <td><a href="" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a><a href="" class="btn btn-green"><img src="<?php echo base_url() ?>assets/images/icon-pencil.png" alt="" /> Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Name of Flavor</strong></td>
-                                <td>Aug 28, 2013</td>
-                                <td><a href="" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a><a href="" class="btn btn-green"><img src="<?php echo base_url() ?>assets/images/icon-pencil.png" alt="" /> Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Name of Flavor</strong></td>
-                                <td>May 29, 2013</td>
-                                <td><a href="" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a><a href="" class="btn btn-green"><img src="<?php echo base_url() ?>assets/images/icon-pencil.png" alt="" /> Edit</a></td>
-                            </tr>
+                            <?php endforeach; ?>
+
+
                             </tbody>
                         </table>
                     </div>
@@ -178,3 +125,11 @@
         </div>
     </div><!-- End Wrapper -->
 </div>
+
+<style type="text/css">
+    .remove_a {
+        color: #201D1D !important;
+        text-decoration: none !important;
+        text-transform: capitalize;
+    }
+</style>

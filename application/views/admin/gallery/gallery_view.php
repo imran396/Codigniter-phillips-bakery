@@ -12,7 +12,7 @@
         <div class="innerLR">
             <div class="widget widget-2">
                 <div class="widget-head">
-                    <h4 class="heading glyphicons file_import"><i></i>File Manager</h4>
+                    <h4 class="heading glyphicons file_import"><i></i>Manager Cake Gallery</h4>
                 </div>
                 <div class="widget-body">
 

@@ -21,6 +21,7 @@ class Blackouts extends Crud_Controller
     {
 
 
+        $this->data['result'] = $this->blackouts_model->getListing();
         $this->data['locations'] = $this->blackouts_model->getLocations();
         $this->data['blockouts'] = $this->blackouts_model->getFlavours();
         $this->data['active']=$this->uri->segment(2,0);
@@ -29,14 +30,6 @@ class Blackouts extends Crud_Controller
 
     }
 
-
-    public function listing(){
-
-        $this->data['result'] = $this->blackouts_model->getListing();
-        $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/servings/listing_view', $this->data);
-
-    }
 
     public function save()
     {
@@ -80,38 +73,16 @@ class Blackouts extends Crud_Controller
 
     }
 
-    public function status($id){
-
-        $this->blackouts_model->statusChange($id);
-        $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
-        $this->redirectToHome("listing");
-
-    }
-
-    public function sorting(){
-
-        $this->blackouts_model->sortingList();
-        echo $this->lang->line('update_msg');
-
-    }
-
 
 
     public function remove($id)
     {
         $this->blackouts_model->delete($id);
-        $this->redirectToHome("listing");
+        $this->redirectToHome();
 
     }
 
-    public function checkTitle($title){
 
-
-        $data = $this->input->post();
-        return  $this->blackouts_model->checkservings($data['serving_id'],$title);
-
-
-    }
 
     private function redirectToHome($redirect = NULL)
     {
