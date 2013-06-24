@@ -9,31 +9,24 @@ class Flavours extends Crud_Controller
 
         $this->layout->setLayout('layout_admin');
         $this->load->model('flavours_model');
+        $log_status = $this->ion_auth->logged_in();
+        $this->access_model->logged_status($log_status);
+        $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
+
 
     }
 
     public function index()
     {
 
-        $group = $this->session->userdata('group');
-
-        if (!$this->ion_auth->logged_in())
-        {
-            redirect('auth/login', 'refresh');
-        }
-        elseif (!$this->ion_auth->is_group($group))
-        {
-            redirect('/admin', 'refresh');
-        }
-        else
-        {
-            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            $this->data['users'] = $this->ion_auth->get_users_array();
-        }
-
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/flavours/flavours_view', $this->data);
 
+    }
+
+    function show(){
+        //$this->access_model->access_permission($this->uri->segment(2,NULL),'others');
+        echo "test";
     }
 
     public function listing(){
@@ -55,7 +48,7 @@ class Flavours extends Crud_Controller
                 if(!empty($id)) {
                     $this->redirectToHome('edit/'.$id);
                 }else{
-                    $this->redirectToHome();
+                    $this->redirectToHome('listing');
                 }
 
 
@@ -89,11 +82,11 @@ class Flavours extends Crud_Controller
         $data = $this->input->post();
         if (empty($data['flavour_id'])) {
 
-            $this->flavours_model->create($data);
+            $this->flavours_model->insert($data);
 
             $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
         } else {
-            $this->flavours_model->save($data, $data['flavour_id']);
+            $this->flavours_model->update($data, $data['flavour_id']);
 
             $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         }
@@ -137,3 +130,7 @@ class Flavours extends Crud_Controller
     }
 
 }
+
+
+
+

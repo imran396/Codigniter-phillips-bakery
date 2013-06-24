@@ -16,6 +16,10 @@
     </div>
     <br/>
     <!-- End Content -->
+    <?php
+
+    print_r($queryup);
+    ?>
     <div class="separator"></div>
     <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/servings/save" name="form1" id="form1">
  <div class="innerLR">
@@ -39,7 +43,7 @@
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('size');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('size');?>" value="<?php  echo(isset($queryup[0]->size))? $queryup[0]->size:set_value('size'); ?>"  class="validate[required] span10" name="size" id="size"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('size');?>" value="<?php  echo(isset($queryup[0]->size))? form_prep($queryup[0]->size):set_value('size'); ?>"  class="validate[required] span10" name="size" id="size"  />
                                     </div>
                                 </div>
 

@@ -14,12 +14,13 @@ class Controls_model extends Crud_Model
 
     public function create($data)
     {
-        $this->insert($data);
+
+        $this->db->set(array('controller_name'=>strtolower(trim($this->input->post('controller_name')))))->insert('user_control');
     }
 
     public function save($data, $id)
     {
-        $this->update($data, $id);
+        $this->db->set(array('controller_name'=>strtolower(trim($this->input->post('controller_name')))))->where(array('control_id'=>$id))->update('user_control');
     }
 
     public function deleteDataExisting($data=0){
@@ -63,19 +64,32 @@ class Controls_model extends Crud_Model
     public function getListing()
     {
 
-        return $this->db->select('*')->get('user_control')->result();
+        return $this->db->select('*')->order_by('ordering','asc')->get('user_control')->result();
 
+    }
+
+    public function sortingList()
+    {
+
+        foreach ($_POST['listItem'] as $position => $item) :
+
+            $array=array('ordering'=>$position);
+            $this->db->set($array);
+            $this->db->where(array('control_id'=>$item));
+            $this->db->update('user_control');
+
+        endforeach;
     }
 
     public function statusChange($id){
 
         $row=$this->getcontrols($id);
-        if($row[0]->status == 1 ){
-            $status=0;
+        if($row[0]->active == 1 ){
+            $active=0;
         }else{
-            $status=1;
+            $active=1;
         }
-        $this->db->where(array('control_id'=>$id))->set(array('status'=>$status))->update('user_control');
+        $this->db->where(array('control_id'=>$id))->set(array('active'=>$active))->update('user_control');
 
     }
 

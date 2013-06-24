@@ -7,49 +7,37 @@ class Dashboard extends Crud_Controller
     {
         parent::__construct();
         $this->load->library('ion_auth');
-        $this->load->library('form_validation');
-        $this->load->library("pagination");
-        $this->load->library('session');
         $this->layout->setLayout('layout_admin');
-        $this->load->helper('url');
+        $log_status = $this->ion_auth->logged_in();
+        $this->access_model->logged_status($log_status);
+        //$this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
+
 
     }
 
     public function index()
     {
-
-        $group = $this->session->userdata('group');
-
-        if (!$this->ion_auth->logged_in())
-        {
-            redirect('auth/login', 'refresh');
-        }
-        elseif (!$this->ion_auth->is_group($group))
-        {
-            redirect('/admin', 'refresh');
-        }
-        else
-        {
-            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            $this->data['users'] = $this->ion_auth->get_users_array();
-        }
-
-
         /*
+         *
+         *
+            $group = $this->session->userdata('group');
 
-        This code use for test another domain path return data function.
-
-        //$this->data['api'] = file_get_contents('http://api.phillips.local/home');
-        $post = array('username' => 'shafiq', 'password' => '123456', 'email' => 'shafiq@rightbrainsolution.com');
-        $ch = curl_init('http://api.phillips.local/home');
-        //curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-        $this->data['api'] = curl_exec($ch);*/
-
-        //var_dump($this->data['api']); die;
+            if (!$this->ion_auth->logged_in())
+            {
+                redirect('auth/login', 'refresh');
+            }
+            elseif (!$this->ion_auth->is_group($group))
+            {
+                redirect('/admin', 'refresh');
+            }
+            else
+            {
+                $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+                $this->data['users'] = $this->ion_auth->get_users_array();
+            }
+        */
         $this->data['active']='dashboard';
-        $this->layout->view('admin/dashboard', $this->data);
+        $this->layout->view('admin/dashboard');
 
     }
 

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 03, 2013 at 04:45 PM
+-- Generation Time: Jun 13, 2013 at 02:18 PM
 -- Server version: 5.5.31
 -- PHP Version: 5.4.6-1ubuntu1.2
 
@@ -30,9 +30,11 @@ CREATE TABLE IF NOT EXISTS `access_control` (
   `group_id` mediumint(8) NOT NULL,
   `control_id` tinyint(2) NOT NULL,
   `controller` tinyint(1) NOT NULL DEFAULT '1',
-  `create` tinyint(1) NOT NULL DEFAULT '0',
-  `update` tinyint(1) NOT NULL DEFAULT '0',
+  `listing` tinyint(1) NOT NULL DEFAULT '0',
+  `save` tinyint(1) NOT NULL DEFAULT '0',
+  `edit` tinyint(1) NOT NULL DEFAULT '0',
   `delete` tinyint(1) NOT NULL DEFAULT '0',
+  `view` tinyint(1) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `others` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`group_id`,`control_id`)
@@ -42,10 +44,31 @@ CREATE TABLE IF NOT EXISTS `access_control` (
 -- Dumping data for table `access_control`
 --
 
-INSERT INTO `access_control` (`group_id`, `control_id`, `controller`, `create`, `update`, `delete`, `status`, `others`) VALUES
-(1, 1, 0, 0, 1, 0, 1, 0),
-(1, 2, 0, 0, 0, 0, 0, 0),
-(1, 3, 1, 1, 1, 1, 1, 1);
+INSERT INTO `access_control` (`group_id`, `control_id`, `controller`, `listing`, `save`, `edit`, `delete`, `view`, `status`, `others`) VALUES
+(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+(1, 2, 1, 1, 1, 1, 1, 1, 1, 1),
+(1, 3, 1, 1, 1, 1, 1, 1, 1, 1),
+(1, 4, 1, 1, 1, 1, 1, 1, 1, 1),
+(1, 5, 1, 1, 1, 1, 1, 1, 1, 1),
+(1, 6, 1, 1, 1, 1, 1, 1, 1, 1),
+(1, 7, 1, 1, 1, 1, 1, 1, 1, 1),
+(1, 8, 1, 1, 1, 1, 1, 1, 1, 1),
+(1, 9, 1, 1, 1, 1, 1, 1, 1, 1),
+(1, 10, 1, 1, 1, 1, 1, 1, 1, 1),
+(1, 11, 1, 1, 1, 1, 1, 1, 1, 1),
+(1, 12, 1, 1, 1, 1, 1, 1, 1, 1),
+(1, 13, 1, 1, 1, 1, 1, 1, 1, 1),
+(1, 14, 1, 1, 1, 1, 1, 1, 1, 1),
+(1, 15, 1, 1, 1, 1, 1, 1, 1, 1),
+(1, 16, 1, 1, 0, 0, 0, 0, 0, 1),
+(2, 1, 1, 0, 0, 0, 0, 0, 1, 1),
+(2, 2, 1, 0, 0, 0, 1, 0, 0, 0),
+(2, 3, 1, 0, 1, 0, 0, 0, 0, 0),
+(3, 1, 1, 0, 0, 0, 0, 0, 0, 0),
+(3, 2, 0, 0, 0, 0, 0, 0, 0, 0),
+(3, 3, 0, 0, 0, 0, 0, 0, 0, 0),
+(3, 4, 0, 0, 0, 0, 0, 0, 0, 0),
+(3, 5, 1, 1, 1, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -83,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `cakes` (
   `end_price` decimal(10,2) NOT NULL,
   `ordering` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`cake_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
 
 --
 -- Dumping data for table `cakes`
@@ -115,9 +138,13 @@ INSERT INTO `cakes` (`cake_id`, `category_id`, `flavour_id`, `title`, `descripti
 (23, 4, 0, 'ddsadas test', '', '', '', '', 1, '2013-06-03 07:00:44', 100.00, 0.00, 5),
 (24, 4, 0, 'ddsadas test1', '', '', '', 'web/assets/uploads/cakes/181939_499958062911_507262911_6298674_1752039_n.jpg', 1, '2013-06-03 07:04:34', 100.00, 0.00, 9),
 (25, 13, 0, 'newxx', 'dsfsdf', '', '', '', 1, '2013-06-03 07:04:34', 3.00, 0.00, 6),
-(26, 15, 1, 'New Cake Black Forest', 'New Cake Black Forest', '', '', '', 1, '2013-06-03 07:04:34', 2000.00, 3000.00, 0),
+(26, 16, 16, 'New Cake Black Forest', 'New Cake Black Forest', 'a:4:{i:0;s:1:"2";i:1;s:1:"3";i:2;s:1:"4";i:3;s:1:"1";}', '', '', 1, '2013-06-13 06:42:11', 2000.00, 3000.00, 0),
 (27, 15, 16, 'Raspberry Chocolate Mousse', 'Raspberry Chocolate Mousse', '', '', 'assets/uploads/cakes/shafiq-pic.jpg', 1, '2013-06-03 07:02:12', 120.00, 320.00, 9),
-(28, 15, 4, 'Cake Title', 'Cake Title', 'a:2:{i:0;s:1:"2";i:1;s:1:"3";}', '', '', 1, '2013-06-03 07:04:42', 2.00, 4.00, 7);
+(28, 15, 4, 'Cake Title', 'Cake Title', 'a:2:{i:0;s:1:"2";i:1;s:1:"3";}', '', '', 1, '2013-06-03 07:04:42', 2.00, 4.00, 7),
+(29, 20, 8, 'Vanila Sumis Cake', 'Vanila Sumis Cake ', 'a:2:{i:0;s:1:"2";i:1;s:1:"3";}', '', '', 1, '2013-06-04 05:55:06', 123.00, 1245.00, 0),
+(30, 24, 15, 'dgff hfghfgh fgh', 'fghf hfg', '', '', '', 1, '2013-06-13 06:44:57', 0.00, 0.00, 0),
+(31, 19, 14, 'New Cake add test shape id', 'New Cake add test shape id', 'a:3:{i:0;s:1:"2";i:1;s:1:"3";i:2;s:1:"4";}', 'test', '', 1, '2013-06-13 06:43:39', 200.00, 3000.00, 0),
+(32, 22, 14, 'Roni cake', 'Roni cake', '', '', '', 1, '2013-06-13 06:44:22', 200.00, 300.00, 0);
 
 -- --------------------------------------------------------
 
@@ -155,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `ordering` tinyint(5) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
 --
 -- Dumping data for table `categories`
@@ -173,7 +200,12 @@ INSERT INTO `categories` (`category_id`, `title`, `ordering`, `status`) VALUES
 (16, 'New add category1', 9, 1),
 (17, 'tet', 3, 1),
 (18, 'New add category 5', 10, 1),
-(19, 'New add category 54', 11, 1);
+(19, 'New add category 54', 11, 1),
+(20, 'ytruiop', 0, 1),
+(21, 'sdsdsdsdasdas', 0, 1),
+(22, 'fsfsdfsdf', 0, 1),
+(23, 'testxx', 0, 0),
+(24, 'srgdfgdf dfgdfg dfgdf', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -215,27 +247,24 @@ INSERT INTO `customers` (`customer_id`, `first_name`, `last_name`, `phone_number
 CREATE TABLE IF NOT EXISTS `flavours` (
   `flavour_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(200) CHARACTER SET utf8 NOT NULL,
-  `cake_shape` varchar(50) NOT NULL,
   `fondant` tinyint(1) NOT NULL DEFAULT '1',
   `ordering` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`flavour_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Dumping data for table `flavours`
 --
 
-INSERT INTO `flavours` (`flavour_id`, `title`, `cake_shape`, `fondant`, `ordering`, `status`) VALUES
-(1, 'Banana Chocolate', 'Round', 1, 3, 1),
-(3, 'Black Forest', '', 1, 0, 0),
-(4, 'Cappuccino Meringue', '', 1, 1, 1),
-(8, 'test', '', 1, 2, 1),
-(9, 'test2', '', 1, 4, 1),
-(13, 'xczxczx', '', 1, 5, 1),
-(14, 'test new', '', 1, 6, 1),
-(15, 'dfvdsfgg', '', 1, 7, 1),
-(16, 'Raspberry Chocolate Mousse', '', 1, 8, 1);
+INSERT INTO `flavours` (`flavour_id`, `title`, `fondant`, `ordering`, `status`) VALUES
+(1, 'Banana Chocolate', 1, 3, 1),
+(13, 'xczxczx', 1, 5, 1),
+(14, 'test new', 1, 6, 1),
+(15, 'dfvdsfgg', 1, 7, 1),
+(16, 'Raspberry Chocolate Mousse', 1, 8, 1),
+(17, 'rhthdfbghfg', 1, 0, 1),
+(18, 'new flavour 1', 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -250,15 +279,16 @@ CREATE TABLE IF NOT EXISTS `groups` (
   `ordering` mediumint(8) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `groups`
 --
 
 INSERT INTO `groups` (`id`, `name`, `description`, `ordering`, `status`) VALUES
-(1, 'admin', 'Administrator', 0, 1),
-(2, 'members', 'General User', 1, 1);
+(1, 'admin', 'Administrator', 2, 1),
+(2, 'employee', 'Employee', 0, 1),
+(3, 'manager', 'Bakery Manager', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -304,22 +334,24 @@ CREATE TABLE IF NOT EXISTS `meta` (
   `user_id` mediumint(8) unsigned DEFAULT NULL,
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
-  `company` varchar(100) DEFAULT NULL,
+  `location_id` mediumint(5) DEFAULT '0',
   `phone` varchar(20) DEFAULT NULL,
   `postal_code` varchar(100) NOT NULL,
   `address` tinytext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `meta`
 --
 
-INSERT INTO `meta` (`id`, `user_id`, `first_name`, `last_name`, `company`, `phone`, `postal_code`, `address`) VALUES
-(1, 1, 'Admin', 'istrator', 'ADMIN', '0', '', ''),
+INSERT INTO `meta` (`id`, `user_id`, `first_name`, `last_name`, `location_id`, `phone`, `postal_code`, `address`) VALUES
+(1, 1, 'Admin', 'istrator', 0, '0', '', ''),
 (2, 2, 'M Shafiq', 'Islam', NULL, NULL, '', ''),
 (3, 3, 'M Shafiq', 'Islam', NULL, NULL, '', ''),
-(4, 4, 'fhjf', 'gfhfgh', NULL, NULL, '', '');
+(4, 4, 'fhjf', 'gfhfgh', NULL, NULL, '', ''),
+(5, 5, 'M Shafiq', 'Islam', 0, NULL, '', ''),
+(6, 6, 'Samiul', 'Amin', 4, NULL, '', '');
 
 -- --------------------------------------------------------
 
@@ -348,6 +380,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `flavour_id` mediumint(5) NOT NULL,
   `serving_id` mediumint(5) NOT NULL DEFAULT '0',
   `flavour_price` decimal(10,2) NOT NULL,
+  `cake_shape` mediumint(2) NOT NULL DEFAULT '0',
   `magic_cake_id` mediumint(5) NOT NULL DEFAULT '0',
   `magic_surcharge` decimal(10,2) NOT NULL DEFAULT '0.00',
   `total_amount` decimal(10,2) NOT NULL,
@@ -361,8 +394,8 @@ CREATE TABLE IF NOT EXISTS `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `cake_id`, `order_date`, `delivery_date`, `customer_id`, `employee_id`, `manager_id`, `discount_price`, `order_status`, `hst`, `payment_status`, `bread_burn`, `inscription`, `sepecial_instruction`, `location_id`, `zone_id`, `delivery_zone_surcharge`, `flavour_id`, `serving_id`, `flavour_price`, `magic_cake_id`, `magic_surcharge`, `total_amount`) VALUES
-(2, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 2, 2, 0.00, 'Production', '', '', 0, '', '', 0, 0, 0.00, 0, 0, 0.00, 0, 0.00, 0.00);
+INSERT INTO `orders` (`order_id`, `cake_id`, `order_date`, `delivery_date`, `customer_id`, `employee_id`, `manager_id`, `discount_price`, `order_status`, `hst`, `payment_status`, `bread_burn`, `inscription`, `sepecial_instruction`, `location_id`, `zone_id`, `delivery_zone_surcharge`, `flavour_id`, `serving_id`, `flavour_price`, `cake_shape`, `magic_cake_id`, `magic_surcharge`, `total_amount`) VALUES
+(2, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 2, 2, 0.00, 'Production', '', '', 0, '', '', 0, 0, 0.00, 0, 0, 0.00, 0, 0, 0.00, 0.00);
 
 -- --------------------------------------------------------
 
@@ -418,94 +451,17 @@ CREATE TABLE IF NOT EXISTS `price_matrix` (
 --
 
 INSERT INTO `price_matrix` (`location_id`, `flavour_id`, `serving_id`, `price`) VALUES
-(2, 1, 2, 1.00),
-(2, 1, 3, 2.00),
-(2, 1, 4, 3.00),
-(2, 1, 5, 4.00),
-(2, 1, 6, 5.00),
-(2, 1, 7, 6.00),
-(2, 1, 8, 7.00),
-(2, 4, 2, 2.00),
-(2, 4, 3, 0.00),
-(2, 4, 4, 0.00),
-(2, 4, 5, 0.00),
-(2, 4, 6, 0.00),
-(2, 4, 7, 0.00),
-(2, 4, 8, 0.00),
-(2, 8, 2, 3.00),
-(2, 8, 3, 0.00),
-(2, 8, 4, 0.00),
-(2, 8, 5, 0.00),
-(2, 8, 6, 0.00),
-(2, 8, 7, 0.00),
-(2, 8, 8, 0.00),
-(2, 9, 2, 4.00),
-(2, 9, 3, 0.00),
-(2, 9, 4, 0.00),
-(2, 9, 5, 0.00),
-(2, 9, 6, 0.00),
-(2, 9, 7, 0.00),
-(2, 9, 8, 0.00),
-(2, 13, 2, 5.00),
-(2, 13, 3, 0.00),
-(2, 13, 4, 0.00),
-(2, 13, 5, 0.00),
-(2, 13, 6, 0.00),
-(2, 13, 7, 0.00),
-(2, 13, 8, 0.00),
-(2, 14, 2, 6.00),
-(2, 14, 3, 0.00),
-(2, 14, 4, 0.00),
-(2, 14, 5, 0.00),
-(2, 14, 6, 0.00),
-(2, 14, 7, 0.00),
-(2, 14, 8, 0.00),
-(2, 15, 2, 7.00),
-(2, 15, 3, 0.00),
-(2, 15, 4, 0.00),
-(2, 15, 5, 0.00),
-(2, 15, 6, 0.00),
-(2, 15, 7, 0.00),
-(2, 15, 8, 0.00),
-(2, 16, 2, 8.00),
-(2, 16, 3, 0.00),
-(2, 16, 4, 0.00),
-(2, 16, 5, 0.00),
-(2, 16, 6, 0.00),
-(2, 16, 7, 0.00),
-(2, 16, 8, 0.00),
-(3, 1, 2, 1.00),
-(3, 1, 3, 2.00),
-(3, 1, 4, 3.00),
-(3, 1, 5, 4.00),
-(3, 1, 6, 5.00),
-(3, 1, 7, 6.00),
-(3, 1, 8, 7.00),
-(3, 4, 2, 0.00),
-(3, 4, 3, 0.00),
-(3, 4, 4, 0.00),
-(3, 4, 5, 0.00),
-(3, 4, 6, 0.00),
-(3, 4, 7, 0.00),
-(3, 4, 8, 0.00),
-(3, 8, 2, 0.00),
-(3, 8, 3, 0.00),
-(3, 8, 4, 0.00),
-(3, 8, 5, 0.00),
-(3, 8, 6, 0.00),
-(3, 8, 7, 0.00),
-(3, 8, 8, 0.00),
-(3, 9, 2, 0.00),
-(3, 9, 3, 0.00),
-(3, 9, 4, 0.00),
-(3, 9, 5, 0.00),
-(3, 9, 6, 0.00),
-(3, 9, 7, 0.00),
-(3, 9, 8, 0.00),
+(3, 1, 2, 2.00),
+(3, 1, 3, 0.00),
+(3, 1, 4, 0.00),
+(3, 1, 5, 1.00),
+(3, 1, 6, 0.00),
+(3, 1, 7, 0.00),
+(3, 1, 8, 0.00),
 (3, 13, 2, 0.00),
 (3, 13, 3, 0.00),
 (3, 13, 4, 0.00),
-(3, 13, 5, 0.00),
+(3, 13, 5, 2.00),
 (3, 13, 6, 0.00),
 (3, 13, 7, 0.00),
 (3, 13, 8, 0.00),
@@ -523,125 +479,13 @@ INSERT INTO `price_matrix` (`location_id`, `flavour_id`, `serving_id`, `price`) 
 (3, 15, 6, 0.00),
 (3, 15, 7, 0.00),
 (3, 15, 8, 0.00),
-(3, 16, 2, 9.00),
-(3, 16, 3, 8.00),
-(3, 16, 4, 7.00),
-(3, 16, 5, 6.00),
-(3, 16, 6, 5.00),
-(3, 16, 7, 4.00),
-(3, 16, 8, 3.00),
-(4, 1, 2, 1.00),
-(4, 1, 3, 2.00),
-(4, 1, 4, 0.00),
-(4, 1, 5, 0.00),
-(4, 1, 6, 0.00),
-(4, 1, 7, 0.00),
-(4, 1, 8, 0.00),
-(4, 4, 2, 2.00),
-(4, 4, 3, 0.00),
-(4, 4, 4, 0.00),
-(4, 4, 5, 0.00),
-(4, 4, 6, 0.00),
-(4, 4, 7, 0.00),
-(4, 4, 8, 0.00),
-(4, 8, 2, 0.00),
-(4, 8, 3, 0.00),
-(4, 8, 4, 0.00),
-(4, 8, 5, 0.00),
-(4, 8, 6, 0.00),
-(4, 8, 7, 0.00),
-(4, 8, 8, 0.00),
-(4, 9, 2, 0.00),
-(4, 9, 3, 0.00),
-(4, 9, 4, 0.00),
-(4, 9, 5, 0.00),
-(4, 9, 6, 0.00),
-(4, 9, 7, 0.00),
-(4, 9, 8, 0.00),
-(4, 13, 2, 0.00),
-(4, 13, 3, 0.00),
-(4, 13, 4, 0.00),
-(4, 13, 5, 0.00),
-(4, 13, 6, 0.00),
-(4, 13, 7, 0.00),
-(4, 13, 8, 0.00),
-(4, 14, 2, 0.00),
-(4, 14, 3, 0.00),
-(4, 14, 4, 0.00),
-(4, 14, 5, 0.00),
-(4, 14, 6, 0.00),
-(4, 14, 7, 0.00),
-(4, 14, 8, 0.00),
-(4, 15, 2, 0.00),
-(4, 15, 3, 0.00),
-(4, 15, 4, 0.00),
-(4, 15, 5, 0.00),
-(4, 15, 6, 0.00),
-(4, 15, 7, 0.00),
-(4, 15, 8, 0.00),
-(4, 16, 2, 0.00),
-(4, 16, 3, 0.00),
-(4, 16, 4, 0.00),
-(4, 16, 5, 0.00),
-(4, 16, 6, 0.00),
-(4, 16, 7, 0.00),
-(4, 16, 8, 0.00),
-(5, 1, 2, 1.00),
-(5, 1, 3, 2.00),
-(5, 1, 4, 0.00),
-(5, 1, 5, 0.00),
-(5, 1, 6, 0.00),
-(5, 1, 7, 0.00),
-(5, 1, 8, 0.00),
-(5, 4, 2, 2.00),
-(5, 4, 3, 0.00),
-(5, 4, 4, 0.00),
-(5, 4, 5, 0.00),
-(5, 4, 6, 0.00),
-(5, 4, 7, 0.00),
-(5, 4, 8, 0.00),
-(5, 8, 2, 0.00),
-(5, 8, 3, 0.00),
-(5, 8, 4, 0.00),
-(5, 8, 5, 0.00),
-(5, 8, 6, 0.00),
-(5, 8, 7, 0.00),
-(5, 8, 8, 0.00),
-(5, 9, 2, 0.00),
-(5, 9, 3, 0.00),
-(5, 9, 4, 0.00),
-(5, 9, 5, 0.00),
-(5, 9, 6, 0.00),
-(5, 9, 7, 0.00),
-(5, 9, 8, 0.00),
-(5, 13, 2, 0.00),
-(5, 13, 3, 0.00),
-(5, 13, 4, 0.00),
-(5, 13, 5, 0.00),
-(5, 13, 6, 0.00),
-(5, 13, 7, 0.00),
-(5, 13, 8, 0.00),
-(5, 14, 2, 0.00),
-(5, 14, 3, 0.00),
-(5, 14, 4, 0.00),
-(5, 14, 5, 0.00),
-(5, 14, 6, 0.00),
-(5, 14, 7, 0.00),
-(5, 14, 8, 0.00),
-(5, 15, 2, 0.00),
-(5, 15, 3, 0.00),
-(5, 15, 4, 0.00),
-(5, 15, 5, 0.00),
-(5, 15, 6, 0.00),
-(5, 15, 7, 0.00),
-(5, 15, 8, 0.00),
-(5, 16, 2, 0.00),
-(5, 16, 3, 0.00),
-(5, 16, 4, 0.00),
-(5, 16, 5, 0.00),
-(5, 16, 6, 0.00),
-(5, 16, 7, 0.00),
-(5, 16, 8, 0.00);
+(3, 16, 2, 0.00),
+(3, 16, 3, 0.00),
+(3, 16, 4, 0.00),
+(3, 16, 5, 0.00),
+(3, 16, 6, 0.00),
+(3, 16, 7, 0.00),
+(3, 16, 8, 0.00);
 
 -- --------------------------------------------------------
 
@@ -663,12 +507,12 @@ CREATE TABLE IF NOT EXISTS `servings` (
 --
 
 INSERT INTO `servings` (`serving_id`, `title`, `size`, `ordering`, `status`) VALUES
-(2, '6-8', '6 round', 1, 1),
-(3, '20-30', '1/4 slab', 2, 1),
-(4, '10-12', '8" round', 5, 1),
-(5, '12-15', '9" round', 0, 1),
-(6, '15-20', '10" round', 3, 1),
-(7, '40-50', '1/2 slab', 4, 1),
+(2, '6-8', '6 round', 0, 1),
+(3, '20-30', '1/4 slab', 3, 1),
+(4, '10-12', '8" round', 1, 1),
+(5, '12-15', '9" round', 2, 1),
+(6, '15-20', '10" round', 4, 1),
+(7, '40-50', '1/2 slab', 5, 1),
 (8, '60-80', 'Full slab', 6, 1);
 
 -- --------------------------------------------------------
@@ -683,16 +527,17 @@ CREATE TABLE IF NOT EXISTS `shapes` (
   `ordering` mediumint(2) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`shape_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `shapes`
 --
 
 INSERT INTO `shapes` (`shape_id`, `title`, `ordering`, `status`) VALUES
-(1, 'Round', 1, 0),
+(1, 'Round', 1, 1),
 (2, 'Square', 0, 1),
-(3, 'Rectangle', 0, 1);
+(3, 'Rectangle', 0, 1),
+(4, 'Square Round', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -715,17 +560,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_login` int(11) unsigned DEFAULT NULL,
   `active` tinyint(1) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `group_id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `remember_code`, `created_on`, `last_login`, `active`) VALUES
-(1, 1, '127.0.0.1', 'administrator', '59beecdf7fc966e2f17fd8f65a4a9aeb09d4a3d4', '9462e8eee0', 'admin@admin.com', '', NULL, '9d029802e28cd9c768e8e62277c0df49ec65c48c', 1268889823, 1370233992, 1),
+(1, 1, '127.0.0.1', 'administrator', '59beecdf7fc966e2f17fd8f65a4a9aeb09d4a3d4', '9462e8eee0', 'admin@admin.com', '', NULL, '9d029802e28cd9c768e8e62277c0df49ec65c48c', 1268889823, 1371099079, 1),
 (2, 2, '127.0.0.1', 'admin', '3e082c38a4f0eacf970adf483f31fc17630ac754', NULL, '0', NULL, NULL, '66e272b8635eee519049ae53b7b0c89612763d9c', 1368551217, 1368591499, 1),
 (3, 2, '127.0.0.1', 'sislam', 'a53c3ffeb3daca8e568e424ce3ad5b10ddc916fc', NULL, '0', NULL, NULL, NULL, 1369204334, 1369204348, 1),
-(4, 2, '127.0.0.1', 'admin2', 'af71faa19ef5029f247e88803f3d46225002198b', NULL, '', NULL, NULL, NULL, 1369216210, 1369216210, 1);
+(4, 2, '127.0.0.1', 'admin2', 'af71faa19ef5029f247e88803f3d46225002198b', NULL, '', NULL, NULL, NULL, 1369216210, 1369216210, 1),
+(5, 3, '127.0.0.1', 'islam', 'f325887144195c402593e48f1750ae052ea981a6', NULL, 'shafiqx@emicrograph.com', NULL, NULL, '6113e35714c8ad5bb9a9d335205b999a733a7280', 1370943111, 1371039701, 1),
+(6, 2, '127.0.0.1', 'samiul', 'ac4c9929aff5b8894eec22497dc77f202c68311c', NULL, 'samiul@gmail.com', NULL, NULL, NULL, 1370943464, 1370943464, 1);
 
 -- --------------------------------------------------------
 
@@ -736,18 +583,32 @@ INSERT INTO `users` (`id`, `group_id`, `ip_address`, `username`, `password`, `sa
 CREATE TABLE IF NOT EXISTS `user_control` (
   `control_id` tinyint(2) NOT NULL AUTO_INCREMENT,
   `controller_name` varchar(100) NOT NULL,
+  `ordering` tinyint(2) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`control_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `user_control`
 --
 
-INSERT INTO `user_control` (`control_id`, `controller_name`, `status`) VALUES
-(1, 'zxczxc', 1),
-(2, 'users', 1),
-(3, 'categories', 1);
+INSERT INTO `user_control` (`control_id`, `controller_name`, `ordering`, `status`) VALUES
+(1, 'dashboard', 0, 1),
+(2, 'users', 12, 1),
+(3, 'categories', 1, 1),
+(4, 'flavours', 2, 1),
+(5, 'cakes', 6, 1),
+(6, 'shapes', 4, 1),
+(7, 'price_matrix', 5, 1),
+(8, 'locations', 8, 1),
+(9, 'zones', 9, 1),
+(10, 'orders', 10, 1),
+(11, 'customers', 11, 1),
+(12, 'roles', 13, 1),
+(13, 'controls', 14, 1),
+(14, 'access_controls', 15, 1),
+(15, 'servings', 3, 1),
+(16, 'gallery', 7, 1);
 
 -- --------------------------------------------------------
 

@@ -76,13 +76,15 @@ margin: 25px 0  5px 1px!important;
     font-weight: bold;
     line-height: 70px;
     padding-left: 20px;
-    width: 212px;
+    width: 112px;
 }
 .matrix-flavour-name {
     font-size: 12px;
     font-weight: bold;
     height: 39px;
-    line-height: 32px !important;
+    /*line-height: 32px !important;*/
+    width: 112px;
+
 
 }
 
@@ -124,4 +126,15 @@ div.dataTables_info {
 }
 .table-primary tbody tr.selectable td {
     cursor: pointer;
+}
+
+.widget.widget-tabs .widget-head ul {
+    border-right: 1px solid #F5F5F5;
+    display: inline-block;
+    height: 36px;
+    list-style: none outside none;
+    margin: 0 0 0 -2px;
+}
+.input-mini{
+    width: 45px;
 }

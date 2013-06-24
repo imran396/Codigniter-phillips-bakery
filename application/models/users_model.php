@@ -12,14 +12,14 @@ class Users_model extends Crud_Model
 
     }
 
-    public function create($data)
-    {
-        $this->insert($data);
-    }
 
-    public function save($data, $id)
+    public function update($data, $id)
     {
-        $this->update($data, $id);
+        $array = array('first_name'=>$data['first_name'],'last_name'=>$data['last_name'],'location_id'=>$data['location_id']);
+        $this->db->set($array)->where(array('id'=>$id))->update('meta');
+        $array = array('email'=>$data['email']);
+        $this->db->set($array)->where(array('id'=>$id))->update('users');
+
     }
 
     public function deleteDataExisting($data=0){
@@ -56,7 +56,7 @@ class Users_model extends Crud_Model
     public function getGroup()
     {
 
-        return $this->db->select('*')->where(array('status'=>1))->get('groups')->result();
+        return $this->db->select('*')->where(array('status'=>1))->order_by("ordering", "asc")->get('groups')->result();
 
     }
 
@@ -88,24 +88,34 @@ class Users_model extends Crud_Model
     {
 
         return $this->db
-            ->select('users.username,users.email,meta.first_name,meta.last_name')
+            ->select('users.id,users.username,users.email,meta.first_name,meta.last_name,meta.location_id, users.active')
             ->join('meta','users.id =meta.user_id')
             ->join('groups','users.group_id =groups.id')
             ->where(array('username'=>$username))->get('users')->result();
 
     }
 
-    public function statusChange($id){
+    public function getLocations()
+    {
 
-        $row=$this->getusers($id);
+        return $this->db->select('*')->where('status',1)->order_by("ordering", "asc")->get('locations')->result();
+
+    }
+
+    public function statusChange($username){
+
+        $row=$this->getusers($username);
+        echo $row[0]->active;
+
         if($row[0]->active == 1 ){
             $status=0;
         }else{
             $status=1;
         }
-        $this->db->where(array('id'=>$id))->set(array('active'=>$status))->update('users');
+        $this->db->where(array('username'=>$username))->set(array('active'=>$status))->update('users');
 
     }
+
 
     public function checkshapes($id,$title)
     {
@@ -126,9 +136,10 @@ class Users_model extends Crud_Model
     }
 
     public function getAll(){
-        $this->db->select('users.id,users.user_code,users.first_name,users.last_name,groups.name');
+        $this->db->select('users.id,meta.employee_id,meta.first_name,meta.last_name,groups.name as role');
         $this->db->from('users');
-        $this->db->join('groups', 'users.group_id = groups.id');
+        $this->db->join('groups', ' groups.id = users.group_id');
+        $this->db->join('meta', 'meta.user_id = users.id');
         $data = $this->db->get()->result_array();
         foreach($data as $key => $val){
             $data[$key]['id'] = (int)  $data[$key]['id'];

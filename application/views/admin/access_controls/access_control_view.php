@@ -10,15 +10,16 @@
     <br/>
     <div class="innerLR">
     <table class="table table-bordered table-striped" >
+        <tr><td><?php echo $this->lang->line('role_group'); ?></td></tr>
         <tr><td>
 
                 <form action="" method="get" onsubmit="access" >
                 <select onclick="" style="width: 100%;"  name="control_id" onchange="window.location=this.value">
-                     <option value="<?php echo site_url('admin/access_control/access/0')?>" >---<?php echo $this->lang->line('select_one');?>---</option>
+                     <option value="<?php echo site_url('admin/access_controls/access/0')?>" >---<?php echo $this->lang->line('select_one');?>---</option>
                     <?php
                     foreach($groupresult as $group):
                         ?>
-                        <option value="<?php echo site_url('admin/access_control/access/'.$group->id)?>" <?php if($group_id == $group->id ){ echo "selected='selected'"; } ?> ><?php echo $group->name; ?></option>
+                        <option value="<?php echo site_url('admin/access_controls/access/'.$group->id)?>" <?php if($group_id == $group->id ){ echo "selected='selected'"; } ?> ><?php echo $group->name; ?></option>
                     <?php endforeach; ?>
 
                 </select>
@@ -28,7 +29,7 @@
 
     </table>
         </div>
-    <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/access_control/save/<?php echo $this->uri->segment(4,0)?>" name="form1" id="form1">
+    <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/access_controls/save/<?php echo $this->uri->segment(4,0)?>" name="form1" id="form1">
          <div class="innerLR">
 
      <div class="tab-content" style="padding: 0;">
@@ -43,7 +44,7 @@
                         <table class="table table-bordered table-striped">
                             <tr>
                                 <th colspan="2"><?php echo $this->lang->line('controller_name');?></th>
-                                 <td>Create</td><td>Update</td><td>Delete</td><td>Status</td><td>Others</td>
+                                 <td><?php echo $this->lang->line('listing');?></td><td><?php echo $this->lang->line('save');?></td><td><?php echo $this->lang->line('edit');?></td><td><?php echo $this->lang->line('delete');?></td><td><?php echo $this->lang->line('view');?></td><td><?php echo $this->lang->line('status');?></td><td><?php echo $this->lang->line('others');?></td>
 
                             </tr>
                             <tr>
@@ -63,14 +64,20 @@
                                                 </td>
                                                 <td>
 
-                                                    <input type="checkbox" class="input-mini" name="create_<?php echo $control->control_id;?>" <?php echo (!empty($getvalue[0]->create) ==1) ? "checked='checked'" :''; ?>  value="1"/>
+                                                    <input type="checkbox" class="input-mini" name="listing_<?php echo $control->control_id;?>" <?php echo (!empty($getvalue[0]->listing) ==1) ? "checked='checked'" :''; ?>  value="1"/>
                                                 </td>
                                                 <td>
-                                                    <input type="checkbox" class="input-mini" name="update_<?php echo $control->control_id;?>" <?php echo (!empty($getvalue[0]->update) ==1) ? "checked='checked'" :''; ?>  value="1"/>
-                                                    </td>
+                                                    <input type="checkbox" class="input-mini" name="save_<?php echo $control->control_id;?>" <?php echo (!empty($getvalue[0]->save) ==1) ? "checked='checked'" :''; ?>  value="1"/>
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" class="input-mini" name="edit_<?php echo $control->control_id;?>" <?php echo (!empty($getvalue[0]->edit) ==1) ? "checked='checked'" :''; ?>  value="1"/>
+                                                </td>
                                                 <td>
                                                     <input type="checkbox" class="input-mini" name="delete_<?php echo $control->control_id;?>" <?php echo (!empty($getvalue[0]->delete) ==1) ? "checked='checked'" :''; ?>  value="1"/>
                                                     </td>
+                                                <td>
+                                                    <input type="checkbox" class="input-mini" name="view_<?php echo $control->control_id;?>" <?php echo (!empty($getvalue[0]->view) ==1) ? "checked='checked'" :''; ?>  value="1"/>
+                                                </td>
                                                 <td>
                                                     <input type="checkbox" class="input-mini" name="status_<?php echo $control->control_id;?>" <?php echo (!empty($getvalue[0]->status) ==1) ? "checked='checked'" :''; ?>  value="1"/>
                                                     </td>

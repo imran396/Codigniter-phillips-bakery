@@ -30,19 +30,20 @@ $lang['drag'] 		 	    = 'Drag';
 $lang['menu_level'] 		 	                    = 'Menu Level';
 $lang['dashboard'] 		 	                        = 'Dashboard';
 $lang['settings'] 		 	                        = 'Settings';
-$lang['categories'] 		 	                    = 'Cake Categories';
+$lang['categories'] 		 	                    = 'Cake Catalogue';
 $lang['cakes'] 		 	                            = 'Manage Cakes';
 $lang['locations'] 		 	                        = 'Locations';
+$lang['location'] 		 	                        = 'Location';
 $lang['access_control'] 		 	                = 'Access Control';
 $lang['users'] 		 	                            = 'Manage Users';
 $lang['access_roles'] 		 	                    = 'Access Roles';
 $lang['manage_flavors'] 		 	                = 'Manage Flavors';
-$lang['shapes'] 		 	                            = 'Shapes';
+$lang['shapes'] 		 	                        = 'Shapes';
 $lang['flavours'] 		 	                        = 'Flavours';
 $lang['fondants'] 		 	                        = 'Fondants';
 $lang['servings'] 		 	                        = 'Servings';
 $lang['sizes'] 		 	                            = 'Sizes';
-$lang['tires'] 		 	                            = 'Tires';
+$lang['tiers'] 		 	                            = 'Tiers';
 $lang['blackouts'] 		 	                        = 'Blackouts';
 $lang['cakes'] 		 	                            = 'Cakes';
 $lang['gallery'] 		 	                    = 'Cake Gallery';
@@ -52,9 +53,11 @@ $lang['customers'] 		 	                        = 'Customers';
 $lang['orders'] 		 	                    = 'Cake Orders';
 $lang['manage_users'] 		 	                = 'Manage Employers';
 $lang['users'] 		 	                = 'Employers';
+$lang['manage_access'] 		 	                    = 'Manage Access Control';
 $lang['roles'] 		 	                    = 'Manage Roles';
-$lang['access'] 		 	                    = 'Access';
-$lang['access_control'] 		 	                    = 'Access Control';
+$lang['access_controller'] 		 	                    = 'Manage Controller';
+$lang['access_control'] 		 	                    = 'Manage Access';
+$lang['role_group'] 		 	                    = 'Role Group';
 
 /*################## Site Message for success  #############*/
 $lang['insert_msg']="Data has been insert successfully";
@@ -70,6 +73,7 @@ $lang['admin_delete_msg']="Administer not delete";
 $lang['no_records_msg']="Sorry - No listings founds";
 $lang['no_location_msg']="Must be need location select";
 $lang['no_group_msg']="Must be need group select";
+$lang['status_msg']="The selected flavour has been disabled.";
 
 
 /* User Settings */
@@ -87,7 +91,7 @@ $lang['enter'] 		 	    = 'Enter';
 /* Categories */
 
 
-$lang['category_name'] 		 	    = 'Category Name';
+$lang['category_name'] 		 	    = 'Catalogue Name';
 $lang['slug'] 		 	    = 'Slug';
 
 /*  Role */
@@ -115,7 +119,7 @@ $lang['pos_api'] 		 	    = 'POS api';
 
 /* Cakes */
 
-$lang['category_id'] 		 	    = 'Cake Category';
+$lang['category_id'] 		 	    = 'Cake Catalogue';
 $lang['flavour_id'] 		 	    = 'Flavour Name';
 $lang['location_id'] 		 	    = 'Location Name';
 $lang['cake_title'] 		 	    = 'Cake Title';
@@ -147,6 +151,7 @@ $lang['size'] 		 	    = 'Size';
 
 /* price matrix */
 $lang['price_matrix'] 		 	    = 'Price Matrix';
+$lang['select_location'] 		 	    = 'Select location';
 
 $lang['manage_price_matrix'] 		= 'Manage Price Matrix';
 $lang['yes'] 		 	    = 'Yes';
@@ -194,4 +199,9 @@ $lang['account_settings_info'] 		 	    = 'Account settings instruction';
 $lang['controller_name'] 		 	    = 'Controller name';
 $lang['inactive'] 		 	    = 'Inactive';
 
+/*        ---------------Production------------------    */
+
+$lang['production'] 		 	    = 'Production';
+$lang['inproduction'] 		 	    = 'In Production';
+$lang['blackout'] 		 	    = 'Blackout';
 

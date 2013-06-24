@@ -1,5 +1,4 @@
 <?php
-
 class API_Controller extends CI_Controller
 {
     protected function sendOutput($data, $code = 200, $content_type = "application/json")

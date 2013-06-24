@@ -53,6 +53,7 @@
                                     </label><br/>
 
                                 </div>
+
                                 <div class="control-group uniformjs">
                                     <label class="control-label"><?php echo $this->lang->line('status');?></label>
                                     <div class="separator"></div>

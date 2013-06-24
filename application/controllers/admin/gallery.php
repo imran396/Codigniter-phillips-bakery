@@ -9,27 +9,15 @@ class Gallery extends Crud_Controller
 
         $this->layout->setLayout('layout_admin');
         $this->load->model('gallery_model');
+        $log_status = $this->ion_auth->logged_in();
+        $this->access_model->logged_status($log_status);
+        $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
 
     }
 
     public function index()
     {
 
-        $group = $this->session->userdata('group');
-
-        if (!$this->ion_auth->logged_in())
-        {
-            redirect('auth/login', 'refresh');
-        }
-        elseif (!$this->ion_auth->is_group($group))
-        {
-            redirect('/admin', 'refresh');
-        }
-        else
-        {
-            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            $this->data['users'] = $this->ion_auth->get_users_array();
-        }
         $this->data['result'] = $this->gallery_model->getCakeList();
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/gallery/gallery_view', $this->data);
@@ -50,7 +38,7 @@ class Gallery extends Crud_Controller
     public function upload()
     {
 
-
+        $this->access_model->access_permission($this->uri->segment(2,NULL),'others');
         // HTTP headers for no cache etc
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
         header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -173,12 +161,12 @@ class Gallery extends Crud_Controller
 
     }
 
-    public function save()
+    public function save_data()
     {
 
 
-        $this->input->post('cake_id');
-        if (!empty($_POST)) {
+        $cake_id=$this->input->post('cake_id');
+        if (!empty($cake_id)) {
             $this->addValidation();
             if ($this->form_validation->run()) {
                 var_dump('imran');

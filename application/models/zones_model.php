@@ -98,9 +98,8 @@ class Zones_model extends Crud_Model
         $dbtitle = $this->checkUniqueTitle($id);
         if($title != $dbtitle ){
 
-            $sql=sprintf("SELECT COUNT(zone_id) AS countValue FROM zones WHERE (LOWER(title) = LOWER('{$title}'))");
-            $count=$this->db->query($sql)->result();
-            if($count[0]->countValue > 0 )
+            $count=$this->db->select('zone_id')->where(array( strtolower('title') => strtolower($title) ))->get('zones')->num_rows();
+            if($count >  0 )
             {
                 $this->form_validation->set_message('checkTitle', $title.' %s '.$this->lang->line('duplicate_msg'));
                 return FALSE;

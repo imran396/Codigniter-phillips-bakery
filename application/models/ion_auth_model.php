@@ -60,6 +60,7 @@ class Ion_auth_model extends CI_Model
 	 **/
 	public $identity;
 
+
 	public function __construct()
 	{
 		parent::__construct();

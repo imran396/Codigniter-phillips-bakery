@@ -14,27 +14,7 @@
     </div>
     <?php $this->load->view('admin/layouts/message'); ?>
     <br/>
-    <div class="innerLR">
-    <table class="table table-bordered table-striped" >
-        <tr><td>
-
-                <form action="" method="get" onsubmit="location" >
-                <select onclick="" style="width: 100%;"  name="location_id" onchange="window.location=this.value">
-                     <option value="<?php echo site_url('admin/price_matrix/matrix/0')?>" >---<?php echo $this->lang->line('select_one');?>---</option>
-                    <?php
-                    foreach($locresult as $location):
-                        ?>
-                        <option value="<?php echo site_url('admin/price_matrix/matrix/'.$location->location_id)?>" <?php if($location_id == $location->location_id){ echo "selected='selected'"; } ?> ><?php echo $location->title; ?></option>
-                    <?php endforeach; ?>
-
-                </select>
-                </form>
-
-            </td></tr>
-
-    </table>
-        </div>
-    <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/price_matrix/save/<?php echo $this->uri->segment(4,0)?>" name="form1" id="form1">
+    <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/price_matrix/save/1" name="form1" id="form1">
  <div class="innerLR">
      <input type="hidden" name="flavour_id" id="flavour_id" value="<?php echo(isset($queryup[0]->flavour_id))? $queryup[0]->flavour_id : set_value('flavour_id'); ?>" />
      <div class="tab-content" style="padding: 0;">

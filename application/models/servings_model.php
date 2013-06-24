@@ -24,24 +24,32 @@ class Servings_model extends Crud_Model
 
     public function deleteDataExisting($data=0){
 
-        $sql=sprintf("SELECT COUNT(serving_id) AS countValue FROM cakes  WHERE (serving_id = '{$data}' )");
-        return $count=$this->db->query($sql)->result()[0]->countValue;
+
+        $count=$this->db->select('serving_id')->where(array('serving_id'=>$data))->get('price_matrix')->num_rows();
+        return $count;
     }
 
     public function delete($id)
     {
 
+        if(!$this->deleteDataExisting($id) > 0){
             $this->remove($id);
             $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
+        }else{
+
+            $this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
+        }
+
 
     }
 
     public function  checkUniqueTitle($id){
 
         if(!empty($id)){
-            return $dbcatid = $this->db->select('title')
+            $dbcatid = $this->db->select('title')
                 ->where('serving_id',$id)
-                ->get('servings')->result()[0]->title;
+                ->get('servings')->result();
+                return $dbcatid [0]->title;
 
         }
 
@@ -92,9 +100,9 @@ class Servings_model extends Crud_Model
         $dbtitle = $this->checkUniqueTitle($id);
         if($title != $dbtitle ){
 
-            $sql=sprintf("SELECT COUNT(serving_id) AS countValue FROM servings WHERE (LOWER(title) = LOWER('{$title}'))");
-            $count=$this->db->query($sql)->result();
-            if($count[0]->countValue > 0 )
+
+            $count=$this->db->select('serving_id')->where(array( strtolower('title') => strtolower($title) ))->get('servings')->num_rows();
+            if($count > 0 )
             {
                 $this->form_validation->set_message('checkTitle', $title.' %s '.$this->lang->line('duplicate_msg'));
                 return FALSE;

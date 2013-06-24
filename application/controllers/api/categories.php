@@ -12,9 +12,9 @@ class Categories extends API_Controller
 
     public function index()
     {
-        $data = $this->categories_model->getAll();
+        //$data = $this->categories_model->getAll();
 
-        /*$data = array(
+        $data = array(
             array(
                 'category_id' => 1,
                 'title'       => "Birthday"
@@ -23,7 +23,7 @@ class Categories extends API_Controller
                 'category_id' => 2,
                 'title'       => "Sports"
             )
-        );*/
+        );
 
         $this->sendOutput($data);
     }

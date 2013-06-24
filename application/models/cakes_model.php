@@ -19,8 +19,9 @@ class Cakes_model extends CI_Model
 
     private function insert($data)
     {
-        $data['shape_id'] = serialize($data['shape_id']);
+        $data['shape_id'] = ($data['shape_id'] !="") ? serialize($data['shape_id']):'';
         $this->db->set($data)->insert('cakes');
+        return $this->db->insert_id();
     }
 
     public function doUpload($id)
@@ -40,8 +41,8 @@ class Cakes_model extends CI_Model
 
             $config['source_image']   = $image;
             $config['maintain_ratio'] = false;
-            $config['width']          = 350;
-            $config['height']         = 200;
+            $config['width']          = 200;
+            $config['height']         = 125;
 
             $this->image_lib->resize();
             $this->fileDelete($id);
@@ -82,13 +83,19 @@ class Cakes_model extends CI_Model
 
     private function update($data, $id)
     {
-        $this->db->set(array('title' => $data['title'], 'description' => $data['description'], 'start_price' => $data['start_price'], 'end_price' => $data['end_price'], 'category_id' => $data['category_id'], 'flavour_id' => $data['flavour_id'], 'shape_id' => serialize($data['shape_id']), 'meta_tag' => $data['meta_tag'], 'status' => $data['status']))->where(array('cake_id' => $id))->update('cakes');
+
+
+        $data['shape_id'] = ($data['shape_id'] !="") ? serialize($data['shape_id']):'';
+        $this->db->set($data)->where(array('cake_id' => $id))->update('cakes');
     }
 
     public function delete($id)
     {
         if (!$this->deleteDataExisting($id) > 0) {
-            $this->remove($id);
+
+            $this->fileDelete($id);
+            $this->db->where(array('cake_id'=> $id))->delete('cakes');
+
             $this->session->set_flashdata('delete_msg', $this->lang->line('delete_msg'));
         } else {
             $this->session->set_flashdata('warning_msg', $this->lang->line('existing_data_msg'));
@@ -97,13 +104,8 @@ class Cakes_model extends CI_Model
 
     public function deleteDataExisting($data = 0)
     {
-        $sql = "SELECT COUNT(cake_id) AS countValue
-                FROM cakes
-                WHERE (cake_id = '{$data}')";
 
-        $query = $this->db->query($sql);
-        $count = $query->result()->countValue;
-
+        $count = $this->db->select('cake_id')->where(array('cake_id'=>$data))->get('orders')->num_rows();;
         return $count;
     }
 
@@ -180,10 +182,8 @@ class Cakes_model extends CI_Model
 
         if ($title != $dbtitle) {
 
-            $sql   = sprintf("SELECT COUNT(cake_id) AS countValue FROM cakes WHERE (LOWER(title) = LOWER('{$title}'))");
-            $count = $this->db->query($sql)->result();
-
-            if ($count[0]->countValue > 0) {
+            $count=$this->db->select('cake_id')->where(array( strtolower('title') => strtolower($title) ))->get('cakes')->num_rows();
+            if ($count > 0) {
                 $this->form_validation->set_message('checkTitle', $title . ' %s ' . $this->lang->line('duplicate_msg'));
                 return false;
             } else {
@@ -196,20 +196,43 @@ class Cakes_model extends CI_Model
     public function checkUniqueTitle($id)
     {
         if (!empty($id)) {
-            $dbcatid = $this->db->select('title')->where('cake_id', $id)->get('cakes')->result();
-            return $dbcatid[0]->title;
+            $dbtitle = $this->db->select('title')->where('cake_id', $id)->get('cakes')->result();
+            return $dbtitle[0]->title;
         }
     }
 
     public function getAll()
     {
-        return $this->db->select('*')->where('status', 1)->get('cakes')->result_array();
+        return $this->db->select('*')->where('status', 1)->order_by('ordering','asc')->get('cakes')->result_array();
+    }
+
+    public function getApiCakes(){
+
+      $sql = "SELECT
+                cakes.*,
+                GROUP_CONCAT(cake_gallery.image ORDER BY cake_gallery.gallery_id ASC SEPARATOR ',') as images
+
+              FROM cakes
+              LEFT JOIN cake_gallery
+                ON ( cakes.cake_id = cake_gallery.cake_id )
+              GROUP BY cakes.cake_id";
+
+      $data = $this->db->query($sql)->result_array();
+
+      foreach($data as $key=>$row){
+          $data[$key]['cake_id'] = (int) $data[$key]['cake_id'];
+          $data[$key]['images'] = explode(',', $row['images']);
+          $data[$key]['shapes'] = unserialize($row['shape_id']);
+      }
+
+       return $data;
+
     }
 
     public function getAll_(){
       $imageurlprefix = base_url().'assets';
       $sql = "SELECT
-                C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.start_price,C.end_price,
+                C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.tiers,
               GROUP_CONCAT(G.image ORDER BY G.gallery_id ASC SEPARATOR ',') as gallery_images
               FROM cakes As C
               LEFT JOIN cake_gallery AS G
@@ -223,8 +246,7 @@ class Cakes_model extends CI_Model
           $data[$key]['category_id'] = (int) $data[$key]['category_id'];
           $data[$key]['flavour_id'] = (int) $data[$key]['flavour_id'];
           $data[$key]['image'] = !empty($data[$key]['image']) ? base_url().$data[$key]['image'] : "";
-          $data[$key]['start_price'] = (float) $data[$key]['start_price'];
-          $data[$key]['end_price'] = (float) $data[$key]['end_price'];
+          $data[$key]['tiers'] = (int) $data[$key]['tiers'];
           $data[$key]['gallery_images'] = explode(',', $row['gallery_images']);
           $data[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$data[$key]['gallery_images']);
           $data[$key]['shapes'] =  !empty($row['shapes']) ? unserialize($row['shapes']): "";

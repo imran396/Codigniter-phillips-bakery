@@ -24,6 +24,16 @@
 <div class="innerLR">
         <div class="widget widget-gray widget-body-white">
             <div class="widget-body" style="padding: 10px 0;">
+<!--                <select class="validate[required] " style="width: 100%;"  name="group_id">-->
+<!--                    <option value="" >-----><?php //echo $this->lang->line('select_one');?><!-----</option>-->
+<!--                    --><?php
+//
+//                    foreach($groupresult as $group):
+//                        ?>
+<!--                        <option value="--><?php //echo $group->id;  ?><!--" --><?php //if($group_id == $group->id){ echo "selected='selected'"; } ?><!-- >--><?php //echo $group->description; ?><!--</option>-->
+<!--                    --><?php //endforeach; ?>
+<!---->
+<!--                </select>-->
                 <table class="table table-bordered table-primary">
                     <thead>
                     <tr>
