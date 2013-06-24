@@ -158,7 +158,16 @@ jQuery(document).ready(function(){
         }
     );
 
+
+    jQuery('.numbersOnly').keyup(function () {
+
+        this.value = this.value.replace(/[^0-9\.]/g,'');
+    });
+
     $("#category_id , #location_id , #flavour_id  ").select2();
+
+
+
 
 });
 
