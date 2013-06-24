@@ -181,6 +181,7 @@ class Gallery extends Crud_Controller
         if (!empty($_POST)) {
             $this->addValidation();
             if ($this->form_validation->run()) {
+                var_dump('imran');
                 $this->saveData();
                 $this->redirectToHome('listing');
             }

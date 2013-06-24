@@ -94,7 +94,7 @@
         });
 
         // Client side form validation
-        $('#pluploadForm').submit(function(e) {
+        /*$('#pluploadForm').submit(function(e) {
             var uploader = $('#pluploadUploader').pluploadQueue();
 
             // Files in queue upload them first
@@ -112,6 +112,6 @@
             }
 
             return false;
-        });
+        });*/
     });
 </script>

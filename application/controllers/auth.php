@@ -29,6 +29,7 @@ class Auth extends Controller {
 		}
 		elseif (!$this->ion_auth->is_admin())
 		{
+
 			//redirect them to the home page because they must be an administrator to view this
 			redirect($this->config->item('base_url'), 'refresh');
 		}

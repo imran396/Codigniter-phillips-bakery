@@ -18,20 +18,26 @@ class Packages_model extends Ci_Model
          );
 
         $data = $this->db->query($sql)->result_array();
+        $flavours = array();
         $output = array();
-        foreach($data as $key => $val){
-               $flavour_id =  $val['flavour_id'];
-               $output[$flavour_id]['flavour_id'] = $flavour_id;
-               $output[$flavour_id]['flavour_title']  = $val['title'];
-               $output[$flavour_id]['fondant']  = $val['fondant'];
-               $count = isset($output[$flavour_id]["servings"]) ? count($output[$flavour_id]["servings"]) : 0;
-               $output[$flavour_id]["servings"][$count]['serving_id'] = $val['serving_id'];
-               $output[$flavour_id]["servings"][$count]['title'] = $val['title'];
-               $output[$flavour_id]["servings"][$count]['size'] = $val['size'];
-               $output[$flavour_id]["servings"][$count]['price'] = $val['price'];
-         }
+        foreach ($data as $key => $val) {
+            $flavour_id = $val['flavour_id'];
 
-         return $output;
+            if (!isset($flavours[$flavour_id])) {
+                $flavours[$flavour_id] = count($flavours);
+            }
+
+            $output[$flavours[$flavour_id]]['flavour_id'] = $flavour_id;
+            $output[$flavours[$flavour_id]]['flavour_title'] = $val['title'];
+            $output[$flavours[$flavour_id]]['fondant'] = $val['fondant'];
+            $count = isset($output[$flavours[$flavour_id]]["servings"]) ? count($output[$flavours[$flavour_id]]["servings"]) : 0;
+            $output[$flavours[$flavour_id]]["servings"][$count]['serving_id'] = $val['serving_id'];
+            $output[$flavours[$flavour_id]]["servings"][$count]['title'] = $val['title'];
+            $output[$flavours[$flavour_id]]["servings"][$count]['size'] = $val['size'];
+            $output[$flavours[$flavour_id]]["servings"][$count]['price'] = $val['price'];
+        }
+
+        return $output;
 
 
     }

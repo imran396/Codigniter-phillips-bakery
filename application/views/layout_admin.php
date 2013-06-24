@@ -44,7 +44,7 @@
     <script src="<?php echo base_url() ?>assets/theme/scripts/jquery-1.8.2.min.js"></script>
 
     <!-- Modernizr -->
-    <script src="<?php echo base_url() ?>assets/theme/scripts/modernizr.custom.76094.js"></script>
+   <!-- <script src="<?php /*echo base_url() */?>assets/theme/scripts/modernizr.custom.76094.js"></script>-->
 
     <!-- MiniColors -->
     <link rel="stylesheet" media="screen" href="<?php echo base_url() ?>assets/theme/scripts/jquery-miniColors/jquery.miniColors.css" />
@@ -53,8 +53,8 @@
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/theme/css/style.min.css?1363272430" />
 
     <!-- LESS 2 CSS -->
-    <script src="<?php echo base_url() ?>assets/theme/scripts/less-1.3.3.min.js"></script>
-
+    <!--<script src="<?php /*echo base_url() */?>assets/theme/scripts/less-1.3.3.min.js"></script>
+-->
 </head>
 <body>
 

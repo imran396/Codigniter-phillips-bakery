@@ -15,6 +15,7 @@ class users extends Crud_Controller
     {
         $group = $this->session->userdata('group');
 
+
         if (!$this->ion_auth->logged_in())
         {
             redirect('auth/login', 'refresh');
