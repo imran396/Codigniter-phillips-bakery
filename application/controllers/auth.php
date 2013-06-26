@@ -15,7 +15,7 @@ class Auth extends Controller {
 		$this->load->library('form_validation');
 		$this->load->database();
 		$this->load->helper('url');
-        $this->output->enable_profiler(TRUE);
+        //$this->output->enable_profiler(TRUE);
 	}
 
 	//redirect if needed, otherwise display the user list
