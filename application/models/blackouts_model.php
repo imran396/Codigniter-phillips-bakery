@@ -114,12 +114,14 @@ class Blackouts_model extends Crud_Model
 
     }
 
-    public function getAll(){
+    public function getAll($location_id){
 
 
-        $data = $this->db->select('flavour_id,blackout_date ')->order_by('flavour_id','asc')->get('blackouts')->result_array();
+        $data = $this->db->select('location_id,flavour_id,blackout_date')->where(array('location_id'=>$location_id))->order_by('flavour_id','asc')->get('blackouts')->result_array();
 
         foreach($data as $key=>$val){
+
+            $data[$key]['location_id'] = (int) $data[$key]['location_id'];
             $data[$key]['flavour_id'] = (int) $data[$key]['flavour_id'];
             $data[$key]['blackout_date'] = $data[$key]['blackout_date'];
         }
