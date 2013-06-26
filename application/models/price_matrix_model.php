@@ -12,22 +12,25 @@ class Price_matrix_model extends Ci_Model
     public function save($location_id)
     {
 
-
         $flavour = ($this->input->post('flavour_id'));
-        $this->remove($location_id);
-        $query="TRUNCATE TABLE `price_matrix`";
-        $this->db->query($query);
+        //$this->remove($location_id);
+       // $query="TRUNCATE TABLE `price_matrix`";
+       // $this->db->query($query);
         foreach ($flavour as $flav):
             $serving = $this->input->post('serving_id_'.$flav);
             $price = $this->input->post('price_'.$flav);
+            $price_matrix = $this->input->post('price_matrix_'.$flav);
             $i=0;
             foreach ($serving as $serv):
-                $this->db->set(array('location_id'=>$location_id,'flavour_id'=> $flav,'serving_id'=> $serv,'price'=> $price[$i]))->insert('price_matrix');
+                if($price_matrix[$i] > 0 ){
+                    $this->db->set(array('price'=> $price[$i]))->where(array('price_matrix_id'=>$price_matrix[$i]))->update('price_matrix');
+                }else{
+                    $this->db->set(array('location_id'=>$location_id,'flavour_id'=> $flav,'serving_id'=> $serv,'price'=> $price[$i]))->insert('price_matrix');
+                }
+
                 $i++;
             endforeach;
         endforeach;
-
-
     }
 
 
@@ -42,12 +45,12 @@ class Price_matrix_model extends Ci_Model
     public function getPrice($location_id,$flavour_id,$serving_id)
     {
 
-        $rows= $this->db
-            ->select('price')
+        return $rows= $this->db
+            ->select('price_matrix_id,price')
             ->where(array('location_id'=>$location_id,'flavour_id'=>$flavour_id,'serving_id'=>$serving_id))
             ->get('price_matrix')->result();
 
-        return isset($rows[0]->price)? $rows[0]->price :'';
+
 
     }
 

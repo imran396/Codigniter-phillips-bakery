@@ -31,7 +31,6 @@ class Productions extends Crud_Controller
     public function inproduction()
     {
 
-
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/production/inproduction_view', $this->data);
 

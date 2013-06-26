@@ -40,6 +40,7 @@ $lang['access_roles'] 		 	                    = 'Access Roles';
 $lang['manage_flavors'] 		 	                = 'Manage Flavors';
 $lang['shapes'] 		 	                        = 'Shapes';
 $lang['flavours'] 		 	                        = 'Flavours';
+$lang['flavour'] 		 	                        = 'Flavour';
 $lang['fondants'] 		 	                        = 'Fondants';
 $lang['servings'] 		 	                        = 'Servings';
 $lang['sizes'] 		 	                            = 'Sizes';

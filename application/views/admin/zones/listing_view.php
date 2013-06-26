@@ -11,7 +11,7 @@
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('zones');?></h3>
         <div class="buttons pull-right">
-            <a href="/admin/shapes" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add page</a>
+            <a href="/admin/zones" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add page</a>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -21,9 +21,6 @@
 <br/>
 <div class="innerLR">
         <div class="widget widget-gray widget-body-white">
-            <div class="widget-head">
-                <h4 class="heading"><?php echo $this->lang->line('zones'); ?> <?php echo $this->lang->line('list'); ?></h4>
-            </div>
             <div class="widget-body" style="padding: 10px 0;">
                 <table class="table table-bordered table-primary js-table-sortable">
                     <thead>
