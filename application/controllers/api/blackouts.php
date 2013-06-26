@@ -13,9 +13,8 @@ class Blackouts extends API_Controller
     public function index()
     {
 
-        $location=isset($_REQUEST['location_id']);
-        if(!empty($location)){
-        $data = $this->blackouts_model->getAll($location);
+
+        $data = $this->blackouts_model->getAll();
 //        $data = array(
 //            array(
 //                'blackout_id' => 1,
@@ -34,6 +33,6 @@ class Blackouts extends API_Controller
 //        );
 
         $this->sendOutput($data);
-        }
+
     }
 }
