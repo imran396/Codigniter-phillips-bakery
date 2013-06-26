@@ -13,7 +13,7 @@ class Packages extends API_Controller
     public function index()
     {
 
-        $location=isset($_REQUEST['id']);
+        $location=isset($_REQUEST['location_id']);
         if(!empty($location)){
             $data = $this->packages_model->getAll($location);
             /*$data = array(
