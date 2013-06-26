@@ -120,6 +120,24 @@ class Customers_model extends Crud_Model
         return $data;
     }
 
+    public function search($data){
+        $data = $this->getSearchField($data);
+        $this->db->or_like($data);
+        $res = $this->db->get('customers');
+        if($res){
+            return $res->result_array();
+        }else{
+            return array();
+        }
+    }
 
+    private function getSearchField($data){
+        foreach ($data as $key => $value) {
+            if (array_search($key, $this->fields) === false) {
+                unset($data[$key]);
+            }
+        }
+        return $data;
 
+    }
 }

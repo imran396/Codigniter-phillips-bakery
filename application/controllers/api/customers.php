@@ -67,5 +67,13 @@ class Customers extends API_Controller
         $this->customers_model->save($data, $data['customer_id']);
     }
 
+    public function customerSearch(){
+        $request = $this->input->get();
+        if($request){
+            $data = $this->customers_model->search($request);
+            $this->sendOutput($data);
+        }
+
+    }
 
 }
