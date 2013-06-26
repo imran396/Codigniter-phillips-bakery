@@ -65,6 +65,15 @@
                 <form name="from" id="from" action="/admin/blackouts/save" method="post">
                 <h3>Create a New Blackout</h3>
                 <div class="box box-narrow">
+                    <div class="label">Select <?php echo $this->lang->line('location'); ?></div>
+                    <div class="row-fluid row-widest">
+                        <select class="selectpicker span12" name="location_id">
+                            <option><?php echo $this->lang->line('select_one'); ?></option>
+                            <?php foreach($locations as $rows):?>
+                                <option value="<?php echo $rows->location_id; ?>" ><?php echo $rows->title;?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                     <div class="label">Select <?php echo $this->lang->line('flavour'); ?></div>
                     <div class="row-fluid row-widest">
                         <select class="selectpicker span12" name="flavour_id">
