@@ -13,6 +13,7 @@ class Blackouts extends API_Controller
     public function index()
     {
 
+
         $data = $this->blackouts_model->getAll();
 //        $data = array(
 //            array(
@@ -32,5 +33,6 @@ class Blackouts extends API_Controller
 //        );
 
         $this->sendOutput($data);
+
     }
 }

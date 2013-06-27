@@ -12,13 +12,14 @@ class Blackouts_model extends Crud_Model
 
     }
 
-    public function insert($data)
+    public function insert()
     {
 
         $curdate=date('m/d/Y');
 
+        $location_id=$this->input->post('location_id');
         $flavour_id=$this->input->post('flavour_id');
-        $dbBlack=$this->getBlackouts($flavour_id);
+        $dbBlack=$this->getBlackouts($location_id,$flavour_id);
         $dbblackout = isset($dbBlack[0]->blackout_id)? $dbBlack[0]->blackout_id :0;
         if (!$dbblackout > 0 ){
 
@@ -33,7 +34,7 @@ class Blackouts_model extends Crud_Model
                 }
             }
             $final_date=implode(',',$final);
-            $this->db->set(array('flavour_id'=>$this->input->post('flavour_id'),'blackout_date'=>$final_date))->insert('blackouts');
+            $this->db->set(array('location_id'=>$location_id , 'flavour_id'=>$this->input->post('flavour_id'),'blackout_date'=>$final_date))->insert('blackouts');
 
         }else{
 
@@ -52,7 +53,7 @@ class Blackouts_model extends Crud_Model
                 }
             }
             $final_date=implode(',',$final);
-            $this->db->set(array('flavour_id'=>$this->input->post('flavour_id'),'blackout_date'=>$final_date))->where('blackout_id',$dbBlack[0]->blackout_id)->update('blackouts');
+            $this->db->set(array('location_id'=>$location_id ,'flavour_id'=>$this->input->post('flavour_id'),'blackout_date'=>$final_date))->where('blackout_id',$dbBlack[0]->blackout_id)->update('blackouts');
         }
 
     }
@@ -74,10 +75,10 @@ class Blackouts_model extends Crud_Model
 
 
 
-    public function getBlackouts($flavour_id)
+    public function getBlackouts($location_id,$flavour_id)
     {
 
-        return $this->db->select('*')->where(array('flavour_id'=>$flavour_id))->get('blackouts')->result();
+        return $this->db->select('*')->where(array('location_id'=>$location_id,'flavour_id'=>$flavour_id))->get('blackouts')->result();
 
     }
 
@@ -116,9 +117,11 @@ class Blackouts_model extends Crud_Model
     public function getAll(){
 
 
-        $data = $this->db->select('flavour_id,blackout_date ')->order_by('flavour_id','asc')->get('blackouts')->result_array();
+        $data = $this->db->select('location_id,flavour_id,blackout_date')->order_by('flavour_id','asc')->get('blackouts')->result_array();
 
         foreach($data as $key=>$val){
+
+            $data[$key]['location_id'] = (int) $data[$key]['location_id'];
             $data[$key]['flavour_id'] = (int) $data[$key]['flavour_id'];
             $data[$key]['blackout_date'] = $data[$key]['blackout_date'];
         }

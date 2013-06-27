@@ -11,7 +11,7 @@
     <ul class="topnav pull-right">
 
         <li class="account">
-            <a data-toggle="dropdowns" href="form_demo.html?lang=en" class="glyphicons logout lock"><span class="hidden-phone text"><?php echo $this->session->userdata('username'); ?></span><i></i></a>
+            <a data-toggle="dropdowns" href="javascript:void(0)" class="glyphicons logout lock"><span class="hidden-phone text"><?php echo $this->session->userdata('username'); ?></span><i></i></a>
             <ul class="dropdown-menu pull-right">
                 <li class="highlight profile">
 							<span>

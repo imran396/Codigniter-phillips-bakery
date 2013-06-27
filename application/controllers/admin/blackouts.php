@@ -62,7 +62,7 @@ class Blackouts extends Crud_Controller
         $data = $this->input->post();
         if (empty($data['blackout_id'])) {
 
-            $this->blackouts_model->insert($data);
+            $this->blackouts_model->insert();
             $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
 
         } else {
