@@ -31,10 +31,10 @@ class Orders extends API_Controller
         $data['shape']=isset($_POST['shape_id'])? $_POST['shape']:'';
         $data['matrix_price ']=isset($_POST['flavour_price'])?$_POST['flavour_price']:'';
         $data['cake_email_photo ']=isset($_POST['cake_email_photo'])?$_POST['cake_email_photo']:'';
-        $data['magic_cake_id ']=isset($_POST['magic_cake_id'])?$_POST['magic_cake_id']:'';
-        $data['magic_surcharge ']=isset($_POST['magic_surcharge'])?$_POST['magic_surcharge']:'';
+        $data['magic_cake_id ']=isset($_POST['magic_cake_id'])? $_POST['magic_cake_id']:'';
+        $data['magic_surcharge ']=isset($_POST['magic_surcharge'])? $_POST['magic_surcharge']:'';
         $data['custom_cake_image_name ']=isset($_POST['custom_cake_image_name'])?$_POST['custom_cake_image_name']:'';
-        $data['custom_cake_image ']=isset($_POST['custom_cake_image'])?$_POST['custom_cake_image']:'';
+        $data['custom_cake_image ']=isset($_POST['custom_cake_image'])? $_POST['custom_cake_image']:'';
         $data['inscription ']=isset($_POST['inscription'])?$_POST['inscription']:'';
         $data['special_instruction ']=isset($_POST['special_instruction'])? $_POST['special_instruction']:'';
         $data['instructional_email_photo ']=isset($_POST['instructional_email_photo'])? $_POST['instructional_email_photo']:'';
