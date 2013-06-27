@@ -16,7 +16,7 @@ class Crud_Model extends CI_Model
     protected $table;
     protected $primaryKey;
 
-    private $fields = array();
+    protected $fields = array();
     private $numRows = null;
     private $insertId = null;
     private $affectedRows = null;
