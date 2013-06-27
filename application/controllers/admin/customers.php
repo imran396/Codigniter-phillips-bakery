@@ -42,7 +42,7 @@ class Customers extends Crud_Controller
                 if(!empty($id)) {
                     $this->redirectToHome('edit/'.$id);
                 }else{
-                    $this->redirectToHome();
+                    $this->redirectToHome('listing');
                 }
 
 
