@@ -10,7 +10,7 @@ class Productions extends Crud_Controller
         //$this->layout->setLayout('layout_admin');
         $this->layout->setLayout('layout_custom');
 
-        $this->load->model('servings_model');
+        $this->load->model('productions_model');
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
@@ -28,10 +28,11 @@ class Productions extends Crud_Controller
     }
 
 
-    public function inproduction()
+    public function inproduction($starts=0)
     {
 
         $this->data['active']=$this->uri->segment(2,0);
+        $this->data['paging']=$this->productions_model->getListing($starts);
         $this->layout->view('admin/production/inproduction_view', $this->data);
 
 

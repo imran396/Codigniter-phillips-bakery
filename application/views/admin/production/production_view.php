@@ -16,7 +16,7 @@
         <div class="panel-choice">
             <div class="logo"></div>
             <div class="options">
-                <a href="/admin/production/inproduction" class="btn">Cakes in Production</a>
+                <a href="/admin/productions/inproduction" class="btn">Cakes in Production</a>
                 <a href="/admin/lookup" class="btn">Customer Lookup</a>
             </div>
         </div>

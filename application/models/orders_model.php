@@ -10,11 +10,26 @@ class Orders_model extends Ci_Model
     }
 
 
-    public function getOrderStatus(){
+    public function order_insert($data){
+
+        $this->db->set($data)->insert('orders');
+        return $this->db->insert_id();
+
+    }
 
 
+    public function notes_insert($order_notes,$order_id){
 
-         //return $output;
+        $order_notes['order_id']=$order_id;
+        $this->db->set($order_notes)->insert('order_notes');
+
+
+    }
+
+    public function instructional_insert($order_notes,$order_id){
+
+        $order_notes['order_id']=$order_id;
+        $this->db->set($order_notes)->insert('order_notes');
 
 
     }

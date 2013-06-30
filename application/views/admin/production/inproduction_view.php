@@ -149,126 +149,23 @@
                 </tr>
                 </thead>
                 <tbody>
+                <?php
+                foreach($paging[0] as $rows):
+                ?>
                 <tr>
                     <td class="center"><a href="/admin/orders/details/<?php echo "4560456"; ?>">4560456</a></td>
-                    <td class="center">Customer Name here</td>
-                    <td>Fancy Double Chocolate Crispy Cream Crunch</td>
-                    <td class="center">Delivery</td>
-                    <td class="center">Aug 28, 2013</td>
-                    <td class="center">4:56pm</td>
-                    <td>Yes</td>
-                    <td>Chocolate</td>
-                    <td>24560456</td>
+                    <td class="center"><?php echo $rows->first_name.' '.$rows->last_name; ?></td>
+                    <td><?php echo $rows->cake_name; ?></td>
+                    <td class="center"><?php echo $rows->delivery_type; ?></td>
+                    <td class="center"><?php echo $this->productions_model->dateFormate($rows->delivery_date); ?></td>
+                    <td class="center"><?php echo $rows->delivery_time; ?></td>
+                    <td><?php echo $rows->fondant; ?></td>
+                    <td><?php echo $rows->flavour_name; ?></td>
+                    <td><?php echo $rows->magic_cake_id; ?></td>
                     <td class="green">In Production</td>
                 </tr>
-                <tr>
-                    <td class="center"><a href="">4560456</a></td>
-                    <td class="center">Customer Name here</td>
-                    <td>Magic Chocolate crispy crunch </td>
-                    <td class="center">Delivery</td>
-                    <td class="center">Aug 28, 2013</td>
-                    <td class="center">4:56pm</td>
-                    <td>Yes</td>
-                    <td>Chocolate</td>
-                    <td>24560456</td>
-                    <td class="red">Sold</td>
-                </tr>
-                <tr>
-                    <td class="center"><a href="">4560456</a></td>
-                    <td class="center">Customer Name here</td>
-                    <td>Coffee La Creme</td>
-                    <td class="center">Delivery</td>
-                    <td class="center">Aug 28, 2013</td>
-                    <td class="center">4:56pm</td>
-                    <td>Yes</td>
-                    <td>Chocolate</td>
-                    <td>24560456</td>
-                    <td class="green">In Production</td>
-                </tr>
-                <tr>
-                    <td class="center"><a href="">4560456</a></td>
-                    <td class="center">Customer Name here</td>
-                    <td>Fancy Double Chocolate Crispy Cream Crunch</td>
-                    <td class="center">Delivery</td>
-                    <td class="center">Aug 28, 2013</td>
-                    <td class="center">4:56pm</td>
-                    <td>Yes</td>
-                    <td>Chocolate</td>
-                    <td>24560456</td>
-                    <td class="green">In Production</td>
-                </tr>
-                <tr>
-                    <td class="center"><a href="">4560456</a></td>
-                    <td class="center">Customer Name here</td>
-                    <td>Magic Chocolate crispy crunch </td>
-                    <td class="center">Delivery</td>
-                    <td class="center">Aug 28, 2013</td>
-                    <td class="center">4:56pm</td>
-                    <td>Yes</td>
-                    <td>Chocolate</td>
-                    <td>24560456</td>
-                    <td class="red">Sold</td>
-                </tr>
-                <tr>
-                    <td class="center"><a href="">4560456</a></td>
-                    <td class="center">Customer Name here</td>
-                    <td>Fancy Double Chocolate Crispy Cream Crunch</td>
-                    <td class="center">Delivery</td>
-                    <td class="center">Aug 28, 2013</td>
-                    <td class="center">4:56pm</td>
-                    <td>Yes</td>
-                    <td>Chocolate</td>
-                    <td>24560456</td>
-                    <td class="green">In Production</td>
-                </tr>
-                <tr>
-                    <td class="center"><a href="">4560456</a></td>
-                    <td class="center">Customer Name here</td>
-                    <td>Magic Chocolate crispy crunch </td>
-                    <td class="center">Delivery</td>
-                    <td class="center">Aug 28, 2013</td>
-                    <td class="center">4:56pm</td>
-                    <td>Yes</td>
-                    <td>Chocolate</td>
-                    <td>24560456</td>
-                    <td class="red">Sold</td>
-                </tr>
-                <tr>
-                    <td class="center"><a href="">4560456</a></td>
-                    <td class="center">Customer Name here</td>
-                    <td>Fancy Double Chocolate Crispy Cream Crunch</td>
-                    <td class="center">Delivery</td>
-                    <td class="center">Aug 28, 2013</td>
-                    <td class="center">4:56pm</td>
-                    <td>Yes</td>
-                    <td>Chocolate</td>
-                    <td>24560456</td>
-                    <td class="green">In Production</td>
-                </tr>
-                <tr>
-                    <td class="center"><a href="">4560456</a></td>
-                    <td class="center">Customer Name here</td>
-                    <td>Magic Chocolate crispy crunch </td>
-                    <td class="center">Delivery</td>
-                    <td class="center">Aug 28, 2013</td>
-                    <td class="center">4:56pm</td>
-                    <td>Yes</td>
-                    <td>Chocolate</td>
-                    <td>24560456</td>
-                    <td class="red">Sold</td>
-                </tr>
-                <tr>
-                    <td class="center"><a href="">4560456</a></td>
-                    <td class="center">Customer Name here</td>
-                    <td>Fancy Double Chocolate Crispy Cream Crunch</td>
-                    <td class="center">Delivery</td>
-                    <td class="center">Aug 28, 2013</td>
-                    <td class="center">4:56pm</td>
-                    <td>Yes</td>
-                    <td>Chocolate</td>
-                    <td>24560456</td>
-                    <td class="green">In Production</td>
-                </tr>
+                <?php endforeach; ?>
+
                 </tbody>
             </table>
         </div>
@@ -277,16 +174,8 @@
         <a href="" class="button button-green"><span class="icon icon-scan"></span>Scan Bar Code</a>
     </div>
     <div class="pagination pagination-small pagination-right" style="margin-top: 0; margin-bottom: 12px;">
-        <ul>
-            <li class="disabled"><a href="#">&lsaquo;</a></li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li>...</li>
-            <li><a href="#">10</a></li>
-            <li><a href="#">11</a></li>
-            <li><a href="#">&rsaquo;</a></li>
-        </ul>
+        <?php echo $paging[1]; ?>
+
     </div>
 </div><!-- End Wrapper -->
 

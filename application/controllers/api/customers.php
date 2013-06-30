@@ -17,62 +17,26 @@ class Customers extends API_Controller
     }
 
 
-   public function add()
+    public function insert()
     {
-        if (!empty($_POST)) {
-            $this->addValidation();
-            if ($this->form_validation->run()) {
-                $this->saveData();
-            }
-
-        }
-    }
-
-    public function update($id = NULL)
-    {
-        if (!empty($_POST)) {
-            $this->addValidation();
-            if ($this->form_validation->run()) {
-                $this->saveData();
-            }
-
-        }
-    }
-
-    private function addValidation()
-    {
-        $this->form_validation->set_rules('first_name');
-        $this->form_validation->set_rules('last_name');
-        $this->form_validation->set_rules('email');
-        $this->form_validation->set_rules('phone_number', 'Phone Number Title','required|trim|xss_clean');
-        $this->form_validation->set_rules('customer_id');
-        $this->form_validation->set_rules('address1');
-        $this->form_validation->set_rules('address2');
-        $this->form_validation->set_rules('city');
-        $this->form_validation->set_rules('province');
-        $this->form_validation->set_rules('postal_code');
-        $this->form_validation->set_rules('country');
-        $this->form_validation->set_rules('status');
-
-    }
-
-    private function saveData()
-    {
-            $data = $this->input->post();
+            $data = $this->input->get();
+            $data['status']=1;
             $this->customers_model->create($data);
 
     }
 
-    private function UpdateData($id = NUll){
-        $this->customers_model->save($data, $data['customer_id']);
+    public function update(){
+
+            $data = $this->input->get();
+            $this->customers_model->save($data, $data['customer_id']);
     }
 
-    public function customerSearch(){
-        $request = $this->input->get();
-        if($request){
-            $data = $this->customers_model->search($request);
-            $this->sendOutput($data);
-        }
+    public function search(){
+            $request = $this->input->get();
+            if($request){
+                $data = $this->customers_model->search($request);
+                $this->sendOutput($data);
+            }
 
     }
 

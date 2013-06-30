@@ -58,13 +58,13 @@
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('address1');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address1');?>" value="<?php echo(isset($queryup[0]->address1))? $queryup[0]->address1:set_value('address1'); ?>"   class="span12" name="address1" id="address1"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address1');?>" value="<?php echo(isset($queryup[0]->address_1))? $queryup[0]->address_1:set_value('address_1'); ?>"   class="span12" name="address_1" id="address_1"  />
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('address2');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address2');?>" value="<?php echo(isset($queryup[0]->address2))? $queryup[0]->address2:set_value('address2'); ?>"  class="span12" name="address2" id="address2"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address2');?>" value="<?php echo(isset($queryup[0]->address_2))? $queryup[0]->address_2:set_value('address_2'); ?>"  class="span12" name="address_2" id="address_2"  />
                                     </div>
                                 </div>
                                 <div class="control-group">
