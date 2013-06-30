@@ -19,9 +19,8 @@ class Customers_model extends Crud_Model
 
     public function save($data, $id)
     {
-        print_r($data);
-        exit;
-        //$this->update($data, $id);
+
+        $this->update($data, $id);
     }
 
     public function deleteDataExisting($data=0){
