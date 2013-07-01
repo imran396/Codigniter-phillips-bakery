@@ -17,12 +17,15 @@ class Productions extends Crud_Controller
 
     }
 
-    public function index()
-    {
 
+    function barcode_gen() {
 
-        $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/production/production_view', $this->data);
+        $this->load->library('zend');
+        $this->zend->load('Zend/Barcode/Barcode');
+
+        $barcodeOptions = array('text' => 'ZEND-FRAMEWORK');
+        $rendererOptions = array();
+        \Zend\Barcode\Barcode::factory('code39', 'image', $barcodeOptions, $rendererOptions)->render();
 
 
     }
@@ -38,12 +41,14 @@ class Productions extends Crud_Controller
 
     }
 
-    public function order_details()
+
+    public function details($order_code=0)
     {
 
 
         $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/orders/order_detail_view', $this->data);
+        $this->data['queryup']=$this->productions_model->orderDetails($order_code);
+        $this->layout->view('admin/production/details_view', $this->data);
 
 
     }
@@ -172,5 +177,7 @@ class Productions extends Crud_Controller
     {
         redirect('admin/servings/'.$redirect);
     }
+
+
 
 }

@@ -1,6 +1,6 @@
 <div class="container-fluid fixed container-new">
 <div class="navbar main">
-    <div class="icon-wrapper"><a href="/admin/production" class="icon-home"></a></div>
+    <div class="icon-wrapper"><a href="/admin/productions" class="icon-home"></a></div>
     <span class="tlogo">Cakes in Production</span>
     <div class="pull-right">
         <div class="search-form">
@@ -20,26 +20,25 @@
         <div class="row-fluid">
             <select class="selectpicker span12">
                 <option class="label">Status</option>
-                <option>Pending</option>
-                <option>In Production</option>
-                <option>Sold</option>
+                <?php
+                $getOrderStatus = $this->productions_model->getOrderStatus();
+                foreach($getOrderStatus as $orderStatus):
+                ?>
+                <option value="<?php echo $orderStatus->title ?>"><?php echo $orderStatus->title ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
         <div class="row-fluid">
             <select class="selectpicker span12">
                 <option class="label">Fondant</option>
-                <option>Mustard</option>
-                <option>Ketchup</option>
-                <option>Relish</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
             </select>
         </div>
         <div class="row-fluid row-wider">
             <select class="selectpicker span12">
                 <option class="label">Flavor</option>
-                <option>Chocolate</option>
-                <option>Vanilia</option>
-                <option>Lemon</option>
-                <option>Extra tasty long flavor </option>
+
             </select>
         </div>
         <div class="row-fluid row-wide">
@@ -150,10 +149,12 @@
                 </thead>
                 <tbody>
                 <?php
+                $var = ($paging[3] != '0')  ? ($paging[3]+1) : 1;
+                $i=$var;
                 foreach($paging[0] as $rows):
                 ?>
                 <tr>
-                    <td class="center"><a href="/admin/orders/details/<?php echo "4560456"; ?>">4560456</a></td>
+                    <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_id; ?>" ><?php echo $rows->order_code; ?></a></td>
                     <td class="center"><?php echo $rows->first_name.' '.$rows->last_name; ?></td>
                     <td><?php echo $rows->cake_name; ?></td>
                     <td class="center"><?php echo $rows->delivery_type; ?></td>
@@ -162,9 +163,9 @@
                     <td><?php echo $rows->fondant; ?></td>
                     <td><?php echo $rows->flavour_name; ?></td>
                     <td><?php echo $rows->magic_cake_id; ?></td>
-                    <td class="green">In Production</td>
+                    <td class="green"><?php echo $rows->production_status;?></td>
                 </tr>
-                <?php endforeach; ?>
+                <?php $i++; endforeach; ?>
 
                 </tbody>
             </table>

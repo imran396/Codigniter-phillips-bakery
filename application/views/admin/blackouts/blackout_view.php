@@ -48,14 +48,14 @@
 </script>
 <div class="container-fluid fixed container-new">
     <div class="navbar main">
-        <div class="icon-wrapper"><a href="/admin" class="icon-home"></a></div>
+        <div class="icon-wrapper"><a href="/admin/productions" class="icon-home"></a></div>
         <span class="tlogo">Manage Blackouts</span>
         <div class="pull-right">
-            <div class="search-form">
-                <div class="error-msg"><span>Error No Results</span></div>
-                <input type="text" name="" value="" placeholder="Search Orders" class="error" />
-                <input type="submit" name="" value="Search" />
-            </div>
+<!--            <div class="search-form">-->
+<!--                <div class="error-msg"><span>Error No Results</span></div>-->
+<!--                <input type="text" name="" value="" placeholder="Search Orders" class="error" />-->
+<!--                <input type="submit" name="" value="Search" />-->
+<!--            </div>-->
         </div>
         <div class="separator"></div>
     </div>

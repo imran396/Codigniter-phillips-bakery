@@ -7,56 +7,17 @@ class Productions_model extends Ci_Model
     {
         parent::__construct();
 
-    }
-
-
-    public function deleteDataExisting($data=0){
-
-
-        $id_serialize = '"'.$data.'"';
-        $SQL = sprintf("SELECT cake_id FROM cakes  WHERE shape_id LIKE  '%s%s%s'", '%',$id_serialize, '%' );
-        $count=$this->db->query($SQL)->num_rows();
-        return $count;
-    }
-
-    public function delete($id)
-    {
-
-
-        if(!$this->deleteDataExisting($id) > 0){
-            $this->remove($id);
-            $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
-        }else{
-
-            $this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
-        }
 
     }
 
-    public function  checkUniqueTitle($id){
 
-        if(!empty($id)){
-             $dbcatid = $this->db->select('title')
-                ->where('shape_id',$id)
-                ->get('shapes')->result();
-                return $dbcatid[0]->title;
 
-        }
-
-    }
-
-    public function getshapes($shape_id)
-    {
-
-        return $this->db->select('*')->where(array('shape_id'=>$shape_id))->get('shapes')->result();
-
-    }
 
     public function getListing($start)
     {
 
         $location_id=1;
-        $per_page=3;
+        $per_page=10;
         $page   = intval($start);
         if( $page<=0 )  $page  = 1;
         $limit= ( $page-1 ) * $per_page;
@@ -73,7 +34,7 @@ class Productions_model extends Ci_Model
         $this->db->or_where(array("orders.pickup_location_id"=> $location_id));
         $this->db->order_by("orders.order_id", "desc");
         $query =$this->db->get()->result();
-        return array($query,$paging);
+        return array($query,$paging,$total_rows,$limit);
 
     }
 
@@ -81,6 +42,51 @@ class Productions_model extends Ci_Model
 
         $cusdate=strtotime($date);
         return date("M j, Y",$cusdate);
+
+    }
+
+    public function orderDetails($order_code=22334455){
+
+        $this->db->select('orders.*,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*');
+        $this->db->from('orders');
+        $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
+        $this->db->join('customers','customers.customer_id = orders.customer_id','left');
+        $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
+        $this->db->join('order_delivery','order_delivery.order_id = orders.order_id','left');
+        $this->db->join('price_matrix','price_matrix.price_matrix_id = orders.price_matrix_id','left');
+        $this->db->where(array("orders.order_code"=> $order_code));
+        return $this->db->get()->row();
+
+
+    }
+
+    public function getLocations($location_id)
+    {
+
+        $row=$this->db->select('title')->where(array('location_id'=>$location_id))->get('locations')->row();
+        return $row->title;
+
+    }
+
+    public function getzones($zone_id)
+    {
+
+        $row=$this->db->select('title')->where(array('zone_id'=>$zone_id))->get('zones')->row();
+        return $row->title;
+
+    }
+
+    public function getOrderStatus()
+    {
+
+        return $this->db->select('*')->where(array('status'=>1))->get('order_status')->result();
+
+    }
+
+    public function getFlavours()
+    {
+
+        return $this->db->select('*')->where(array('status'=>1))->get('flavours')->result();
 
     }
 
@@ -108,22 +114,6 @@ class Productions_model extends Ci_Model
 
     }
 
-    public function checkshapes($id,$title)
-    {
-        $dbtitle = $this->checkUniqueTitle($id);
-        if($title != $dbtitle ){
-
-            $count=$this->db->select('shape_id')->where(array( strtolower('title') => strtolower($title) ))->get('shapes')->num_rows();
-            if($count > 0 )
-            {
-                $this->form_validation->set_message('checkTitle', $title.' %s '.$this->lang->line('duplicate_msg'));
-                return FALSE;
-            }else{
-                return TRUE;
-            }
-        }
-
-    }
 
     public function getAll()
     {

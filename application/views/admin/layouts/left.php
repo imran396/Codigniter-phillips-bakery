@@ -40,8 +40,6 @@ $array = array('roles','controls','access_controls');
                 </ul>
             </li>
             <li class="glyphicons cogwheels <?php echo (!empty($active) && ($active == 'productions' || $active == 'inproduction' ) ) ? 'active' : ''; ?>"><a href="/admin/productions"><i></i><span><?php echo $this->lang->line('production'); ?></span></a></li>
-            <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'blackouts') ? 'active' : ''; ?>"><a href="/admin/blackouts"><i></i><span><?php echo $this->lang->line('blackout'); ?></span></a></li>
-
 
         </ul>
 

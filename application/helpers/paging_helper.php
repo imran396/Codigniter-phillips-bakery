@@ -215,7 +215,7 @@ if ( ! function_exists('production_paginate')){
 
 
             // Pages
-            if ($lastpage < 7 + ($stages * 2))	// Not enough pages to breaking it up
+            if ($lastpage < 5 + ($stages * 2))	// Not enough pages to breaking it up
             {
                 for ($counter = 1; $counter <= $lastpage; $counter++)
                 {
@@ -225,7 +225,7 @@ if ( ! function_exists('production_paginate')){
                         $paginate.= "<li><a href='$targetpage/$counter'>$counter</a></li>";}
                 }
             }
-            elseif($lastpage > 5 + ($stages * 2))	// Enough pages to hide a few?
+            elseif($lastpage > 3 + ($stages * 2))	// Enough pages to hide a few?
             {
                 // Beginning only hide later pages
                 if($page < 1 + ($stages * 2))

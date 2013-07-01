@@ -45,7 +45,7 @@ class Blackouts extends Crud_Controller
     }
 
 
-    public function edit($id)
+    public function search($id)
     {
 
         $this->data['queryup'] = $this->blackouts_model->getservings($id);
