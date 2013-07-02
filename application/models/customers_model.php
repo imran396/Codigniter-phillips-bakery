@@ -14,7 +14,8 @@ class Customers_model extends Crud_Model
 
     public function create($data)
     {
-        $this->insert($data);
+        $id = $this->insert($data);
+        return $id;
     }
 
     public function save($data, $id)

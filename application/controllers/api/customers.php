@@ -19,9 +19,17 @@ class Customers extends API_Controller
 
     public function insert()
     {
-            $data = $this->input->get();
+            $data = $this->input->post();
             $data['status']=1;
-            $this->customers_model->create($data);
+            $customer_id = $this->customers_model->create($data);
+
+            $data = array(
+                array(
+                    'customer_id' => $customer_id
+                ),
+
+            );
+           $this->sendOutput($data);
 
     }
 
