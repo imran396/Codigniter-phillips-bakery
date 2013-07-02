@@ -1,11 +1,18 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+set_include_path(get_include_path() . PATH_SEPARATOR . '/var/www/phillips-bakery/application/libraries/');
 
+//var_dump($loader->register());
 
 class Productions extends Crud_Controller
 {
     public function __construct()
     {
         parent::__construct();
+
+        require_once 'Zend/Loader/StandardAutoloader.php';
+
+        $loader = new Zend\Loader\StandardAutoloader(array('autoregister_zf' => true));
+        $loader->register();
 
         //$this->layout->setLayout('layout_admin');
         $this->layout->setLayout('layout_custom');
@@ -20,11 +27,8 @@ class Productions extends Crud_Controller
 
     public function index()
     {
-
-
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/production/production_view', $this->data);
-
 
     }
 
@@ -33,32 +37,26 @@ class Productions extends Crud_Controller
 
         $this->load->library('zend');
         $this->zend->load('Zend/Barcode/Barcode');
-
         $barcodeOptions = array('text' => 'ZEND-FRAMEWORK');
         $rendererOptions = array();
-        Barcode::factory('code39', 'image', $barcodeOptions, $rendererOptions)->render();
+        Zend\Barcode\Barcode::factory('code39', 'image', $barcodeOptions, $rendererOptions)->render();
     }
 
 
     public function inproduction($starts=0)
     {
-
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['paging']=$this->productions_model->getListing($starts);
         $this->layout->view('admin/production/inproduction_view', $this->data);
-
 
     }
 
 
     public function details($order_code=0)
     {
-
-
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['queryup']=$this->productions_model->orderDetails($order_code);
         $this->layout->view('admin/production/details_view', $this->data);
-
 
     }
 
