@@ -9,8 +9,6 @@ class Productions extends Crud_Controller
 
         //$this->layout->setLayout('layout_admin');
         $this->layout->setLayout('layout_custom');
-        $this->load->library('barcode');
-
         $this->load->model('productions_model');
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
@@ -18,13 +16,10 @@ class Productions extends Crud_Controller
 
     }
 
+
+
     public function index()
     {
-
-echo "dfsdfsdfsd";
-        exit;
-       // $this->load->helper('barcode_helper');
-       // echo  $this->barcode_helper->getBarcodeArray();
 
 
         $this->data['active']=$this->uri->segment(2,0);
@@ -36,12 +31,12 @@ echo "dfsdfsdfsd";
 
     function barcode_gen() {
 
-//        $this->load->library('zend');
-//        $this->zend->load('Zend/Barcode/Barcode');
-//
-//        $barcodeOptions = array('text' => 'ZEND-FRAMEWORK');
-//        $rendererOptions = array();
-//        \Zend\Barcode\Barcode::factory('code39', 'image', $barcodeOptions, $rendererOptions)->render();
+        $this->load->library('zend');
+        $this->zend->load('Zend/Barcode/Barcode');
+
+        $barcodeOptions = array('text' => 'ZEND-FRAMEWORK');
+        $rendererOptions = array();
+        Barcode::factory('code39', 'image', $barcodeOptions, $rendererOptions)->render();
     }
 
 

@@ -38,14 +38,20 @@
         <div class="row-fluid row-wider">
             <select class="selectpicker span12">
                 <option class="label">Flavor</option>
+                <?php
+                $getFlavours = $this->productions_model->getFlavours();
+                foreach($getFlavours as $flavours):
+                    ?>
+                    <option value="<?php echo $flavours->flavour_id ?>"><?php echo $flavours->title ?></option>
+                <?php endforeach; ?>
 
             </select>
         </div>
         <div class="row-fluid row-wide">
             <select class="selectpicker span12">
                 <option class="label">Pickup/Dellivery</option>
-                <option>Dellivery</option>
-                <option>Dellivery</option>
+                <option value="delivery">Delivery</option>
+                <option value="pickup">Pickup</option>
             </select>
         </div>
         <div class="row-fluid row-widest">

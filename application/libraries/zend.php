@@ -48,7 +48,10 @@ class CI_Zend
      */
     function load($class)
     {
-        require_once (string) $class . EXT;
+
+        require_once "Zend/Loader/Autoloader.php";
+        //require_once (string) $class . EXT;
+        //$loader = Zend_Loader_Autoloader::getInstance();
         log_message('debug', "Zend Class $class Loaded");
     }
 }

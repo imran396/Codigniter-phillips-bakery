@@ -86,7 +86,14 @@ class Productions_model extends Ci_Model
     public function getFlavours()
     {
 
-        return $this->db->select('*')->where(array('status'=>1))->get('flavours')->result();
+        return   $this->db
+                ->select('flavours.*')
+                ->from('orders')
+                ->join('flavours','flavours.flavour_id = orders.flavour_id')
+                ->where(array('status'=>1))
+                ->group_by('flavour_id')
+                ->get()
+                ->result();
 
     }
 
