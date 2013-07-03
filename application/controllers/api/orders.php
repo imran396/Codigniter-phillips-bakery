@@ -55,51 +55,6 @@ class Orders extends API_Controller
         $order_delivery['province']=isset($_REQUEST['province'])? $_REQUEST['province']:'';
         $order_delivery['spacial_instruction']=isset($_REQUEST['spacial_instruction'])? $_REQUEST['spacial_instruction']:'';
 
-//print_r($data);
-
-
-    /*$data=array("cake_id"=> 1,
-    "customer_id" => 5,
-    "employee_id" => 1,
-    "manager_id"=> 1,
-    "location_id" => 1,
-    "order_date" => '06/20/2013',
-    "delivery_type" => "delivery",
-    "pickup_location_id"=> 2,
-    "delivery_zone_id"=> 1,
-    "delivery_zone_surcharge"=> 49.90,
-    "delivery_date"=> "07/08/2013",
-    "delivery_time"=> "8:30 AM",
-    "flavour_id" => 1,
-    "fondant" => "yes",
-    "price_matrix_id" => 1,
-    "tiers" => 4,
-    "shape"=> "Round",
-    "matrix_price" => 56.90,
-    "cake_email_photo" =>'yes',
-    "magic_cake_id"=> "#MC12345",
-    "magic_surcharge" => 40.00,
-    "custom_cake_image_name"=> "../photo.png",
-    "custom_cake_image"=> "",
-    "inscription" => "The cake is very good",
-    "special_instruction" => "Test",
-    "instructional_email_photo" =>'yes',
-    "vaughan_location"=>'yes',
-    "order_status"=> "estimate",
-    "discount_price" => 10.80,
-    "total_price" => 999.90,
-    "override_price"=> 49.90);
-
-    $order_notes = array(
-            "name"=>"contact name",
-            "phone"=>"1232321",
-            "address_1"=>"aaaa",
-            "address_2"=>"bbbb",
-            "postal"=>"postal code",
-            "city"=>"my city",
-            "province"=>"my province",
-            "spacial_instruction"=>"ddsfd  sdfsd s"
-    );*/
 
 //
 //        "instructional_photo" : [
@@ -113,16 +68,20 @@ class Orders extends API_Controller
 
     $orders=$this->orders_model->order_insert($data);
 
-    if(strtolower($data['delivery_type']) == 'order'){
+    if(strtolower($data['delivery_type']) == 'delivery'){
 
         $this->orders_model->delivery_insert($order_delivery,$orders['order_id']);
     }
 
     if(strtolower($data['instructional_email_photo']) == 'yes'){
 
-        $this->orders_model->instructional_photo($order_notes,$orders['order_id']);
+        $this->orders_model->instructional_photo($order_delivery,$orders['order_id']);
     }
-    $this->sendOutput($orders);
+    if(strtolower($data['order_status']) == 'order'){
+        $this->sendOutput($orders);
+    }else{
+        $this->sendOutput(array('order_id'=> $orders['order_id']));
+    }
 
     }
 
