@@ -13,8 +13,10 @@ class Orders_model extends Crud_Model
 
     public function order_insert($data){
 
+        $data['order_status']="Pending";
         $order_id = $this->insert($data);
         $order_code=(100000+$order_id);
+
         $this->db->set(array('order_code'=>$order_code))->where('order_id',$order_id)->update('orders');
 
         $order['order_id']= $order_id;
