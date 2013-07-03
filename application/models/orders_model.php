@@ -28,12 +28,10 @@ class Orders_model extends Crud_Model
     }
 
 
-    public function delivery_insert($delivery_insert,$order_id){
+    public function delivery_order($delivery_insert,$order_id){
 
         $delivery_insert['order_id']=$order_id;
         $this->db->set($delivery_insert)->insert('order_delivery');
-
-
     }
 
     public function instructional_insert($order_notes,$order_id){
