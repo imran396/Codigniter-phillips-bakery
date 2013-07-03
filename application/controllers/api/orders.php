@@ -46,14 +46,14 @@ class Orders extends API_Controller
         $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';
 
 
-        $order_notes['name']=isset($_REQUEST['name']) ? $_REQUEST['name']:'';
-        $order_notes['phone']=isset($_REQUEST['phone']) ? $_REQUEST['phone']:'';
-        $order_notes['address_1']=isset($_REQUEST['address_1'])? $_REQUEST['address_1']:'';
-        $order_notes['address_2']=isset($_REQUEST['address_2'])? $_REQUEST['address_2']:'';
-        $order_notes['postal']=isset($_REQUEST['postal'])? $_REQUEST['postal']:'';
-        $order_notes['city']=isset($_REQUEST['city'])? $_REQUEST['city']:'';
-        $order_notes['province']=isset($_REQUEST['province'])? $_REQUEST['province']:'';
-        $order_notes['spacial_instruction']=isset($_REQUEST['spacial_instruction'])? $_REQUEST['spacial_instruction']:'';
+        $order_delivery['name']=isset($_REQUEST['name']) ? $_REQUEST['name']:'';
+        $order_delivery['phone']=isset($_REQUEST['phone']) ? $_REQUEST['phone']:'';
+        $order_delivery['address_1']=isset($_REQUEST['address_1'])? $_REQUEST['address_1']:'';
+        $order_delivery['address_2']=isset($_REQUEST['address_2'])? $_REQUEST['address_2']:'';
+        $order_delivery['postal']=isset($_REQUEST['postal'])? $_REQUEST['postal']:'';
+        $order_delivery['city']=isset($_REQUEST['city'])? $_REQUEST['city']:'';
+        $order_delivery['province']=isset($_REQUEST['province'])? $_REQUEST['province']:'';
+        $order_delivery['spacial_instruction']=isset($_REQUEST['spacial_instruction'])? $_REQUEST['spacial_instruction']:'';
 
 //print_r($data);
 
@@ -115,15 +115,13 @@ class Orders extends API_Controller
 
     if(strtolower($data['delivery_type']) == 'order'){
 
-        $this->orders_model->notes_insert($order_notes,$orders['order_id']);
+        $this->orders_model->delivery_insert($order_delivery,$orders['order_id']);
     }
 
     if(strtolower($data['instructional_email_photo']) == 'yes'){
 
         $this->orders_model->instructional_photo($order_notes,$orders['order_id']);
     }
-
-   // print_r($orders);
     $this->sendOutput($orders);
 
     }
