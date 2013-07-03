@@ -7,13 +7,24 @@ class Orders extends API_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->library('image_lib');
         $this->load->model('orders_model');
+    }
+
+    public function index()
+    {
+        $data = $this->orders_model->getAll();
+        $this->sendOutput($data);
     }
 
     public function insert()
     {
 
 
+        //print_r($_FILES['instructionalImages']);
+
+
+        $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
         $data['customer_id']=isset($_REQUEST['customer_id'])? $_REQUEST['customer_id']:'';
         $data['employee_id']=isset($_REQUEST['employee_id'])? $_REQUEST['employee_id']:'';
         $data['manager_id']=isset($_REQUEST['manager_id'])? $_REQUEST['manager_id']:'';
@@ -60,13 +71,25 @@ class Orders extends API_Controller
 
         if(strtolower($data['delivery_type']) == 'delivery'){
 
-            $this->orders_model->delivery_insert($order_delivery,$orders['order_id']);
+            $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
         }
 
         if(strtolower($data['instructional_email_photo']) == 'yes'){
 
             $this->orders_model->instructional_photo($order_delivery,$orders['order_id']);
         }
+
+        if(isset($_FILES['onCakeImage'])){
+            $this->orders_model->doUpload($orders['order_id']);
+        }
+
+        if(isset($_FILES['instructionalImages'])){
+
+            //$this->orders_model->instructionalImagesUpload($orders['order_id']);
+
+        }
+
+
         if(strtolower($data['order_status']) == 'order'){
             $this->sendOutput($orders);
         }else{
@@ -79,6 +102,7 @@ class Orders extends API_Controller
 
 
         $data['order_id']=isset($_REQUEST['order_id'])? $_REQUEST['order_id']:'';
+        $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
         $data['customer_id']=isset($_REQUEST['customer_id'])? $_REQUEST['customer_id']:'';
         $data['employee_id']=isset($_REQUEST['employee_id'])? $_REQUEST['employee_id']:'';
         $data['manager_id']=isset($_REQUEST['manager_id'])? $_REQUEST['manager_id']:'';
@@ -133,6 +157,16 @@ class Orders extends API_Controller
             $this->orders_model->instructional_photo($order_delivery,$orders['order_id']);
         }
 
+        if(isset($_FILES['onCakeImage'])){
+            $this->orders_model->doUpload($orders['order_id']);
+        }
+
+        if(isset($_FILES['instructionalImages'])){
+
+            //$this->orders_model->instructionalImagesUpload($orders['order_id']);
+
+        }
+
         if(strtolower($data['order_status']) == 'order'){
             $this->sendOutput($orders);
         }else{
@@ -141,10 +175,11 @@ class Orders extends API_Controller
 
     }
 
-    public function search(){
+
+    public function orderSearch(){
         $request = $this->input->get();
         if($request){
-            $data = $this->customers_model->search($request);
+            $data = $this->orders_model->doSearch($request);
             $this->sendOutput($data);
         }
 
