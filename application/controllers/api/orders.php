@@ -12,39 +12,53 @@ class Orders extends API_Controller
 
     public function insert()
     {
-//        $data['customer_id']=isset($_POST['customer_id'])? $_POST['customer_id']:'';
-//        $data['employee_id']=isset($_POST['employee_id'])? $_POST['employee_id']:'';
-//        $data['manager_id ']=isset($_POST['manager_id '])? $_POST['manager_id ']:'';
-//        $data['location_id']=isset($_POST['location_id'])? $_POST['location_id']:'';
-//        $data['order_date ']=isset($_POST['order_date '])? $_POST['order_date ']:'';
-//        $data['delivery_type ']=isset($_POST['delivery_type'])? $_POST['delivery_type']:'';
-//        $data['pickup_location_id ']=isset($_POST['pickup_location_id'])? $_POST['pickup_location_id']:'';
-//        $data['delivery_zone_id ']=isset($_POST['delivery_zone_id'])? $_POST['delivery_zone_id']:'';
-//        $data['delivery_zone_surcharge ']=isset($_POST['delivery_zone_surcharge '])? $_POST['delivery_zone_surcharge']:'';
-//        $data['delivery_date ']=isset($_POST['delivery_date '])? $_POST['delivery_date ']:'';
-//        $data['delivery_time ']=isset($_POST['delivery_time'])? $_POST['delivery_time']:'';
-//        $data['flavour_id ']=isset($_POST['flavour_id'])? $_POST['flavour_id']:'';
-//        $data['fondant ']=isset($_POST['fondant'])? $_POST['fondant']:'';
-//        $data['price_matrix_id ']=isset($_POST['price_matrix_id'])? $_POST['price_matrix_id']:'';
-//        $data['tiers ']=isset($_POST['tiers'])? $_POST['tiers']:'';
-//        $data['shape']=isset($_POST['shape_id'])? $_POST['shape']:'';
-//        $data['matrix_price ']=isset($_POST['flavour_price'])? $_POST['flavour_price']:'';
-//        $data['cake_email_photo ']=isset($_POST['cake_email_photo'])? $_POST['cake_email_photo']:'';
-//        $data['magic_cake_id ']=isset($_POST['magic_cake_id'])? $_POST['magic_cake_id']:'';
-//        $data['magic_surcharge ']=isset($_POST['magic_surcharge'])? $_POST['magic_surcharge']:'';
-//        $data['custom_cake_image_name ']=isset($_POST['custom_cake_image_name'])? $_POST['custom_cake_image_name']:'';
-//        $data['custom_cake_image ']=isset($_POST['custom_cake_image'])? $_POST['custom_cake_image']:'';
-//        $data['inscription ']=isset($_POST['inscription'])?$_POST['inscription']:'';
-//        $data['special_instruction ']=isset($_POST['special_instruction'])? $_POST['special_instruction']:'';
-//        $data['instructional_email_photo ']=isset($_POST['instructional_email_photo'])? $_POST['instructional_email_photo']:'';
-//        $data['vaughan_location ']=isset($_POST['vaughan_location'])? $_POST['vaughan_location']:'';
-//        $data['order_status ']=isset($_POST['order_status'])? $_POST['order_status']:'';
-//        $data['payment_status ']=isset($_POST['payment_status'])? $_POST['payment_status']:'';
-//        $data['discount_price ']=isset($_POST['discount_price'])? $_POST['discount_price']:'';
-//        $data['total_price ']=isset($_POST['total_price'])? $_POST['total_price']:'';
-//        $data['override_price ']=isset($_POST['override_price'])? $_POST['override_price']:'';
 
-    $data=array("cake_id"=> 1,
+
+        $data['customer_id']=isset($_REQUEST['customer_id'])? $_REQUEST['customer_id']:'';
+        $data['employee_id']=isset($_REQUEST['employee_id'])? $_REQUEST['employee_id']:'';
+        $data['manager_id']=isset($_REQUEST['manager_id'])? $_REQUEST['manager_id']:'';
+        $data['location_id']=isset($_REQUEST['location_id'])? $_REQUEST['location_id']:'';
+        $data['order_date']=isset($_REQUEST['order_date'])? $_REQUEST['order_date']:'';
+        $data['delivery_type']=isset($_REQUEST['delivery_type'])? $_REQUEST['delivery_type']:'';
+        $data['pickup_location_id']=isset($_REQUEST['pickup_location_id'])? $_REQUEST['pickup_location_id']:'';
+        $data['delivery_zone_id']=isset($_REQUEST['delivery_zone_id'])? $_REQUEST['delivery_zone_id']:'';
+        $data['delivery_zone_surcharge']=isset($_REQUEST['delivery_zone_surcharge'])? $_REQUEST['delivery_zone_surcharge']:'';
+        $data['delivery_date']=isset($_REQUEST['delivery_date'])? $_REQUEST['delivery_date']:'';
+        $data['delivery_time']=isset($_REQUEST['delivery_time'])? $_REQUEST['delivery_time']:'';
+        $data['flavour_id']=isset($_REQUEST['flavour_id'])? $_REQUEST['flavour_id']:'';
+        $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:'';
+        $data['price_matrix_id']=isset($_REQUEST['price_matrix_id'])? $_REQUEST['price_matrix_id']:'';
+        $data['tiers']=isset($_REQUEST['tiers'])? $_REQUEST['tiers']:'';
+        $data['shape']=isset($_REQUEST['shape'])? $_REQUEST['shape']:'';
+        $data['matrix_price']=isset($_REQUEST['matrix_price'])? $_REQUEST['matrix_price']:'';
+        $data['cake_email_photo']=isset($_REQUEST['cake_email_photo'])? $_REQUEST['cake_email_photo']:'';
+        $data['magic_cake_id']=isset($_REQUEST['magic_cake_id'])? $_REQUEST['magic_cake_id']:'';
+        $data['magic_surcharge']=isset($_REQUEST['magic_surcharge'])? $_REQUEST['magic_surcharge']:'';
+        $data['custom_cake_image_name']=isset($_REQUEST['custom_cake_image_name'])? $_REQUEST['custom_cake_image_name']:'';
+        $data['custom_cake_image']=isset($_REQUEST['custom_cake_image'])? $_REQUEST['custom_cake_image']:'';
+        $data['inscription']=isset($_REQUEST['inscription'])?$_REQUEST['inscription']:'';
+        $data['special_instruction']=isset($_REQUEST['special_instruction'])? $_REQUEST['special_instruction']:'';
+        $data['instructional_email_photo']=isset($_REQUEST['instructional_email_photo'])? $_REQUEST['instructional_email_photo']:'';
+        $data['vaughan_location']=isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
+        $data['order_status']=isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'';
+        $data['discount_price']=isset($_REQUEST['discount_price'])? $_REQUEST['discount_price']:'';
+        $data['total_price']=isset($_REQUEST['total_price'])? $_REQUEST['total_price']:'';
+        $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';
+
+
+        $order_notes['name']=isset($_REQUEST['name']) ? $_REQUEST['name']:'';
+        $order_notes['phone']=isset($_REQUEST['phone']) ? $_REQUEST['phone']:'';
+        $order_notes['address_1']=isset($_REQUEST['address_1'])? $_REQUEST['address_1']:'';
+        $order_notes['address_2']=isset($_REQUEST['address_2'])? $_REQUEST['address_2']:'';
+        $order_notes['postal']=isset($_REQUEST['postal'])? $_REQUEST['postal']:'';
+        $order_notes['city']=isset($_REQUEST['city'])? $_REQUEST['city']:'';
+        $order_notes['province']=isset($_REQUEST['province'])? $_REQUEST['province']:'';
+        $order_notes['spacial_instruction']=isset($_REQUEST['spacial_instruction'])? $_REQUEST['spacial_instruction']:'';
+
+print_r($data);
+
+
+    /*$data=array("cake_id"=> 1,
     "customer_id" => 5,
     "employee_id" => 1,
     "manager_id"=> 1,
@@ -85,7 +99,7 @@ class Orders extends API_Controller
             "city"=>"my city",
             "province"=>"my province",
             "spacial_instruction"=>"ddsfd  sdfsd s"
-    );
+    );*/
 
 //
 //        "instructional_photo" : [
@@ -97,9 +111,20 @@ class Orders extends API_Controller
 //        "instructionalphoto2.png"
 //    ]
 
-    $order_id=$this->orders_model->order_insert($data,$order_notes);
-    $this->orders_model->notes_insert($order_notes,$order_id);
+    $orders=$this->orders_model->order_insert($data);
 
+    if(strtolower($data['delivery_type']) == 'order'){
+
+        $this->orders_model->notes_insert($order_notes,$orders['order_id']);
+    }
+
+    if(strtolower($data['instructional_email_photo']) == 'yes'){
+
+        $this->orders_model->instructional_photo($order_notes,$orders['order_id']);
+    }
+
+    print_r($orders);
+    $this->sendOutput($orders);
 
     }
 
