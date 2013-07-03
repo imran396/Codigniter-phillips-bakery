@@ -55,7 +55,7 @@ class Orders extends API_Controller
         $order_notes['province']=isset($_REQUEST['province'])? $_REQUEST['province']:'';
         $order_notes['spacial_instruction']=isset($_REQUEST['spacial_instruction'])? $_REQUEST['spacial_instruction']:'';
 
-print_r($data);
+//print_r($data);
 
 
     /*$data=array("cake_id"=> 1,
@@ -123,7 +123,7 @@ print_r($data);
         $this->orders_model->instructional_photo($order_notes,$orders['order_id']);
     }
 
-    print_r($orders);
+   // print_r($orders);
     $this->sendOutput($orders);
 
     }
