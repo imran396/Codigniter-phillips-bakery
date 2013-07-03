@@ -175,7 +175,7 @@ class Orders extends API_Controller
     }
 
 
-    public function orderSearch(){
+    public function search(){
         $request = $this->input->get();
         if($request){
             $data = $this->orders_model->doSearch($request);
