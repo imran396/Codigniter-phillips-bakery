@@ -76,18 +76,15 @@ class Orders_model extends Crud_Model
     public function instructionalImagesUpload($order_id){
 
         $i=0;
-        foreach($_FILES['instructionalImages'] as $val ){
+        foreach($_FILES['instructionalImages']['name'] as $file_name ){
 
             $n = rand(10e16, 10e20);
             $rand = base_convert($n, 10, 36);
-
-            $file_name=$_FILES['instructionalImages']['name'][$i];
             $name = $rand.'-'.$file_name;
             $temp_name=$_FILES['instructionalImages']['tmp_name'][$i];
-            $target_path = "assets/uploads/";
+            $target_path = "assets/uploads/gallery/";
             $target_path = $target_path . basename($name);
             move_uploaded_file($temp_name, $target_path);
-
             $instructional_photo = $target_path.'/'.$name;
             $this->db->set(array('order_id'=>$order_id,'instructional_photo_name'=>$name,'instructional_photo' => $instructional_photo))->insert('instructional_photo');
 
@@ -129,7 +126,7 @@ class Orders_model extends Crud_Model
     public function getOrder($order_id){
 
         return $this->db
-        ->select('orders.*,order_delivery.*')
+            ->select('orders.*,order_delivery.*')
             ->from('orders')
             ->join('order_delivery','order_delivery.delivery_order_id = orders.order_id','left')
             ->where(array('orders.order_id'=>$order_id))

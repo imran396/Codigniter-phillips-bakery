@@ -21,8 +21,6 @@ class Orders extends API_Controller
     {
 
 
-        //print_r($_FILES['instructionalImages']);
-
 
         $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
         $data['customer_id']=isset($_REQUEST['customer_id'])? $_REQUEST['customer_id']:'';
@@ -72,19 +70,15 @@ class Orders extends API_Controller
             $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
         }
 
-        if(strtolower($data['instructional_email_photo']) == 'yes'){
-
-           // $this->orders_model->instructional_photo($order_delivery,$orders['order_id']);
-        }
 
         if(isset($_FILES['onCakeImage'])){
 
             $this->orders_model->doUpload($orders['order_id']);
         }
 
-        if(isset($_FILES['instructionalImages'])){
+        if(isset($_FILES['instructionalImages']) && strtolower($data['instructional_email_photo']) == 'no'){
 
-            //$this->orders_model->instructionalImagesUpload($orders['order_id']);
+            $this->orders_model->instructionalImagesUpload($orders['order_id']);
 
         }
 
@@ -98,6 +92,7 @@ class Orders extends API_Controller
     }
 
     public function update(){
+
 
 
         $data['order_id']=isset($_REQUEST['order_id'])? $_REQUEST['order_id']:'';
@@ -151,18 +146,14 @@ class Orders extends API_Controller
             $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
         }
 
-        if(strtolower($data['instructional_email_photo']) == 'yes'){
-
-            //$this->orders_model->instructional_photo($order_delivery,$orders['order_id']);
-        }
 
         if(isset($_FILES['onCakeImage'])){
             $this->orders_model->doUpload($orders['order_id']);
         }
 
-        if(isset($_FILES['instructionalImages'])){
+        if(isset($_FILES['instructionalImages']) && strtolower($data['instructional_email_photo']) == 'no'){
 
-            //$this->orders_model->instructionalImagesUpload($orders['order_id']);
+            $this->orders_model->instructionalImagesUpload($orders['order_id']);
 
         }
 

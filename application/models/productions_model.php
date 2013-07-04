@@ -38,7 +38,45 @@ class Productions_model extends Ci_Model
 
     }
 
-    function dateFormate($date){
+    public function getFiltering($data,$start){
+
+
+
+        $data['order_status'] = (strtolower($data['order_status']) != "status" ) ? strtolower($data['order_status']) :'';
+        $data['fondant'] = (strtolower($data['fondant']) != "fondant" ) ? strtolower($data['fondant']) :'';
+        $data['flavour_id'] = (strtolower($data['flavour_id']) != "flavour" ) ? strtolower($data['flavour_id']) :'';
+        $data['delivery_type'] = (strtolower($data['delivery_type']) != "pickup/delivery" ) ? strtolower($data['delivery_type']) :'';
+
+        $data['orders.fondant'] =  $data['fondant'];
+        unset($data['fondant']);
+        $data['orders.flavour_id'] =  $data['flavour_id'];
+        unset($data['flavour_id']);
+
+        $location_id=1;
+        $per_page=10;
+        $page   = intval($start);
+        if ( $page<=0 )  $page  = 1;
+        $limit= ( $page-1 ) * $per_page;
+        $base_url = site_url('admin/productions/inproduction/');
+        $total_rows = $this->db->count_all_results('orders');
+        $paging = production_paginate($base_url, $total_rows,$start,$per_page);
+        $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name, flavours.fondant AS fondant_name, customers.first_name,customers.last_name');
+        $this->db->from('orders');
+        $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
+        $this->db->join('customers','customers.customer_id = orders.customer_id','left');
+        $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
+        $this->db->limit($per_page,$limit);
+        $this->db->where(array("orders.location_id"=> $location_id));
+        $this->db->or_where($data);
+        $this->db->order_by("orders.order_id", "desc");
+        $query =$this->db->get()->result();
+        var_dump($query);
+        return array($query,$paging,$total_rows,$limit);
+
+
+    }
+
+    public function dateFormate($date){
 
         $cusdate=strtotime($date);
         return date("M j, Y",$cusdate);
