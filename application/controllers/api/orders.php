@@ -76,7 +76,7 @@ class Orders extends API_Controller
             $this->orders_model->doUpload($orders['order_id']);
         }
 
-        if(isset($_FILES['instructionalImages']) && strtolower($data['instructional_email_photo']) == 'no'){
+        if(isset($_FILES['instructionalImages'])){
 
             $this->orders_model->instructionalImagesUpload($orders['order_id']);
 
@@ -151,7 +151,7 @@ class Orders extends API_Controller
             $this->orders_model->doUpload($orders['order_id']);
         }
 
-        if(isset($_FILES['instructionalImages']) && strtolower($data['instructional_email_photo']) == 'no'){
+        if(isset($_FILES['instructionalImages'])){
 
             $this->orders_model->instructionalImagesUpload($orders['order_id']);
 
