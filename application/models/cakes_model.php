@@ -53,7 +53,7 @@ class Cakes_model extends CI_Model
         }
 
         $file_name = $upload_data['file_name'];
-        $filePath  = "assets/uploads/cakes/" . $file_name;
+        $filePath  = "/assets/uploads/cakes/" . $file_name;
 
         $this->db->where(array('cake_id' => $id))->set(array('image' => $filePath))->update('cakes');
     }

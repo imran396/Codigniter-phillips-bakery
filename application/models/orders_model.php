@@ -68,7 +68,7 @@ class Orders_model extends Crud_Model
         }
 
         $file_name = $upload_data['file_name'];
-        $filePath  = "assets/uploads/cakes/" . $file_name;
+        $filePath  = "/assets/uploads/cakes/" . $file_name;
 
         $this->db->set(array('custom_cake_image_name'=>$file_name, 'custom_cake_image' => $filePath))->where(array('order_id' => $id))->update('orders');
     }
@@ -85,7 +85,7 @@ class Orders_model extends Crud_Model
             $target_path = "assets/uploads/gallery/";
             $target_path = $target_path . basename($name);
             move_uploaded_file($temp_name, $target_path);
-            $instructional_photo = $target_path.'/'.$name;
+            $instructional_photo = '/'.$target_path;
             $this->db->set(array('order_id'=>$order_id,'instructional_photo_name'=>$name,'instructional_photo' => $instructional_photo))->insert('instructional_photo');
 
             $i++;
