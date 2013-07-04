@@ -68,7 +68,7 @@ class Orders_model extends Crud_Model
         }
 
         $file_name = $upload_data['file_name'];
-        $filePath  = "/assets/uploads/cakes/" . $file_name;
+        $filePath  = "assets/uploads/cakes/" . $file_name;
 
         $this->db->set(array('on_cake_image' => $filePath))->where(array('order_id' => $id))->update('orders');
     }
@@ -85,8 +85,8 @@ class Orders_model extends Crud_Model
             $target_path = "assets/uploads/gallery/";
             $target_path = $target_path . basename($name);
             move_uploaded_file($temp_name, $target_path);
-            $instructional_photo = '/'.$target_path;
-            $this->db->set(array('order_id'=>$order_id,'instructional_photo_name'=>$name,'instructional_photo' => $instructional_photo))->insert('instructional_photo');
+            $instructional_photo = $target_path;
+            $this->db->set(array('instructional_order_id'=>$order_id,'instructional_photo' => $instructional_photo))->insert('instructional_photo');
 
             $i++;
         }
@@ -131,33 +131,6 @@ class Orders_model extends Crud_Model
             ->join('order_delivery','order_delivery.delivery_order_id = orders.order_id','left')
             ->where(array('orders.order_id'=>$order_id))
             ->get()->row();
-
-
-       /* if($res){
-            $result =  $res->result_array();
-            foreach($result  as $key => $val){
-
-                $result[$key]['order_id'] = (int) $result[$key]['order_id'];
-                $result[$key]['order_code'] = (int) $result[$key]['order_code'];
-                $result[$key]['cake_id'] = (int) $result[$key]['cake_id'];
-                $result[$key]['customer_id'] = (int) $result[$key]['customer_id'];
-                $result[$key]['employee_id'] = (int) $result[$key]['employee_id'];
-                $result[$key]['manager_id'] = (int) $result[$key]['manager_id'];
-                $result[$key]['location_id'] = (int) $result[$key]['location_id'];
-                $result[$key]['pickup_location_id'] = (int) $result[$key]['pickup_location_id'];
-                $result[$key]['delivery_zone_id'] = (int) $result[$key]['delivery_zone_id'];
-                $result[$key]['flavour_id'] = (int) $result[$key]['flavour_id'];
-                $result[$key]['price_matrix_id'] = (int) $result[$key]['price_matrix_id'];
-                $result[$key]['delivery_order_id'] = (int) $result[$key]['delivery_order_id'];
-
-            }
-            return $result;
-
-        }else{
-
-             return array();
-        }*/
-
     }
 
     public function getAll(){
@@ -166,6 +139,7 @@ class Orders_model extends Crud_Model
             ->select('orders.*,order_delivery.*')
             ->from('orders')
             ->join('order_delivery','order_delivery.delivery_order_id = orders.order_id','left')
+            ->join('instructional_photo','instructional_photo.instructional_order_id = orders.order_id','left')
             ->order_by('order_id','desc')
             ->get();
 
@@ -199,17 +173,37 @@ class Orders_model extends Crud_Model
 
     public function doSearch($data){
 
-        $data = $this->getSearchField($data);
+
+       /* $data = $this->getSearchField($data);
         $res = $this->db
             ->select('orders.*,order_delivery.*')
             ->from('orders')
             ->join('order_delivery','order_delivery.delivery_order_id = orders.order_id','left')
+            ->join('instructional_photo','instructional_photo.instructional_order_id = orders.order_id','left')
             ->or_like($data)
-            ->get();
+            ->get();*/
 
 
-        if($res){
-            $result =  $res->result_array();
+        $imageurlprefix = base_url().'assets';
+        $order_id = isset($data['order_id'])?$data['order_id']:'';
+        $order_code = isset($data['order_code'])?$data['order_code']:'4';
+        $customer_id = isset($data['customer_id'])? $data['customer_id']:'5';
+
+
+              $sql = "SELECT
+              O.*,G.*,OD.*,
+              GROUP_CONCAT(G.instructional_photo ORDER BY G.instructional_order_id ASC SEPARATOR ',') as gallery_images
+              FROM orders As O
+              LEFT JOIN instructional_photo AS G ON ( O.order_id = G.instructional_order_id)
+              LEFT JOIN order_delivery AS OD ON ( O.order_id = OD.delivery_order_id )
+              /*WHERE (`order_id` = $order_id OR `order_code` = $order_code OR `customer_id` = $customer_id)*/
+              GROUP BY O.order_id";
+
+        ;
+
+
+        if($sql){
+            $result = $this->db->or_like($data)->query($sql)->result_array();
             foreach($result  as $key => $val){
 
                 $result[$key]['order_id'] = (int) $result[$key]['order_id'];
@@ -224,6 +218,11 @@ class Orders_model extends Crud_Model
                 $result[$key]['flavour_id'] = (int) $result[$key]['flavour_id'];
                 $result[$key]['price_matrix_id'] = (int) $result[$key]['price_matrix_id'];
                 $result[$key]['delivery_order_id'] = (int) $result[$key]['delivery_order_id'];
+                $result[$key]['on_cake_image'] = str_replace('assets',$imageurlprefix,$result[$key]['on_cake_image']);
+
+                $result[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$result[$key]['gallery_images']);
+                $result[$key]['instructional_photo'] = explode(',',$result[$key]['instructional_photo']);
+
 
             }
             return $result;
