@@ -70,7 +70,7 @@ class Orders_model extends Crud_Model
         $file_name = $upload_data['file_name'];
         $filePath  = "assets/uploads/cakes/" . $file_name;
 
-        $this->db->where(array('order_id' => $id))->set(array('custom_cake_image_name'=>$file_name, 'custom_cake_image' => $filePath))->update('orders');
+        $this->db->set(array('custom_cake_image_name'=>$file_name, 'custom_cake_image' => $filePath))->where(array('order_id' => $id))->update('orders');
     }
 
     public function instructionalImagesUpload($order_id){
