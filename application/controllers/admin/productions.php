@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-set_include_path(get_include_path() . PATH_SEPARATOR . realpath(APPPATH . 'libraries'));
+set_include_path(get_include_path() . PATH_SEPARATOR . realpath(APPPATH .'libraries'));
 
 //var_dump($loader->register());
 
@@ -35,9 +35,9 @@ class Productions extends Crud_Controller
 
     function barcode_gen() {
 
-        $this->load->library('zend');
+        $this->load->library('Zend');
         $this->zend->load('Zend/Barcode/Barcode');
-        $barcodeOptions = array('text' => '6543789076');
+        $barcodeOptions = array('text' => 'ZEND-FRAMEWORK');
         $rendererOptions = array();
         Zend\Barcode\Barcode::factory('code39', 'image', $barcodeOptions, $rendererOptions)->render();
     }
@@ -48,6 +48,14 @@ class Productions extends Crud_Controller
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['paging']=$this->productions_model->getListing($starts);
         $this->layout->view('admin/production/inproduction_view', $this->data);
+
+    }
+
+    public function filtering(){
+        $start=0;
+        $data = $this->input->post();
+        $this->data['paging']=$this->productions_model->getFiltering($data,$start);
+
 
     }
 
@@ -73,7 +81,6 @@ class Productions extends Crud_Controller
 
     public function blackout()
     {
-
 
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/orders/blackout_view', $this->data);
