@@ -13,60 +13,7 @@ class Provinces extends API_Controller
     public function index()
     {
 
-        $data = array(
-             array(
-
-                 'province'       => "Ontario"
-
-             ),
-            array(
-
-                'province'       => "Quebec"
-
-            ),
-            array(
-
-                'province'       => "Nova Scotia"
-
-            ),
-            array(
-
-                'province'       => "New Brunswick"
-
-            ),
-            array(
-
-                'province'       => "Manitoba"
-
-            ),
-            array(
-
-                'province'       => "British Columbia"
-
-            ),
-            array(
-
-                'province'       => "Prince Edward Island"
-
-            ),
-            array(
-
-                'province'       => "Saskatchewan"
-
-            ),
-            array(
-
-                'province'       => "Alberta"
-
-            ),
-            array(
-
-                'province'       => "Newfoundland and Labrador"
-
-            )
-
-         );
-
+        $data = array("Ontario","Quebec","Nova Scotia", "New Brunswick", "Manitoba","British Columbia","Prince Edward Island","Saskatchewan","Alberta","Newfoundland and Labrador");
         $this->sendOutput($data);
     }
 }
