@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-set_include_path(get_include_path() . PATH_SEPARATOR . '/var/www/phillips-bakery/application/libraries/');
+set_include_path(get_include_path() . PATH_SEPARATOR . realpath(APPPATH . 'libraries'));
 
 //var_dump($loader->register());
 
@@ -37,7 +37,7 @@ class Productions extends Crud_Controller
 
         $this->load->library('zend');
         $this->zend->load('Zend/Barcode/Barcode');
-        $barcodeOptions = array('text' => 'ZEND-FRAMEWORK');
+        $barcodeOptions = array('text' => '6543789076');
         $rendererOptions = array();
         Zend\Barcode\Barcode::factory('code39', 'image', $barcodeOptions, $rendererOptions)->render();
     }
