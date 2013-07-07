@@ -10,7 +10,7 @@ class Productions extends Crud_Controller
         parent::__construct();
 
         require_once 'Zend/Loader/StandardAutoloader.php';
-
+        //$this->output->enable_profiler(TRUE);
         $loader = new Zend\Loader\StandardAutoloader(array('autoregister_zf' => true));
         $loader->register();
 
@@ -47,6 +47,9 @@ class Productions extends Crud_Controller
     {
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['paging']=$this->productions_model->getListing($starts);
+
+
+
         $this->layout->view('admin/production/inproduction_view', $this->data);
 
     }
@@ -54,7 +57,9 @@ class Productions extends Crud_Controller
     public function filtering(){
         $start=0;
         $data = $this->input->post();
-        $this->data['paging']=$this->productions_model->getFiltering($data,$start);
+        $this->data['query']=$this->productions_model->getFiltering($data);
+        $this->layout->view('admin/production/order_filtering_view', $this->data);
+
 
 
     }

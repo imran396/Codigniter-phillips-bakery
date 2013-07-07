@@ -124,6 +124,11 @@ class Customers_model extends Crud_Model
 
     public function search($data){
         $data = $this->getSearchField($data);
+        if(isset($data['customer_id'])){
+            $customer_id = $data['customer_id'];
+            $this->db->where('customer_id', $customer_id);
+            unset($data['customer_id']);
+        }
         $this->db->or_like($data);
         $res = $this->db->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->get('customers');
         if($res){

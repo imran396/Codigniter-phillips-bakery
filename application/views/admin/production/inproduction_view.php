@@ -1,3 +1,70 @@
+<script type="text/javascript">
+
+    var doAction;
+    function timedely(){
+        clearTimeout(doAction);
+        doAction = setTimeout(function(){
+            doSearch();
+        }, 2000);
+    }
+
+    function doSearch()
+    {
+
+        var result =$("#filter").serialize();
+
+        $.ajax({
+            url:"<?php echo site_url('admin/productions/filtering')?>",
+            data:result,
+            type:"post",
+            success: function(val){
+                $('.innerLR').html(val);
+                //console.log(val);
+            }
+        })
+
+    }
+    /* when document is ready */
+    $(document).ready(function(){
+
+        $('#search-form').submit(function() {
+            return false;
+        });
+
+        $('#order_status , #fondant , #flavour_id , #delivery_type , #datepicker , #datepicker2 , #delivery_start_time , #delivery_end_time').change(function(){
+
+            timedely();
+
+        });
+
+        $('.submit').click(function(){
+
+            var keysearch=$('#search').val();
+            //alert(keysearch);
+
+            var sortbyname=$(".dropdown dt a span").text();
+            var sortbydesignation=$(".sortby dt a span").text();
+            var servicebyindustray=$(".serviceby dt a span").text();
+
+            $.ajax({
+
+                beforeSend: function(){
+                    $('#itemContainer').addClass('imagecenter');
+                },
+                url:"<?php echo site_url('admin/productions/filtering')?>",
+                data:'keysearch='+keysearch+'&sortbyname='+sortbyname+'&sortbydesignation='+sortbydesignation+'&servicebyindustray='+servicebyindustray,
+                success: function(val){
+                    $('#itemContainer').removeClass('imagecenter');
+
+                    $('.search-results').html(val);
+                }
+            })
+        })
+
+
+
+    });
+</script>
 <div class="container-fluid fixed container-new">
 <div class="navbar main">
     <div class="icon-wrapper"><a href="/admin/productions" class="icon-home"></a></div>
@@ -14,11 +81,12 @@
 </div>
 <div id="wrapper">
 <div class="widget filters">
+<form action="" method="post" name="filter" id="filter">
     <div class="widget-body">
         <a href="" class="icon-refresh"></a>
         <span class="label">Filter By:</span>
         <div class="row-fluid">
-            <select class="selectpicker span12">
+            <select class="selectpicker span12" name="order_status" id="order_status">
                 <option class="label">Status</option>
                 <?php
                 $getOrderStatus = $this->productions_model->getOrderStatus();
@@ -29,15 +97,15 @@
             </select>
         </div>
         <div class="row-fluid">
-            <select class="selectpicker span12">
+            <select class="selectpicker span12" name="fondant" id="fondant">
                 <option class="label">Fondant</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
             </select>
         </div>
         <div class="row-fluid row-wider">
-            <select class="selectpicker span12">
-                <option class="label">Flavor</option>
+            <select class="selectpicker span12" id="flavour_id" name="flavour_id">
+                <option class="label">flavour</option>
                 <?php
                 $getFlavours = $this->productions_model->getFlavours();
                 foreach($getFlavours as $flavours):
@@ -48,8 +116,8 @@
             </select>
         </div>
         <div class="row-fluid row-wide">
-            <select class="selectpicker span12">
-                <option class="label">Pickup/Dellivery</option>
+            <select class="selectpicker span12" id="delivery_type" name="delivery_type">
+                <option class="label">Pickup/Delivery</option>
                 <option value="delivery">Delivery</option>
                 <option value="pickup">Pickup</option>
             </select>
@@ -58,10 +126,10 @@
             <span class="label pull-left">Date</span>
             <div class="pull-right">
                 <div class="controls">
-                    <input type="text" id="datepicker" value="" placeholder="Start" />
+                    <input type="text" id="datepicker" name="start_date" value="" placeholder="Start" />
                 </div>
                 <div class="controls">
-                    <input type="text" id="datepicker2" value="" placeholder="End" />
+                    <input type="text" id="datepicker2" name="end_date" value="" placeholder="End" />
                 </div>
             </div>
         </div>
@@ -69,7 +137,7 @@
             <span class="label pull-left">Time</span>
             <div class="pull-right">
                 <div class="timepicker">
-                    <input type="text" value="" class="hasTimeDropdown" placeholder="Start" />
+                    <input type="text" name="delivery_start_time" id="delivery_start_time" value="" class="hasTimeDropdown" placeholder="Start" />
                     <div class="popup timedropdown">
                         <div class="ui-datepicker-title">Choose Time</div>
                         <div class="innerLR">
@@ -100,7 +168,7 @@
                     </div>
                 </div>
                 <div class="timepicker">
-                    <input type="text" value="" class="hasTimeDropdown" placeholder="End" />
+                    <input type="text" value=""  name="delivery_end_time" id="delivery_end_time" class="hasTimeDropdown" placeholder="End" />
                     <div class="popup timedropdown">
                         <div class="ui-datepicker-title">Choose Time</div>
                         <div class="innerLR">
@@ -134,6 +202,7 @@
         </div>
         <div class="clear"></div>
     </div>
+</form>
 </div><!-- end of filters -->
 <div class="innerLR">
     <div class="widget">
