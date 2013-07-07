@@ -186,20 +186,34 @@ class Orders_model extends Crud_Model
 
         $imageurlprefix = base_url().'assets';
         $order_id = isset($data['order_id'])?$data['order_id']:'';
-        $order_code = isset($data['order_code'])?$data['order_code']:'4';
-        $customer_id = isset($data['customer_id'])? $data['customer_id']:'5';
+        $order_code = isset($data['order_code'])?$data['order_code']:'';
+        $customer_id = isset($data['customer_id'])? $data['customer_id']:'';
 
+        $where ="'order_date' != '' ";
+        if(!empty($order_id)){
 
-              $sql = "SELECT
+            $where .=" AND `order_id` = ".$order_id;
+        }
+        if(!empty($order_code)){
+
+            $where .=" AND  `order_code` = ".$order_code;
+        }
+
+        if(!empty($customer_id)  ){
+
+            $where .=" AND `customer_id` =". $customer_id;
+        }
+
+        $sql = "SELECT
               O.*,G.*,OD.*,
               GROUP_CONCAT(G.instructional_photo ORDER BY G.instructional_order_id ASC SEPARATOR ',') as gallery_images
               FROM orders As O
               LEFT JOIN instructional_photo AS G ON ( O.order_id = G.instructional_order_id)
               LEFT JOIN order_delivery AS OD ON ( O.order_id = OD.delivery_order_id )
-              /*WHERE (`order_id` = $order_id OR `order_code` = $order_code OR `customer_id` = $customer_id)*/
+              WHERE ($where)
               GROUP BY O.order_id";
 
-        ;
+
 
 
         if($sql){

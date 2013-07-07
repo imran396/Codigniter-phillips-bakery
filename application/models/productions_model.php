@@ -32,15 +32,13 @@ class Productions_model extends Ci_Model
         $this->db->limit($per_page,$limit);
         $this->db->where(array("orders.location_id"=> $location_id));
         $this->db->or_where(array("orders.pickup_location_id"=> $location_id));
-        $this->db->order_by("orders.order_id", "desc");
+        $this->db->order_by("orders.order_code", "desc");
         $query =$this->db->get()->result();
         return array($query,$paging,$total_rows,$limit);
 
     }
 
     public function getFiltering($data){
-
-
 
         $order_status = (strtolower($data['order_status']) != "status" ) ? strtolower($data['order_status']) :'';
         $fondant = (strtolower($data['fondant']) != "fondant" ) ? strtolower($data['fondant']) :'';
@@ -57,32 +55,44 @@ class Productions_model extends Ci_Model
         $data['orders.flavour_id'] =  $data['flavour_id'];
         unset($data['flavour_id']);
 
+
         $location_id=1;
         $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name, flavours.fondant AS fondant_name, customers.first_name,customers.last_name');
         $this->db->from('orders');
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
+
         $this->db->where(array("orders.location_id"=> $location_id));
-        $array = array(
-            'orders.order_status' => $order_status
-            ,'orders.fondant' => $fondant
-            , 'orders.flavour_id ' => $flavour_id
-            , 'orders.delivery_type ' => $delivery_type
-            , 'orders.delivery_date >' => $start_date
-            , 'orders.delivery_date <' => $end_date
-            , 'orders.delivery_time >' => $start_time
-            , 'orders.delivery_time <' => $end_time
+        if($order_status){
+            $this->db->like(array("orders.production_status"=> $order_status));
+        }
+        if($fondant){
+            $this->db->where(array("orders.fondant"=> $fondant));
+        }
+        if($flavour_id){
+            $this->db->where(array("orders.flavour_id"=> $flavour_id));
+        }
 
-        );
+        if($delivery_type){
+            $this->db->where(array("orders.delivery_type"=> $delivery_type));
+        }
 
-        $this->db->where($array);
+        if($start_date && $end_date){
+            $this->db->where(array("orders.delivery_date >="=> $start_date));
+            $this->db->where(array("orders.delivery_date <="=> $end_date));
+        }
+        if($start_time && $end_time){
+            $this->db->where(array("orders.delivery_time >="=> $start_time));
+            $this->db->where(array("orders.delivery_time <="=> $end_time));
+        }
+
         $this->db->order_by("orders.order_id", "desc");
         $query =$this->db->get()->result();
+        //echo $this->db->last_query();
         return $query;
-
-
     }
+
 
     public function dateFormate($date){
 
@@ -91,14 +101,13 @@ class Productions_model extends Ci_Model
 
     }
 
-    public function orderDetails($order_code=22334455){
+    public function orderDetails($order_code){
 
         $this->db->select('orders.*,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*');
         $this->db->from('orders');
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
-        $this->db->join('order_delivery','order_delivery.order_id = orders.order_id','left');
         $this->db->join('price_matrix','price_matrix.price_matrix_id = orders.price_matrix_id','left');
         $this->db->where(array("orders.order_code"=> $order_code));
         return $this->db->get()->row();
