@@ -47,7 +47,7 @@ class Orders extends API_Controller
         $data['special_instruction']=isset($_REQUEST['special_instruction'])? $_REQUEST['special_instruction']:'';
         $data['instructional_email_photo']=isset($_REQUEST['instructional_email_photo'])? $_REQUEST['instructional_email_photo']:'';
         $data['vaughan_location']=isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
-        $data['order_status']=isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'';
+        $data['order_status']=isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'In production';
         $data['discount_price']=isset($_REQUEST['discount_price'])? $_REQUEST['discount_price']:'';
         $data['total_price']=isset($_REQUEST['total_price'])? $_REQUEST['total_price']:'';
         $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';
@@ -117,8 +117,6 @@ class Orders extends API_Controller
         $data['cake_email_photo']=isset($_REQUEST['cake_email_photo'])? $_REQUEST['cake_email_photo']:'';
         $data['magic_cake_id']=isset($_REQUEST['magic_cake_id'])? $_REQUEST['magic_cake_id']:'';
         $data['magic_surcharge']=isset($_REQUEST['magic_surcharge'])? $_REQUEST['magic_surcharge']:'';
-        $data['custom_cake_image_name']=isset($_REQUEST['custom_cake_image_name'])? $_REQUEST['custom_cake_image_name']:'';
-        $data['custom_cake_image']=isset($_REQUEST['custom_cake_image'])? $_REQUEST['custom_cake_image']:'';
         $data['inscription']=isset($_REQUEST['inscription'])?$_REQUEST['inscription']:'';
         $data['special_instruction']=isset($_REQUEST['special_instruction'])? $_REQUEST['special_instruction']:'';
         $data['instructional_email_photo']=isset($_REQUEST['instructional_email_photo'])? $_REQUEST['instructional_email_photo']:'';
