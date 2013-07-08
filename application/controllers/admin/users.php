@@ -16,8 +16,6 @@ class users extends Crud_Controller
 
     public function index()
     {
-
-
         $this->data['groupresult'] = $this->users_model->getGroup();
         $this->data['locresult'] = $this->users_model->getLocations();
         $this->data['active']=$this->uri->segment(2,0);
@@ -32,19 +30,15 @@ class users extends Crud_Controller
         $this->data['paging'] = $this->users_model->getListing($start);
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/users/listing_view', $this->data);
-
     }
 
     public function save()
     {
-
         if (!empty($_POST)) {
 
             $this->addValidation();
 
             if ($this->form_validation->run()) {
-
-
                 $username = strtolower($this->input->post('username'));
                 $email = $this->input->post('email');
                 $password = $this->input->post('password');
@@ -86,7 +80,6 @@ class users extends Crud_Controller
 
     public function edit($username)
     {
-
         $this->data['queryup'] = $this->users_model->getusers($username);
         $this->data['groupresult'] = $this->users_model->getGroup();
         $this->data['locresult'] = $this->users_model->getLocations();
@@ -96,7 +89,6 @@ class users extends Crud_Controller
 
     public function profile()
     {
-
         $this->access_model->access_permission($this->uri->segment(2,NULL),'others');
         $username=  $this->session->userdata('username');
         $this->data['queryup'] = $this->users_model->getusers($username);
@@ -140,13 +132,10 @@ class users extends Crud_Controller
             $this->data['error_msg'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
             //render
             if($this->session->userdata('username') == $username ){
-
                 redirect('admin/users/profile');
 
             }else{
-
                 redirect('admin/users/edit/'.$username, $this->data);
-
             }
 
         }
@@ -155,6 +144,13 @@ class users extends Crud_Controller
             $identity = $this->session->userdata($this->config->item('identity', 'ion_auth'));
 
             $change = $this->ion_auth->change_password($identity, $this->input->post('old'), $this->input->post('new'));
+
+           var_dump($this->input->post('old'));
+           var_dump($this->input->post('new'));
+           var_dump($identity);
+
+
+
 
             if ($change)
             { //if the password was successfully changed
@@ -249,5 +245,13 @@ class users extends Crud_Controller
     {
         redirect('admin/users/'.$redirect);
     }
+
+    public function qrcode(){
+        $this->data['employee_code']=$this->uri->segment(4,0);
+        $this->layout->view('admin/users/qrcode_view',$this->data);
+
+    }
+
+
 
 }

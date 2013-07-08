@@ -244,4 +244,37 @@ class Orders_model extends Crud_Model
 
     }
 
+   public function getAllNotes(){
+       $data = $this->db->select('order_id,employee_id,create_date,notes')->order_by('order_id','asc')->get('order_notes')->result_array();
+       foreach($data as $key=>$val){
+           $data[$key]['order_id'] = (int) $data[$key]['order_id'];
+           $data[$key]['employee_id'] = (int) $data[$key]['employee_id'];
+           $data[$key]['create_date'] = (string) $data[$key]['create_date'];
+           $data[$key]['notes'] =  $data[$key]['notes'];
+       }
+
+       return $data;
+   }
+
+    public function SaveNotes($data){
+        $this->db->set($data)->insert('order_notes');
+    }
+
+
+    public function NotesSearch($data){
+        $data = $this->getSearchField($data);
+        $this->db->where('order_id', $data['order_id']);
+        $data = $this->db->select('order_id,employee_id,create_date,notes')->order_by('order_id','asc')->get('order_notes')->result_array();
+
+        foreach($data as $key=>$val){
+            $data[$key]['order_id'] = (int) $data[$key]['order_id'];
+            $data[$key]['employee_id'] = (int) $data[$key]['employee_id'];
+            $data[$key]['create_date'] = (string) $data[$key]['create_date'];
+            $data[$key]['notes'] =  $data[$key]['notes'];
+        }
+
+        return $data;
+
+     }
+
 }

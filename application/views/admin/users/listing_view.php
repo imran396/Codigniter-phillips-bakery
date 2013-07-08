@@ -45,7 +45,6 @@
                     </tr>
                     </thead>
                     <tbody>
-
                     <?php
                     $var = ($paging[3] != '0')  ? ($paging[3]+1) : 1;
                     $i=$var;
@@ -59,6 +58,15 @@
                             <a href="/admin/users/status/<?php echo $rows->username; ?>" class="btn-action glyphicons btn <?php if($rows->active ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
                             <a class="btn-action glyphicons pencil btn-success" href="/admin/users/edit/<?php echo $rows->username; ?>"><i></i></a>
                             <a class="btn-action glyphicons remove_2 btn-danger" href="/admin/users/remove/<?php echo $rows->username; ?>"><i></i></a>
+                           <?php
+                            $size = '50x50';
+                            $content = $rows->employee_id;
+                            $encoding = 'UTF-8';
+                            $correction = 'L';
+                            $rootUrl = "https://chart.googleapis.com/chart?cht=qr&chs=$size&chl=$content&choe=$encoding&chld=$correction";
+                            ?>
+                            <a  href="/admin/users/qrcode/<?php echo $content; ?>"><img src="<?php echo $rootUrl;?>"></a>
+
 
 
                         </td>

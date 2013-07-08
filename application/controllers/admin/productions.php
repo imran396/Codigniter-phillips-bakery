@@ -54,14 +54,16 @@ class Productions extends Crud_Controller
 
     }
 
+    public function badge(){
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->layout->view('admin/production/badge_view',$this->data);
+    }
+
     public function filtering(){
         $start=0;
         $data = $this->input->post();
         $this->data['query']=$this->productions_model->getFiltering($data);
-        $this->layout->view('admin/production/order_filtering_view', $this->data);
-
-
-
+        $this->load->view('admin/production/order_filtering_view', $this->data);
     }
 
 

@@ -176,4 +176,24 @@ class Orders extends API_Controller
     }
 
 
+    public function notes(){
+        $data = $this->orders_model->getAllNotes();
+        $this->sendOutput($data);
+    }
+
+    public function notesave(){
+        if(!empty($_POST)){
+            $this->orders_model->SaveNotes($_POST);
+        }
+    }
+
+    public function notesearch(){
+        $request = $this->input->get();
+        if($request){
+        $data = $this->orders_model->NotesSearch($request);
+        $this->sendOutput($data);
+        }
+
+    }
+
 }
