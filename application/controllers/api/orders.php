@@ -19,9 +19,6 @@ class Orders extends API_Controller
 
     public function insert()
     {
-
-
-
         $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
         $data['customer_id']=isset($_REQUEST['customer_id'])? $_REQUEST['customer_id']:'';
         $data['employee_id']=isset($_REQUEST['employee_id'])? $_REQUEST['employee_id']:'';
@@ -47,7 +44,7 @@ class Orders extends API_Controller
         $data['special_instruction']=isset($_REQUEST['special_instruction'])? $_REQUEST['special_instruction']:'';
         $data['instructional_email_photo']=isset($_REQUEST['instructional_email_photo'])? $_REQUEST['instructional_email_photo']:'';
         $data['vaughan_location']=isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
-        $data['order_status']=isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'In production';
+        $data['order_status']=isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'';
         $data['discount_price']=isset($_REQUEST['discount_price'])? $_REQUEST['discount_price']:'';
         $data['total_price']=isset($_REQUEST['total_price'])? $_REQUEST['total_price']:'';
         $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';

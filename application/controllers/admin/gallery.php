@@ -161,15 +161,14 @@ class Gallery extends Crud_Controller
 
     }
 
-    public function save_data()
+    public function insert()
     {
 
 
-        $cake_id=$this->input->post('cake_id');
-        if (!empty($cake_id)) {
+       $cake_id=$this->input->post('cake_id');
+       if (!empty($cake_id)) {
             $this->addValidation();
             if ($this->form_validation->run()) {
-                var_dump('imran');
                 $this->saveData();
                 $this->redirectToHome('listing');
             }

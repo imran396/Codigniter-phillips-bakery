@@ -5,7 +5,7 @@
         clearTimeout(doAction);
         doAction = setTimeout(function(){
             doSearch();
-        }, 2000);
+        }, 5000);
     }
 
     function doSearch()
@@ -36,33 +36,6 @@
             timedely();
 
         });
-
-        $('.submit').click(function(){
-
-            var keysearch=$('#search').val();
-            //alert(keysearch);
-
-            var sortbyname=$(".dropdown dt a span").text();
-            var sortbydesignation=$(".sortby dt a span").text();
-            var servicebyindustray=$(".serviceby dt a span").text();
-
-            $.ajax({
-
-                beforeSend: function(){
-                    $('#itemContainer').addClass('imagecenter');
-                },
-                url:"<?php echo site_url('admin/productions/filtering')?>",
-                data:'keysearch='+keysearch+'&sortbyname='+sortbyname+'&sortbydesignation='+sortbydesignation+'&servicebyindustray='+servicebyindustray,
-                success: function(val){
-                    $('#itemContainer').removeClass('imagecenter');
-
-                    $('.search-results').html(val);
-                }
-            })
-        })
-
-
-
     });
 </script>
 <div class="container-fluid fixed container-new">
@@ -92,7 +65,7 @@
                 $getOrderStatus = $this->productions_model->getOrderStatus();
                 foreach($getOrderStatus as $orderStatus):
                 ?>
-                <option value="<?php echo $orderStatus->title ?>"><?php echo $orderStatus->title ?></option>
+                <option value="<?php echo $orderStatus->title ?>"><?php echo $orderStatus->description ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -215,7 +188,7 @@
                     <th width="170">Cake Name</th>
                     <th width="122">Pickup/Delivery</th>
                     <th width="93">Date</th>
-                    <th width="48">Time</th>
+                    <th width="65">Time</th>
                     <th width="65">Fondant</th>
                     <th width="84">Flavor</th>
                     <th width="110">Magic Cake ID</th>
@@ -229,7 +202,7 @@
                 foreach($paging[0] as $rows):
                 ?>
                 <tr>
-                    <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_id; ?>" ><?php echo $rows->order_code; ?></a></td>
+                    <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
                     <td class="center"><?php echo $rows->first_name.' '.$rows->last_name; ?></td>
                     <td><?php echo $rows->cake_name; ?></td>
                     <td class="center"><?php echo $rows->delivery_type; ?></td>
