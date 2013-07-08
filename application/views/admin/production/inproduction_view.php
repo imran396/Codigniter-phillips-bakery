@@ -188,7 +188,7 @@
                     <th width="170">Cake Name</th>
                     <th width="122">Pickup/Delivery</th>
                     <th width="93">Date</th>
-                    <th width="65">Time</th>
+                    <th width="67">Time</th>
                     <th width="65">Fondant</th>
                     <th width="84">Flavor</th>
                     <th width="110">Magic Cake ID</th>
