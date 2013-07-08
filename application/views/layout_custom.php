@@ -154,7 +154,7 @@ jQuery(document).ready(function(){
         }
     );
 
-    $("#category_id , #location_id , #flavour_id  ").select2();
+//    $("#category_id , #location_id , #flavour_id  ").select2();
 
 });
 
