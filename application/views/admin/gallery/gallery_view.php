@@ -6,16 +6,9 @@
             <li><?php echo $this->lang->line('cake_gallery');?></li>
         </ul>
     <br/>
-    <div class="menubar">
-        <ul>
-            <li><a href="/admin/gallery"><?php echo $this->lang->line('add_gallery'); ?></a></li>
-            <li class="divider"></li>
-            <li><a href="/admin/gallery/listing"><?php echo $this->lang->line('list'); ?></a></li>
-        </ul>
-    </div>
     <?php $this->load->view('admin/layouts/message'); ?>
     <br/>
-    <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/gallery/save" name="form1" id="pluploadForm">
+    <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/gallery/insert" name="form1" id="pluploadForm">
         <div class="innerLR">
             <div class="widget widget-2">
                 <div class="widget-head">

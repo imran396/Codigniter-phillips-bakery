@@ -28,7 +28,7 @@
             foreach($query as $rows):
                 ?>
                 <tr>
-                    <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_id; ?>" ><?php echo $rows->order_code; ?></a></td>
+                    <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
                     <td class="center"><?php echo $rows->first_name.' '.$rows->last_name; ?></td>
                     <td><?php echo $rows->cake_name; ?></td>
                     <td class="center"><?php echo $rows->delivery_type; ?></td>

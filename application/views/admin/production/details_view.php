@@ -1,13 +1,15 @@
 <div class="container-fluid fixed container-new">
 <div class="navbar main">
     <div class="icon-wrapper"><a href="/admin" class="icon-home"></a></div>
-    <a href="/admin/production/inproduction" class="back"><span>Back</span></a>
+    <a href="/admin/productions/inproduction" class="back"><span>Back</span></a>
     <span class="tlogo">Cakes Order Detail</span>
     <div class="pull-right">
         <div class="search-form">
             <div class="error-msg"><span>Error No Results</span></div>
-            <input type="text" name="" value="" placeholder="Search Orders" class="error" />
+            <form action="/admin/productions/search" method="post">
+            <input type="text" class="validate[required]" name="search" value="" placeholder="Search Orders" class="error" />
             <input type="submit" name="" value="Search" />
+            </form>
         </div>
         <a href="" class="button"><span class="icon icon-print"></span> Print Page</a>
     </div>
@@ -17,12 +19,24 @@
 <div class="panel">
     <div class="pull-right">
         <div class="row-fluid row-widest">
-            <select class="selectpicker span12">
-                <option>Status</option>
-                <option>Mustard</option>
-                <option>Ketchup</option>
-                <option>Relish</option>
-            </select>
+            <form action="" method="get" onsubmit="location" >
+            <select class="selectpicker span12" name="order_status" id="order_status" onchange="window.location=this.value" >
+                <?php if($this->productions_model->currentProductionStatus($queryup->production_status)){?>
+                <option class="label"><?php echo $this->productions_model->currentProductionStatus($queryup->production_status) ?></option>
+                <?php }else{ ?>
+                <option class="label">Status</option>
+                <?php } ?>
+                    <?php
+                    $getOrderStatus = $this->productions_model->getOrderStatus();
+                    foreach($getOrderStatus as $production_status):
+                        if($queryup->production_status != $production_status->title){
+                        ?>
+                        <option value="<?php echo site_url('admin/productions/status/'.$queryup->order_code.'/'.$production_status->title)?>"><?php echo $production_status->description ?></option>
+                    <?php } endforeach; ?>
+                </select>
+
+            </form>
+
         </div>
     </div>
     <div class="pull-right">
@@ -31,25 +45,24 @@
                 <ul>
                     <li>
                         <span>Total</span>
-                        <span class="count">$1000.00</span>
+                        <span class="count"><?php echo $queryup->total_price ?></span>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="title">Wedding cake withavery longfancyname</div>
-    <div class="customer">Very long customer name</div>
+    <div class="title" style="height: 20px"><?php echo $queryup->title ?></div>
+    <div class="customer"><?php echo $queryup->first_name.' '. $queryup->last_name ?></div>
     <div class="separator"></div>
 </div><!-- end of panel -->
 <div class="slider-img">
     <ul>
-        <li><a href=""><span class="plus"></span><span class="desc">On Cake</span><img src="<?php echo base_url() ?>assets/images/img-1.jpg" alt="" /></a></li>
-        <li><a href=""><span class="plus"></span><span class="desc">On Cake</span><img src="<?php echo base_url() ?>assets/images/img-1.jpg" alt="" /></a></li>
-        <li><a href=""><span class="plus"></span><span class="desc">On Cake</span><img src="<?php echo base_url() ?>assets/images/img-1.jpg" alt="" /></a></li>
-        <li><a href=""><span class="plus"></span><span class="desc">On Cake</span><img src="<?php echo base_url() ?>assets/images/img-1.jpg" alt="" /></a></li>
-        <li><a href=""><span class="plus"></span><span class="desc">On Cake</span><img src="<?php echo base_url() ?>assets/images/img-1.jpg" alt="" /></a></li>
-        <li><a href=""><span class="plus"></span><span class="desc">On Cake</span><img src="<?php echo base_url() ?>assets/images/img-1.jpg" alt="" /></a></li>
-        <li><a href=""><span class="plus"></span><span class="desc">On Cake</span><img src="<?php echo base_url() ?>assets/images/img-1.jpg" alt="" /></a></li>
+       <?php
+        $galleries = $this->productions_model->photoGallery($queryup->order_id);
+        foreach($galleries as $gallery){
+        ?>
+        <li><a href=""><span class="plus"></span><span class="desc">On Cake</span><img src="<?php echo base_url().$gallery->instructional_photo; ?>" alt="" /></a></li>
+        <?php } ?>
     </ul>
 </div><!-- End Slider -->
 <div class="double">
@@ -57,43 +70,67 @@
         <div class="box">
             <div class="scrolled">
                 <div class="info">
+                    <?php if( $this->productions_model->getLocations($queryup->location_id) > 0){ ?>
                     <div class="line">
                         <div class="title">Bakery location</div><?php echo $this->productions_model->getLocations($queryup ->location_id); ?>
                     </div>
+                    <?php } ?>
+                    <?php if( $queryup->delivery_date){ ?>
                     <div class="line">
                         <div class="title">Pickup / delivery date</div><?php echo $this->productions_model->dateFormate($queryup->delivery_date); ?>
                     </div>
+                    <?php } ?>
+                    <?php if( $this->productions_model->getZones($queryup->delivery_zone_id) > 0){ ?>
                     <div class="line">
                         <div class="title">Delivery zone</div><?php echo $this->productions_model->getZones($queryup->delivery_zone_id); ?>
                     </div>
+                    <?php } ?>
+                    <?php if( $queryup->delivery_time){ ?>
                     <div class="line">
                         <div class="title">Pickup time</div><?php echo $queryup->delivery_time; ?>
                     </div>
+                    <?php } ?>
+                    <?php if( $queryup->flavour_name){ ?>
                     <div class="line">
                         <div class="title">Flavor</div><?php echo $queryup->flavour_name; ?>
                     </div>
+                    <?php } ?>
+                    <?php if( $queryup->shape || $queryup->serving_size ){ ?>
                     <div class="line">
-                        <div class="title">Size and shape</div>Size and  <?php echo $queryup->shape; ?>
+                        <div class="title">Size and shape</div><?php  echo $queryup->serving_size; ?> <?php if( $queryup->shape){ ?> and  <?php echo $queryup->shape; } ?>
                     </div>
+                    <?php } ?>
+                    <?php if( $queryup->serving_size){ ?>
                     <div class="line">
-                        <div class="title">Serving</div>Serving
+                        <div class="title">Serving</div><?php echo $queryup->serving_title; ?>
                     </div>
+                    <?php } ?>
+                    <?php if( $queryup->tiers){ ?>
                     <div class="line">
                         <div class="title">Tiers</div><?php echo $queryup->tiers; ?>
                     </div>
+                    <?php } ?>
+                    <?php if( $queryup->magic_cake_id){ ?>
                     <div class="line">
                         <div class="title">Magic cake id</div><?php echo $queryup->magic_cake_id; ?>
                     </div>
+                    <?php } ?>
+                    <?php if( $queryup->magic_surcharge){ ?>
                     <div class="line">
                         <div class="title">Magic cake surcharge</div><?php echo $queryup->magic_surcharge; ?>
                     </div>
+                    <?php } ?>
+                    <?php if( $queryup->inscription){ ?>
                     <div class="line">
                         <div class="title">Inscription</div><?php echo $queryup->inscription; ?>
                     </div>
+                    <?php } ?>
+                    <?php if( $queryup->special_instruction){ ?>
                     <div class="line last">
                         <div class="title">Special instructions</div>
                         <?php echo $queryup->special_instruction; ?>
                     </div>
+                    <?php } ?>
                 </div>
             </div>
         </div><!-- End Box -->
@@ -103,120 +140,141 @@
             <div class="widget widget-2 widget-tabs">
                 <div class="widget-head">
                     <ul>
-                        <li><a href="#customer-information-tab" data-toggle="tab">Customer Information</a></li>
-                        <li class="active"><a href="#delivery-information-tab" data-toggle="tab">Delivery Information</a></li>
+                        <li class="active" ><a href="#customer-information-tab" data-toggle="tab">Customer Information</a></li>
+                        <?php if($this->productions_model->deliveryInfo($queryup->order_id)){ ?>
+                        <li><a href="#delivery-information-tab" data-toggle="tab">Delivery Information</a></li>
+                        <?php } ?>
                     </ul>
                 </div>
                 <div class="widget-body">
                     <div class="tab-content">
-                        <div class="tab-pane" id="customer-information-tab">
+                        <div class="tab-pane active" id="customer-information-tab">
                             <div class="scrolled">
                                 <div class="info">
+                                    <?php if( $queryup->first_name){ ?>
                                     <div class="line">
-                                        <div class="title">First Name</div> <?php echo $queryup->first_name; ?></div>
+                                        <div class="title">First Name</div> <?php echo $queryup->first_name; ?>
+                                    </div>
+                                    <?php } ?>
+                                    <?php if( $queryup->last_name){ ?>
                                     <div class="line">
                                         <div class="title">Last Name</div><?php echo $queryup->last_name; ?>
                                     </div>
+                                    <?php } ?>
+                                    <?php if( $queryup->phone_number){ ?>
                                     <div class="line">
                                         <div class="title">Phone</div><?php echo $queryup->phone_number; ?>
                                     </div>
+                                    <?php } ?>
+                                    <?php if( $queryup->email){ ?>
                                     <div class="line">
                                         <div class="title">Email</div><?php echo $queryup->email; ?>
                                     </div>
+                                    <?php } ?>
+                                    <?php if( $queryup->address_1){ ?>
                                     <div class="line">
                                         <div class="title">Address</div><?php echo $queryup->address_1; ?>
                                     </div>
+                                    <?php } ?>
+                                    <?php if( $queryup->address_2){ ?>
+                                        <div class="line">
+                                            <div class="title">Address</div><?php echo $queryup->address_2; ?>
+                                        </div>
+                                    <?php } ?>
+                                    <?php if( $queryup->postal_code){ ?>
                                     <div class="line">
                                         <div class="title">Postal Code</div><?php echo $queryup->postal_code; ?>
                                     </div>
+                                    <?php } ?>
+
                                     <div class="line last">
                                         <div class="title title-big">Added Notes</div>
+                                        <?php
+
+                                        if($this->productions_model->orderNotes($queryup->order_id)){
+                                        $notes = $this->productions_model->orderNotes($queryup->order_id);
+
+
+                                        foreach( $notes as $orderNotes):
+                                            $createdate = $orderNotes->create_date;
+                                            $date = date("D M Y",$createdate);
+                                            $time = date("g:i a",$createdate);
+
+                                        ?>
                                         <div class="note">
                                             <div class="note-header">
-                                                <div class="row-fluid row-widest">
-                                                    <div class="title">Added by:</div>
-                                                    Verylong Employee Full  Name
+                                                <?php if( $orderNotes->first_name){ ?>
+                                                <div class="row-fluid row-widest-custom" >
+                                                    <div class="title" style="padding-bottom: 0px" >Added by:</div>
+                                                   <?php echo $orderNotes->first_name.' '.$orderNotes->last_name; ?>
                                                 </div>
-                                                <div class="row-fluid row-widest">
-                                                    <div class="title">Date added:</div>
-                                                    Day,#,Month
+                                                <?php } ?>
+                                                <div class="row-fluid row-widest-custom" >
+                                                    <div class="title" style="padding-bottom:0px ">Date added:</div>
+                                                    <?php echo $date; ?>
                                                 </div>
-                                                <div class="row-fluid row-widest">
-                                                    <div class="title">Time added</div>
-                                                    4:56 pm
-                                                </div>
-                                            </div>
-                                            Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet dolore
-                                            and aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem
-                                            ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet dolore and
-                                            aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum.
-                                        </div>
-                                        <div class="note">
-                                            <div class="note-header">
-                                                <div class="row-fluid row-widest">
-                                                    <div class="title">Added by:</div>
-                                                    Employee  Name
-                                                </div>
-                                                <div class="row-fluid row-widest">
-                                                    <div class="title">Date added:</div>
-                                                    Day,#,Month
-                                                </div>
-                                                <div class="row-fluid row-widest">
-                                                    <div class="title">Time added</div>
-                                                    4:56 pm
+                                                <div class="row-fluid row-widest-custom">
+                                                    <div class="title" style="padding-bottom:0px">Time added:</div>
+                                                    <?php echo $time; ?>
                                                 </div>
                                             </div>
-                                            Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet dolore
-                                            and aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem
-                                            ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet dolore and
-                                            aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet dolore
-                                            and aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem
-                                            ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet dolore and
-                                            aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet dolore
-                                            and aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem
-                                            ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet dolore and
-                                            aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum.
+                                            <?php echo $orderNotes->notes; ?>
                                         </div>
+                                        <?php endforeach; } ?>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane active" id="delivery-information-tab">
+                        <?php
+                        if($this->productions_model->deliveryInfo($queryup->order_id)){
+                        $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id)
+                        ?>
+                        <div class="tab-pane" id="delivery-information-tab">
+
                             <div class="scrolled">
                                 <div class="info">
+                                    <?php if( $deliveryInfo->name){ ?>
                                     <div class="line">
-                                        <div class="title">Location or Contact Name</div>Location or Contact Name</div>
-                                    <div class="line">
-                                        <div class="title">Phone</div>416-456-0456
+                                        <div class="title">Location or Contact Name</div><?php echo $deliveryInfo->name; ?>
                                     </div>
+                                    <?php } ?>
+                                    <?php if( $deliveryInfo->phone){ ?>
                                     <div class="line">
-                                        <div class="title">Address</div>Full Address here
+                                        <div class="title">Phone</div><?php echo $deliveryInfo->phone; ?>
                                     </div>
+                                    <?php } ?>
+                                    <?php if( $deliveryInfo->address_1){ ?>
                                     <div class="line">
-                                        <div class="title">Address 2</div>Full Secondary Address here
+                                        <div class="title">Address</div><?php echo $deliveryInfo->address_1; ?>
                                     </div>
+                                    <?php } ?>
+                                    <?php if( $deliveryInfo->address_2){ ?>
                                     <div class="line">
-                                        <div class="title">City</div>Toronto a City
+                                        <div class="title">Address 2</div><?php echo $deliveryInfo->address_2; ?>
                                     </div>
+                                    <?php } ?>
+                                    <?php if( $deliveryInfo->city){ ?>
                                     <div class="line">
-                                        <div class="title">Province</div>Ontario Province
+                                        <div class="title">City</div><?php echo $deliveryInfo->city; ?>
                                     </div>
+                                    <?php } ?>
+                                    <?php if( $deliveryInfo->province){ ?>
+                                    <div class="line">
+                                        <div class="title">Province</div><?php echo $deliveryInfo->province; ?>
+                                    </div>
+                                    <?php } ?>
+                                    <?php if( $deliveryInfo->spacial_instruction){ ?>
                                     <div class="line last">
                                         <div class="title">Special instructions</div>
-                                        Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet
-                                        dolore and aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem
-                                        upsum. Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set
-                                        aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet dolore
-                                        and aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem
-                                        ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet dolore and
-                                        aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet dolore
-                                        and aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum. Lorem
-                                        ipsum set amet dolore illum aplha lorem upsum. Lorem ipsum set amet dolore and
-                                        aplha lorem upsum. Lorem ipsum set amet dolore illum aplha lorem upsum.
+                                        <?php echo $deliveryInfo->spacial_instruction; ?>
                                     </div>
+                                    <?php } ?>
+
                                 </div>
                             </div>
+
                         </div>
+                        <?php  } ?>
                     </div>
                 </div>
             </div>
@@ -232,15 +290,14 @@
         <div class="current-img"></div>
         <div class="gallery-slider">
             <ul>
-                <li><a href="<?php echo base_url() ?>assets/images/img-1.jpg"><img src="<?php echo base_url() ?>assets/images/img-1.jpg" alt="" /></a></li>
-                <li><a href="<?php echo base_url() ?>assets/images/img-1.jpg"><img src="<?php echo base_url() ?>assets/images/img-1.jpg" alt="" /></a></li>
-                <li><a href="<?php echo base_url() ?>assets/images/img-1.jpg"><img src="<?php echo base_url() ?>assets/images/img-1.jpg" alt="" /></a></li>
-                <li><a href="<?php echo base_url() ?>assets/images/img-1.jpg"><img src="<?php echo base_url() ?>assets/images/img-1.jpg" alt="" /></a></li>
-                <li><a href="<?php echo base_url() ?>assets/images/img-1.jpg"><img src="<?php echo base_url() ?>assets/images/img-1.jpg" alt="" /></a></li>
-                <li><a href="<?php echo base_url() ?>assets/images/img-1.jpg"><img src="<?php echo base_url() ?>assets/images/img-1.jpg" alt="" /></a></li>
-                <li><a href="<?php echo base_url() ?>assets/images/img-1.jpg"><img src="<?php echo base_url() ?>assets/images/img-1.jpg" alt="" /></a></li>
-                <li><a href="<?php echo base_url() ?>assets/images/img-1.jpg"><img src="<?php echo base_url() ?>assets/images/img-1.jpg" alt="" /></a></li>
-            </ul>
+                <?php
+                $galleries = $this->productions_model->photoGallery($queryup->order_id);
+                foreach($galleries as $gallery){
+                    ?>
+                    <li><a href="<?php echo base_url().$gallery->instructional_photo; ?>"><img src="<?php echo base_url().$gallery->instructional_photo; ?>" alt="" /></a></li>
+                <?php } ?>
+
+                </ul>
         </div>
     </div>
 </div>

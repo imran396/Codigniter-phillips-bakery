@@ -301,10 +301,26 @@
 	vertical-align: top;
 }
 
+
+.note{
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #F0EDE9
+}
+
+
+
 .container-new  .row-fluid.row-widest {
 	margin-left: 5px;
 	width: 175px;
 }
+
+.container-new  .row-fluid.row-widest-custom {
+    margin-left: 0px;
+    width: 175px;
+    margin-bottom: 10px
+}
+
 
 .container-new  .row-fluid.row-widerer {
 	width: 150px;
@@ -1037,6 +1053,7 @@
 	font-size: 15px;
 	color: #3d3131;
 	line-height: 20px;
+    height: 20px;
 }
 
 .panel .widget .widget-body.list ul li span {
@@ -1100,8 +1117,8 @@
 	width: 44px;
 	height: 44px;
 	display: inline-block;
-	top: -20px;
-	right: -24px;
+	top: -18px;
+	right: -20px;
 	position: absolute;
 	z-index: 10;
 }
@@ -1137,6 +1154,7 @@
 .jcarousel-container-horizontal {
     padding: 15px 41px 15px 37px;
 	height: 115px;
+    width: 915px;
 }
 
 .jcarousel-clip-horizontal {
@@ -1397,6 +1415,7 @@
 	clear: both;
 	overflow: hidden;
 	position: relative;
+    width: 550px;
 }
 
 .popup-gallery .jcarousel-clip-horizontal {

@@ -47,16 +47,8 @@ class Productions extends Crud_Controller
     {
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['paging']=$this->productions_model->getListing($starts);
-
-
-
         $this->layout->view('admin/production/inproduction_view', $this->data);
 
-    }
-
-    public function badge(){
-        $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/production/badge_view',$this->data);
     }
 
     public function filtering(){
@@ -64,6 +56,9 @@ class Productions extends Crud_Controller
         $data = $this->input->post();
         $this->data['query']=$this->productions_model->getFiltering($data);
         $this->load->view('admin/production/order_filtering_view', $this->data);
+
+
+
     }
 
 
@@ -75,97 +70,31 @@ class Productions extends Crud_Controller
 
     }
 
-    public function lookup()
-    {
+    public function search(){
 
+        $request = $this->input->post();
+        if($request){
 
-        $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/orders/lookup_view', $this->data);
-
-
-    }
-
-
-    public function blackout()
-    {
-
-        $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/orders/blackout_view', $this->data);
-
-
-    }
-
-
-
-    public function listing(){
-
-        $this->data['result'] = $this->servings_model->getListing();
-        $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/servings/listing_view', $this->data);
-
-    }
-
-    public function save()
-    {
-
-        if (!empty($_POST)) {
-            $this->addValidation();
-            if ($this->form_validation->run()) {
-                $this->saveData();
-                $id =$this->input->post('serving_id');
-                if(!empty($id)) {
-                    $this->redirectToHome('edit/'.$id);
-                }else{
-                    $this->redirectToHome('listing');
-                }
-
-
+            $order_code = $this->productions_model->doSearch($request);
+            if($order_code > 0){
+            $this->data['queryup']=$this->productions_model->orderDetails($order_code);
+            redirect('admin/productions/details/'.$order_code);
+            }else{
+                $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
+                redirect('admin/productions/inproduction/'.$order_code);
             }
-        }
-        $this->index();
-
-    }
 
 
-    public function edit($id)
-    {
-
-        $this->data['queryup'] = $this->servings_model->getservings($id);
-        $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/servings/servings_view', $this->data);
-    }
-
-    private function addValidation()
-    {
-        $this->form_validation->set_rules('title', 'Category', 'required|trim|xss_clean|callback_checkTitle');
-        $this->form_validation->set_rules('serving_id');
-        $this->form_validation->set_rules('status');
-
-    }
-
-
-    private function saveData()
-    {
-
-        $data = $this->input->post();
-        if (empty($data['serving_id'])) {
-
-            $this->servings_model->create($data);
-
-            $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
-        } else {
-            $this->servings_model->save($data, $data['serving_id']);
-
-            $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         }
 
     }
 
-    public function status($id){
 
-        $this->servings_model->statusChange($id);
+    public function status($order_code,$production_status){
+
+        $this->productions_model->statusChange($order_code,$production_status);
         $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
-        $this->redirectToHome("listing");
+        redirect('admin/productions/details/'.$order_code);
 
     }
 
@@ -176,28 +105,6 @@ class Productions extends Crud_Controller
 
     }
 
-
-
-    public function remove($id)
-    {
-        $this->servings_model->delete($id);
-        $this->redirectToHome("listing");
-
-    }
-
-    public function checkTitle($title){
-
-
-        $data = $this->input->post();
-        return  $this->servings_model->checkservings($data['serving_id'],$title);
-
-
-    }
-
-    private function redirectToHome($redirect = NULL)
-    {
-        redirect('admin/servings/'.$redirect);
-    }
 
 
 
