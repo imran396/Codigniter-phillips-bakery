@@ -130,36 +130,6 @@
 <script src="<?php echo base_url() ?>assets/theme/scripts/custom.js"></script>
 <!--Layout Options-->
 <!--<script src="<?php //echo base_url() ?>/assets/theme/scripts/layout.js"></script>-->
-<script type="text/javascript" language="javascript">
-jQuery(document).ready(function(){
-
-    jQuery("#form1").validationEngine(
-        {
-        promptPosition: "topLeft"
-        }
-    );
-    jQuery("#form2").validationEngine(
-        {
-            promptPosition: "topLeft"
-        }
-    );
-    jQuery("#form3").validationEngine(
-        {
-            promptPosition: "topLeft"
-        }
-    );
-    jQuery("#form4").validationEngine(
-        {
-            promptPosition: "topLeft"
-        }
-    );
-
-//    $("#category_id , #location_id , #flavour_id  ").select2();
-
-});
-
-</script>
-
 <link rel="stylesheet" type="text/css" href="/assets/multi-datepicker/css/mdp.css">
 </body>
 </html>
