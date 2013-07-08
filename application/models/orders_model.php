@@ -258,8 +258,8 @@ class Orders_model extends Crud_Model
 
     }
 
-   public function getAllNotes(){
-       $data = $this->db->select('order_id,employee_id,create_date,notes')->order_by('order_id','asc')->get('order_notes')->result_array();
+   public function getAllNotes($order_id){
+       $data = $this->db->select('order_id,employee_id,create_date,notes')->where('order_id',$order_id)->order_by('order_id','asc')->get('order_notes')->result_array();
        foreach($data as $key=>$val){
            $data[$key]['order_id'] = (int) $data[$key]['order_id'];
            $data[$key]['employee_id'] = (int) $data[$key]['employee_id'];

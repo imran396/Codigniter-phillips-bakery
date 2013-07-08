@@ -171,8 +171,8 @@ class Orders extends API_Controller
     }
 
 
-    public function notes(){
-        $data = $this->orders_model->getAllNotes();
+    public function notes($order_id){
+        $data = $this->orders_model->getAllNotes($order_id);
         $this->sendOutput($data);
     }
 
