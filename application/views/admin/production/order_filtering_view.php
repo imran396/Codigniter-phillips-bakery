@@ -1,11 +1,3 @@
-
-
-<?php
-
-//var_dump($query) ;
-//exit;
-?>
-
 <div class="widget">
     <div class="widget-body">
         <table class="dynamicTable table table-striped table-bordered">
@@ -46,7 +38,7 @@
     </div>
 </div>
 <div class="buttons">
-    <a href="" class="button button-green"><span class="icon icon-scan"></span>Scan Bar Code</a>
+    <a href="/admin/productions/badge" class="button button-green"><span class="icon icon-scan"></span>Scan Bar Code</a>
 </div>
 <div class="pagination pagination-small pagination-right" style="margin-top: 0; margin-bottom: 12px;">
     <?php //echo $paging[1]; ?>

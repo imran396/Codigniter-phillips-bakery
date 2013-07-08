@@ -62,8 +62,6 @@ class Users_model extends Crud_Model
 
     public function getListing($start)
     {
-
-
         $per_page=10;
         $num_link=3;
         $page   = intval($start);
@@ -72,7 +70,7 @@ class Users_model extends Crud_Model
         $base_url = site_url('admin/users/listing');
         $total_rows = $this->db->count_all_results('users');
         $paging = paginate($base_url, $total_rows,$start,$per_page);
-        $this->db->select('users.*,meta.first_name,meta.last_name,groups.description');
+        $this->db->select('users.*,meta.first_name,meta.last_name,groups.description,meta.employee_id');
         $this->db->from('users');
         $this->db->join('meta','users.id =meta.user_id');
         $this->db->join('groups','users.group_id =groups.id');
