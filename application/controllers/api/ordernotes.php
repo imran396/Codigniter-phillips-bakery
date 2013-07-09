@@ -2,7 +2,7 @@
 
 include_once __DIR__ . '/API_Controller.php';
 
-class Ordersnotes extends API_Controller
+class Ordernotes extends API_Controller
 {
     public function __construct()
     {
