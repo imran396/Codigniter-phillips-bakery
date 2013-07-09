@@ -65,26 +65,29 @@ class Productions extends Crud_Controller
     public function details($order_code=0)
     {
         $this->data['active']=$this->uri->segment(2,0);
-        $this->data['queryup']=$this->productions_model->orderDetails($order_code);
-        $this->layout->view('admin/production/details_view', $this->data);
+        $result= $this->productions_model->orderDetails($order_code);
+        if($result ->num_rows > 0 ){
+            $this->data['queryup']=$result->row();
+            $this->layout->view('admin/production/details_view', $this->data);
+        }else{
+            redirect('admin/productions/inproduction');
+
+        }
+
 
     }
 
     public function search(){
 
-        $request = $this->input->post();
+        $request = $this->input->post('search');
         if($request){
 
             $order_code = $this->productions_model->doSearch($request);
             if($order_code > 0){
-            $this->data['queryup']=$this->productions_model->orderDetails($order_code);
-            redirect('admin/productions/details/'.$order_code);
+                echo $order_code;
             }else{
-                $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
-                redirect('admin/productions/inproduction/'.$order_code);
+                return false;
             }
-
-
         }
 
     }

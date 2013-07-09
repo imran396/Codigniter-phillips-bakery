@@ -1,3 +1,29 @@
+<script type="text/javascript">
+
+    /* when document is ready */
+    $(document).ready(function(){
+
+        $('#searchButton').click(function() {
+
+            var search =$("#search").val();
+            $.ajax({
+                url:"<?php echo site_url('admin/productions/search')?>",
+                data:"search="+search,
+                type:"post",
+                success: function(val){
+                    if(val > 0){
+                        window.location="<?php echo site_url('/admin/productions/details')?>/"+val;
+                    }else{
+                        $('.error-msg').html("<span>Error No Results</span>");
+                    }
+                    //console.log(val);
+                }
+            })
+        });
+
+
+    });
+</script>
 <div class="container-fluid fixed container-new">
 <div class="navbar main">
     <div class="icon-wrapper"><a href="/admin" class="icon-home"></a></div>
@@ -5,10 +31,10 @@
     <span class="tlogo">Cakes Order Detail</span>
     <div class="pull-right">
         <div class="search-form">
-            <div class="error-msg"><span>Error No Results</span></div>
+            <div class="error-msg"></div>
             <form action="/admin/productions/search" method="post">
-            <input type="text" class="validate[required]" name="search" value="" placeholder="Search Orders" class="error" />
-            <input type="submit" name="" value="Search" />
+                <input type="text" class="validate[required]" name="search" id="search" value="" placeholder="Search Orders" class="error" />
+                <input type="button" id="searchButton" name="" value="Search" />
             </form>
         </div>
         <a href="" class="button"><span class="icon icon-print"></span> Print Page</a>
@@ -45,7 +71,7 @@
                 <ul>
                     <li>
                         <span>Total</span>
-                        <span class="count"><?php echo $queryup->total_price ?></span>
+                        <span class="count"><?php if($queryup->override_price !='0.00') echo $queryup->override_price; else echo $queryup->total_price; ?></span>
                     </li>
                 </ul>
             </div>
@@ -70,7 +96,8 @@
         <div class="box">
             <div class="scrolled">
                 <div class="info">
-                    <?php if( $this->productions_model->getLocations($queryup->location_id) > 0){ ?>
+                    <?php
+                    if($this->productions_model->getLocations($queryup->location_id)){ ?>
                     <div class="line">
                         <div class="title">Bakery location</div><?php echo $this->productions_model->getLocations($queryup ->location_id); ?>
                     </div>

@@ -27,7 +27,8 @@ class Productions_model extends Ci_Model
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
         $this->db->limit($per_page,$limit);
-        $this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
+        //$this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
+        $this->db->where(array('order_status'=>'order'));
         $this->db->or_where(array("orders.pickup_location_id"=> $location_id));
         $this->db->order_by("orders.order_code", "desc");
         $query =$this->db->get()->result();
@@ -37,7 +38,7 @@ class Productions_model extends Ci_Model
 
     public function getFiltering($data){
 
-        $order_status = (strtolower($data['order_status']) != "status" ) ? strtolower($data['order_status']) :'';
+        $production_status = (strtolower($data['production_status']) != "status" ) ? strtolower($data['production_status']) :'';
         $fondant = (strtolower($data['fondant']) != "fondant" ) ? strtolower($data['fondant']) :'';
         $flavour_id = (strtolower($data['flavour_id']) != "flavour" ) ? strtolower($data['flavour_id']) :'';
         $delivery_type = (strtolower($data['delivery_type']) != "pickup/delivery" ) ? strtolower($data['delivery_type']) :'';
@@ -60,9 +61,10 @@ class Productions_model extends Ci_Model
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
 
-        $this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
-        if($order_status){
-            $this->db->like(array("orders.production_status"=> $order_status));
+        //$this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
+        $this->db->where(array('order_status'=>'order'));
+        if($production_status){
+            $this->db->like(array("orders.production_status"=> $production_status));
         }
         if($fondant){
             $this->db->where(array("orders.fondant"=> $fondant));
@@ -108,7 +110,7 @@ class Productions_model extends Ci_Model
         $this->db->join('price_matrix','price_matrix.price_matrix_id = orders.price_matrix_id','left');
         $this->db->join('servings','servings.serving_id = .price_matrix.serving_id','left');
         $this->db->where(array("orders.order_code"=> $order_code));
-        return $this->db->get()->row();
+        return $this->db->get();
 
 
     }
@@ -221,18 +223,18 @@ class Productions_model extends Ci_Model
 
 
 
-    public function doSearch($data){
+    public function doSearch($search){
 
-        $search = isset($data['search'])? $data['search']:'';
+
         if($this->checkSearch("order_code",$search) > 0){
-            $order_id=$this->checkSearch("order_code",$search);
-            return $order_id;
+            $order_code = $this->checkSearch("order_code",$search);
+            return $order_code;
         }else if($this->checkSearch("first_name",$search) > 0){
-            $order_id=$this->checkSearch("first_name",$search);
-            return $order_id;
+            $order_code = $this->checkSearch("first_name",$search);
+            return $order_code;
         }else if($this->checkSearch("last_name",$search) > 0){
-            $order_id=$this->checkSearch("last_name",$search);
-            return $order_id;
+            $order_code = $this->checkSearch("last_name",$search);
+            return $order_code;
         }else{
             return false;
 

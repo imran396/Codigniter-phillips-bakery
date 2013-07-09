@@ -22,7 +22,7 @@ class Gallery_model extends CI_Model
            if(strpos($key,'tmpname')){
 
                 $cake_id=$this->input->post('cake_id');
-                $image="/assets/uploads/gallery/".nl2br(htmlentities(stripslashes($value)));
+                $image="assets/uploads/gallery/".nl2br(htmlentities(stripslashes($value)));
                 $this->db->set(array('cake_id'=>$cake_id,'image'=>$image))->insert('cake_gallery');
 
            }

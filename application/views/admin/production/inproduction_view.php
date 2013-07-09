@@ -18,7 +18,7 @@
             data:result,
             type:"post",
             success: function(val){
-                $('.innerLR').html(val);
+                $('#filterResult').html(val);
                 //console.log(val);
             }
         })
@@ -27,26 +27,49 @@
     /* when document is ready */
     $(document).ready(function(){
 
-        $('#search-form').submit(function() {
-            return false;
+        $('#searchButton').click(function() {
+
+
+            var search =$("#search").val();
+            $.ajax({
+                url:"<?php echo site_url('admin/productions/search')?>",
+                data:"search="+search,
+                type:"post",
+                success: function(val){
+                    if(val > 0){
+                        window.location="<?php echo site_url('/admin/productions/details')?>/"+val;
+                    }else{
+                        $('.error-msg').html("<span>Error No Results</span>");
+                    }
+                    //console.log(val);
+                }
+            })
         });
 
-        $('#order_status , #fondant , #flavour_id , #delivery_type , #datepicker , #datepicker2 , #delivery_start_time , #delivery_end_time').change(function(){
+        $('#production_status , #fondant , #flavour_id , #delivery_type , #datepicker , #datepicker2 , #delivery_start_time , #delivery_end_time').change(function(){
 
             timedely();
 
         });
     });
 </script>
+
+<style type="text/css">
+#filterResult{
+    min-height: 400px;
+}
+</style>
 <div class="container-fluid fixed container-new">
 <div class="navbar main">
     <div class="icon-wrapper"><a href="/admin/productions" class="icon-home"></a></div>
     <span class="tlogo">Cakes in Production</span>
     <div class="pull-right">
         <div class="search-form">
-            <div class="error-msg"><span>Error No Results</span></div>
-            <input type="text" name="" value="" placeholder="Search Orders" class="error" />
-            <input type="submit" name="" value="Search" />
+            <div class="error-msg"></div>
+            <form action="/admin/productions/search" method="post">
+                <input type="text" class="validate[required]" name="search" id="search" value="" placeholder="Search Orders" class="error" />
+                <input type="button" id="searchButton" name="" value="Search" />
+            </form>
         </div>
         <a href="" class="button"><span class="icon icon-print"></span> Print Page</a>
     </div>
@@ -59,7 +82,7 @@
         <a href="" class="icon-refresh"></a>
         <span class="label">Filter By:</span>
         <div class="row-fluid">
-            <select class="selectpicker span12" name="order_status" id="order_status">
+            <select class="selectpicker span12" name="production_status" id="production_status">
                 <option class="label">Status</option>
                 <?php
                 $getOrderStatus = $this->productions_model->getOrderStatus();
@@ -177,7 +200,7 @@
     </div>
 </form>
 </div><!-- end of filters -->
-<div class="innerLR">
+<div class="innerLR" id="filterResult">
     <div class="widget">
         <div class="widget-body">
             <table class="dynamicTable table table-striped table-bordered">
@@ -203,7 +226,7 @@
                 ?>
                 <tr>
                     <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
-                    <td class="center"><?php echo $rows->first_name.' '.$rows->last_name; ?></td>
+                    <td><?php echo $rows->first_name.' '.$rows->last_name; ?></td>
                     <td><?php echo $rows->cake_name; ?></td>
                     <td class="center"><?php echo $rows->delivery_type; ?></td>
                     <td class="center"><?php echo $this->productions_model->dateFormate($rows->delivery_date); ?></td>

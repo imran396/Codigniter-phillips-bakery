@@ -32,7 +32,7 @@ class Orders extends API_Controller
         $data['delivery_date']=isset($_REQUEST['delivery_date'])? $_REQUEST['delivery_date']:'';
         $data['delivery_time']=isset($_REQUEST['delivery_time'])? $_REQUEST['delivery_time']:'';
         $data['flavour_id']=isset($_REQUEST['flavour_id'])? $_REQUEST['flavour_id']:'';
-        $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:'';
+        $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:'No';
         $data['price_matrix_id']=isset($_REQUEST['price_matrix_id'])? $_REQUEST['price_matrix_id']:'';
         $data['tiers']=isset($_REQUEST['tiers'])? $_REQUEST['tiers']:'';
         $data['shape']=isset($_REQUEST['shape'])? $_REQUEST['shape']:'';
@@ -106,7 +106,7 @@ class Orders extends API_Controller
         $data['delivery_date']=isset($_REQUEST['delivery_date'])? $_REQUEST['delivery_date']:'';
         $data['delivery_time']=isset($_REQUEST['delivery_time'])? $_REQUEST['delivery_time']:'';
         $data['flavour_id']=isset($_REQUEST['flavour_id'])? $_REQUEST['flavour_id']:'';
-        $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:'';
+        $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:'No';
         $data['price_matrix_id']=isset($_REQUEST['price_matrix_id'])? $_REQUEST['price_matrix_id']:'';
         $data['tiers']=isset($_REQUEST['tiers'])? $_REQUEST['tiers']:'';
         $data['shape']=isset($_REQUEST['shape'])? $_REQUEST['shape']:'';
@@ -157,6 +157,8 @@ class Orders extends API_Controller
         }else{
             $this->sendOutput(array('order_id'=> $orders['order_id']));
         }
+
+
 
     }
 
