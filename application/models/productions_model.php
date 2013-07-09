@@ -221,18 +221,18 @@ class Productions_model extends Ci_Model
 
 
 
-    public function doSearch($data){
+    public function doSearch($search){
 
-        $search = isset($data['search'])? $data['search']:'';
+
         if($this->checkSearch("order_code",$search) > 0){
-            $order_id=$this->checkSearch("order_code",$search);
-            return $order_id;
+            $order_code = $this->checkSearch("order_code",$search);
+            return $order_code;
         }else if($this->checkSearch("first_name",$search) > 0){
-            $order_id=$this->checkSearch("first_name",$search);
-            return $order_id;
+            $order_code = $this->checkSearch("first_name",$search);
+            return $order_code;
         }else if($this->checkSearch("last_name",$search) > 0){
-            $order_id=$this->checkSearch("last_name",$search);
-            return $order_id;
+            $order_code = $this->checkSearch("last_name",$search);
+            return $order_code;
         }else{
             return false;
 

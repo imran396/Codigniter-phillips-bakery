@@ -45,7 +45,7 @@
                 <ul>
                     <li>
                         <span>Total</span>
-                        <span class="count"><?php echo $queryup->total_price ?></span>
+                        <span class="count"><?php if($queryup->override_price !='0.00') echo $queryup->override_price; else echo $queryup->total_price; ?></span>
                     </li>
                 </ul>
             </div>
@@ -70,7 +70,8 @@
         <div class="box">
             <div class="scrolled">
                 <div class="info">
-                    <?php if( $this->productions_model->getLocations($queryup->location_id) > 0){ ?>
+                    <?php
+                    if($this->productions_model->getLocations($queryup->location_id)){ ?>
                     <div class="line">
                         <div class="title">Bakery location</div><?php echo $this->productions_model->getLocations($queryup ->location_id); ?>
                     </div>
