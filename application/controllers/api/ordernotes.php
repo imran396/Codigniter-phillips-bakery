@@ -28,9 +28,9 @@ class Ordernotes extends API_Controller
     }
 
     public function search(){
-        $request = $this->input->get();
+        $request = $this->input->get('order_id');
         if($request){
-        $data = $this->orders_model->NotesSearch($request);
+        $data = $this->orders_model->search($request);
         $this->sendOutput($data);
         }
 

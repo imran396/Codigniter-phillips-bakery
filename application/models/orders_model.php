@@ -275,9 +275,9 @@ class Orders_model extends Crud_Model
     }
 
 
-    public function NotesSearch($data){
-        $data = $this->getSearchField($data);
-        $this->db->where('order_id', $data['order_id']);
+    public function search($order_id){
+
+        $this->db->where('order_id',$order_id);
         $data = $this->db->select('order_id,employee_id,create_date,notes')->order_by('order_id','asc')->get('order_notes')->result_array();
 
         foreach($data as $key=>$val){
