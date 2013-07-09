@@ -181,7 +181,7 @@ class Orders extends API_Controller
         if(!empty($_POST)){
             $this->orders_model->SaveNotes($_POST);
             if($this->db->insert_id()){
-                $data = array('message'=>'successfull','code'=>'201');
+                $data = array('message'=>'created successfull','code'=>'201');
                 $this->sendOutput($data);
             }
         }
