@@ -88,7 +88,7 @@ class Productions_model extends Ci_Model
 
         $this->db->order_by("orders.order_id", "desc");
         $query =$this->db->get()->result();
-        echo $this->db->last_query();
+        //echo $this->db->last_query();
         return $query;
     }
 
