@@ -108,7 +108,7 @@ class Productions_model extends Ci_Model
         $this->db->join('price_matrix','price_matrix.price_matrix_id = orders.price_matrix_id','left');
         $this->db->join('servings','servings.serving_id = .price_matrix.serving_id','left');
         $this->db->where(array("orders.order_code"=> $order_code));
-        return $this->db->get()->row();
+        return $this->db->get();
 
 
     }

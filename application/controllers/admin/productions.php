@@ -65,8 +65,15 @@ class Productions extends Crud_Controller
     public function details($order_code=0)
     {
         $this->data['active']=$this->uri->segment(2,0);
-        $this->data['queryup']=$this->productions_model->orderDetails($order_code);
-        $this->layout->view('admin/production/details_view', $this->data);
+        $result= $this->productions_model->orderDetails($order_code);
+        if($result ->num_rows > 0 ){
+            $this->data['queryup']=$result->row();
+            $this->layout->view('admin/production/details_view', $this->data);
+        }else{
+            redirect('admin/productions/inproduction');
+
+        }
+
 
     }
 
