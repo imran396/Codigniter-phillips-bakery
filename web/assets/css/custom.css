@@ -138,3 +138,42 @@ div.dataTables_info {
 .input-mini{
     width: 45px;
 }
+
+
+/*added by imran*/
+.print_button{
+    margin-left:42px;
+}
+
+.print_button .button{
+    background: linear-gradient(to bottom, #8b8b8b 50%,#5c5c5c 50%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8b8b8b', endColorstr='#5c5c5c',GradientType=0 );
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    padding: 0 13px;
+    margin: 8px 0 0 0 !important;
+    font-family: Helvetica, Ariel, sans-serif;
+    font-size: 15px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: #6f6f6f 0 -1px 0;
+    line-height: 33px;
+    height: 33px;
+    vertical-align: middle;
+}
+
+.print_button .button .icon {
+    margin-right: 10px;
+    display: inline-block;
+}
+.print_button .icon-print {
+    background-image: url(../images/icon-print.png);
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    width: 23px;
+    height: 22px;
+    display: inline-block;
+    vertical-align: middle;
+}
