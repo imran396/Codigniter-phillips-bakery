@@ -27,7 +27,8 @@ class Productions_model extends Ci_Model
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
         $this->db->limit($per_page,$limit);
-        $this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
+        //$this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
+        $this->db->where(array('order_status'=>'order'));
         $this->db->or_where(array("orders.pickup_location_id"=> $location_id));
         $this->db->order_by("orders.order_code", "desc");
         $query =$this->db->get()->result();
@@ -60,7 +61,8 @@ class Productions_model extends Ci_Model
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
 
-        $this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
+        //$this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
+        $this->db->where(array('order_status'=>'order'));
         if($order_status){
             $this->db->like(array("orders.production_status"=> $order_status));
         }
