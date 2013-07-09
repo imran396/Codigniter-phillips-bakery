@@ -174,11 +174,16 @@ class Orders extends API_Controller
     public function notes($order_id){
         $data = $this->orders_model->getAllNotes($order_id);
         $this->sendOutput($data);
+
     }
 
     public function notesave(){
         if(!empty($_POST)){
             $this->orders_model->SaveNotes($_POST);
+            if($this->db->insert_id()){
+                $data = array('message'=>'successfull','code'=>'201');
+                $this->sendOutput($data);
+            }
         }
     }
 

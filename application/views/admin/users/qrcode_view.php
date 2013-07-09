@@ -1,3 +1,5 @@
+
+
 <div id="content">
  <?php
     $size = '300x300';
@@ -8,7 +10,9 @@
     echo '<img src="'.$rootUrl.'">';
 ?>
 
-    <div onclick="window.print();"> Print </div>
+ <div class="print_button">
+    <a onclick="window.print();" href="javascript:void(0);"  class="button"><span class="icon icon-print"></span> Print QR Code</a>
+</div>
 
 </div>
 

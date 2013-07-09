@@ -247,7 +247,7 @@ class users extends Crud_Controller
     }
 
     public function qrcode(){
-        $this->data['employee_code']=$this->uri->segment(4,0);
+        $this->data['employee_code']= $this->uri->segment(4,0);
         $this->layout->view('admin/users/qrcode_view',$this->data);
 
     }
