@@ -38,7 +38,7 @@ class Productions_model extends Ci_Model
 
     public function getFiltering($data){
 
-        $order_status = (strtolower($data['order_status']) != "status" ) ? strtolower($data['order_status']) :'';
+        $production_status = (strtolower($data['production_status']) != "status" ) ? strtolower($data['production_status']) :'';
         $fondant = (strtolower($data['fondant']) != "fondant" ) ? strtolower($data['fondant']) :'';
         $flavour_id = (strtolower($data['flavour_id']) != "flavour" ) ? strtolower($data['flavour_id']) :'';
         $delivery_type = (strtolower($data['delivery_type']) != "pickup/delivery" ) ? strtolower($data['delivery_type']) :'';
@@ -63,8 +63,8 @@ class Productions_model extends Ci_Model
 
         //$this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
         $this->db->where(array('order_status'=>'order'));
-        if($order_status){
-            $this->db->like(array("orders.production_status"=> $order_status));
+        if($production_status){
+            $this->db->like(array("orders.production_status"=> $production_status));
         }
         if($fondant){
             $this->db->where(array("orders.fondant"=> $fondant));
@@ -88,7 +88,7 @@ class Productions_model extends Ci_Model
 
         $this->db->order_by("orders.order_id", "desc");
         $query =$this->db->get()->result();
-        //echo $this->db->last_query();
+        echo $this->db->last_query();
         return $query;
     }
 

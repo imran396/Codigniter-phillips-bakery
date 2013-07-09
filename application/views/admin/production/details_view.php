@@ -6,13 +6,11 @@
         $('#searchButton').click(function() {
 
             var search =$("#search").val();
-            alert(search);
             $.ajax({
                 url:"<?php echo site_url('admin/productions/search')?>",
                 data:"search="+search,
                 type:"post",
                 success: function(val){
-                    alert(val);
                     if(val > 0){
                         window.location="<?php echo site_url('/admin/productions/details')?>/"+val;
                     }else{

@@ -31,13 +31,11 @@
 
 
             var search =$("#search").val();
-            alert(search);
             $.ajax({
                 url:"<?php echo site_url('admin/productions/search')?>",
                 data:"search="+search,
                 type:"post",
                 success: function(val){
-                    alert(val);
                     if(val > 0){
                         window.location="<?php echo site_url('/admin/productions/details')?>/"+val;
                     }else{
@@ -48,7 +46,7 @@
             })
         });
 
-        $('#order_status , #fondant , #flavour_id , #delivery_type , #datepicker , #datepicker2 , #delivery_start_time , #delivery_end_time').change(function(){
+        $('#production_status , #fondant , #flavour_id , #delivery_type , #datepicker , #datepicker2 , #delivery_start_time , #delivery_end_time').change(function(){
 
             timedely();
 
@@ -84,7 +82,7 @@
         <a href="" class="icon-refresh"></a>
         <span class="label">Filter By:</span>
         <div class="row-fluid">
-            <select class="selectpicker span12" name="order_status" id="order_status">
+            <select class="selectpicker span12" name="production_status" id="production_status">
                 <option class="label">Status</option>
                 <?php
                 $getOrderStatus = $this->productions_model->getOrderStatus();
