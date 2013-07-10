@@ -173,17 +173,6 @@ class Orders_model extends Crud_Model
 
     public function doSearch($data){
 
-
-       /* $data = $this->getSearchField($data);
-        $res = $this->db
-            ->select('orders.*,order_delivery.*')
-            ->from('orders')
-            ->join('order_delivery','order_delivery.delivery_order_id = orders.order_id','left')
-            ->join('instructional_photo','instructional_photo.instructional_order_id = orders.order_id','left')
-            ->or_like($data)
-            ->get();*/
-
-
         $imageurlprefix = base_url().'assets';
         $order_id = isset($data['order_id'])?$data['order_id']:'';
         $order_code = isset($data['order_code'])?$data['order_code']:'';

@@ -108,10 +108,29 @@ class Gallery_model extends CI_Model
 
     }
 
-    public function getGallery($gallery_id)
+    public function getCakeGallery()
     {
 
-        return $this->db->select('*')->where(array('gallery_id'=>$gallery_id))->get('cake_gallery')->result();
+        return $this->db
+            ->select('cakes.cake_id,cakes.title ,cakes.image')
+            ->from('cake_gallery')
+            ->join('cakes','cakes.cake_id = cake_gallery.cake_id')
+            ->group_by('cake_gallery.cake_id')
+            ->get()
+            ->result();
+
+    }
+
+    public function getGallery($cake_id)
+    {
+
+
+        $result = $this->db->select('*')->where(array('cake_id'=>$cake_id))->get('cake_gallery');
+        if($result ->num_rows() > 0){
+            return $result->result();
+        }else{
+            return false;
+        }
 
     }
 

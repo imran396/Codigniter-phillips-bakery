@@ -23,36 +23,36 @@
 <div class="innerLR">
         <div class="widget widget-gray widget-body-white">
             <div class="widget-body" style="padding: 10px 0;">
-                <table class="table table-bordered table-primary js-table-sortable">
-                    <thead>
-                    <tr>
-                        <th class="center">No.</th>
-                        <th><?php echo $this->lang->line('gallery_image');?></th>
-                        <th><?php echo $this->lang->line('cake_title');?></th>
-                        <th style="width: 1%;" class="center"><?php echo $this->lang->line('drag');?></th>
-                        <th><?php echo $this->lang->line('action');?></th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                <div class="slider-img">
+                    <ul>
+                        <?php
+                        $i=1;
+                        $result = $this->gallery_model->getCakeGallery();
+                        foreach($result as  $rows ) :?>
+                         <li><a title="<?php echo $rows->title; ?>" class="select-image select-image-group" rel="group-<?php echo $rows->cake_id ?>" href="<?php echo base_url(); ?>/<?php echo $rows->image; ?>"><span class="plus"></span><img src="<?php echo base_url(); ?>/<?php echo $rows->image; ?>" alt="" /></a>
+                             <?php
+                             $galleries = $this->gallery_model->getGallery($rows->cake_id);
+                             foreach($galleries as $gallery):
+                                 ?>
+                                 <a rel='group-<?php echo $rows->cake_id ?>' class="select-image-group"  href="<?php echo base_url(); ?>/<?php echo $gallery->image; ?>"></a>
+                             <?php endforeach; ?>
+                         </li>
 
-                    <?php
-                    $i=1;
-                    foreach($result as  $rows ) :?>
-                    <tr class="selectable" id="listItem_<?php echo $rows->gallery_id; ?>" >
-                        <td class="center"><?php echo $i; ?></td>
-                        <td><img src="<?php echo base_url(); ?>/<?php echo $rows->image; ?>" height="50" width="50" ></td>
-                        <td><?php echo $rows->title; ?></td>
-                        <td class="center js-sortable-handle"><span  class="glyphicons btn-action single move" style="margin-right: 0;"><i></i></span></td>
-                        <td>
-                            <a class="glyphicons no-js glyphicons-ok <?php if($rows->status ==1 ){ echo 'ok'; }else{ echo 'ban';}?>" href="/admin/gallery/status/<?php echo $rows->gallery_id; ?>"><i></i></a>
-                            <a class="glyphicons no-js remove_2 glyphicons-delete" href="/admin/gallery/remove/<?php echo $rows->gallery_id; ?>"><i></i></a>
-                        </td>
-                    </tr>
-                    <?php $i++; endforeach; ?>
-                    </tbody>
-                </table>
+                         <?php $i++; endforeach; ?>
+                    </ul>
+                </div>
             </div>
         </div>
 
+
 </div>
 </div>
+
+<link rel="stylesheet" href="/assets/lightbox/colorbox.css" />
+<script src="/assets/lightbox/jquery.colorbox.js"></script>
+<script>
+    $(document).ready(function(){
+        //Examples of how to assign the Colorbox event to elements
+        $(".select-image-group").colorbox();
+    });
+</script>
