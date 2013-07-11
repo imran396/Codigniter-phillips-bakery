@@ -203,7 +203,7 @@
 <div class="innerLR" id="filterResult">
     <div class="widget">
         <div class="widget-body">
-            <table class="dynamicTable table table-striped table-bordered">
+            <table class="table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th width="70">Order #</th>
@@ -227,7 +227,7 @@
                 <tr>
                     <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
                     <td><?php echo $rows->first_name.' '.$rows->last_name; ?></td>
-                    <td><?php echo $rows->cake_name; ?></td>
+                    <td><?php if($rows->cake_name){ echo $rows->cake_name;}else{ echo '---';} ?></td>
                     <td class="center"><?php echo $rows->delivery_type; ?></td>
                     <td class="center"><?php echo $this->productions_model->dateFormate($rows->delivery_date); ?></td>
                     <td class="center"><?php echo $rows->delivery_time; ?></td>

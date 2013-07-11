@@ -19,66 +19,48 @@
 <!-- End Content -->
 <div class="separator"></div>
 <br/>
-<div class="innerLR">
-        <div class="widget widget-gray widget-body-white">
-
-            <div class="widget-body" style="padding: 10px 0;">
-                <table class="table table-bordered table-primary js-table-sortable">
+<div class="innerLR hidden-paging" id="filterResult">
+        <div class="widget">
+            <div class="widget-body">
+                <table class="table table-bordered table-primary table-striped">
                     <thead>
                     <tr>
-                        <th class="center">No.</th>
-                        <th><?php echo $this->lang->line('shapes');?></th>
-                        <th style="width: 1%;" class="center"><?php echo $this->lang->line('drag');?></th>
-                        <th><?php echo $this->lang->line('action');?></th>
+                        <th width="70">Order #</th>
+                        <th width="166">Customer Name</th>
+                        <th width="93">Date</th>
+                        <th width="110">Order Status</th>
+                        <th width="150">Production Status</th>
+                        <th>&nbsp;</th>
                     </tr>
                     </thead>
                     <tbody>
-
                     <?php
-                    $i=1;
-                    foreach($result as  $rows ) :?>
-                        <tr class="selectable" id="listItem_<?php echo $rows->shape_id; ?>" >
-                        <td class="center"><?php echo $i; ?></td>
-                        <td><?php echo $rows->title; ?></td>
-                        <td class="center js-sortable-handle"><span  class="glyphicons btn-action single move" style="margin-right: 0;"><i></i></span></td>
-                        <td>
+                    $var = ($paging[3] != '0')  ? ($paging[3]+1) : 1;
+                    $i=$var;
+                    foreach($paging[0] as $rows):
+                        ?>
+                        <tr>
+                            <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
+                            <td><?php if($rows->first_name) echo $rows->first_name.' '.$rows->last_name; else echo "---"; ?></td>
+                            <td class="center"><?php echo $this->productions_model->dateFormate($rows->delivery_date); ?></td>
+                            <td class="center"><?php if($rows->order_status) echo $rows->order_status; else echo '---'; ?></td>
+                            <td class="green"><?php if($rows->production_status) echo $rows->production_status;else echo '---';?></td>
+                            <td><?php if($rows->order_status =='cancelled'){ ?> <a class="btn-action glyphicons remove_2 btn-danger" href="/admin/orders/remove/<?php echo $rows->order_code; ?>"><i></i></a><?php } ?>
+                                <a class="btn-action glyphicons pencil btn-success" href="/admin/orders/view/<?php echo $rows->order_code; ?>"><i></i></a>
+                            </td>
+                           </tr>
+                        <?php $i++; endforeach; ?>
 
-                            <a href="/admin/shapes/status/<?php echo $rows->shape_id; ?>" class="btn-action glyphicons btn <?php if($rows->status ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
-                            <a class="btn-action glyphicons pencil btn-success" href="/admin/shapes/edit/<?php echo $rows->shape_id; ?>"><i></i></a>
-                            <a class="btn-action glyphicons remove_2 btn-danger" href="/admin/shapes/remove/<?php echo $rows->shape_id; ?>"><i></i></a>
-
-                        </td>
-                    </tr>
-                    <?php $i++; endforeach; ?>
                     </tbody>
                 </table>
             </div>
         </div>
+    <?php if($paging[1]){ ?>
+        <div class="row-fluid row-fluid-custom"><div class="left-custom-paging">Showing 1 to <?php echo ($i-1); ?> of <?php echo $paging[2]; ?> entries</div><div class="paging_bootstrap pagination custom-pagination"><?php echo $paging[1]; ?></div></div>
+    <?php } ?>
+    </div><!-- End Wrapper -->
+</div>
 
-</div>
-</div>
 <script type="text/javascript">
-
-    $(document).ready(function() {
-
-        $(".js-table-sortable").sortable({
-            opacity: '0.5',
-            axis:'vertically',
-            handle : '.js-sortable-handle',
-            update : function () {
-                var order = $(this).sortable('serialize');
-                console.log(order);
-                $.ajax({
-                    type: "POST",
-                    url:"<?php echo site_url('admin/shapes/sorting')?>",
-                    data:order,
-                    cache: false,
-                    success: function(html){
-                        $('#loader').html(html);
-                    }
-                });
-            }
-        });
-    });
 
 </script>
