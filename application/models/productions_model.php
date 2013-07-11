@@ -19,7 +19,15 @@ class Productions_model extends Ci_Model
         if( $page<=0 )  $page  = 1;
         $limit= ( $page-1 ) * $per_page;
         $base_url = site_url('admin/productions/inproduction/');
-        $total_rows = $this->db->count_all_results('orders');
+
+        $this->db->from('orders');
+        $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
+        $this->db->join('customers','customers.customer_id = orders.customer_id','left');
+        $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
+        //$this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
+        $this->db->where(array('order_status'=>'order'));
+        $total_rows = $this->db->count_all_results();
+
         $paging = production_paginate($base_url, $total_rows,$start,$per_page);
         $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name,customers.first_name,customers.last_name');
         $this->db->from('orders');
@@ -29,9 +37,10 @@ class Productions_model extends Ci_Model
         $this->db->limit($per_page,$limit);
         //$this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
         $this->db->where(array('order_status'=>'order'));
-        $this->db->or_where(array("orders.pickup_location_id"=> $location_id));
+       // $this->db->or_where(array("orders.pickup_location_id"=> $location_id));
         $this->db->order_by("orders.order_code", "desc");
         $query =$this->db->get()->result();
+
         return array($query,$paging,$total_rows,$limit);
 
     }

@@ -15,7 +15,7 @@ class Orders_model extends Crud_Model
 
     public function order_insert($data){
 
-        $data['order_status']="Pending";
+
         $order_id = $this->insert($data);
         $order_code=(100000+$order_id);
 
@@ -29,9 +29,8 @@ class Orders_model extends Crud_Model
 
     public function order_update($data,$order_id){
 
-        $data['order_status']="Pending";
-        $order_id = $this->update($data,$order_id);
 
+        $order_id = $this->update($data,$order_id);
         $dbdata =$this->getOrder($order_id);
         $order_id = $dbdata->order_id;
         $order_code = $dbdata->order_code;
@@ -131,6 +130,31 @@ class Orders_model extends Crud_Model
             ->join('order_delivery','order_delivery.delivery_order_id = orders.order_id','left')
             ->where(array('orders.order_id'=>$order_id))
             ->get()->row();
+    }
+
+    public function getListing($start)
+    {
+
+
+        $per_page=20;
+        $page   = intval($start);
+        if( $page<=0 )  $page  = 1;
+        $limit= ( $page-1 ) * $per_page;
+
+
+        $base_url = site_url('admin/orders/listing/');
+        $total_rows = $this->db->count_all_results('orders');
+        $paging = production_paginate($base_url, $total_rows,$start,$per_page);
+        $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name,customers.first_name,customers.last_name');
+        $this->db->from('orders');
+        $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
+        $this->db->join('customers','customers.customer_id = orders.customer_id','left');
+        $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
+        $this->db->limit($per_page,$limit);
+        $this->db->order_by("orders.order_id", "desc");
+        $query =$this->db->get()->result();
+        return array($query,$paging,$total_rows,$limit);
+
     }
 
     public function getAll(){
