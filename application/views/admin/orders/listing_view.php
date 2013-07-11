@@ -30,7 +30,7 @@
                         <th width="93">Date</th>
                         <th width="110">Order Status</th>
                         <th width="150">Production Status</th>
-                        <th>&nbsp;</th>
+                        <th width="70">&nbsp;</th>
                     </tr>
                     </thead>
                     <tbody>
