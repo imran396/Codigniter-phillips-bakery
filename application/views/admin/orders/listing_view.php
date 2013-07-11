@@ -46,7 +46,7 @@
                             <td class="center"><?php if($rows->order_status) echo $rows->order_status; else echo '---'; ?></td>
                             <td class="green"><?php if($rows->production_status) echo $rows->production_status;else echo '---';?></td>
                             <td><?php if($rows->order_status =='cancelled'){ ?> <a class="btn-action glyphicons remove_2 btn-danger" href="/admin/orders/remove/<?php echo $rows->order_code; ?>"><i></i></a><?php } ?>
-                                <a class="btn-action glyphicons pencil btn-success" href="/admin/orders/view/<?php echo $rows->order_code; ?>"><i></i></a>
+                                <a class="btn-action glyphicons pencil btn-success" href="/admin/orders/details/<?php echo $rows->order_code; ?>"><i></i></a>
                             </td>
                            </tr>
                         <?php $i++; endforeach; ?>

@@ -16,7 +16,7 @@ class Productions extends Crud_Controller
 
         //$this->layout->setLayout('layout_admin');
         $this->layout->setLayout('layout_custom');
-        $this->load->model('productions_model');
+        $this->load->model(array('productions_model','gallery_model'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));

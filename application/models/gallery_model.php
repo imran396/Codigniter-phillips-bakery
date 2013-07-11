@@ -108,16 +108,34 @@ class Gallery_model extends CI_Model
 
     }
 
-    public function getCakeGallery()
+    public function getCakeGallery($start)
     {
 
-        return $this->db
+
+        $per_page = 12;
+        $page     = intval($start);
+        if ($page <= 0) $page = 1;
+        $limit      = ($page - 1) * $per_page;
+        $base_url   = site_url('admin/gallery/listing');
+        $paging = $this->db->select('cakes.cake_id,cakes.title ,cakes.image')
+                ->from('cake_gallery')
+                ->join('cakes','cakes.cake_id = cake_gallery.cake_id')
+                ->group_by('cake_gallery.cake_id')
+                ->get();
+        $total_rows =$paging->num_rows();
+        $paging     = paginate($base_url, $total_rows, $start, $per_page);
+
+        $query = $this->db
+
             ->select('cakes.cake_id,cakes.title ,cakes.image')
             ->from('cake_gallery')
             ->join('cakes','cakes.cake_id = cake_gallery.cake_id')
             ->group_by('cake_gallery.cake_id')
+            ->limit($per_page, $limit)
             ->get()
             ->result();
+
+        return array($query, $paging, $total_rows, $limit);
 
     }
 

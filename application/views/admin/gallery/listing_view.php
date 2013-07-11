@@ -23,12 +23,11 @@
 <div class="innerLR">
         <div class="widget widget-gray widget-body-white">
             <div class="widget-body" style="padding: 10px 0;">
-                <div class="slider-img">
+                <div class="gallery-img">
                     <ul>
                         <?php
                         $i=1;
-                        $result = $this->gallery_model->getCakeGallery();
-                        foreach($result as  $rows ) :?>
+                        foreach($paging[0] as  $rows ) :?>
                          <li><a title="<?php echo $rows->title; ?>" class="select-image select-image-group" rel="group-<?php echo $rows->cake_id ?>" href="<?php echo base_url(); ?>/<?php echo $rows->image; ?>"><span class="plus"></span><img src="<?php echo base_url(); ?>/<?php echo $rows->image; ?>" alt="" /></a>
                              <?php
                              $galleries = $this->gallery_model->getGallery($rows->cake_id);
@@ -41,6 +40,9 @@
                          <?php $i++; endforeach; ?>
                     </ul>
                 </div>
+                <?php if($paging[1]){ ?>
+                    <div class="row-fluid row-fluid-custom"><div class="left-custom-paging">Showing 1 to <?php echo ($i-1); ?> of <?php echo $paging[2]; ?> entries</div><div class="paging_bootstrap pagination custom-pagination"><?php echo $paging[1]; ?></div></div>
+                <?php } ?>
             </div>
         </div>
 

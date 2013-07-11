@@ -18,15 +18,15 @@ class Gallery extends Crud_Controller
     public function index()
     {
 
-        $this->data['result'] = $this->gallery_model->getCakeList();
+        $this->data['paging'] = $this->gallery_model->getCakeGallery();
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/gallery/gallery_view', $this->data);
 
     }
 
-    public function listing(){
+    public function listing($start=0){
 
-        $this->data['result'] = $this->gallery_model->getListing();
+        $this->data['paging'] = $this->gallery_model->getCakeGallery($start);
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/gallery/listing_view', $this->data);
 

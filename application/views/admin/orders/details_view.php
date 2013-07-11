@@ -7,12 +7,12 @@
 
             var search =$("#search").val();
             $.ajax({
-                url:"<?php echo site_url('admin/productions/search')?>",
+                url:"<?php echo site_url('admin/orders/search')?>",
                 data:"search="+search,
                 type:"post",
                 success: function(val){
                     if(val > 0){
-                        window.location="<?php echo site_url('/admin/productions/details')?>/"+val;
+                        window.location="<?php echo site_url('/admin/orders/details')?>/"+val;
                     }else{
                         $('.error-msg').html("<span>Error No Results</span>");
                     }
@@ -27,7 +27,7 @@
 <div class="container-fluid fixed container-new">
 <div class="navbar main">
     <div class="icon-wrapper"><a href="/admin" class="icon-home"></a></div>
-    <a href="/admin/productions/inproduction" class="back"><span>Back</span></a>
+    <a href="/admin/orders/listing" class="back"><span>Back</span></a>
     <span class="tlogo">Cakes Order Detail</span>
     <div class="pull-right">
         <div class="search-form">
@@ -87,17 +87,19 @@
         $cake_id=$queryup->cake_id;
         $galleries = $this->gallery_model->getGallery($cake_id);
         if(!empty($galleries)){
-            foreach($galleries as $gallery):
-                ?>
-                <li><a href=""><span class="plus"></span><span class="desc">On Cake</span><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
-            <?php endforeach; } ?>
+        foreach($galleries as $gallery):
+            ?>
+            <li><a href=""><span class="plus"></span><span class="desc">On Cake</span><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
+        <?php endforeach; } ?>
         <?php
         $instructionals = $this->productions_model->photoGallery($queryup->order_id);
         if(!empty($instructionals)){
-        foreach($instructionals as $instructional){
-            ?>
-            <li><a href=""><span class="plus"></span><span class="desc">On Cake</span><img src="<?php echo base_url().$instructional->instructional_photo; ?>" alt="" /></a></li>
-        <?php } } ?>
+            foreach($instructionals as $instructional){
+                ?>
+                <li><a href=""><span class="plus"></span><span class="desc">On Cake</span><img src="<?php echo base_url().$instructional->instructional_photo; ?>" alt="" /></a></li>
+         <?php } } ?>
+
+
     </ul>
 </div><!-- End Slider -->
 <div class="double">
@@ -326,15 +328,16 @@
         <div class="current-img"></div>
         <div class="gallery-slider">
             <ul>
+
                 <?php
                 $cake_id=$queryup->cake_id;
                 $galleries = $this->gallery_model->getGallery($cake_id);
                 if(!empty($galleries)){
                     foreach($galleries as $gallery):
-                        ?>
+                ?>
 
-                        <li><a href="<?php echo base_url().$gallery->image; ?>"><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
-                    <?php endforeach; } ?>
+                 <li><a href="<?php echo base_url().$gallery->image; ?>"><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
+                <?php endforeach; } ?>
                 <?php
                 $instructionals = $this->productions_model->photoGallery($queryup->order_id);
                 if(!empty($instructionals)){
