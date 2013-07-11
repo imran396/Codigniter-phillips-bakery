@@ -178,14 +178,15 @@ div.dataTables_info {
     vertical-align: middle;
 }
 
-.slider-img {
+.gallery-img {
+    height: 100%;
     margin: -28px 11px 3px 13px;
-    padding: 15px 0 15px 12px;
-    height: 115px;
     overflow: hidden;
+    padding: 15px 0 15px 12px;
 }
 
-.slider-img ul li {
+
+.gallery-img ul li {
     margin: 0 45px 45px 0;
     width: 148px;
     height: 99px;
@@ -194,7 +195,7 @@ div.dataTables_info {
     list-style: none;
 }
 
-.slider-img ul li .select-image {
+.gallery-img ul li .select-image {
     border: #fafcfd 7px solid;
     box-shadow: #afadaf 0 0 4px;
     -moz-box-shadow: #afadaf 0 0 4px;
@@ -206,12 +207,12 @@ div.dataTables_info {
     cursor: pointer;
 }
 
-.slider-img ul li .select-image img {
+.gallery-img ul li .select-image img {
     width: 134px;
     height: 85px;
 }
 
-.slider-img ul li .plus {
+.gallery-img ul li .plus {
     background-image: url("../images/icon-plus.png");
     background-position: 0 0;
     background-repeat: no-repeat;
@@ -224,7 +225,7 @@ div.dataTables_info {
     z-index: 10;
 }
 
-.slider-img ul li .desc {
+.gallery-img ul li .desc {
     background-image: url("../images/slider-desc.png");
     background-position: 0 0;
     background-repeat: no-repeat;
@@ -244,11 +245,11 @@ div.dataTables_info {
     z-index: 10;
 }
 
-.slider-img ul li a:hover .desc, .slider-img ul li a:active .desc {
+.gallery-img ul li a:hover .desc, .gallery-img ul li a:active .desc {
     display: block;
 }
 
-.slider-img ul li a:hover, .slider-img ul li a:active, .slider-img ul li a:focus  {
+.gallery-img ul li a:hover, .gallery-img ul li a:active, .gallery-img ul li a:focus  {
     border-color: #9ed75a;
 }
 
