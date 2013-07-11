@@ -252,3 +252,19 @@ div.dataTables_info {
     border-color: #9ed75a;
 }
 
+
+
+.hidden-paging div.dataTables_info, .hidden-paging div.dataTables_filter, .hidden-paging div.dataTables_length, .hidden-paging div.dataTables_paginate, .hidden-paging .dataTables_wrapper .row-fluid:first-child, .hidden-paging .dataTables_wrapper .row-fluid {
+    display: none;
+}
+.row-fluid-custom{ display: block; width: 100%}
+.left-custom-paging{
+    float: left;
+    margin: 0px;
+    width: 220px;
+}
+.custom-pagination{
+    float: right;
+    margin: 0px;
+}
+
