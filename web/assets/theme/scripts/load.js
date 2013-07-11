@@ -817,6 +817,15 @@ $(function()
             });
     }
 
+//    $('.table-striped').dataTable( {
+//        "iDisplayLength": 50
+//    } );
+//    var oTable = $('.table-striped').dataTable();
+//    // Sort immediately with columns 0 and 1
+//    oTable.fnSort( [ [0,'desc']] );
+
+
+
 
 
 });
