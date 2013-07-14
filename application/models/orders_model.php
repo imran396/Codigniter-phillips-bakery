@@ -32,10 +32,9 @@ class Orders_model extends Crud_Model
 
         $order_id = $this->update($data,$order_id);
         $dbdata =$this->getOrder($order_id);
-        $order_id = $dbdata->order_id;
-        $order_code = $dbdata->order_code;
-        $order['order_id']= $order_id;
-        $order['order_code']= $order_code;
+        $order['order_id']= $dbdata->order_id;
+        $order['order_code']=  $dbdata->order_code;
+        $order['order_status']=  $dbdata->order_status;
 
         return $order;
     }
