@@ -17,7 +17,7 @@ class Ordernotes extends API_Controller
 
     }
 
-    public function save(){
+    public function insert(){
         if(!empty($_POST)){
             $this->orders_model->SaveNotes($_POST);
             if($this->db->insert_id()){
