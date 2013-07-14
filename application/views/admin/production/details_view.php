@@ -24,6 +24,41 @@
 
     });
 </script>
+<script>
+    function printpage()
+    {
+        window.print()
+    }
+</script>
+<style type="text/css" media="print">
+    .pull-right , .back{
+        display: none;
+    }
+    .container-new .filters {
+        display: none;
+    }
+    .slider-img{
+        display: none;
+    }
+    .line{
+        background: #fff !important;
+    }
+    .double .box.tabber .scrolled {
+        height: auto;
+    }
+    .icon-wrapper{
+        display: none;
+    }
+    .container-new *::-moz-placeholder {
+        background: #fff !important;
+    }
+    .desc{
+        display: none;
+    }
+    .plus{
+        display: none;
+    }
+</style>
 <div class="container-fluid fixed container-new">
 <div class="navbar main">
     <div class="icon-wrapper"><a href="/admin" class="icon-home"></a></div>
@@ -37,7 +72,7 @@
                 <input type="button" id="searchButton" name="" value="Search" />
             </form>
         </div>
-        <a href="" class="button"><span class="icon icon-print"></span> Print Page</a>
+        <a href="javascript:void(0)" class="button"  onclick="printpage()" ><span class="icon icon-print"></span> Print Page</a>
     </div>
     <div class="separator"></div>
 </div>

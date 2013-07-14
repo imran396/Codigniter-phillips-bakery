@@ -53,11 +53,39 @@
         });
     });
 </script>
-
-<style type="text/css">
-#filterResult{
-    min-height: 400px;
+<script>
+    function printpage()
+    {
+        window.print()
+    }
+</script>
+<style type="text/css" media="print">
+.pull-right{
+    display: none;
 }
+.container-new .filters {
+    display: none;
+}
+.buttons{
+    display: none;
+}
+.list-code{
+    display: block!important;
+}
+.print-none{
+    display: none;
+}
+.icon-wrapper{
+   display: none;
+}
+</style>
+<style type="text/css">
+    #filterResult{
+        min-height: 400px;
+    }
+    .list-code{
+        display: none;
+    }
 </style>
 <div class="container-fluid fixed container-new">
 <div class="navbar main">
@@ -71,7 +99,7 @@
                 <input type="button" id="searchButton" name="" value="Search" />
             </form>
         </div>
-        <a href="" class="button"><span class="icon icon-print"></span> Print Page</a>
+        <a href="javascript:void(0)" class="button"  onclick="printpage()" ><span class="icon icon-print"></span> Print Page</a>
     </div>
     <div class="separator"></div>
 </div>
@@ -225,7 +253,10 @@
                 foreach($paging[0] as $rows):
                 ?>
                 <tr>
-                    <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
+                    <td class="center">
+                        <a class="print-none" href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a>
+                        <p class="list-code"><?php echo $rows->order_code; ?></p>
+                    </td>
                     <td><?php echo $rows->first_name.' '.$rows->last_name; ?></td>
                     <td><?php if($rows->cake_name){ echo $rows->cake_name;}else{ echo '---';} ?></td>
                     <td class="center"><?php echo $rows->delivery_type; ?></td>
