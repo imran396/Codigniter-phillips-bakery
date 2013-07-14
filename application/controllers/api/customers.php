@@ -37,6 +37,13 @@ class Customers extends API_Controller
 
             $data = $this->input->post();
             $this->customers_model->save($data, $data['customer_id']);
+            $data = array(
+            array(
+                'customer_id' => $data['customer_id']
+            ),
+
+        );
+        $this->sendOutput($data);
     }
 
     public function search(){
