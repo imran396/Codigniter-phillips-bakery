@@ -115,7 +115,7 @@ class Orders extends API_Controller
 
         }
 
-
+        $orders=$this->orders_model->order_update($data, $data['order_id']);
 
         if(isset($_FILES['onCakeImage'])){
             $this->orders_model->doUpload($orders['order_id']);
