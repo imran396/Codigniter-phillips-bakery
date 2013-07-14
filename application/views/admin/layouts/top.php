@@ -34,6 +34,11 @@
                 </li>
             </ul>-->
         </li>
+        <li>
+
+            <a data-toggle="dropdowns" href="/admin/users/change_password" class="glyphicons logout lock"><span class="hidden-phone text">Edit Profile</span></a>
+
+        </li>
         <li class="account">
 
             <a data-toggle="dropdowns" href="/auth/logout" class="glyphicons logout lock"><span class="hidden-phone text">Logout</span></a>

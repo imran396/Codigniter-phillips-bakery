@@ -111,11 +111,10 @@ class users extends Crud_Controller
         $this->form_validation->set_rules('location_id');
 
     }
-
     function change_password()
     {
-
         $username=$this->input->post('username');
+        $old=$this->input->post('old');
         $this->form_validation->set_rules('old', 'Old password', 'required');
         $this->form_validation->set_rules('new', 'New Password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
         $this->form_validation->set_rules('new_confirm', 'Confirm New Password', 'required');
@@ -124,7 +123,6 @@ class users extends Crud_Controller
         {
             redirect('auth/login', 'refresh');
         }
-        $user = $this->ion_auth->get_user($this->session->userdata('user_id'));
 
         if ($this->form_validation->run() == false)
         { //display the form
@@ -132,10 +130,10 @@ class users extends Crud_Controller
             $this->data['error_msg'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
             //render
             if($this->session->userdata('username') == $username ){
-                redirect('admin/users/profile');
+                //redirect('admin/users/profile');
 
             }else{
-                redirect('admin/users/edit/'.$username, $this->data);
+                //  redirect('admin/users/edit/'.$username, $this->data);
             }
 
         }
@@ -143,14 +141,8 @@ class users extends Crud_Controller
         {
             $identity = $this->session->userdata($this->config->item('identity', 'ion_auth'));
 
+
             $change = $this->ion_auth->change_password($identity, $this->input->post('old'), $this->input->post('new'));
-
-           var_dump($this->input->post('old'));
-           var_dump($this->input->post('new'));
-           var_dump($identity);
-
-
-
 
             if ($change)
             { //if the password was successfully changed
@@ -160,19 +152,26 @@ class users extends Crud_Controller
             else
             {
                 $this->session->set_flashdata('error_msg', $this->ion_auth->errors());
-               // redirect('auth/change_password', 'refresh');
+                // redirect('auth/change_password', 'refresh');
 
                 if($this->session->userdata('username') == $username ){
 
-                    redirect('admin/users/profile');
+                    // redirect('admin/users/profile');
 
                 }else{
 
-                    redirect('admin/users/edit/'.$username, $this->data);
+                    //  redirect('admin/users/edit/'.$username, $this->data);
 
                 }
             }
+
         }
+
+        $this->data['active']=$this->uri->segment(2,0);
+        $user = $this->ion_auth->get_user($this->session->userdata('user_id'));
+
+        $this->data['username'] = $user->username;
+        $this->layout->view('admin/users/change_password_view', $this->data);
     }
 
     function update(){
