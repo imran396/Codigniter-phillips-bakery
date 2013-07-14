@@ -100,15 +100,17 @@ class Orders_model extends Crud_Model
         }
     }
 
-    public function delivery_order($data_delivery,$order_id){
+    public function delivery_order($order_delivery,$order_id){
 
-        $data_delivery['delivery_order_id'] = $order_id;
+        $order_delivery['delivery_order_id'] =  $order_id;
         $dbdata =$this->getOrder($order_id);
         $delivery_order_id = $dbdata->delivery_order_id;
+
         if($delivery_order_id > 0){
-            $this->db->set($data_delivery)->where(array('delivery_order_id'=>$delivery_order_id))->update('order_delivery');
+            $this->db->set($order_delivery)->where(array('delivery_order_id'=>$delivery_order_id))->update('order_delivery');
         }else{
-            $this->db->set($data_delivery)->insert('order_delivery');
+
+            $this->db->set($order_delivery)->insert('order_delivery');
         }
 
     }
@@ -248,6 +250,8 @@ class Orders_model extends Crud_Model
                 if(!empty($result[$key]['gallery_images'])){
                     $result[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$result[$key]['gallery_images']);
                     $result[$key]['instructional_photo'] = explode(',',$result[$key]['instructional_photo']);
+                }else{
+                    $result[$key]['instructional_photo'] = array();
                 }
 
 

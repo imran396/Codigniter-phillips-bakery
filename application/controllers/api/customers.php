@@ -35,7 +35,7 @@ class Customers extends API_Controller
 
     public function update(){
 
-            $data = $this->input->get();
+            $data = $this->input->post();
             $this->customers_model->save($data, $data['customer_id']);
     }
 

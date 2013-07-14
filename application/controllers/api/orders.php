@@ -109,13 +109,17 @@ class Orders extends API_Controller
 
             if(in_array($key,$array_delivery_key)){
 
-                $order_delivery['delivery_order_id'] =  $data['order_id'];;
                 $order_delivery[$key] = $val;
             }
 
         }
 
         $orders=$this->orders_model->order_update($data, $data['order_id']);
+
+        if(isset($order_delivery)){
+            $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
+        }
+
 
         if(isset($_FILES['onCakeImage'])){
             $this->orders_model->doUpload($orders['order_id']);
