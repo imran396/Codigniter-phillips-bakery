@@ -127,8 +127,8 @@ class Orders extends API_Controller
 
         }
 
-        if(strtolower(isset($data['order_status'])) == 'order'){
-            $this->sendOutput($orders);
+        if($orders['order_status'] == 'order'){
+            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code']));
         }else{
             $this->sendOutput(array('order_id'=> $orders['order_id']));
         }
