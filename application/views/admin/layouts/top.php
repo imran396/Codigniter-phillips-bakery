@@ -36,7 +36,7 @@
         </li>
         <li>
 
-            <a data-toggle="dropdowns" href="/admin/users/change_password" class="glyphicons logout lock"><span class="hidden-phone text">Edit Profile</span></a>
+            <a data-toggle="dropdowns" href="/admin/users/profile/<?php echo $this->session->userdata('username'); ?>" class="glyphicons logout lock"><span class="hidden-phone text">Edit Profile</span></a>
 
         </li>
         <li class="account">

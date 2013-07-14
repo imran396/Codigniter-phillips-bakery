@@ -33,7 +33,7 @@
                              $galleries = $this->gallery_model->getGallery($rows->cake_id);
                              foreach($galleries as $gallery):
                                  ?>
-                                 <a rel='group-<?php echo $rows->cake_id ?>' class="select-image-group"  href="<?php echo base_url(); ?>/<?php echo $gallery->image; ?>"></a>
+                                 <a title="<?php echo $rows->title; ?>" rel='group-<?php echo $rows->cake_id ?>' class="select-image-group"  href="<?php echo base_url(); ?>/<?php echo $gallery->image; ?>"></a>
                              <?php endforeach; ?>
                          </li>
 

@@ -15,7 +15,7 @@
         <div class="clearfix"></div>
     </div>
     <br/>
-    <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/users/change_password" name="form2" id="form2">
+    <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/users/update_profile" name="form2" id="form2">
         <div class="widget widget-2">
             <div class="widget-head">
                 <h4 class="heading glyphicons settings"><i></i><?php echo $this->lang->line('account_settings');?></h4>
@@ -29,8 +29,8 @@
                     <div class="span9">
 
                         <label for="inputUsername"><?php echo $this->lang->line('username');?></label>
-                        <input type="hidden" name="username" value="<?php echo $username;?>">
-                        <input type="text" id="inputUsername" class="span10" value="<?php echo $username;?>" disabled="disabled" />
+                        <input type="hidden" name="username" value="<?php echo $queryup[0]->username;?>">
+                        <input type="text" id="inputUsername" class="span10" value="<?php echo  $queryup[0]->username;?>" disabled="disabled" />
                         <span style="margin: 0;" class="btn-action single glyphicons circle_question_mark" data-toggle="tooltip" data-placement="top" data-original-title="Username can't be changed"><i></i></span>
 
                         <div class="separator"></div>

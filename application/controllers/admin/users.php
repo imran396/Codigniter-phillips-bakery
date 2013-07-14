@@ -78,25 +78,23 @@ class users extends Crud_Controller
     }
 
 
-    public function edit($username)
+    public function profile($username)
     {
+
         $this->data['queryup'] = $this->users_model->getusers($username);
         $this->data['groupresult'] = $this->users_model->getGroup();
         $this->data['locresult'] = $this->users_model->getLocations();
         $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/users/edit_user_view', $this->data);
+        if($this->session->userdata('username') == $username ){
+
+            $this->layout->view('admin/users/profile_view', $this->data);
+
+        }else{
+
+            $this->layout->view('admin/users/edit_user_view', $this->data);
+        }
     }
 
-    public function profile()
-    {
-        $this->access_model->access_permission($this->uri->segment(2,NULL),'others');
-        $username=  $this->session->userdata('username');
-        $this->data['queryup'] = $this->users_model->getusers($username);
-        $this->data['groupresult'] = $this->users_model->getGroup();
-        $this->data['locresult'] = $this->users_model->getLocations();
-        $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/users/edit_user_view', $this->data);
-    }
 
     private function addValidation()
     {
@@ -111,67 +109,69 @@ class users extends Crud_Controller
         $this->form_validation->set_rules('location_id');
 
     }
-    function change_password()
+    function update_profile()
     {
-        $username=$this->input->post('username');
-        $old=$this->input->post('old');
-        $this->form_validation->set_rules('old', 'Old password', 'required');
-        $this->form_validation->set_rules('new', 'New Password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
-        $this->form_validation->set_rules('new_confirm', 'Confirm New Password', 'required');
 
-        if (!$this->ion_auth->logged_in())
+
+        $this->passwordValidation();
+
+        if ($this->form_validation->run() != false)
         {
-            redirect('auth/login', 'refresh');
-        }
 
-        if ($this->form_validation->run() == false)
-        { //display the form
-            //set the flash data error message if there is one
-            $this->data['error_msg'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            //render
-            if($this->session->userdata('username') == $username ){
-                //redirect('admin/users/profile');
-
+            $identity = $this->session->userdata($this->config->item('identity', 'ion_auth'));
+            $change = $this->ion_auth->change_password($identity, $this->input->post('old'), $this->input->post('new'));
+            if ($change)
+            { //if the password was successfully changed
+                $this->session->set_flashdata('success_msg', $this->ion_auth->messages());
+                //$this->auth_model->logout();
+                redirect('auth/logout');
             }else{
-                //  redirect('admin/users/edit/'.$username, $this->data);
+                redirect('admin/users/profile/'.$this->session->userdata('username'));
             }
 
         }
         else
         {
-            $identity = $this->session->userdata($this->config->item('identity', 'ion_auth'));
+            $this->data['active']=$this->uri->segment(2,0);
+            $this->data['queryup'] = $this->users_model->getusers($this->session->userdata('username'));
+            $this->layout->view('admin/users/profile_view', $this->data);
+        }
+    }
+
+    private function passwordValidation(){
+
+        $username=$this->input->post('username');
+        $old=$this->input->post('old');
+        $this->form_validation->set_rules('old', 'Old password', 'required|callback_checkPassword');
+        $this->form_validation->set_rules('new', 'New Password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
+        $this->form_validation->set_rules('new_confirm', 'Confirm New Password', 'required');
 
 
-            $change = $this->ion_auth->change_password($identity, $this->input->post('old'), $this->input->post('new'));
+    }
 
-            if ($change)
-            { //if the password was successfully changed
-                $this->session->set_flashdata('success_msg', $this->ion_auth->messages());
-                $this->auth_model->logout();
-            }
-            else
-            {
-                $this->session->set_flashdata('error_msg', $this->ion_auth->errors());
-                // redirect('auth/change_password', 'refresh');
 
-                if($this->session->userdata('username') == $username ){
+    function checkPassword($oldPassword){
 
-                    // redirect('admin/users/profile');
-
-                }else{
-
-                    //  redirect('admin/users/edit/'.$username, $this->data);
-
-                }
-            }
-
+        $identity = $this->session->userdata($this->config->item('identity', 'ion_auth'));
+        $oldpassword = $this->ion_auth_model->hash_password_db($identity,$oldPassword);
+        $count=$this->db->select('password')->where(array( strtolower('password') => strtolower($oldpassword) ))->get('users')->num_rows();
+        if($count == 1 )
+        {
+            return TRUE;
+        }else{
+            $this->form_validation->set_message('checkPassword','Your old password is not exist');
+            return FALSE;
         }
 
-        $this->data['active']=$this->uri->segment(2,0);
-        $user = $this->ion_auth->get_user($this->session->userdata('user_id'));
+    }
 
-        $this->data['username'] = $user->username;
-        $this->layout->view('admin/users/change_password_view', $this->data);
+    public function edit($username){
+
+        $this->data['queryup'] = $this->users_model->getusers($username);
+        $this->data['groupresult'] = $this->users_model->getGroup();
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->layout->view('admin/users/edit_user_view', $this->data);
+
     }
 
     function update(){
@@ -179,12 +179,12 @@ class users extends Crud_Controller
         $username=$this->input->post('username');
         $this->form_validation->set_rules('first_name', 'First name', 'required');
         $this->form_validation->set_rules('last_name', 'Last name', 'required');
-        $this->form_validation->set_rules('location_id', 'Location name', 'required');
+        $this->form_validation->set_rules('email', 'Email Address', 'valid_email');
 
         if ($this->form_validation->run() == false)
         {
             if($this->session->userdata('username') == $username ){
-                $this->profile();
+                $this->profile($username);
             }else{
                 $this->edit($username);
             }
@@ -194,7 +194,7 @@ class users extends Crud_Controller
             $this->saveData();
             $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
             if($this->session->userdata('username') == $username ){
-                redirect('admin/users/profile');
+                redirect('admin/users/profile/'.$username);
             }else{
                 redirect('admin/users/edit/'.$username);
             }

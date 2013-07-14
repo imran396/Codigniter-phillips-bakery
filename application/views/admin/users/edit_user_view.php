@@ -44,15 +44,15 @@
 
                     <div class="control-group">
 
-                        <label class="control-label"><?php echo $this->lang->line('location');?></label>
+                        <label class="control-label">Access Role</label>
                         <div class="controls">
-                            <select onclick="" style="width: 100%;"  name="location_id" >
+                            <select onclick="" style="width: 100%;"  name="group_id" >
                                 <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
                                 <?php
-                                $location_id = (isset($queryup[0]->location_id))? $queryup[0]->location_id:set_value('location_id');
-                                foreach($locresult as $location):
+                                echo $group_id = (isset($queryup[0]->group_id))? $queryup[0]->group_id:set_value('group_id');
+                                foreach($groupresult as $group):
                                     ?>
-                                    <option value="<?php echo $location->location_id; ?>" <?php if($location_id == $location->location_id){ echo "selected='selected'"; } ?> ><?php echo $location->title; ?></option>
+                                    <option value="<?php echo $group->id; ?>" <?php if($group_id == $group->id){ echo "selected='selected'"; } ?> ><?php echo $group->description; ?></option>
                                 <?php endforeach; ?>
 
                             </select>

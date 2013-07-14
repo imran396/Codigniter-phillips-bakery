@@ -146,7 +146,6 @@ class Ion_auth_model extends CI_Model
 			     ->get($this->tables['users']);
 
 	    $result = $query->row();
-
 	    if ($query->num_rows() !== 1)
 	    {
 		return FALSE;
