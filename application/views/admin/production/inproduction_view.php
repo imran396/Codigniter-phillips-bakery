@@ -51,6 +51,11 @@
             timedely();
 
         });
+
+        $('.scan_button').on('click',function(){
+            $("input[name = search]").focus();
+            $("input[name = search]").attr('placeholder','');
+        })
     });
 </script>
 <script>
@@ -274,7 +279,7 @@
         </div>
     </div>
     <div class="buttons">
-        <a href="" class="button button-green"><span class="icon icon-scan"></span>Scan Bar Code</a>
+        <a href="javascript:void(0)" class="button button-green scan_button"><span class="icon icon-scan"></span>Scan Bar Code</a>
     </div>
     <div class="pagination pagination-small pagination-right" style="margin-top: 0; margin-bottom: 12px;">
         <?php echo $paging[1]; ?>
