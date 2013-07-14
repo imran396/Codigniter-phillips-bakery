@@ -245,9 +245,11 @@ class Orders_model extends Crud_Model
                 $result[$key]['price_matrix_id'] = (int) $result[$key]['price_matrix_id'];
                 $result[$key]['delivery_order_id'] = (int) $result[$key]['delivery_order_id'];
                 $result[$key]['on_cake_image'] = str_replace('assets',$imageurlprefix,$result[$key]['on_cake_image']);
+                if(!empty($result[$key]['gallery_images'])){
+                    $result[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$result[$key]['gallery_images']);
+                    $result[$key]['instructional_photo'] = explode(',',$result[$key]['instructional_photo']);
+                }
 
-                $result[$key]['instructional_photo'] = '';
-                $result[$key]['instructional_photo'] = explode(',',$result[$key]['instructional_photo']);
 
 
             }
