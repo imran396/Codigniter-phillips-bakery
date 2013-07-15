@@ -10,11 +10,12 @@ class Ordernotes extends API_Controller
     }
 
 
-    public function index(){
+    public function save(){
 
         $data=$this->input->post();
         $this->set($data)->insert('order_emails');
-        print_r($data);
+        $this->sendOutput($data);
+       // print_r($data);
 
     }
 
