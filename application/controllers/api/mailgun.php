@@ -1,7 +1,7 @@
 <?php
 include_once __DIR__ . '/API_Controller.php';
 
-class Ordernotes extends API_Controller
+class Mailgun extends API_Controller
 {
 
     public function __construct()
@@ -15,7 +15,7 @@ class Ordernotes extends API_Controller
         $data=$this->input->post();
         $this->set($data)->insert('order_emails');
         $this->sendOutput($data);
-       // print_r($data);
+        print_r($data);
 
     }
 
