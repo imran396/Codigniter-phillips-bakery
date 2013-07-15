@@ -142,7 +142,7 @@ div.dataTables_info {
 
 /*added by imran*/
 .print_button{
-    margin-left:42px;
+    margin-left:70px;
 }
 
 .print_button .button{
@@ -263,9 +263,21 @@ div.dataTables_info {
     float: left;
     margin: 0px;
     width: 220px;
+    line-height: 30px;
 }
 .custom-pagination{
     float: right;
     margin: 0px;
+}
+
+#filterResult{
+    min-height: 400px;
+}
+.list-code{
+    display: none;
+}
+#delivery_start_time ,#delivery_end_time
+{
+    cursor: pointer!important;
 }
 

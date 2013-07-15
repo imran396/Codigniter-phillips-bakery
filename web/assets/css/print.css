@@ -1,0 +1,53 @@
+.navbar.main{
+    display: none!important;
+}
+.pull-right{
+    display: none;
+}
+.container-new .filters {
+    display: none;
+}
+.buttons{
+    display: none;
+}
+.list-code{
+    display: block!important;
+}
+.print-none{
+    display: none;
+}
+.icon-wrapper{
+    display: none;
+}
+
+.pull-right , .back{
+    display: none;
+}
+.container-new .filters {
+    display: none;
+}
+.slider-img{
+    display: none;
+}
+.line{
+    background: #fff !important;
+}
+.double .box.tabber .scrolled {
+    height: auto;
+}
+.icon-wrapper{
+    display: none;
+}
+.container-new *::-moz-placeholder {
+    background: #fff !important;
+}
+.desc{
+    display: none;
+}
+.plus{
+    display: none;
+}
+
+.print_button{
+    display: none;
+}

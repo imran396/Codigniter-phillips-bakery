@@ -664,7 +664,11 @@ $(function()
     if ($('#datepicker').length)
     {
         $("#datepicker").datepicker({
-            showOtherMonths:true
+            showOtherMonths:true,
+            onClose:function(a,b){
+                $("#datepicker2").val(a);
+                //$("#datepicker2").val() == "" && $("#datepicker2").val(a);
+            }
         });
     }
     if ($('#datepicker2').length)
@@ -817,12 +821,25 @@ $(function()
             });
     }
 
-//    $('.table-striped').dataTable( {
-//        "iDisplayLength": 50
-//    } );
-//    var oTable = $('.table-striped').dataTable();
-//    // Sort immediately with columns 0 and 1
-//    oTable.fnSort( [ [0,'desc']] );
+    var oTable = $('.column-sorting').dataTable({
+        "iDisplayLength": 500
+        /*"aoColumnDefs": [
+            { "bSortable":false, "aTargets": [ 1 ] }
+        ]*/
+    });
+    //Sort immediately with columns 0 and 1
+    oTable.fnSort( [ [0,'desc']] );
+
+   /* var oTable = $('.blackout-sorting').dataTable({
+        "iDisplayLength": 500,
+        "aoColumnDefs": [
+            { "bSortable":false, "aTargets": [2] }
+
+        ]
+    });
+    //Sort immediately with columns 0 and 1
+    oTable.fnSort( [ [0,'desc']] );
+*/
 
 
 
