@@ -209,7 +209,7 @@
 <div class="innerLR" id="filterResult">
     <div class="widget">
         <div class="widget-body">
-            <table class="table table-striped table-bordered column-sorting">
+            <table class="dynamicTable table table-striped table-bordered column-sorting">
                 <thead>
                 <tr>
                     <th width="70">Order #</th>
