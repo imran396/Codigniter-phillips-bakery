@@ -1,0 +1,138 @@
+$(function()
+{
+	$(".popup").each(function()
+	{
+		var popup = $(this);
+		popup.find(".popup-close").click(function()
+		{
+			$(".layer").remove();
+			popup.hide();
+			
+			return false;
+		});
+	});
+	
+	$(".popup-gallery").each(function()
+	{
+		var gallery = $(this);
+		
+		if (gallery.find(".gallery-slider li.selected").length == 0) gallery.find(".gallery-slider li:first").addClass("selected");
+		
+		gallery.find(".current-img").html('<img src="'+gallery.find(".gallery-slider .selected a").attr("href")+'" alt="" />');
+		
+		gallery.find(".gallery-slider a").click(function()
+		{
+			gallery.find(".current-img").html('<img src="'+$(this).attr("href")+'" alt="" />');
+			gallery.find(".gallery-slider li.selected").removeClass("selected");
+			$(this).parent().addClass("selected");
+			
+			return false;
+		});
+	});
+	
+	if ($('.slider-img').length > 0)
+	{
+		$('.slider-img').jcarousel({
+			scroll: 1,
+			wrap: "both"
+		});
+		
+		$(".slider-img a").click(function()
+		{
+			var layer = $('<div class="layer" />');
+			$("body").append(layer);
+			$(".layer").height($("body").height() + 50).show();
+			
+			$("#gallery-popup").show();
+			
+			$(".gallery-slider").jcarousel({
+				scroll: 1,
+				wrap: "both"
+			});
+			
+			return false;
+		});
+	}
+					 
+	$(".timepicker").each(function()
+	{
+		var timepicker = $(this);
+		
+		timepicker.find(".hasTimeDropdown").click(function()
+		{
+			timepicker.find(".timedropdown").toggle();
+		});
+		
+		$(timepicker.find(".timedropdown .btn-success")).click(function()
+		{
+			$(timepicker.find(".timedropdown")).hide();
+			
+			var ampm = "am";
+			var hours = timepicker.find( ".sliderhour .slider" ).slider( "value" );
+			var minutes = timepicker.find( ".sliderminute .slider" ).slider( "value" );
+			
+			if (hours > 11) { hours -= 12; ampm = "pm"; }
+
+            var time_inp = timepicker.find( ".hasTimeDropdown" );
+            time_inp.val( hours + ":" + minutes + ampm );
+
+            if(time_inp.attr('rel')){
+                $(time_inp.attr('rel')).val(time_inp.val());
+            }
+			return false;
+		});
+	});
+	
+	$('.scrolled').jScrollPane(
+		{
+			showArrows: true,
+			horizontalGutter: 8,
+			verticalGutter: 8
+		}
+	);
+
+    $('.date-pick')
+
+            .datePicker(
+            {
+                createButton:false,
+                displayClose:true,
+                closeOnSelect:false,
+                selectMultiple:true
+            }
+        )
+            .bind(
+            'click',
+            function()
+            {
+                $(this).dpDisplay();
+                this.blur();
+                return false;
+            }
+        )
+            .bind(
+            'dateSelected',
+            function(e, selectedDate, $td, state)
+            {
+                console.log('You ' + (state ? '' : 'un') // wrap
+                    + 'selected ' + selectedDate);
+
+            }
+        )
+            .bind(
+            'dpClosed',
+            function(e, selectedDates)
+            {
+                console.log('You closed the date picker and the ' // wrap
+                    + 'currently selected dates are:');
+                console.log(selectedDates);
+            }
+        );
+
+   /* last update ----   */
+
+
+
+});
+
+
