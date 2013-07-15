@@ -1,3 +1,23 @@
+var oTable = $('.column-sorting').dataTable({
+    "iDisplayLength": 500
+    /*"aoColumnDefs": [
+     { "bSortable":false, "aTargets": [ 1 ] }
+     ]*/
+});
+//Sort immediately with columns 0 and 1
+oTable.fnSort( [ [0,'desc']] );
+
+/* var oTable = $('.blackout-sorting').dataTable({
+ "iDisplayLength": 500,
+ "aoColumnDefs": [
+ { "bSortable":false, "aTargets": [2] }
+
+ ]
+ });
+ //Sort immediately with columns 0 and 1
+ oTable.fnSort( [ [0,'desc']] );
+ */
+
 /*
 $(function()
 {
@@ -821,25 +841,7 @@ $(function()
             });
     }
 
-    var oTable = $('.column-sorting').dataTable({
-        "iDisplayLength": 500
-        /*"aoColumnDefs": [
-            { "bSortable":false, "aTargets": [ 1 ] }
-        ]*/
-    });
-    //Sort immediately with columns 0 and 1
-    oTable.fnSort( [ [0,'desc']] );
 
-   /* var oTable = $('.blackout-sorting').dataTable({
-        "iDisplayLength": 500,
-        "aoColumnDefs": [
-            { "bSortable":false, "aTargets": [2] }
-
-        ]
-    });
-    //Sort immediately with columns 0 and 1
-    oTable.fnSort( [ [0,'desc']] );
-*/
 
 
 
