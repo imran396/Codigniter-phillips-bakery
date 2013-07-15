@@ -276,8 +276,9 @@ div.dataTables_info {
 .list-code{
     display: none;
 }
-#delivery_start_time ,#delivery_end_time
+#delivery_start_time , #delivery_end_time , .hasDatepicker
 {
     cursor: pointer!important;
 }
+
 
