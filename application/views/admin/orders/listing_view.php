@@ -3,7 +3,7 @@
         <ul class="breadcrumb">
             <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
             <li class="divider"></li>
-            <li><?php echo $this->lang->line('shapes');?></li>
+            <li><?php echo $this->lang->line('orders');?></li>
         </ul>
     <br/>
     <?php $this->load->view('admin/layouts/message'); ?>
