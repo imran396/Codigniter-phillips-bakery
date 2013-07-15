@@ -13,7 +13,7 @@ class Mailgun extends API_Controller
     public function save(){
 
         $data = $this->input->post();
-        $this->db->set($data)->insert('order_emails');
+        $this->db->set(array('subject'=>$data['subject']))->insert('order_emails');
         $this->sendOutput($data);
         print_r($data);
 
