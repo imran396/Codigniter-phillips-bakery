@@ -53,12 +53,13 @@ $lang['employee'] 		 	                        = 'Employee';
 $lang['customers'] 		 	                        = 'Customers';
 $lang['orders'] 		 	                    = 'Cake Orders';
 $lang['manage_users'] 		 	                = 'Manage Employees';
-$lang['users'] 		 	                = 'Employers';
+$lang['users'] 		 	                = 'Employees';
 $lang['manage_access'] 		 	                    = 'Manage Access Control';
 $lang['roles'] 		 	                    = 'Manage Roles';
 $lang['access_controller'] 		 	                    = 'Manage Controller';
 $lang['access_control'] 		 	                    = 'Manage Access';
 $lang['role_group'] 		 	                    = 'Role Group';
+$lang['customer_id'] 		 	                    = 'Customer ID';
 
 /*################## Site Message for success  #############*/
 $lang['insert_msg']="Data has been insert successfully";

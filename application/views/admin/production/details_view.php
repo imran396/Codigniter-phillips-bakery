@@ -30,6 +30,7 @@
         window.print()
     }
 </script>
+
 <div class="container-fluid fixed container-new">
 <div class="navbar main">
     <div class="icon-wrapper"><a href="/admin" class="icon-home"></a></div>
@@ -305,10 +306,10 @@
                                         <div class="title">Province</div><?php echo $deliveryInfo->province; ?>
                                     </div>
                                     <?php } ?>
-                                    <?php if( $deliveryInfo->spacial_instruction){ ?>
+                                    <?php if( $deliveryInfo->delivery_instruction){ ?>
                                     <div class="line last">
                                         <div class="title">Special instructions</div>
-                                        <?php echo $deliveryInfo->spacial_instruction; ?>
+                                        <?php echo $deliveryInfo->delivery_instruction; ?>
                                     </div>
                                     <?php } ?>
 

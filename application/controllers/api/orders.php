@@ -57,7 +57,7 @@ class Orders extends API_Controller
         $order_delivery['postal']=isset($_REQUEST['postal'])? $_REQUEST['postal']:'';
         $order_delivery['city']=isset($_REQUEST['city'])? $_REQUEST['city']:'';
         $order_delivery['province']=isset($_REQUEST['province'])? $_REQUEST['province']:'';
-        $order_delivery['spacial_instruction']=isset($_REQUEST['spacial_instruction'])? $_REQUEST['spacial_instruction']:'';
+        $order_delivery['delivery_instruction']=isset($_REQUEST['delivery_instruction'])? $_REQUEST['delivery_instruction']:'';
 
 
         $orders=$this->orders_model->order_insert($data);
@@ -100,7 +100,7 @@ class Orders extends API_Controller
             'override_price'
         );
 
-        $array_delivery_key = array('name','phone','address_1','address_2','postal','city','province','spacial_instruction');
+        $array_delivery_key = array('name','phone','address_1','address_2','postal','city','province','delivery_instruction');
 
         foreach($_REQUEST as $key => $val ){
             if(in_array($key,$array_orders_key)){

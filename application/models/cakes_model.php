@@ -26,6 +26,44 @@ class Cakes_model extends CI_Model
 
     public function doUpload($id)
     {
+
+
+
+      /*  $filename = $_FILES['image_name']['name'];
+        $temporary_name = $_FILES['image_name']['tmp_name'];
+        $random=rand(5,999);
+        $filename  =url_title($filename,'underscore',TRUE);
+        $fileUp=$random.$filename;
+
+        $source_file =$temporary_name;
+        $filepath = 'assets/uploads/cakes';
+        move_uploaded_file($source_file, $filepath);
+        $filename='assets/uploads/cakes/'.$source_file;
+
+        // File and new size
+                $percent = 0.5;
+
+        // Content type
+                header('Content-Type: image/jpeg');
+
+        // Get new sizes
+                list($width, $height) = getimagesize($filename);
+                $newwidth = $width * $percent;
+                $newheight = $height * $percent;
+
+        // Load
+                $thumb = imagecreatetruecolor($newwidth, $newheight);
+                $source = imagecreatefromjpeg($filename);
+
+        // Resize
+                imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+
+        // Output
+        imagejpeg($thumb);*/
+
+
+
+
         $config['upload_path']   = 'assets/uploads/cakes/';
         $config['allowed_types'] = 'gif|jpg|png|jpeg';
         $config['remove_spaces'] = true;
@@ -47,23 +85,24 @@ class Cakes_model extends CI_Model
 
             $this->load->library('image_lib', $config2);
 
-            if ( ! $this->image_lib->resize())
+          /*  if ( ! $this->image_lib->resize())
             {
                 echo $this->image_lib->display_errors();exit;
             }else{
                 die("no error");
             }
-            $this->fileDelete($id);
+            $this->fileDelete($id);*/
 
         } else {
 
             $this->session->set_flashdata('warning_msg', $this->upload->display_errors());
         }
 
-        $file_name = $upload_data['file_name'];
-        $filePath  = "assets/uploads/cakes/" . $file_name;
 
+        $filePath  = "assets/uploads/cakes/" . $file_name;
         $this->db->where(array('cake_id' => $id))->set(array('image' => $filePath))->update('cakes');
+
+
     }
 
     public function fileDelete($id)

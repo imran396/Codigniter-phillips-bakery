@@ -79,7 +79,7 @@ class Cakes extends Crud_Controller
 
     private function addValidation()
     {
-        $this->form_validation->set_rules('title', 'Location Title','required|trim|xss_clean|callback_checkTitle');
+        $this->form_validation->set_rules('title', 'Cake','required|trim|xss_clean|callback_checkTitle');
         $this->form_validation->set_rules('cake_id');
         $this->form_validation->set_rules('cake_id');
         $this->form_validation->set_rules('category_id');
