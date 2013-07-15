@@ -4,6 +4,7 @@ var oTable = $('.column-sorting').dataTable({
      { "bSortable":false, "aTargets": [ 1 ] }
      ]*/
 });
+
 //Sort immediately with columns 0 and 1
 oTable.fnSort( [ [0,'desc']] );
 
