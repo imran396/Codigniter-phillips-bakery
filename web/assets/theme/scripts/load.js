@@ -1,12 +1,12 @@
-var oTable = $('.column-sorting').dataTable({
+/*var oTable = $('.column-sorting').dataTable({
     "iDisplayLength": 500
-    /*"aoColumnDefs": [
+    *//*"aoColumnDefs": [
      { "bSortable":false, "aTargets": [ 1 ] }
-     ]*/
+     ]*//*
 });
 
 //Sort immediately with columns 0 and 1
-oTable.fnSort( [ [0,'desc']] );
+oTable.fnSort( [ [0,'desc']] );*/
 
 /* var oTable = $('.blackout-sorting').dataTable({
  "iDisplayLength": 500,
