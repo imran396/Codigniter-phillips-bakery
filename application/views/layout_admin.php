@@ -53,6 +53,7 @@
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/theme/css/style.min.css?1363272430" />
 
     <!-- LESS 2 CSS -->
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/print.css" media="print"/>
     <!--<script src="<?php /*echo base_url() */?>assets/theme/scripts/less-1.3.3.min.js"></script>
 -->
 </head>

@@ -1,6 +1,6 @@
 <div class="widget">
     <div class="widget-body">
-        <table class="dynamicTable table table-striped table-bordered">
+        <table class="dynamicTable table table-striped table-bordered column-sorting">
             <thead>
             <tr>
                 <th width="70">Order #</th>

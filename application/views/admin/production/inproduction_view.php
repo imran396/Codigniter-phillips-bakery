@@ -64,34 +64,7 @@
         window.print()
     }
 </script>
-<style type="text/css" media="print">
-.pull-right{
-    display: none;
-}
-.container-new .filters {
-    display: none;
-}
-.buttons{
-    display: none;
-}
-.list-code{
-    display: block!important;
-}
-.print-none{
-    display: none;
-}
-.icon-wrapper{
-   display: none;
-}
-</style>
-<style type="text/css">
-    #filterResult{
-        min-height: 400px;
-    }
-    .list-code{
-        display: none;
-    }
-</style>
+
 <div class="container-fluid fixed container-new">
 <div class="navbar main">
     <div class="icon-wrapper"><a href="/admin/productions" class="icon-home"></a></div>
@@ -166,7 +139,7 @@
             <span class="label pull-left">Time</span>
             <div class="pull-right">
                 <div class="timepicker">
-                    <input type="text" name="delivery_start_time" id="delivery_start_time" value="" class="hasTimeDropdown" placeholder="Start" />
+                    <input type="text" name="delivery_start_time" rel="#delivery_end_time" id="delivery_start_time" value="" class="hasTimeDropdown" placeholder="Start" />
                     <div class="popup timedropdown">
                         <div class="ui-datepicker-title">Choose Time</div>
                         <div class="innerLR">
@@ -236,7 +209,7 @@
 <div class="innerLR" id="filterResult">
     <div class="widget">
         <div class="widget-body">
-            <table class="table table-striped table-bordered">
+            <table class="table table-striped table-bordered column-sorting">
                 <thead>
                 <tr>
                     <th width="70">Order #</th>

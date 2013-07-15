@@ -1,6 +1,6 @@
 
 
-<div id="content">
+<div id="content" >
  <?php
     $size = '300x300';
     $content = $employee_code;
