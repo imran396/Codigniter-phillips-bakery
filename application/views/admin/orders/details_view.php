@@ -29,16 +29,16 @@
     <div class="icon-wrapper"><a href="/admin" class="icon-home"></a></div>
     <a href="/admin/orders/listing" class="back"><span>Back</span></a>
     <span class="tlogo">Cakes Order Detail</span>
-    <div class="pull-right">
+    <!--<div class="pull-right">
         <div class="search-form">
             <div class="error-msg"></div>
-            <form action="/admin/productions/search" method="post">
+            <form action="/admin/orders/search" method="post">
                 <input type="text" class="validate[required]" name="search" id="search" value="" placeholder="Search Orders" class="error" />
                 <input type="button" id="searchButton" name="" value="Search" />
             </form>
         </div>
         <a href="" class="button"><span class="icon icon-print"></span> Print Page</a>
-    </div>
+    </div>-->
     <div class="separator"></div>
 </div>
 <div id="wrapper">
@@ -301,10 +301,10 @@
                                         <div class="title">Province</div><?php echo $deliveryInfo->province; ?>
                                     </div>
                                     <?php } ?>
-                                    <?php if( $deliveryInfo->spacial_instruction){ ?>
+                                    <?php if( $deliveryInfo->delivery_instruction){ ?>
                                     <div class="line last">
                                         <div class="title">Special instructions</div>
-                                        <?php echo $deliveryInfo->spacial_instruction; ?>
+                                        <?php echo $deliveryInfo->delivery_instruction; ?>
                                     </div>
                                     <?php } ?>
 
