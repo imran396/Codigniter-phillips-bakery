@@ -78,7 +78,7 @@
                 <ul>
                     <li>
                         <span>Total</span>
-                        <span class="count"><?php if($queryup->override_price !='0.00') echo $queryup->override_price; else echo $queryup->total_price; ?></span>
+                        <span class="count">$<?php if($queryup->override_price !='0.00') echo $queryup->override_price; else echo $queryup->total_price; ?></span>
                     </li>
                 </ul>
             </div>
