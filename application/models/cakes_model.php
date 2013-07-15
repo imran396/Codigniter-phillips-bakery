@@ -29,9 +29,8 @@ class Cakes_model extends CI_Model
         $config['upload_path']   = 'assets/uploads/cakes/';
         $config['allowed_types'] = 'gif|jpg|png|jpeg';
         $config['remove_spaces'] = true;
-        $config['max_size']      = 7000;
-
         $this->load->library('upload', $config);
+
         $this->upload->initialize($config);
 
         if ($this->upload->do_upload('image_name')) {
@@ -39,12 +38,21 @@ class Cakes_model extends CI_Model
             $upload_data = $this->upload->data();
             $image = $upload_data['full_path'];
 
-            $config['source_image']   = $image;
-            $config['maintain_ratio'] = false;
-            $config['width']          = 200;
-            $config['height']         = 125;
+            $config2['image_library'] = 'gd2';
+            $config2['source_image']   = $image;
+            $config2['create_thumb'] = FALSE;
+            $config2['maintain_ratio'] = TRUE;
+            $config2['width']          = 200;
+            $config2['height']         = 140;
 
-            $this->image_lib->resize();
+            $this->load->library('image_lib', $config2);
+
+            if ( ! $this->image_lib->resize())
+            {
+                echo $this->image_lib->display_errors();exit;
+            }else{
+                die("no error");
+            }
             $this->fileDelete($id);
 
         } else {

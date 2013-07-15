@@ -18,7 +18,7 @@ class Gallery extends Crud_Controller
     public function index()
     {
 
-        $this->data['paging'] = $this->gallery_model->getCakeGallery();
+        $this->data['result'] = $this->gallery_model->getCakeList();
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/gallery/gallery_view', $this->data);
 

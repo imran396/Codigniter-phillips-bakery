@@ -67,3 +67,19 @@
 .cboxIE #cboxMiddleRight {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF);
 }
+
+/**************-------Custom & Override Css-------****************/
+#cboxCurrent {
+    bottom: 4px;
+    color: #949494;
+    display: none !important;
+    left: 58px;
+    position: absolute;
+}
+
+.cboxLoadedContent{
+    display: block;
+    max-height: 450px!important;
+    overflow: auto;
+    max-width: 650px!important;
+}
