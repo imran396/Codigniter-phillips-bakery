@@ -91,7 +91,7 @@ if ( ! function_exists('paginate')){
 
     function paginate($targetpage,$totalData,$page,$limits) {
 
-    $stages = 3;
+    $stages = 2;
     $paginate="";
     // Initial page num setup
     if ($page == 0){$page = 1;}
@@ -192,7 +192,7 @@ if ( ! function_exists('production_paginate')){
 
     function production_paginate($targetpage,$totalData,$page,$limits) {
 
-        $stages = 3;
+        $stages =  2;
         $paginate="";
         // Initial page num setup
         if ($page == 0){ $page = 1;}
