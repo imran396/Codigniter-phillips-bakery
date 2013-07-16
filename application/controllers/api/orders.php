@@ -4,12 +4,25 @@ include_once __DIR__ . '/API_Controller.php';
 
 class Orders extends API_Controller
 {
+    public $config = array(
+        'protocol' => 'smtp',
+        'smtp_host' => 'ssl://smtp.googlemail.com',
+        'smtp_port' => 465,
+        'smtp_user' => 'imran@emicrograph.com',
+        'smtp_pass' => 'i1m2r3a4n',
+        'charset'   => 'iso-8859-1',
+        'mailtype' => 'html'
+    );
+
     public function __construct()
     {
         parent::__construct();
         $this->load->library('image_lib');
+        $this->load->library('email',$this->config);
         $this->load->model('orders_model');
     }
+
+
 
     public function index()
     {
@@ -49,6 +62,10 @@ class Orders extends API_Controller
         $data['total_price']=isset($_REQUEST['total_price'])? $_REQUEST['total_price']:'';
         $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';
 
+        $order_status=isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'';
+        if($order_status =='order'){
+            $data['production_status']='in-production';
+        }
 
         $order_delivery['name']=isset($_REQUEST['name']) ? $_REQUEST['name']:'';
         $order_delivery['phone']=isset($_REQUEST['phone']) ? $_REQUEST['phone']:'';
@@ -137,9 +154,13 @@ class Orders extends API_Controller
             'override_price'
         );
 
+
         $array_delivery_key = array('name','phone','address_1','address_2','postal','city','province','delivery_instruction');
 
+
+
         foreach($_REQUEST as $key => $val ){
+
             if(in_array($key,$array_orders_key)){
                 $data[$key] = $val;
             }
@@ -148,9 +169,7 @@ class Orders extends API_Controller
 
                 $order_delivery[$key] = $val;
             }
-
         }
-
         $orders=$this->orders_model->order_update($data, $data['order_id']);
 
         if(isset($order_delivery)){
@@ -168,6 +187,14 @@ class Orders extends API_Controller
 
         }
 
+        if(isset($_REQUEST['removedinstructionalImages'])){
+
+            $image=$_REQUEST['removedinstructionalImages'];
+            if(!empty($image)){
+                $this->orders_model->instructionalPhotoDelete($image,$orders['order_id']);
+            }
+        }
+
         if($orders['order_status'] == 'order'){
             $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code']));
         }else{
@@ -175,7 +202,11 @@ class Orders extends API_Controller
         }
     }
 
-    function imageDelete(){
+    function invoice($order_id){
+
+        echo $returnvalue=parse_url("http://phillips.local/assets/uploads/4e4nnz39vjk-img-1.jpg", PHP_URL_PATH);
+        $data="";
+        $this->orders_model->instructionalPhotoDelete($data,$order_id);
 
     }
 
@@ -209,8 +240,8 @@ class Orders extends API_Controller
     public function notesearch(){
         $request = $this->input->get();
         if($request){
-        $data = $this->orders_model->NotesSearch($request);
-        $this->sendOutput($data);
+            $data = $this->orders_model->NotesSearch($request);
+            $this->sendOutput($data);
         }
 
     }

@@ -118,6 +118,20 @@ class Orders_model extends Crud_Model
         }
     }
 
+    public function instructionalPhotoDelete($image,$order_id)
+    {
+
+        foreach($image as $imagePath){
+
+            echo $returnvalue=trim(parse_url($imagePath, PHP_URL_PATH),'/');
+            if (file_exists($returnvalue)) {
+                unlink($_SERVER['DOCUMENT_ROOT'].$returnvalue);
+            }
+            $this->db->where(array('instructional_order_id'=>$order_id,'instructional_photo'=>$returnvalue))->delete('instructional_photo');
+       }
+
+    }
+
     public function delivery_order($order_delivery,$order_id){
 
         $order_delivery['delivery_order_id'] =  $order_id;
