@@ -79,6 +79,10 @@ class Orders extends API_Controller
 
         }
 
+        if($data['instructional_email_photo']== 'yes'){
+            $this->mailgunSendMessage($orders['order_id']);
+        }
+
 
         if(strtolower($data['order_status']) == 'order'){
             $this->sendOutput($orders);
@@ -87,6 +91,39 @@ class Orders extends API_Controller
         }
 
     }
+
+
+    private function mailgunSendMessage($order_id){
+        $data['order_id'] = $order_id;
+        $body = $this->load->view('email/instructional_photo_view', $data,true);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_USERPWD, 'api:key-3ax6xnjp29jd6fds4gc373sgvjxteol0');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_URL, 'https://api.mailgun.net/v2/samples.mailgun.org/messages');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, array(
+            'from' => 'roni@imran3968.mailgun.org',
+            'to' => 'imran@emicrograph.com',
+            'subject' => "St Phillip's - Attach your reference images",
+            'text' => $body));
+
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        return $result;
+    }
+
+    public function mailgunReply(){
+        $request = $this->input->post();
+        $request['order_id'] = 3;
+        if($request){
+            $this->orders_model->instructionalImagesUploadByemail($request);
+        }
+
+    }
+
+
 
     public function update(){
 

@@ -13,7 +13,7 @@ class Productions_model extends Ci_Model
     public function getListing($start)
     {
 
-        $location_id=1;
+        $location_id = $this->session->userdata('locationid');
         $per_page=10;
         $page   = intval($start);
         if( $page<=0 )  $page  = 1;
@@ -24,8 +24,8 @@ class Productions_model extends Ci_Model
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
-        //$this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
-        $this->db->where(array('order_status'=>'order'));
+        $this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
+        //$this->db->where(array('order_status'=>'order'));
         $total_rows = $this->db->count_all_results();
 
         $paging = production_paginate($base_url, $total_rows,$start,$per_page);
@@ -35,8 +35,8 @@ class Productions_model extends Ci_Model
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
         $this->db->limit($per_page,$limit);
-        //$this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
-        $this->db->where(array('order_status'=>'order'));
+        $this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
+        //$this->db->where(array('order_status'=>'order'));
        // $this->db->or_where(array("orders.pickup_location_id"=> $location_id));
         $this->db->order_by("orders.order_code", "desc");
         $query =$this->db->get()->result();
@@ -46,6 +46,8 @@ class Productions_model extends Ci_Model
     }
 
     public function getFiltering($data){
+
+        $location_id = $this->session->userdata('locationid');
 
         $production_status = (strtolower($data['production_status']) != "status" ) ? strtolower($data['production_status']) :'';
         $fondant = (strtolower($data['fondant']) != "fondant" ) ? strtolower($data['fondant']) :'';
@@ -62,16 +64,14 @@ class Productions_model extends Ci_Model
         $data['orders.flavour_id'] =  $data['flavour_id'];
         unset($data['flavour_id']);
 
-
-        $location_id=1;
         $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name, flavours.fondant AS fondant_name, customers.first_name,customers.last_name');
         $this->db->from('orders');
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
 
-        //$this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
-        $this->db->where(array('order_status'=>'order'));
+        $this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
+        //$this->db->where(array('order_status'=>'order'));
         if($production_status){
             $this->db->like(array("orders.production_status"=> $production_status));
         }

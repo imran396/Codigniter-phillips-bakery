@@ -91,6 +91,24 @@ class Orders_model extends Crud_Model
 
     }
 
+    public function instructionalImagesUploadByEmail($data){
+        $count =  $data['attachment-count'];
+        for($i=1;$i<=$count;$i++){
+            $attachment = "attachment-$i";
+            $n = rand(10e16, 10e20);
+            $rand = base_convert($n, 10, 36);
+            $name = $rand.'-'.$_FILES[$attachment]['name'];
+            $temp_name = $_FILES[$attachment]['tmp_name'];
+            $target_path = "assets/uploads/gallery/";
+            $target_path = $target_path . basename($name);
+            move_uploaded_file($temp_name, $target_path);
+            $instructional_photo = $target_path;
+            $this->db->set(array('instructional_order_id'=>$data['order_id'],'instructional_photo' => $instructional_photo))->insert('instructional_photo');
+        }
+
+    }
+
+
 
     public function fileDelete($id)
     {

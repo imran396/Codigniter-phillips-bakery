@@ -60,8 +60,7 @@ class Auth extends Controller {
 			redirect($this->config->item('base_url'), 'refresh');
 		}
 
-        echo $this->input->post('location_id');
-        //exit;
+
 		//validate form input
 		$this->form_validation->set_rules('username', 'User Name', 'required|trim');
 		$this->form_validation->set_rules('password', 'Password', 'required');
@@ -72,12 +71,18 @@ class Auth extends Controller {
 		{ //check to see if the user is logging in
 			//check for "remember me"
 			$remember = (bool) $this->input->post('remember');
-
+            $location_id = $this->input->post('location_id');
+            //exit;
 			if ($this->ion_auth->login($this->input->post('username'), $this->input->post('password'), $remember))
 			{ //if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect($this->config->item('base_url'), 'refresh');
+                $newdata = array(
+                    'locationid'  =>$location_id
+                );
+                $this->session->set_userdata($newdata);
+
+                redirect($this->config->item('base_url'), 'refresh');
 			}
 			else
 			{ //if the login was un-successful
