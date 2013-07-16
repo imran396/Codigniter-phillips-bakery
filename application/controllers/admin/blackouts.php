@@ -17,16 +17,23 @@ class Blackouts extends Crud_Controller
 
     }
 
-    public function index()
+    public function index($start=0)
     {
-
-
-        $this->data['result'] = $this->blackouts_model->getListing();
+        $this->data['paging'] = $this->blackouts_model->getListing($start);
         $this->data['locations'] = $this->blackouts_model->getLocations();
         $this->data['blockouts'] = $this->blackouts_model->getFlavours();
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/blackouts/blackout_view', $this->data);
 
+    }
+
+    public function listing($start=0)
+    {
+        $this->data['paging'] = $this->blackouts_model->getListing($start);
+        $this->data['locations'] = $this->blackouts_model->getLocations();
+        $this->data['blockouts'] = $this->blackouts_model->getFlavours();
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->layout->view('admin/blackouts/blackout_view', $this->data);
 
     }
 

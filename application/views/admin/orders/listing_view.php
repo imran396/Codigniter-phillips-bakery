@@ -54,7 +54,7 @@
             </div>
         </div>
     <?php if($paging[1]){ ?>
-        <div class="row-fluid row-fluid-custom"><div class="left-custom-paging">Showing 1 to <?php echo ($i-1); ?> of <?php echo $paging[2]; ?> entries</div><div class="paging_bootstrap pagination custom-pagination"><?php echo $paging[1]; ?></div></div>
+        <div class="row-fluid row-fluid-custom"><div class="left-custom-paging">Showing <?php echo ($paging[3]+1); ?> to <?php echo ($i-1); ?> of <?php echo $paging[2]; ?> Entries.</div><div class="paging_bootstrap pagination custom-pagination"><?php echo $paging[1]; ?></div></div>
     <?php } ?>
     </div><!-- End Wrapper -->
 </div>

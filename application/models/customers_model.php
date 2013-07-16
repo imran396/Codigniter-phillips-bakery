@@ -64,7 +64,6 @@ class Customers_model extends Crud_Model
     public function getListing($start)
     {
         $per_page=10;
-        $num_link=3;
         $page   = intval($start);
         if($page<=0)  $page  = 1;
         $limit=($page-1)*$per_page;

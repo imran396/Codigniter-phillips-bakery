@@ -5,7 +5,8 @@ class Cakes_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('image_lib');
+
+
     }
 
     public function create($data)
@@ -27,79 +28,35 @@ class Cakes_model extends CI_Model
     public function doUpload($id)
     {
 
-
-
-      /*  $filename = $_FILES['image_name']['name'];
-        $temporary_name = $_FILES['image_name']['tmp_name'];
-        $random=rand(5,999);
-        $filename  =url_title($filename,'underscore',TRUE);
-        $fileUp=$random.$filename;
-
-        $source_file =$temporary_name;
-        $filepath = 'assets/uploads/cakes';
-        move_uploaded_file($source_file, $filepath);
-        $filename='assets/uploads/cakes/'.$source_file;
-
-        // File and new size
-                $percent = 0.5;
-
-        // Content type
-                header('Content-Type: image/jpeg');
-
-        // Get new sizes
-                list($width, $height) = getimagesize($filename);
-                $newwidth = $width * $percent;
-                $newheight = $height * $percent;
-
-        // Load
-                $thumb = imagecreatetruecolor($newwidth, $newheight);
-                $source = imagecreatefromjpeg($filename);
-
-        // Resize
-                imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-
-        // Output
-        imagejpeg($thumb);*/
-
-
-
-
         $config['upload_path']   = 'assets/uploads/cakes/';
         $config['allowed_types'] = 'gif|jpg|png|jpeg';
         $config['remove_spaces'] = true;
         $this->load->library('upload', $config);
-
+        // Alternately you can set preferences by calling the initialize function. Useful if you auto-load the class:
         $this->upload->initialize($config);
-
-        if ($this->upload->do_upload('image_name')) {
-
+        if($this->upload->do_upload('image_name')){
             $upload_data = $this->upload->data();
             $image = $upload_data['full_path'];
+            $config['image_library'] = 'gd2';
+            $config['source_image'] = $image;
 
-            $config2['image_library'] = 'gd2';
-            $config2['source_image']   = $image;
-            $config2['create_thumb'] = FALSE;
-            $config2['maintain_ratio'] = TRUE;
-            $config2['width']          = 200;
-            $config2['height']         = 140;
-
-            $this->load->library('image_lib', $config2);
-
-          /*  if ( ! $this->image_lib->resize())
+            $config['source_image'];
+            $config['maintain_ratio'] = TRUE;
+            $config['width']          = 200;
+            $config['height']         = 140;
+            $config['create_thumb'] = TRUE;
+            $this->load->library('image_lib',$config);
+            $this->image_lib->resize();
+            if ( ! $this->image_lib->resize())
             {
-                echo $this->image_lib->display_errors();exit;
-            }else{
-                die("no error");
+                echo $this->image_lib->display_errors();
             }
-            $this->fileDelete($id);*/
 
-        } else {
-
-            $this->session->set_flashdata('warning_msg', $this->upload->display_errors());
         }
 
-
-        $filePath  = "assets/uploads/cakes/" . $file_name;
+        $this->fileDelete($id);
+        $file_name = $upload_data['file_name'];
+        $filePath  = "assets/uploads/cakes/".$file_name;
         $this->db->where(array('cake_id' => $id))->set(array('image' => $filePath))->update('cakes');
 
 

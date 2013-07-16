@@ -95,15 +95,27 @@ class Blackouts_model extends Crud_Model
 
     }
 
-    public function getListing()
+    public function getListing($start)
     {
 
-        return $this->db
+        $per_page=10;
+        $page   = intval($start);
+        if( $page<=0 )  $page  = 1;
+        $limit= ( $page-1 ) * $per_page;
+        $base_url = site_url('admin/blackouts/listing');
+
+
+        $total_rows = $this->db->count_all_results('blackouts');
+        $paging = production_paginate($base_url, $total_rows,$start,$per_page);
+              $query = $this->db
             ->select('flavours.title,blackouts.blackout_id,blackouts.flavour_id,blackouts.blackout_date')
             ->from('blackouts')
             ->join('flavours','flavours.flavour_id=blackouts.flavour_id','inner')
             ->order_by('blackout_id','desc')
+            ->limit($per_page,$limit)
             ->get()->result();
+
+        return array($query,$paging,$total_rows,$limit);
 
     }
 

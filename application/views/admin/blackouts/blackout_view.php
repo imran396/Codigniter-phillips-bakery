@@ -110,12 +110,8 @@
                             </thead>
                             <tbody class="overflow">
                             <?php
-                            foreach($result as $rows ):
-
+                            foreach($paging[0] as $rows ):
                                 $blackout_date=explode(',',$rows->blackout_date);
-
-                               // $this->blackouts_model->dateFormate($blackout_date[0]);
-
                             ?>
                             <tr>
                                 <td><strong><?php echo $rows->title; ?></strong></td>
@@ -127,6 +123,11 @@
 
                             </tbody>
                         </table>
+                    </div>
+                    <br/>
+                    <div class="pagination pagination-small pagination-right" style="margin-top: 0; margin-bottom: 12px;">
+                        <?php echo $paging[1]; ?>
+
                     </div>
                 </div>
             </div><!-- End Right-bar -->
