@@ -103,7 +103,7 @@ class Orders extends API_Controller
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($ch, CURLOPT_URL, 'https://api.mailgun.net/v2/samples.mailgun.org/messages');
         curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-            'from' => 'roni@imran3968.mailgun.org',
+            'from' => 'shafiq@imran3968.mailgun.org',
             'to' => 'imran@emicrograph.com',
             'subject' => "St Phillip's - Attach your reference images",
             'text' => $body));
@@ -173,8 +173,9 @@ class Orders extends API_Controller
         }else{
             $this->sendOutput(array('order_id'=> $orders['order_id']));
         }
+    }
 
-
+    function imageDelete(){
 
     }
 
