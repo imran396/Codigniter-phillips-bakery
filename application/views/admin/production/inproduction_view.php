@@ -56,7 +56,41 @@
             $("input[name = search]").focus();
             $("input[name = search]").attr('placeholder','');
         })
+
+        $('#startTime').on('click',function(){
+
+            var currentdate = new Date();
+            var startTime=formatAMPM(currentdate);
+            $("input[name = delivery_start_time]").val(startTime);
+            $(".timedropdown").hide();
+        })
+
+        $('#endTime').on('click',function(){
+
+            var currentdate = new Date();
+            var endTime=formatAMPM(currentdate);
+            $("input[name = delivery_end_time]").val(endTime);
+            $(".timedropdown").hide();
+
+        })
+
+
+
+
     });
+
+    function formatAMPM(date) {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+        return strTime;
+    }
+
+
 </script>
 <script>
     function printpage()
@@ -163,7 +197,7 @@
                                 </div>
                                 <div class="buttons">
                                     <a href="" class="btn btn-block btn-success pull-right">Done</a>
-                                    <a href="" class="btn btn-block btn-default">Now</a>
+                                    <a id="startTime" href="javascript:void(0)" class="btn btn-block btn-default">Now</a>
                                 </div>
                             </div>
                         </div>
@@ -194,7 +228,7 @@
                                 </div>
                                 <div class="buttons">
                                     <a href="" class="btn btn-block btn-success pull-right">Done</a>
-                                    <a href="" class="btn btn-block btn-default">Now</a>
+                                    <a id='endTime' href="javascript:void(0)" class="btn btn-block btn-default">Now</a>
                                 </div>
                             </div>
                         </div>
