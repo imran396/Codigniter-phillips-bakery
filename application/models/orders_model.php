@@ -123,11 +123,11 @@ class Orders_model extends Crud_Model
 
         foreach($image as $imagePath){
 
-            echo $returnvalue=trim(parse_url($imagePath, PHP_URL_PATH),'/');
+            $returnvalue=parse_url($imagePath, PHP_URL_PATH);
             if (file_exists($returnvalue)) {
                 unlink($_SERVER['DOCUMENT_ROOT'].$returnvalue);
             }
-            $this->db->where(array('instructional_order_id'=>$order_id,'instructional_photo'=>$returnvalue))->delete('instructional_photo');
+            $this->db->where(array('instructional_order_id'=>$order_id,'instructional_photo'=>trim($returnvalue,'/')))->delete('instructional_photo');
        }
 
     }
