@@ -15,6 +15,7 @@ class Auth extends Controller {
 		$this->load->library('form_validation');
 		$this->load->database();
 		$this->load->helper('url');
+
         //$this->output->enable_profiler(TRUE);
 	}
 
@@ -52,17 +53,21 @@ class Auth extends Controller {
 
 
         $this->data['title'] = "Login";
-		
+        $this->data['query'] = $this->db->select('*')->where(array('status'=>1))->order_by('ordering','asc')->get('locations')->result();
 		if ($this->ion_auth->logged_in())
 		{
 			//already logged in so no need to access this page
 			redirect($this->config->item('base_url'), 'refresh');
 		}
 
+        echo $this->input->post('location_id');
+        //exit;
 		//validate form input
 		$this->form_validation->set_rules('username', 'User Name', 'required|trim');
 		$this->form_validation->set_rules('password', 'Password', 'required');
+		$this->form_validation->set_rules('location_id', 'Location', 'required');
 
+       // exit;
 		if ($this->form_validation->run() == true)
 		{ //check to see if the user is logging in
 			//check for "remember me"
