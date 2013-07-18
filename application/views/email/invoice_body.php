@@ -3,7 +3,7 @@ SUBJECT: St. phillip's Bakery - Cake <?php echo ucfirst($invoice_title); ?>
 St. Phillips Bakery
 --------------------------
 <?php
-$locations=$this->locations_model->getLocations($queryup->location_id);
+$locations=$this->locations_model->getLocations($queryup->locationid);
 ?>
 
 <?php echo $locations[0]->title.PHP_EOL; ?>

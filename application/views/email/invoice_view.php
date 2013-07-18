@@ -67,7 +67,7 @@
 
 <div class="col_half right">
     <?php
-    $locations=$this->locations_model->getLocations($queryup->location_id);
+    $locations=$this->locations_model->getLocations($queryup->locationid);
     ?>
     <p  class="align-right">St. Phillip's Bakery</p>
 

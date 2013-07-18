@@ -51,7 +51,7 @@
 <p class="cen">St. Phillip's Bakery</p>
 <hr />
 <?php
-$locations=$this->locations_model->getLocations($queryup->location_id);
+$locations=$this->locations_model->getLocations($queryup->locationid);
 ?>
 <p class="cen"><?php echo $locations[0]->title; ?></p>
 <p class="cen"><?php echo $locations[0]->address1; ?></p>

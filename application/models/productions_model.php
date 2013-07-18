@@ -111,7 +111,7 @@ class Productions_model extends Ci_Model
 
     public function orderDetails($order_code){
 
-        $this->db->select('orders.*,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, servings.size AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description ');
+        $this->db->select('orders.*, orders.location_id AS locationid ,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, servings.size AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description ');
         $this->db->from('orders');
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');

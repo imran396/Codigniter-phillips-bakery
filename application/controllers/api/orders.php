@@ -247,7 +247,8 @@ class Orders extends API_Controller
             $this->data['queryup']=$result->row();
 
             if($invoice =="order"){
-                $this->sendOrderEmail($order_code,'invoice');
+                //$this->sendOrderEmail($order_code,'invoice');
+                $this->data['invoice_title']="Invoice";
                 $this->load->view('email/invoice_view', $this->data);
             }
             if($invoice =="thurmal"){
@@ -277,7 +278,7 @@ class Orders extends API_Controller
         $pdf           = pdf_create($html, $invoiceNumber, false);
         $filePath      = realpath(APPPATH . "../web/assets/uploads/orders/pdf/"). DIRECTORY_SEPARATOR . $invoiceNumber.".pdf";
         file_put_contents($filePath,$pdf);
-        $this->sendEmail($filePath,$body);
+        //$this->sendEmail($filePath,$body);
     }
 
 
