@@ -50,15 +50,20 @@
 
 <p class="cen">St. Phillip's Bakery</p>
 <hr />
-<p class="cen">$store_addresse</p>
-<p class="cen">$store_city, $store_province $store_postal</p>
-<p class="cen">$store_email</p>
-<p class="cen">$store_phone
+<?php
+$locations=$this->locations_model->getLocations($queryup->location_id);
+?>
+<p class="cen"><?php echo $locations[0]->title; ?></p>
+<p class="cen"><?php echo $locations[0]->address1; ?></p>
+<p class="cen"><?php echo $locations[0]->address2; ?></p>
+<p class="cen"><?php echo $locations[0]->city; ?> , <?php echo $locations[0]->province; ?> <?php echo $locations[0]->postal_code; ?></p>
+<p class="cen"><?php echo $locations[0]->country; ?></p>
+<p class="cen"><?php echo $locations[0]->email; ?></p>
+<p class="cen"><?php echo $this->orders_model->phoneNoFormat($locations[0]->phone); ?></p>
 
-</p>
 <br />
 
-<p>ORDER #$order_UID $order_date_dd/mm/yyyy</p>
+<p>ORDER #<?php echo $queryup->order_code; ?> <?php echo $this->orders_model->dateFormat($queryup->order_date); ?></p>
 <hr />
 
 <ul class="col_1">
@@ -76,22 +81,40 @@
 <br />
 
 <ul class="col_1">
-    <li>$customer_first $customer_last</li>
-    <li>$customer_address_1</li>
-    <li>$customer_address_2</li>
-    <li>$customer_city, $customer_province $customer_postal</li>
-    <li>$customer_phone</li>
-    <li>$customer_email</li>
+    <li><?php echo $queryup->first_name.' '. $queryup->last_name ?></li>
+    <li><?php echo $queryup->address_1; ?></li>
+    <li><?php echo $queryup->address_2; ?></li>
+    <li><?php echo $queryup->city; ?>, <?php echo $queryup->province; ?> <?php echo $queryup->postal_code; ?></li>
+    <li><?php echo $this->orders_model->phoneNoFormat($queryup->phone_number); ?>
+    </li>
+    <li><?php echo $queryup->email; ?></li>
 </ul>
 
 <ul class="col_2">
-    <li>$location_or_contact_name</li>
-    <li>$address_1</li>
-    <li>$address_2</li>
-    <li>$city, $province $postal</li>
-    <li>$phone</li>
-    <li>$special_instructions</li>
+    <?php
+    if($this->productions_model->deliveryInfo($queryup->order_id) && $queryup->delivery_type == 'delivery'){
+        $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id);
+        ?>
+        <?php if( $deliveryInfo->name){ ?>
+            <li><?php echo $deliveryInfo->name; ?></li>
+        <?php } ?>
+        <?php if( $deliveryInfo->address_1){ ?>
+            <li><?php echo $deliveryInfo->address_1; ?></li>
+        <?php } ?>
+        <?php if( $deliveryInfo->address_2){ ?>
+            <li><?php echo $deliveryInfo->address_2; ?></li>
+        <?php } ?>
+        <?php if( $deliveryInfo->city || $deliveryInfo->postal ){ ?>
+            <li><?php if($deliveryInfo->city){  echo $deliveryInfo->city; } ?> , <?php if($deliveryInfo->province){  echo $deliveryInfo->province; } ?> , <?php if( $deliveryInfo->postal){ ?> ON <?php echo $deliveryInfo->postal; } ?></li>
+        <?php } ?>
+        <li><?php echo $this->orders_model->phoneNoFormat($deliveryInfo->phone); ?></li>
+        <?php if( $deliveryInfo->email){ ?>
+            <li><?php echo $deliveryInfo->email; ?></li>
+        <?php } ?>
+    <?php } ?>
+
 </ul>
+
 <div class="clr"></div>
 <br />
 
@@ -106,125 +129,133 @@
     <li>
         <p>DATE:</p>
     </li>
+    <?php
+    if($queryup->delivery_type != 'delivery' ){
+    ?>
     <li>
         <p>PICKUP LOCATION:</p>
     </li>
+    <?php }else{ ?>
     <li>
         <p>DELIVERY ZONE:</p>
     </li>
+    <?php } ?>
 </ul>
 
 <ul class="col_2">
-    <li>
-        <p>$pickup_or_delivery</p>
-    </li>
-    <li>
-        <p>$pickup/delivery_date_dd/mm/yyyy $pickup/delivery_hour_24hr</p>
-    </li>
-    <li>
-        <p>$pickup_store_address $pickup_store_city, $pickup_store_postal</p>
-    </li>
-    <li>
-        <p>$delivery_zone</p>
-    </li>
+    <li><?php echo ucfirst($queryup->delivery_type); ?></li>
+    <li><?php echo $this->orders_model->dateFormat($queryup->delivery_date); ?> <?php echo $this->orders_model->timeFormat($queryup->delivery_time); ?></li>
+    <?php
+    if($queryup->delivery_type != 'delivery' ){
+        ?>
+        <li><?php  echo $this->productions_model->getLocations($queryup->pickup_location_id);  ?></li>
+    <?php }else{ ?>
+        <li><?php echo $queryup->zone_title; ?></li>
+    <?php } ?>
 </ul>
 <div class="clr"></div>
 
 <hr />
 <p>CAKE DETAILS</p>
 <br />
-<p>IMAGE ON CAKE: $add_an_image_on_cake_filename</p>
-<p>REFERENCE PHOTOS: $add_instructional_photo_filename, $add_instructional_photo_filename, $etc</p>
+<p>IMAGE ON CAKE: <?php if($queryup->on_cake_image){ echo $this->orders_model->fileName($queryup->on_cake_image); } ?></p>
+<p>REFERENCE PHOTOS: <?php
+    $instructionals = $this->productions_model->photoGallery($queryup->order_id);
+    if(!empty($instructionals)){
+        foreach($instructionals as $instructional){
+
+            echo $this->orders_model->fileName($instructional->instructional_photo) ." , ";
+
+        } } ?></p>
 <br />
+<?php if($queryup->inscription){ ?>
 <p>INSCRIPTION</p>
 <br />
-<p>> $inscriptionp>
+<p>> <?php echo $queryup->inscription; ?>
+ <?php } ?>
     <br />
+    <?php if($queryup->special_instruction){ ?>
 <p>SPECIAL INSTRUCTIONS</p>
 <br />
-<p>> $special_instructions</p>
-<p>> $special_instructions_continued</p>
+<p>> <?php echo $queryup->special_instruction; ?></p>
+<?php } ?>
 <hr />
 <ul class="col_1">
-    <li>
-        <p>Birthday Cake</p>
-    </li>
-    <li>
-        <p>MAGIC CAKE ID:</p>
-    </li>
-    <li>
-        <p>FLAVOUR:</p>
-    </li>
-    <li>
-        <p>SIZE:</p>
-    </li>
-    <li>
-        <p>SHAPE:</p>
-    </li>
-    <li>
-        <p>SERVING:</p>
-    </li>
-    <li>
-        <p>TIERS:</p>
-    </li>
-</ul>
+    <?php if($queryup->title){ ?>
+        <li><p><?php echo $queryup->title ?></p></li>
+    <?php } ?>
+    <?php if($queryup->magic_cake_id){ ?>
+        <li><p>MAGIC CAKE ID:</p></li>
+    <?php } ?>
+    <?php if($queryup->flavour_name){ ?>
+        <li><p></p>FLAVOUR:</p></li>
+    <?php } ?>
+    <?php if($queryup->serving_size){ ?>
+        <li><p>SIZE:</p></li>
+    <?php } ?>
+    <?php if($queryup->shape){ ?>
+        <li><p>SHAPE:</p></li>
+    <?php } ?>
+    <?php if($queryup->serving_title){ ?>
+        <li><p>SERVING:</p></li>
+    <?php } ?>
+    <?php if($queryup->tiers){ ?>
+        <li><p>TIERS:</p></li>
+    <?php } ?></ul>
 
 <ul class="col_2">
-    <li>
-        <p>$catalogue_price</p>
-    </li>
-    <li>
-        <p>$magic_cake_id_value</p>
-    </li>
-    <li>
-        <p>$cake_falvor_falue</p>
-    </li>
-    <li>
-        <p>$cake_size_value</p>
-    </li>
-    <li>
-        <p>$cake_shape_value</p>
-    </li>
-    <li>
-        <p>$cake_serving_value</p>
-    </li>
-    <li>
-        <p>$cake_tiers_value</p>
-    </li>
+    <li><p><?php echo $queryup->matrix_price; ?></p></li>
+    <?php if($queryup->magic_cake_id){ ?>
+        <li><p><?php echo $queryup->magic_cake_id; ?></p></li>
+    <?php } ?>
+    <?php if($queryup->flavour_name){ ?>
+        <li><p><?php echo $queryup->flavour_name; ?></p></li>
+    <?php } ?>
+    <?php if($queryup->serving_size){ ?>
+        <li><p><?php echo $queryup->serving_size; ?></p></li>
+    <?php } ?>
+    <?php if($queryup->shape){ ?>
+        <li><p><?php echo $queryup->shape; ?></p></li>
+    <?php } ?>
+    <?php if($queryup->serving_title){ ?>
+        <li><p><?php echo $queryup->serving_title; ?></p></li>
+    <?php } ?>
+    <?php if($queryup->tiers){ ?>
+        <li><p><?php echo $queryup->tiers; ?></p></li>
+    <?php } ?>
 </ul>
 <div class="clr"></div>
 
 
 <ul class="col_1">
-    <li>
-        <p>PRINTED IMAGE:</p>
-    </li>
-    <br />
-    <li>
-        <p>DELIVERY:</p>
-    </li>
-    <li>
-        <p>OTHER SURCHARGE:</p>
-    </li>
-    <li>
-        <p>DISCOUNT:</p>
-    </li>
+    <?php if($queryup->printed_imag_surcharge >0 ){ ?>
+        <li><p>PRINTED IMAGE:</p></li>
+    <?php } ?>
+    <?php if($queryup->delivery_zone_surcharge){ ?>
+        <li><p>DELIVERY:</p></li>
+    <?php } ?>
+    <?php if($queryup->magic_surcharge){ ?>
+        <li><p>MAGIC SURCHARGE:</p></li>
+    <?php } ?>
+    <?php if($queryup->discount_price){ ?>
+        <li><p>DISCOUNT:</p></li>
+    <?php } ?>
 </ul>
 
 <ul class="col_2">
-    <li>
-        <p>$price_for_printed_image</p>
-    </li>
-    <br />
-    <li>
-        <p>$delivery_charge</p>
-    </li>
-    <li>
-        <p>$10.00</p>
-    </li>
-    <li>
-        <p>($managere_discount)</p>
-    </li>
+    <?php if($queryup->printed_imag_surcharge >0 ){ ?>
+        <li><p><?php echo $queryup->printed_imag_surcharge; ?></p></li>
+    <?php } ?>
+    <?php if($queryup->delivery_zone_surcharge){ ?>
+        <li><p><?php echo $queryup->delivery_zone_surcharge; ?></p></li>
+    <?php } ?>
+    <?php if($queryup->magic_surcharge){ ?>
+        <li><p><?php echo $queryup->magic_surcharge; ?></p></li>
+    <?php } ?>
+    <?php if($queryup->discount_price){ ?>
+        <li><p><?php echo $queryup->discount_price; ?></p></li>
+    <?php } ?>
+
 </ul>
 <div class="clr"></div>
 
@@ -238,9 +269,9 @@
 </ul>
 
 <ul class="col_2">
-    <li>
-        <p>$sum_of_above_values_or_manager_override</p>
-    </li>
+    <?php if($queryup->total_price){ ?>
+        <li><p><?php if($queryup->override_price){ echo $queryup->override_price;}else{ echo $queryup->total_price;} ?></p></li>
+    <?php } ?>
 </ul>
 <div class="clr"></div>
 
@@ -248,12 +279,12 @@
 <hr />
 <br />
 <p class="cen">Thank You</p>
-<p class="cen">$store-email</p>
+<p class="cen"><?php echo $locations[0]->email; ?></p>
 <p class="cen">stphillipsbakery.com</p>
 <br />
 
 <p class="cen">
-    <img src="http://gsipreview.net/stp-templates/img/barcode.jpg" width="60%"/>
+    <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
 </p>
 
 </div>

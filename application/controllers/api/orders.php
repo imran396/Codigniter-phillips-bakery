@@ -1,23 +1,20 @@
-<?php
-
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+set_include_path(get_include_path() . PATH_SEPARATOR . realpath(APPPATH .'libraries'));
 include_once __DIR__ . '/API_Controller.php';
 
 class Orders extends API_Controller
 {
-    public $config = array(
-        'protocol' => 'smtp',
-        'smtp_host' => 'ssl://smtp.googlemail.com',
-        'smtp_port' => 465,
-        'smtp_user' => 'imran@emicrograph.com',
-        'smtp_pass' => 'i1m2r3a4n',
-        'charset'   => 'iso-8859-1',
-        'mailtype' => 'html'
-    );
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('image_lib');
+
+        require_once 'Zend/Loader/StandardAutoloader.php';
+        $loader = new Zend\Loader\StandardAutoloader(array('autoregister_zf' => true));
+        $loader->register();
+
+        $this->load->model(array('orders_model','productions_model','gallery_model','locations_model'));
+        $this->load->helper('dompdf');
         $this->load->library('email',$this->config);
         $this->load->model('orders_model');
     }
@@ -93,52 +90,29 @@ class Orders extends API_Controller
         if(isset($_FILES['instructionalImages'])){
 
             $this->orders_model->instructionalImagesUpload($orders['order_id']);
+        }
 
+        if($data['cake_email_photo']== 'yes'){
+            $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony');
         }
 
         if($data['instructional_email_photo']== 'yes'){
-            $this->mailgunSendMessage($orders['order_id']);
+            $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak');
         }
+        $this->bar_code = $orders['order_code'];
+        $this->saveImage($orders['order_code']);
 
 
         if(strtolower($data['order_status']) == 'order'){
+            $this->sendOrderEmail($orders['order_code'],"order");
             $this->sendOutput($orders);
         }else{
+            $this->sendOrderEmail($orders['order_code'],"estimate");
             $this->sendOutput(array('order_id'=> $orders['order_id']));
         }
 
     }
 
-
-    private function mailgunSendMessage($order_id){
-        $data['order_id'] = $order_id;
-        $body = $this->load->view('email/instructional_photo_view', $data,true);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($ch, CURLOPT_USERPWD, 'api:key-3ax6xnjp29jd6fds4gc373sgvjxteol0');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-        curl_setopt($ch, CURLOPT_URL, 'https://api.mailgun.net/v2/samples.mailgun.org/messages');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-            'from' => 'shafiq@imran3968.mailgun.org',
-            'to' => 'imran@emicrograph.com',
-            'subject' => "St Phillip's - Attach your reference images",
-            'text' => $body));
-
-        $result = curl_exec($ch);
-        curl_close($ch);
-
-        return $result;
-    }
-
-    public function mailgunReply(){
-        $request = $this->input->post();
-        $request['order_id'] = 3;
-        if($request){
-            $this->orders_model->instructionalImagesUploadByemail($request);
-        }
-
-    }
 
 
 
@@ -186,6 +160,13 @@ class Orders extends API_Controller
             $this->orders_model->instructionalImagesUpload($orders['order_id']);
 
         }
+        if($data['cake_email_photo']== 'yes'){
+            $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony');
+        }
+
+        if($data['instructional_email_photo']== 'yes'){
+            $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak');
+        }
 
         if(isset($_REQUEST['removedinstructionalImages'])){
 
@@ -195,18 +176,123 @@ class Orders extends API_Controller
             }
         }
 
-        if($orders['order_status'] == 'order'){
+        if(strtolower($data['order_status']) == 'order'){
+            $this->sendOrderEmail($orders['order_code'],"order");
             $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code']));
         }else{
+            $this->sendOrderEmail($orders['order_code'],"estimate");
             $this->sendOutput(array('order_id'=> $orders['order_id']));
         }
+
     }
 
-    function invoice($order_id){
 
-        echo $returnvalue=parse_url("http://phillips.local/assets/uploads/4e4nnz39vjk-img-1.jpg", PHP_URL_PATH);
-        $data="";
-        $this->orders_model->instructionalPhotoDelete($data,$order_id);
+    private function mailgunSendMessage($orders, $data, $replyTo,$name){
+        $data['order_id'] = $orders['order_id'];
+        $data ['rows'] = $this->orders_model->getCustomerData($data['customer_id']);
+        $body = $this->load->view('email/instructional_photo_view', $data,true);
+        $this->email->set_newline("\r\n");
+        $this->email->from('imran@emicrograph.com', 'test');
+        $this->email->reply_to($replyTo, $name);
+        $this->email->to($data ['rows']->email);
+        $this->email->subject('St Phillip\'s - Attach your images'.'|'.$data['order_id']);
+        $this->email->message(nl2br($body));
+        $this->email->send();
+
+    }
+
+    public function mailgunReply(){
+        $request = $this->input->post();
+        $order_array = explode('|',$request['subject']);
+        $request['order_id'] =  $order_array['1'];
+
+        if($request){
+            $this->orders_model->instructionalImagesUploadByemail($request);
+        }
+
+    }
+
+    public function mailgunCakeOnImageReply(){
+        $request = $this->input->post();
+        $order_array = explode('|',$request['subject']);
+        $request['order_id'] =  $order_array['1'];
+
+        if($request){
+            $this->orders_model->cakeOnimage($request);
+        }
+
+    }
+    public function barcode_gen($order_code) {
+
+        $this->load->library('Zend');
+        $this->zend->load('Zend/Barcode/Barcode');
+        $barcodeOptions = array('text' => "$order_code",'drawText'=>false);
+        $rendererOptions = array();
+        Zend\Barcode\Barcode::factory('code39', 'image', $barcodeOptions, $rendererOptions)->render();
+
+    }
+
+    public function saveImage($order_code){
+        define('YOUR_DIRECTORY',realpath(APPPATH . "../web/assets/uploads/orders/barcode/"));
+        $content = file_get_contents(site_url()."/api/orders/barcode_gen/".$order_code);
+        file_put_contents(YOUR_DIRECTORY.$this->bar_code.".png",$content);
+    }
+
+
+    function invoice($invoice,$order_code){
+
+       $result= $this->productions_model->orderDetails($order_code);
+        if($result ->num_rows() > 0 ){
+
+            $this->data['queryup']=$result->row();
+
+            if($invoice =="order"){
+                $this->sendOrderEmail($order_code,'invoice');
+                $this->load->view('email/invoice_view', $this->data);
+            }
+            if($invoice =="thurmal"){
+                $this->load->view('email/invoice_thurmal_view', $this->data);
+            }
+            //$this->load->view('email/estimate_view', $this->data);
+            //$this->load->view('email/invoice_thurmal_view', $this->data);
+            //$this->load->view('email/estimate_body', $this->data);
+
+        }else{
+
+            return false;
+
+        }
+
+    }
+
+    public function sendOrderEmail($order_code,$ordertype){
+
+        $this->load->helper(array('dompdf', 'file'));
+        $result= $this->productions_model->orderDetails($order_code);
+        $this->data['queryup']=$result->row();
+        $this->data['invoice_title']= $ordertype;
+        $body          = $this->load->view('email/invoice_body', $this->data,true);
+        $html          = $this->load->view('email/invoice_view', $this->data,true);
+        $invoiceNumber = str_pad($ordertype.'-'.$order_code,8,0,STR_PAD_LEFT);
+        $pdf           = pdf_create($html, $invoiceNumber, false);
+        $filePath      = realpath(APPPATH . "../web/assets/uploads/orders/pdf/"). DIRECTORY_SEPARATOR . $invoiceNumber.".pdf";
+        file_put_contents($filePath,$pdf);
+        $this->sendEmail($filePath,$body);
+    }
+
+
+
+    public function sendEmail($filePath,$body){
+
+
+        $to      = 'shafiq@emicrograph.com';
+        $subject ="Estimate";
+        $this->email->from('info@stphillipsbakery.com','St. Phillip\'s Bakery');
+        $this->email->to($to);
+        $this->email->subject($subject);
+        $this->email->message(nl2br($body));
+        $this->email->attach($filePath);
+        $this->email->send();
 
     }
 

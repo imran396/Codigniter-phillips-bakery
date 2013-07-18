@@ -42,48 +42,24 @@ class Orders_model extends Crud_Model
 
     public function doUpload($id)
     {
-        $config['upload_path']   = 'assets/uploads/cakes/';
-        $config['allowed_types'] = 'gif|jpg|png|jpeg';
-        $config['remove_spaces'] = true;
-        $config['max_size']      = 7000;
 
-        $this->load->library('upload', $config);
-        $this->upload->initialize($config);
-
-        if ($this->upload->do_upload('onCakeImage')) {
-
-            $upload_data = $this->upload->data();
-            $image = $upload_data['full_path'];
-
-            $config['source_image']   = $image;
-            $config['maintain_ratio'] = false;
-            $config['width']          = 200;
-            $config['height']         = 125;
-
-            $this->image_lib->resize();
-            $this->fileDelete($id);
-
-        }
-
-        $file_name = $upload_data['file_name'];
-        $filePath  = "assets/uploads/cakes/" . $file_name;
-
+        $filePath  = "assets/uploads/cakes/";
+        $file_name=resize_image($_FILES[onCakeImage],$filePath,700,480);
+        $this->fileDelete($id);
+        $filePath  = "assets/uploads/cakes/".$file_name;
+        $this->fileDelete($id);
         $this->db->set(array('on_cake_image' => $filePath))->where(array('order_id' => $id))->update('orders');
-    }
+
+      }
 
     public function instructionalImagesUpload($order_id){
 
         $i=0;
         foreach($_FILES['instructionalImages']['name'] as $file_name ){
 
-            $n = rand(10e16, 10e20);
-            $rand = base_convert($n, 10, 36);
-            $name = $rand.'-'.$file_name;
-            $temp_name=$_FILES['instructionalImages']['tmp_name'][$i];
-            $target_path = "assets/uploads/gallery/";
-            $target_path = $target_path . basename($name);
-            move_uploaded_file($temp_name, $target_path);
-            $instructional_photo = $target_path;
+            $filePath  = "assets/uploads/gallery/";
+            $file_name=resize_image($_FILES['instructionalImages'],$filePath,730,480);
+            $instructional_photo  = "assets/uploads/gallery/".$file_name;
             $this->db->set(array('instructional_order_id'=>$order_id,'instructional_photo' => $instructional_photo))->insert('instructional_photo');
 
             $i++;
@@ -92,17 +68,14 @@ class Orders_model extends Crud_Model
     }
 
     public function instructionalImagesUploadByEmail($data){
+
         $count =  $data['attachment-count'];
         for($i=1;$i<=$count;$i++){
             $attachment = "attachment-$i";
-            $n = rand(10e16, 10e20);
-            $rand = base_convert($n, 10, 36);
-            $name = $rand.'-'.$_FILES[$attachment]['name'];
-            $temp_name = $_FILES[$attachment]['tmp_name'];
-            $target_path = "assets/uploads/gallery/";
-            $target_path = $target_path . basename($name);
-            move_uploaded_file($temp_name, $target_path);
-            $instructional_photo = $target_path;
+            $filePath  = "assets/uploads/gallery/";
+            $file_name=resize_image($attachment,$filePath,730,480);
+            $instructional_photo  = "assets/uploads/gallery/".$file_name;
+
             $this->db->set(array('instructional_order_id'=>$data['order_id'],'instructional_photo' => $instructional_photo))->insert('instructional_photo');
         }
 
@@ -339,6 +312,41 @@ class Orders_model extends Crud_Model
 
         return $data;
 
-     }
+    }
+
+    public function getCustomerData($id){
+        $this->db->where('customer_id', $id);
+        $res = $this->db->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->get('customers');
+        $result =  $res->row();
+        return $result;
+
+    }
+
+    function dateFormat($date=NULL){
+
+        $mdate =strtotime($date);
+        $udate =date("d/m/Y",$mdate);
+        return $udate;
+    }
+
+    function phoneNoFormat($phone){
+        return  $to = sprintf("%s-%s-%s",
+            substr($phone, 0, 3),
+            substr($phone, 3, 3),
+            substr($phone, 6, 8));
+    }
+
+    function timeFormat($time){
+
+        $date=date('d-m-y');
+        $dateTime=strtotime($date.' '.$time);
+        return date("H:i",$dateTime);
+    }
+
+    function fileName($fileName){
+        $filename=explode("/",$fileName);
+        return end($filename);
+
+    }
 
 }

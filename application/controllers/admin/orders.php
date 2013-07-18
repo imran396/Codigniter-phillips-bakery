@@ -8,6 +8,7 @@ class Orders extends Crud_Controller
         parent::__construct();
 
         $this->layout->setLayout('layout_admin');
+        $this->load->helper('uploader');
         $this->load->model(array('orders_model','productions_model','gallery_model'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);

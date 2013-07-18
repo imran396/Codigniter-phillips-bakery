@@ -111,13 +111,14 @@ class Productions_model extends Ci_Model
 
     public function orderDetails($order_code){
 
-        $this->db->select('orders.*,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, servings.size AS serving_size ');
+        $this->db->select('orders.*,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, servings.size AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description ');
         $this->db->from('orders');
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
         $this->db->join('price_matrix','price_matrix.price_matrix_id = orders.price_matrix_id','left');
-        $this->db->join('servings','servings.serving_id = .price_matrix.serving_id','left');
+        $this->db->join('servings','servings.serving_id = price_matrix.serving_id','left');
+        $this->db->join('zones','zones.zone_id = orders.delivery_zone_id','left');
         $this->db->where(array("orders.order_code"=> $order_code));
         return $this->db->get();
 

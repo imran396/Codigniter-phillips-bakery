@@ -143,7 +143,7 @@
                         <div class="title">Size and shape</div><?php  echo $queryup->serving_size; ?> <?php if( $queryup->shape){ ?> and  <?php echo $queryup->shape; } ?>
                     </div>
                     <?php } ?>
-                    <?php if( $queryup->serving_size){ ?>
+                    <?php if( $queryup->serving_title){ ?>
                     <div class="line">
                         <div class="title">Serving</div><?php echo $queryup->serving_title; ?>
                     </div>
@@ -206,7 +206,11 @@
                                     <?php } ?>
                                     <?php if( $queryup->phone_number){ ?>
                                     <div class="line">
-                                        <div class="title">Phone</div><?php echo $queryup->phone_number; ?>
+                                        <div class="title">Phone</div><?php $from = $queryup->phone_number;
+                                        echo $to = sprintf("%s-%s-%s",
+                                            substr($from, 0, 3),
+                                            substr($from, 3, 3),
+                                            substr($from, 6, 8));?>
                                     </div>
                                     <?php } ?>
                                     <?php if( $queryup->email){ ?>
@@ -283,7 +287,13 @@
                                     <?php } ?>
                                     <?php if( $deliveryInfo->phone){ ?>
                                     <div class="line">
-                                        <div class="title">Phone</div><?php echo $deliveryInfo->phone; ?>
+                                        <div class="title">Phone</div><?php
+                                        $from = $deliveryInfo->phone;
+                                        echo $to = sprintf("%s-%s-%s",
+                                            substr($from, 0, 3),
+                                            substr($from, 3, 3),
+                                            substr($from, 6, 8));
+                                       ?>
                                     </div>
                                     <?php } ?>
                                     <?php if( $deliveryInfo->address_1){ ?>

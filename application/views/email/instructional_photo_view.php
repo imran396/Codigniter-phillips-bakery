@@ -5,20 +5,16 @@ Required By:	< Date dd/mm/yyyy >
 
 ------------------------------------------------------------
 ORDER #<?php echo $order_id.PHP_EOL; ?>
-01/01/2013
+<?php echo $order_date.PHP_EOL; ?>
 
 ------------------------------------------------------------
 CUSTOMER DETAILS
-
-Spencer Spear
-123 Fake St
-Unit 678
-Toronto, ON A1A 1A1
-905-832-5688
-spencer@gsisolutions.com
-
+<?php echo $rows->first_name.'&nbsp;'.$rows->last_name.PHP_EOL; ?>
+<?php echo $rows->address_1.PHP_EOL; ?>
+<?php echo $rows->address_2.PHP_EOL; ?>
+<?php echo $rows->phone_number.PHP_EOL; ?>
+<?php echo $rows->email.PHP_EOL; ?>
 ------------------------------------------------------------
-
 Thank You
 info@stphillipsbakery.com
 stphillipsbakery.com

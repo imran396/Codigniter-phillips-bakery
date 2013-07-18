@@ -28,35 +28,11 @@ class Cakes_model extends CI_Model
     public function doUpload($id)
     {
 
-        $config['upload_path']   = 'assets/uploads/cakes/';
-        $config['allowed_types'] = 'gif|jpg|png|jpeg';
-        $config['remove_spaces'] = true;
-        $this->load->library('upload', $config);
-        // Alternately you can set preferences by calling the initialize function. Useful if you auto-load the class:
-        $this->upload->initialize($config);
-        if($this->upload->do_upload('image_name')){
-            $upload_data = $this->upload->data();
-            $image = $upload_data['full_path'];
-            $config['image_library'] = 'gd2';
-            $config['source_image'] = $image;
-
-            $config['source_image'];
-            $config['maintain_ratio'] = TRUE;
-            $config['width']          = 200;
-            $config['height']         = 140;
-            $config['create_thumb'] = TRUE;
-            $this->load->library('image_lib',$config);
-            $this->image_lib->resize();
-            if ( ! $this->image_lib->resize())
-            {
-                echo $this->image_lib->display_errors();
-            }
-
-        }
-
+        $filePath  = "assets/uploads/cakes/";
+        $file_name=resize_image($_FILES[image_name],$filePath,200,140);
         $this->fileDelete($id);
-        $file_name = $upload_data['file_name'];
         $filePath  = "assets/uploads/cakes/".$file_name;
+        $this->fileDelete($id);
         $this->db->where(array('cake_id' => $id))->set(array('image' => $filePath))->update('cakes');
 
 

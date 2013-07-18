@@ -17,8 +17,12 @@
             url:"<?php echo site_url('admin/productions/filtering')?>",
             data:result,
             type:"post",
+            beforeSend: function(){
+                $('#beforloading').fadeIn(5000).html('<img src="<?php echo base_url() ?>assets/images/loading.gif">');
+            },
             success: function(val){
                 $('#filterResult').html(val);
+                $('#beforloading').html('');
                 //console.log(val);
             }
         })
@@ -238,7 +242,17 @@
         </div>
         <div class="clear"></div>
     </div>
+    <div id="beforloading">rgterjelrtjkler</div>
+
 </form>
+    <style>
+        #beforloading {
+            left: 460px;
+            position: absolute;
+            top: 66px;
+            z-index: 999;
+        }
+    </style>
 </div><!-- end of filters -->
 <div class="innerLR" id="filterResult">
     <div class="widget">

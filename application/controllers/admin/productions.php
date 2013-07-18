@@ -37,7 +37,7 @@ class Productions extends Crud_Controller
 
         $this->load->library('Zend');
         $this->zend->load('Zend/Barcode/Barcode');
-        $barcodeOptions = array('text' => 'ZEND-FRAMEWORK');
+        $barcodeOptions = array('text' => '3458908123');
         $rendererOptions = array();
         Zend\Barcode\Barcode::factory('code39', 'image', $barcodeOptions, $rendererOptions)->render();
     }
@@ -66,7 +66,7 @@ class Productions extends Crud_Controller
     {
         $this->data['active']=$this->uri->segment(2,0);
         $result= $this->productions_model->orderDetails($order_code);
-        if($result ->num_rows > 0 ){
+        if($result ->num_rows() > 0 ){
             $this->data['queryup']=$result->row();
             $this->layout->view('admin/production/details_view', $this->data);
         }else{

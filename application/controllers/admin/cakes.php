@@ -7,7 +7,8 @@ class Cakes extends Crud_Controller
     {
         parent::__construct();
 
-        $this->load->library('image_lib');
+       // $this->load->library('image_lib');
+        $this->load->helper('uploader');
         $this->layout->setLayout('layout_admin');
         $this->load->model('cakes_model');
         $log_status = $this->ion_auth->logged_in();

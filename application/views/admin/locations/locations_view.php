@@ -73,6 +73,18 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
+                                    <label class="control-label"><?php echo $this->lang->line('email');?></label>
+                                    <div class="controls">
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('email');?>" value="<?php echo(isset($queryup[0]->email))? $queryup[0]->email:set_value('email'); ?>"   class="span10" name="email" id="email"  />
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label"><?php echo $this->lang->line('phone_number');?></label>
+                                    <div class="controls">
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('phone');?>" value="<?php echo(isset($queryup[0]->phone))? $queryup[0]->phone:set_value('phone'); ?>"   class="span10" name="phone" id="phone"  />
+                                    </div>
+                                </div>
+                                <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('pos_api');?></label>
                                     <div class="controls">
                                         <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('pos_api');?>" value="<?php echo(isset($queryup[0]->pos_api))? $queryup[0]->pos_api:set_value('pos_api'); ?>"   class="span12" name="pos_api" id="pos_api"  />
