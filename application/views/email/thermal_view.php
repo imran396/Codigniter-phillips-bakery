@@ -52,6 +52,7 @@
 <hr />
 <?php
 $locations=$this->locations_model->getLocations($queryup->locationid);
+if(!empty($locations)){
 ?>
 <?php if($locations[0]->title){ ?><p class="cen"><?php echo $locations[0]->title; ?></p><?php } ?>
 <?php if($locations[0]->address1){ ?><p class="cen"><?php echo $locations[0]->address1; ?></p><?php } ?>
@@ -60,7 +61,7 @@ $locations=$this->locations_model->getLocations($queryup->locationid);
 <?php if($locations[0]->country){ ?><p class="cen"><?php echo $locations[0]->country; ?></p><?php } ?>
 <?php if($locations[0]->email){ ?><p class="cen"><?php echo $locations[0]->email; ?></p><?php } ?>
 <?php if($locations[0]->phone){ ?><p class="cen"><?php echo $this->orders_model->phoneNoFormat($locations[0]->phone); ?></p><?php } ?>
-
+<?php } ?>
 <br />
 
 <p>ORDER #<?php echo $queryup->order_code; ?> <?php echo $this->orders_model->dateFormat($queryup->order_date); ?></p>
