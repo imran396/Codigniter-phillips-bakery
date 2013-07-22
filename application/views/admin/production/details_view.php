@@ -96,7 +96,7 @@
         if(!empty($galleries)){
             foreach($galleries as $gallery):
                 ?>
-                <li><a href=""><span class="plus"></span><span class="desc">On Cake</span><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
+                <li><a href=""><span class="plus"></span><span class="desc">Image On Cake</span><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
             <?php endforeach; } ?>
         <?php
         $instructionals = $this->productions_model->photoGallery($queryup->order_id);

@@ -147,12 +147,12 @@ class Cakes_model extends CI_Model
 
     public function getCategories()
     {
-        return $this->db->select('*')->where('status', 1)->order_by('ordering','asc')->get('categories')->result();
+        return $this->db->select('*')->where('status', 1)->order_by('title','asc')->get('categories')->result();
     }
 
     public function getFlavours()
     {
-        return $this->db->select('*')->where('status', 1)->order_by('ordering','asc')->get('flavours')->result();
+        return $this->db->select('*')->where('status', 1)->order_by('title','asc')->get('flavours')->result();
     }
 
     public function getShapes()
