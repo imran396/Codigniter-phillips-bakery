@@ -83,12 +83,21 @@ if(!empty($locations)){
 
 <ul class="col_1">
     <li><?php echo $queryup->first_name.' '. $queryup->last_name ?></li>
+    <?php if($queryup->address_1){?>
     <li><?php echo $queryup->address_1; ?></li>
+    <?php } ?>
+    <?php if($queryup->address_2){?>
     <li><?php echo $queryup->address_2; ?></li>
+    <?php } ?>
+    <?php if($queryup->city !="" || $queryup->province !="" || $queryup->postal_code !=""  ){?>
     <li><?php echo $queryup->city; ?>, <?php echo $queryup->province; ?> <?php echo $queryup->postal_code; ?></li>
-    <li><?php echo $this->orders_model->phoneNoFormat($queryup->phone_number); ?>
-    </li>
+    <?php } ?>
+    <?php if($queryup->phone_number){?>
+    <li><?php echo $this->orders_model->phoneNoFormat($queryup->phone_number); ?></li>
+    <?php } ?>
+    <?php if($queryup->email){?>
     <li><?php echo $queryup->email; ?></li>
+    <?php } ?>
 </ul>
 
 <ul class="col_2">
@@ -106,7 +115,7 @@ if(!empty($locations)){
             <li><?php echo $deliveryInfo->address_2; ?></li>
         <?php } ?>
         <?php if( $deliveryInfo->city || $deliveryInfo->postal ){ ?>
-            <li><?php if($deliveryInfo->city){  echo $deliveryInfo->city; } ?> , <?php if($deliveryInfo->province){  echo $deliveryInfo->province; } ?> , <?php if( $deliveryInfo->postal){ ?> ON <?php echo $deliveryInfo->postal; } ?></li>
+            <li><?php if($deliveryInfo->city){  echo $deliveryInfo->city; } ?>  <?php if($deliveryInfo->province){  echo ", ".$deliveryInfo->province; } ?>  <?php if( $deliveryInfo->postal){ ?> <?php echo $deliveryInfo->postal; } ?></li>
         <?php } ?>
         <li><?php echo $this->orders_model->phoneNoFormat($deliveryInfo->phone); ?></li>
         <?php if( $deliveryInfo->email){ ?>
@@ -205,7 +214,7 @@ if(!empty($locations)){
     <?php } ?></ul>
 
 <ul class="col_2">
-    <li><p><?php echo $queryup->matrix_price; ?></p></li>
+    <li><p><?php echo "$".$queryup->matrix_price; ?></p></li>
     <?php if($queryup->magic_cake_id){ ?>
         <li><p><?php echo $queryup->magic_cake_id; ?></p></li>
     <?php } ?>
@@ -229,7 +238,7 @@ if(!empty($locations)){
 
 
 <ul class="col_1">
-    <?php if($queryup->printed_imag_surcharge >0 ){ ?>
+    <?php if($queryup->printed_image_surcharge >0 ){ ?>
         <li><p>PRINTED IMAGE:</p></li>
     <?php } ?>
     <?php if($queryup->delivery_zone_surcharge){ ?>
@@ -244,8 +253,8 @@ if(!empty($locations)){
 </ul>
 
 <ul class="col_2">
-    <?php if($queryup->printed_imag_surcharge >0 ){ ?>
-        <li><p><?php echo "$".$queryup->printed_imag_surcharge; ?></p></li>
+    <?php if($queryup->printed_image_surcharge >0 ){ ?>
+        <li><p><?php echo "$".$queryup->printed_image_surcharge; ?></p></li>
     <?php } ?>
     <?php if($queryup->delivery_zone_surcharge){ ?>
         <li><p><?php echo "$".$queryup->delivery_zone_surcharge; ?></p></li>

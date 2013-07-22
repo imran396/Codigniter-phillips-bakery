@@ -109,14 +109,21 @@
 
 <ul class="col_fourth left">
     <li><?php echo $queryup->first_name.' '. $queryup->last_name ?></li>
+    <?php if($queryup->address_1){?>
     <li><?php echo $queryup->address_1; ?></li>
+    <?php } ?>
+    <?php if($queryup->address_2){?>
     <li><?php echo $queryup->address_2; ?></li>
+    <?php } ?>
     <?php if($queryup->city !="" || $queryup->province !="" || $queryup->postal_code !=""  ){?>
     <li><?php echo $queryup->city; ?> <?php if($queryup->province){ echo ",".$queryup->province; } ?> <?php echo $queryup->postal_code; ?></li>
     <?php } ?>
-    <li><?php echo $this->orders_model->phoneNoFormat($queryup->phone_number); ?>
-    </li>
+    <?php if($queryup->phone_number){?>
+    <li><?php echo $this->orders_model->phoneNoFormat($queryup->phone_number); ?></li>
+    <?php } ?>
+    <?php if($queryup->email){?>
     <li><?php echo $queryup->email; ?></li>
+    <?php } ?>
 </ul>
 
 <div class="left col_fourth">
@@ -258,14 +265,17 @@
         <?php } ?>
         <tr><td colspan="2">&nbsp;</td></tr>
         <tr><td colspan="2">&nbsp;</td></tr>
-        <?php if($queryup->printed_imag_surcharge > 0){ ?>
-            <tr><td>PRINTED IMAGE</td><td><?php echo "$".$queryup->printed_imag_surcharge; ?></td></tr>
+        <?php if($queryup->printed_image_surcharge > 0){ ?>
+            <tr><td>PRINTED IMAGE</td><td><?php echo "$".$queryup->printed_image_surcharge; ?></td></tr>
         <?php } ?>
         <?php if($queryup->delivery_zone_surcharge){ ?>
             <tr><td>DELIVERY:</td><td><?php echo "$".$queryup->delivery_zone_surcharge; ?></td></tr>
         <?php } ?>
-        <?php if($queryup->magic_surcharge){ ?>
-            <tr><td>DISCOUNT:</td><td><?php echo "$".$queryup->magic_surcharge; ?></td></tr>
+         <?php if($queryup->magic_surcharge){ ?>
+            <tr><td>MAGIC SURCHARGE:</td><td><?php echo "$".$queryup->magic_surcharge; ?></td></tr>
+        <?php } ?>
+        <?php if($queryup->discount_price){ ?>
+            <tr><td>DISCOUNT:</td><td><?php echo "$".$queryup->discount_price; ?></td></tr>
         <?php } ?>
         <tr><td colspan="2">&nbsp;</td></tr>
         <tr><td colspan="2"> <hr /></td></tr>
