@@ -75,7 +75,7 @@ class Cakes_model extends CI_Model
         $row = $this->getCakes($id);
 
         if (file_exists($row[0]->image)) {
-            unlink($_SERVER['DOCUMENT_ROOT'] . $row[0]->image);
+            unlink($_SERVER['DOCUMENT_ROOT'] .'/'. $row[0]->image);
         }
     }
 
