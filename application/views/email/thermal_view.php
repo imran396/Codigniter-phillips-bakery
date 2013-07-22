@@ -280,7 +280,7 @@ if(!empty($locations)){
 <hr />
 <br />
 <p class="cen">Thank You</p>
-<p class="cen"><?php echo $locations[0]->email; ?></p>
+<?php if(!empty($locations)){ ?><p class="cen"><?php echo $locations[0]->email; ?></p><?php } ?>
 <br />
 <p class="cen">stphillipsbakery.com</p>
 <br />
