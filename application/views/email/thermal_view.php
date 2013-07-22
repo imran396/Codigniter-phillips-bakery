@@ -238,7 +238,7 @@ if(!empty($locations)){
 
 
 <ul class="col_1">
-    <?php if($queryup->printed_imag_surcharge >0 ){ ?>
+    <?php if($queryup->printed_image_surcharge >0 ){ ?>
         <li><p>PRINTED IMAGE:</p></li>
     <?php } ?>
     <?php if($queryup->delivery_zone_surcharge){ ?>
@@ -253,8 +253,8 @@ if(!empty($locations)){
 </ul>
 
 <ul class="col_2">
-    <?php if($queryup->printed_imag_surcharge >0 ){ ?>
-        <li><p><?php echo "$".$queryup->printed_imag_surcharge; ?></p></li>
+    <?php if($queryup->printed_image_surcharge >0 ){ ?>
+        <li><p><?php echo "$".$queryup->printed_image_surcharge; ?></p></li>
     <?php } ?>
     <?php if($queryup->delivery_zone_surcharge){ ?>
         <li><p><?php echo "$".$queryup->delivery_zone_surcharge; ?></p></li>

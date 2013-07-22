@@ -81,7 +81,7 @@ SPECIAL INSTRUCTIONS:
 <?php echo $queryup->special_instruction.PHP_EOL; ?>
 <?php } ?>
 ------------------------------------------------------------
-<?php echo $queryup->title ?>                                  <?php echo $queryup->matrix_price.PHP_EOL; ?>
+<?php echo $queryup->title ?>                                  <?php echo "$".$queryup->matrix_price.PHP_EOL; ?>
 <?php if($queryup->magic_cake_id){ ?>
 MAGIC CAKE ID: 			<?php echo $queryup->magic_cake_id.PHP_EOL; ?>
 <?php } ?>
@@ -101,8 +101,8 @@ SERVING: 			    <?php echo $queryup->serving_title.PHP_EOL; ?>
 TIERS: 			        <?php echo $queryup->orderTiers.PHP_EOL; ?>
 <?php } ?>
 
-<?php if($queryup->printed_imag_surcharge >0 ){ ?>
-PRINTED IMAGE:                                  <?php echo "$".$queryup->printed_imag_surcharge.PHP_EOL; ?>
+<?php if($queryup->printed_image_surcharge >0 ){ ?>
+PRINTED IMAGE:                                  <?php echo "$".$queryup->printed_image_surcharge.PHP_EOL; ?>
 <?php } ?>
 <?php if($queryup->delivery_zone_surcharge >0 ){ ?>
 DELIVERY:                                       <?php echo "$".$queryup->delivery_zone_surcharge.PHP_EOL; ?>

@@ -265,8 +265,8 @@
         <?php } ?>
         <tr><td colspan="2">&nbsp;</td></tr>
         <tr><td colspan="2">&nbsp;</td></tr>
-        <?php if($queryup->printed_imag_surcharge > 0){ ?>
-            <tr><td>PRINTED IMAGE</td><td><?php echo "$".$queryup->printed_imag_surcharge; ?></td></tr>
+        <?php if($queryup->printed_image_surcharge > 0){ ?>
+            <tr><td>PRINTED IMAGE</td><td><?php echo "$".$queryup->printed_image_surcharge; ?></td></tr>
         <?php } ?>
         <?php if($queryup->delivery_zone_surcharge){ ?>
             <tr><td>DELIVERY:</td><td><?php echo "$".$queryup->delivery_zone_surcharge; ?></td></tr>
