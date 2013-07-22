@@ -219,7 +219,7 @@ class Cakes_model extends CI_Model
 
         $sql = "SELECT
                 cakes.*,
-                GROUP_CONCAT(cake_gallery.image ORDER BY cake_gallery.gallery_id ASC SEPARATOR ',') as images
+                GROUP_CONCAT(cake_gallery.image ORDER BY cake_gallery.feature_image DESC SEPARATOR ',') as images
 
               FROM cakes
               LEFT JOIN cake_gallery
