@@ -31,11 +31,43 @@ class Cakes_model extends CI_Model
         $filePath  = "assets/uploads/cakes/";
         $file_name=resize_image($_FILES[image_name],$filePath,200,140);
         $this->fileDelete($id);
-        $filePath  = "assets/uploads/cakes/".$file_name;
-        $this->fileDelete($id);
+        $filePath  = $filePath.$file_name;
         $this->db->where(array('cake_id' => $id))->set(array('image' => $filePath))->update('cakes');
 
 
+        $filePath  = "assets/uploads/gallery/";
+        $file_name=resize_image($_FILES['image_name'],$filePath,730,480);
+        $gallery_photo  = $filePath.$file_name;
+
+        $GalleryImage = $this->getGalleryImage($id);
+
+        if(empty($GalleryImage)){
+            $this->db->set(array('cake_id'=>$id,'feature_image'=>1,'image' => $gallery_photo))->insert('cake_gallery');
+        }else{
+            $this->galleryImageDelete($id);
+            $this->db->set(array('image' => $gallery_photo))->where(array('cake_id'=>$id,'feature_image'=>1))->update('cake_gallery');
+        }
+
+    }
+
+    private function getGalleryImage($id){
+
+        $result = $this->db->where(array('cake_id'=>$id,'feature_image'=>1))->get('cake_gallery');
+        if($result-> num_rows() > 0){
+
+            return $row = $result->row();
+
+        }
+        return false;
+    }
+
+    private function galleryImageDelete($id){
+        $GalleryImage = $this->getGalleryImage($id);
+        if(empty($GalleryImage)){
+            if (file_exists($GalleryImage->image)) {
+                    unlink($_SERVER['DOCUMENT_ROOT'] . $GalleryImage->image);
+            }
+        }
     }
 
     public function fileDelete($id)
@@ -185,7 +217,7 @@ class Cakes_model extends CI_Model
 
     public function getApiCakes(){
 
-      $sql = "SELECT
+        $sql = "SELECT
                 cakes.*,
                 GROUP_CONCAT(cake_gallery.image ORDER BY cake_gallery.gallery_id ASC SEPARATOR ',') as images
 
@@ -194,21 +226,21 @@ class Cakes_model extends CI_Model
                 ON ( cakes.cake_id = cake_gallery.cake_id )
               GROUP BY cakes.cake_id";
 
-      $data = $this->db->query($sql)->result_array();
+        $data = $this->db->query($sql)->result_array();
 
-      foreach($data as $key=>$row){
-          $data[$key]['cake_id'] = (int) $data[$key]['cake_id'];
-          $data[$key]['images'] = explode(',', $row['images']);
-          $data[$key]['shapes'] = unserialize($row['shape_id']);
-      }
+        foreach($data as $key=>$row){
+            $data[$key]['cake_id'] = (int) $data[$key]['cake_id'];
+            $data[$key]['images'] = explode(',', $row['images']);
+            $data[$key]['shapes'] = unserialize($row['shape_id']);
+        }
 
-       return $data;
+        return $data;
 
     }
 
     public function getAll_(){
-      $imageurlprefix = base_url().'assets';
-      $sql = "SELECT
+        $imageurlprefix = base_url().'assets';
+        $sql = "SELECT
                 C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.tiers,
               GROUP_CONCAT(G.image ORDER BY G.gallery_id ASC SEPARATOR ',') as gallery_images
               FROM cakes As C
@@ -216,30 +248,30 @@ class Cakes_model extends CI_Model
                 ON ( C.cake_id = G.cake_id )
               GROUP BY C.cake_id";
 
-      $data = $this->db->query($sql)->result_array();
+        $data = $this->db->query($sql)->result_array();
 
-      foreach($data as $key=>$row){
-          $data[$key]['cake_id'] = (int) $data[$key]['cake_id'];
-          $data[$key]['category_id'] = (int) $data[$key]['category_id'];
-          $data[$key]['flavour_id'] = (int) $data[$key]['flavour_id'];
-          $data[$key]['image'] = !empty($data[$key]['image']) ? base_url().$data[$key]['image'] : "";
-          $data[$key]['tiers'] = (int) $data[$key]['tiers'];
+        foreach($data as $key=>$row){
+            $data[$key]['cake_id'] = (int) $data[$key]['cake_id'];
+            $data[$key]['category_id'] = (int) $data[$key]['category_id'];
+            $data[$key]['flavour_id'] = (int) $data[$key]['flavour_id'];
+            $data[$key]['image'] = !empty($data[$key]['image']) ? base_url().$data[$key]['image'] : "";
+            $data[$key]['tiers'] = (int) $data[$key]['tiers'];
 
-          $data[$key]['gallery_images'] = explode(',', $row['gallery_images']);
-          $data[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$data[$key]['gallery_images']);
+            $data[$key]['gallery_images'] = explode(',', $row['gallery_images']);
+            $data[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$data[$key]['gallery_images']);
 
-          if(!empty($result[$key]['gallery_images'])){
-              $data[$key]['gallery_images'] = explode(',', $row['gallery_images']);
-              $data[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$data[$key]['gallery_images']);
-          }else{
-              $result[$key]['gallery_images'] = array();
-          }
+            if(!empty($result[$key]['gallery_images'])){
+                $data[$key]['gallery_images'] = explode(',', $row['gallery_images']);
+                $data[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$data[$key]['gallery_images']);
+            }else{
+                $result[$key]['gallery_images'] = array();
+            }
 
 
-          $data[$key]['shapes'] =  !empty($row['shapes']) ? unserialize($row['shapes']): "";
-      }
+            $data[$key]['shapes'] =  !empty($row['shapes']) ? unserialize($row['shapes']): "";
+        }
 
-       return $data;
+        return $data;
 
     }
 }

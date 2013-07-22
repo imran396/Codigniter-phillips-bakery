@@ -11,8 +11,12 @@
     <br/>
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('cakes');?></h3>
+
         <div class="buttons pull-right">
-            <a href="/admin/cakes" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add page</a>
+            <a href="/admin/cakes" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add New Cake</a>
+        </div>
+        <div class="buttons pull-right">
+           <form action="/admin/cakes/search" method="get"><input type="text"  name="search" placeholder="serach by name,tag" id="search"><button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok mbutton"><i></i><?php echo $this->lang->line('search');?></button></form>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -26,7 +30,7 @@
         <div class="widget widget-body-white">
 
             <div class="widget-body" style="padding: 10px 0;">
-                <table class="table table-bordered table-primary js-table-sortable">
+                <table class="column-sorting table table-bordered table-primary js-table-sortable">
                     <thead>
                     <tr>
                         <th class="center">No.</th>
@@ -49,11 +53,11 @@
                         <td><?php echo $rows->title; ?></td>
                         <td><?php echo $rows->categories_name; ?></td>
                         <td><?php echo $rows->flavours_name; ?></td>
-                        <td class="center js-sortable-handle"><span  class="glyphicons btn-action single move" style="margin-right: 0;"><i></i></span></td>
+                        <td class="center js-sortable-handle"><span  class="glyphicons btn-action single move" style="margin-right: 0;"><i data-original-title="<?php echo $this->lang->line('move'); ?>" data-placement="top" data-toggle="tooltip"></i></span></td>
                         <td>
-                            <a href="/admin/cakes/status/<?php echo $rows->cake_id; ?>" class="btn-action glyphicons btn <?php if($rows->status ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
-                            <a class="btn-action glyphicons pencil btn-success" href="/admin/cakes/edit/<?php echo $rows->cake_id; ?>"><i></i></a>
-                            <a class="btn-action glyphicons remove_2 btn-danger" href="/admin/cakes/remove/<?php echo $rows->cake_id; ?>"><i></i></a>
+                            <a data-original-title="<?php echo $this->lang->line('status'); ?>" data-placement="top" data-toggle="tooltip" href="/admin/cakes/status/<?php echo $rows->cake_id; ?>" class="btn-action glyphicons btn <?php if($rows->status ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
+                            <a data-original-title="<?php echo $this->lang->line('edit'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action glyphicons pencil btn-success" href="/admin/cakes/edit/<?php echo $rows->cake_id; ?>"><i></i></a>
+                            <a data-original-title="<?php echo $this->lang->line('delete'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action glyphicons remove_2 btn-danger" href="/admin/cakes/remove/<?php echo $rows->cake_id; ?>"><i></i></a>
 
                         </td>
                     </tr>
@@ -62,13 +66,17 @@
                 </table>
 
             </div>
-            <?php if($paging[1]){ ?>
-                <div class="row-fluid row-fluid-custom"><div class="left-custom-paging">Showing <?php echo ($paging[3]+1); ?> to <?php echo ($i-1); ?> of <?php echo $paging[2]; ?> Entries.</div><div class="paging_bootstrap pagination custom-pagination"><?php echo $paging[1]; ?></div></div>
-            <?php } ?>
-        </div>
 
+            <?php if($paging[1]){ ?>
+                <div class="row-fluid-custom"><div class="left-custom-paging">Showing <?php echo ($paging[3]+1); ?> to <?php echo ($i-1); ?> of <?php echo $paging[2]; ?> Entries.</div><div class="paging_bootstrap pagination custom-pagination"><?php echo $paging[1]; ?></div></div>
+            <?php } ?>
+
+        </div>
 </div>
-</div>
+<style type="text/css">
+    .row-fluid{display: none}
+    .mbutton{ margin-top:-10px }
+</style>
 <script type="text/javascript">
 
     $(document).ready(function() {

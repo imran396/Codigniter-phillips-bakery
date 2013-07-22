@@ -53,13 +53,13 @@
 <?php
 $locations=$this->locations_model->getLocations($queryup->locationid);
 ?>
-<p class="cen"><?php echo $locations[0]->title; ?></p>
-<p class="cen"><?php echo $locations[0]->address1; ?></p>
-<p class="cen"><?php echo $locations[0]->address2; ?></p>
-<p class="cen"><?php echo $locations[0]->city; ?> , <?php echo $locations[0]->province; ?> <?php echo $locations[0]->postal_code; ?></p>
-<p class="cen"><?php echo $locations[0]->country; ?></p>
-<p class="cen"><?php echo $locations[0]->email; ?></p>
-<p class="cen"><?php echo $this->orders_model->phoneNoFormat($locations[0]->phone); ?></p>
+<?php if($locations[0]->title){ ?><p class="cen"><?php echo $locations[0]->title; ?></p><?php } ?>
+<?php if($locations[0]->title){ ?><p class="cen"><?php echo $locations[0]->address1; ?></p><?php } ?>
+<?php if($locations[0]->title){ ?><p class="cen"><?php echo $locations[0]->address2; ?></p><?php } ?>
+<?php if($locations[0]->title){ ?><p class="cen"><?php echo $locations[0]->city; ?> , <?php echo $locations[0]->province; ?> <?php echo $locations[0]->postal_code; ?></p><?php } ?>
+<?php if($locations[0]->title){ ?><p class="cen"><?php echo $locations[0]->country; ?></p><?php } ?>
+<?php if($locations[0]->title){ ?><p class="cen"><?php echo $locations[0]->email; ?></p><?php } ?>
+<?php if($locations[0]->title){ ?><p class="cen"><?php echo $this->orders_model->phoneNoFormat($locations[0]->phone); ?></p><?php } ?>
 
 <br />
 
@@ -188,7 +188,7 @@ $locations=$this->locations_model->getLocations($queryup->locationid);
         <li><p>MAGIC CAKE ID:</p></li>
     <?php } ?>
     <?php if($queryup->flavour_name){ ?>
-        <li><p></p>FLAVOUR:</p></li>
+        <li><p>FLAVOUR:</p></li>
     <?php } ?>
     <?php if($queryup->serving_size){ ?>
         <li><p>SIZE:</p></li>
@@ -221,7 +221,7 @@ $locations=$this->locations_model->getLocations($queryup->locationid);
         <li><p><?php echo $queryup->serving_title; ?></p></li>
     <?php } ?>
     <?php if($queryup->tiers){ ?>
-        <li><p><?php echo $queryup->tiers; ?></p></li>
+        <li><p><?php echo $queryup->orderTiers; ?></p></li>
     <?php } ?>
 </ul>
 <div class="clr"></div>
@@ -244,16 +244,16 @@ $locations=$this->locations_model->getLocations($queryup->locationid);
 
 <ul class="col_2">
     <?php if($queryup->printed_imag_surcharge >0 ){ ?>
-        <li><p><?php echo $queryup->printed_imag_surcharge; ?></p></li>
+        <li><p><?php echo "$".$queryup->printed_imag_surcharge; ?></p></li>
     <?php } ?>
     <?php if($queryup->delivery_zone_surcharge){ ?>
-        <li><p><?php echo $queryup->delivery_zone_surcharge; ?></p></li>
+        <li><p><?php echo "$".$queryup->delivery_zone_surcharge; ?></p></li>
     <?php } ?>
     <?php if($queryup->magic_surcharge){ ?>
-        <li><p><?php echo $queryup->magic_surcharge; ?></p></li>
+        <li><p><?php echo "$".$queryup->magic_surcharge; ?></p></li>
     <?php } ?>
     <?php if($queryup->discount_price){ ?>
-        <li><p><?php echo $queryup->discount_price; ?></p></li>
+        <li><p><?php echo "$".$queryup->discount_price; ?></p></li>
     <?php } ?>
 
 </ul>
@@ -270,7 +270,7 @@ $locations=$this->locations_model->getLocations($queryup->locationid);
 
 <ul class="col_2">
     <?php if($queryup->total_price){ ?>
-        <li><p><?php if($queryup->override_price){ echo $queryup->override_price;}else{ echo $queryup->total_price;} ?></p></li>
+        <li><p><?php if($queryup->override_price){ echo "$".$queryup->override_price;}else{ echo "$".$queryup->total_price;} ?></p></li>
     <?php } ?>
 </ul>
 <div class="clr"></div>
@@ -280,6 +280,7 @@ $locations=$this->locations_model->getLocations($queryup->locationid);
 <br />
 <p class="cen">Thank You</p>
 <p class="cen"><?php echo $locations[0]->email; ?></p>
+<br />
 <p class="cen">stphillipsbakery.com</p>
 <br />
 

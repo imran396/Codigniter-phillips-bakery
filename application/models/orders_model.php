@@ -44,7 +44,7 @@ class Orders_model extends Crud_Model
     {
 
         $filePath  = "assets/uploads/cakes/";
-        $file_name=resize_image($_FILES[onCakeImage],$filePath,700,480);
+        $file_name=resize_image($_FILES['onCakeImage'],$filePath,700,480);
         $this->fileDelete($id);
         $filePath  = "assets/uploads/cakes/".$file_name;
         $this->fileDelete($id);
@@ -69,9 +69,10 @@ class Orders_model extends Crud_Model
 
     public function instructionalImagesUploadByEmail($data){
 
+
         $count =  $data['attachment-count'];
         for($i=1;$i<=$count;$i++){
-            $attachment = "attachment-$i";
+            $attachment = $_FILES["attachment-$i"];
             $filePath  = "assets/uploads/gallery/";
             $file_name=resize_image($attachment,$filePath,730,480);
             $instructional_photo  = "assets/uploads/gallery/".$file_name;
@@ -80,6 +81,20 @@ class Orders_model extends Crud_Model
         }
 
     }
+
+
+    public function cakeOnimage($data){
+
+        $id = $data['order_id'];
+        $attachment = "attachment-1";
+        $attachment = $_FILES["$attachment"];
+        $filePath = "assets/uploads/cakes/";
+        $file_name=resize_image($attachment,$filePath,200,140);
+        $on_cake_image  = "assets/uploads/cakes/".$file_name;
+        $this->fileDelete($id);
+        $this->db->set(array('on_cake_image' => $on_cake_image))->where(array('order_id' => $id))->update('orders');
+    }
+
 
 
 

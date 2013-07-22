@@ -76,7 +76,7 @@ class Price_matrix_model extends Ci_Model
     public function getFlavours()
     {
 
-        return $this->db->select('*')->where('status',1)->order_by("ordering", "asc")->get('flavours')->result();
+        return $this->db->select('*')->where('status',1)->order_by("title", "asc")->get('flavours')->result();
 
     }
 

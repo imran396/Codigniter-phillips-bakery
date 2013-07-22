@@ -5,7 +5,7 @@
         clearTimeout(doAction);
         doAction = setTimeout(function(){
             doSearch();
-        }, 5000);
+        },1000);
     }
 
     function doSearch()
@@ -23,6 +23,13 @@
             success: function(val){
                 $('#filterResult').html(val);
                 $('#beforloading').html('');
+                $('.dynamicTable').dataTable({
+                    "sPaginationType": "bootstrap",
+                    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+                    "oLanguage": {
+                        "sLengthMenu": "_MENU_ records per page"
+                    }
+                });
                 //console.log(val);
             }
         })
@@ -242,7 +249,7 @@
         </div>
         <div class="clear"></div>
     </div>
-    <div id="beforloading">rgterjelrtjkler</div>
+    <div id="beforloading"></div>
 
 </form>
     <style>
@@ -257,7 +264,7 @@
 <div class="innerLR" id="filterResult">
     <div class="widget">
         <div class="widget-body">
-            <table class="dynamicTable table table-striped table-bordered column-sorting">
+            <table class="dynamicTable table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th width="70">Order #</th>

@@ -68,7 +68,7 @@ class Categories_model extends Crud_Model
     public function getListing()
     {
 
-        return $this->db->select('*')->order_by('ordering','asc')->get('categories')->result();
+        return $this->db->select('*')->order_by('title','asc')->get('categories')->result();
 
     }
 

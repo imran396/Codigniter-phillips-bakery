@@ -1,4 +1,4 @@
-SUBJECT: St. phillip's Bakery - Cake <?php echo ucfirst($invoice_title); ?>
+SUBJECT: St. phillip's Bakery - Cake <?php if( $queryup->order_status =="estimate"){ echo ucfirst( $queryup->order_status); }else{ echo "Invoice"; } ?>
 
 St. Phillips Bakery
 --------------------------
@@ -29,7 +29,7 @@ CUSTOMER DETAILS
 ------------------------------------------------------------
 ORDER INFORMATION
 
-PICKUP/DELIVERY: 		<?php echo $queryup->delivery_type.PHP_EOL; ?>
+PICKUP/DELIVERY: 		<?php echo ucfirst($queryup->delivery_type).PHP_EOL; ?>
 DATE: 					<?php echo $this->orders_model->dateFormat($queryup->delivery_date); ?> <?php echo $this->orders_model->timeFormat($queryup->delivery_time).PHP_EOL; ?>
 <?php
 if($queryup->delivery_type != 'delivery' ){
@@ -97,27 +97,27 @@ SHAPE: 			        <?php echo $queryup->shape.PHP_EOL; ?>
 <?php if($queryup->serving_title){ ?>
 SERVING: 			    <?php echo $queryup->serving_title.PHP_EOL; ?>
 <?php } ?>
-<?php if($queryup->tiers){ ?>
-TIERS: 			        <?php echo $queryup->tiers.PHP_EOL; ?>
+<?php if($queryup->orderTiers){ ?>
+TIERS: 			        <?php echo $queryup->orderTiers.PHP_EOL; ?>
 <?php } ?>
 
 <?php if($queryup->printed_imag_surcharge >0 ){ ?>
-PRINTED IMAGE:                                  <?php echo $queryup->printed_imag_surcharge.PHP_EOL; ?>
+PRINTED IMAGE:                                  <?php echo "$".$queryup->printed_imag_surcharge.PHP_EOL; ?>
 <?php } ?>
 <?php if($queryup->delivery_zone_surcharge >0 ){ ?>
-DELIVERY:                                       <?php echo $queryup->delivery_zone_surcharge.PHP_EOL; ?>
+DELIVERY:                                       <?php echo "$".$queryup->delivery_zone_surcharge.PHP_EOL; ?>
 <?php } ?>
 <?php if($queryup->magic_surcharge >0 ){ ?>
-MAGIC SURCHARGE:                                <?php echo $queryup->magic_surcharge.PHP_EOL; ?>
+MAGIC SURCHARGE:                                <?php echo "$".$queryup->magic_surcharge.PHP_EOL; ?>
 <?php } ?>
 <?php if($queryup->discount_price >0 ){ ?>
-DISCOUNT:                                       <?php echo $queryup->discount_price.PHP_EOL; ?>
+DISCOUNT:                                       <?php echo "$".$queryup->discount_price.PHP_EOL; ?>
 <?php } ?>
 ------------------------------------------------------------
-TOTAL:                                         <?php if($queryup->override_price){ echo $queryup->override_price.PHP_EOL;}else{ echo $queryup->total_price.PHP_EOL;} ?>
+TOTAL:                                         <?php if($queryup->override_price){ echo "$".$queryup->override_price.PHP_EOL;}else{ echo "$".$queryup->total_price.PHP_EOL;} ?>
 
 ------------------------------------------------------------
 
 Thank You
-<?php echo $locations[0]->email; ?>
+<?php echo $locations[0]->email.PHP_EOL; ?>
 stphillipsbakery.com

@@ -387,6 +387,7 @@ class Ion_auth
 		$this->ci->session->unset_userdata('group');
 		$this->ci->session->unset_userdata('id');
 		$this->ci->session->unset_userdata('user_id');
+		$this->ci->session->unset_userdata('locationid');
 
 		//delete the remember me cookies if they exist
 		if (get_cookie('identity'))

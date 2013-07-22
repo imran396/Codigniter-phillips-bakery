@@ -30,7 +30,7 @@ $lang['drag'] 		 	    = 'Drag';
 $lang['menu_level'] 		 	                    = 'Menu Level';
 $lang['dashboard'] 		 	                        = 'Dashboard';
 $lang['settings'] 		 	                        = 'Settings';
-$lang['categories'] 		 	                    = 'Cake Catalogue';
+$lang['categories'] 		 	                    = 'Cake Categories';
 $lang['cakes'] 		 	                            = 'Manage Cakes';
 $lang['locations'] 		 	                        = 'Locations';
 $lang['location'] 		 	                        = 'Location';
@@ -73,14 +73,17 @@ $lang['image_delete_msg']="Image has been deleted successfully";
 $lang['duplicate_msg']="is already taken";
 $lang['admin_delete_msg']="Administer not delete";
 $lang['no_records_msg']="Sorry - No listings founds";
-$lang['no_location_msg']="Must be need location select";
+$lang['no_location_msg']="Location must be selected";
 $lang['no_group_msg']="Must be need group select";
 $lang['status_msg']="The selected flavour has been disabled.";
-
+$lang['tag_msg']="Separate tag with a comma in order to use multiple tags. Example tag1,tag2, etc";
+$lang['move'] 		 	    = 'Move';
+$lang['search'] 		 	    = 'Search';
 
 /* User Settings */
 $lang['sign_out'] 		 	    = 'Sign Out';
 $lang['user'] 		 	    = 'User';
+
 
 /*     Action button    */
 $lang['add_categories'] 		 	    = 'Add Categories';
@@ -109,6 +112,7 @@ $lang['unpublish'] 		 	    = 'Un-publish';
 
 
 $lang['create_location'] 		 	    = 'Create Location';
+$lang['vaughan_location'] 		 	    = 'Vaughan Location';
 $lang['location_title'] 		 	    = 'Location Title';
 $lang['address1'] 		 	    = 'Address 1';
 $lang['address2'] 		 	    = 'Address 2';

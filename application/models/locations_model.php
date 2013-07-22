@@ -42,17 +42,7 @@ class Locations_model extends Crud_Model
 
     }
 
-    public function  checkUniqueTitle($id){
 
-        if(!empty($id)){
-            $dbcatid = $this->db->select('title')
-                ->where('location_id',$id)
-                ->get('locations')->result();
-                return $dbcatid[0]->title;
-
-        }
-
-    }
 
     public function getLocations($location_id)
     {
@@ -91,18 +81,65 @@ class Locations_model extends Crud_Model
 
     }
 
+    private function  checkUniqueTitle($id){
+
+        if(!empty($id)){
+            $dbcatid = $this->db->select('title')
+                ->where('location_id',$id)
+                ->get('locations')->row();
+                return $dbcatid->title;
+
+        }
+
+    }
+
+    private function  checkUniqueVaughan($id){
+
+        if(!empty($id)){
+            $dbcatid = $this->db->select('vaughan_location')
+                ->where('location_id',$id)
+                ->get('locations')->row();
+            return $dbcatid->vaughan_location;
+
+        }
+
+    }
+
+
     public function checkLocations($id,$title)
     {
 
 
         $dbtitle = $this->checkUniqueTitle($id);
-        if($title != $dbtitle ){
+        if($title != $dbtitle){
 
 
             $count=$this->db->select('location_id')->where(array( strtolower('title') => strtolower($title) ))->get('locations')->num_rows();
             if($count > 0 )
             {
                 $this->form_validation->set_message('checkTitle', $title.' %s '.$this->lang->line('duplicate_msg'));
+                return FALSE;
+            }else{
+                return TRUE;
+            }
+        }
+
+    }
+
+
+    public function vaughanLocation($id,$VaughanLocation)
+    {
+
+
+        $dbVaughan = $this->checkUniqueVaughan($id);
+
+        if($VaughanLocation != $dbVaughan ){
+
+
+            $count=$this->db->select('vaughan_location')->where(array( 'vaughan_location' => $VaughanLocation ))->get('locations')->num_rows();
+            if($count > 0 )
+            {
+                $this->form_validation->set_message('checkVaughanLocation',$this->lang->line('duplicate_msg'));
                 return FALSE;
             }else{
                 return TRUE;

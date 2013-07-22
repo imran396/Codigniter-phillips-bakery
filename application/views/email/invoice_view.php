@@ -62,7 +62,7 @@
 
 <div id="wrapper">
 <div class="col_half left">
-    <h1><?php echo strtoupper($invoice_title); ?></h1>
+    <h1><?php if( $queryup->order_status =="estimate"){ echo strtoupper( $queryup->order_status); }else{ echo "INVOICE"; } ?></h1>
 </div>
 
 <div class="col_half right">
@@ -71,13 +71,13 @@
     ?>
     <p  class="align-right">St. Phillip's Bakery</p>
 
-    <p  class="align-right"><?php echo $locations[0]->title; ?></p>
-    <p  class="align-right"><?php echo $locations[0]->address1; ?></p>
-    <p  class="align-right"><?php echo $locations[0]->address2; ?></p>
-    <p  class="align-right"><?php echo $locations[0]->city; ?> , <?php echo $locations[0]->province; ?> <?php echo $locations[0]->postal_code; ?></p>
-    <p  class="align-right"><?php echo $locations[0]->country; ?></p>
-    <p  class="align-right"><?php echo $locations[0]->email; ?></p>
-    <p  class="align-right"><?php echo $this->orders_model->phoneNoFormat($locations[0]->phone); ?></p>
+    <?php if($locations[0]->title){ ?><p  class="align-right"><?php echo $locations[0]->title; ?></p><?php } ?>
+    <?php if($locations[0]->address1){ ?><p  class="align-right"><?php echo $locations[0]->address1; ?></p><?php } ?>
+    <?php if($locations[0]->address2){ ?><p  class="align-right"><?php echo $locations[0]->address2; ?></p><?php } ?>
+    <?php if($locations[0]->city){ ?><p  class="align-right"><?php echo $locations[0]->city; ?> , <?php echo $locations[0]->province; ?> <?php echo $locations[0]->postal_code; ?></p><?php } ?>
+    <?php if($locations[0]->country){ ?><p  class="align-right"><?php echo $locations[0]->country; ?></p><?php } ?>
+    <?php if($locations[0]->email){ ?><p  class="align-right"><?php echo $locations[0]->email; ?></p><?php } ?>
+    <?php if($locations[0]->phone){ ?><p  class="align-right"><?php echo $this->orders_model->phoneNoFormat($locations[0]->phone); ?></p><?php } ?>
 </div>
 <div class="clr"></div>
 
@@ -225,6 +225,7 @@
     <br />
     <p class="cen">Thank You</p>
     <p class="cen"><?php echo $locations[0]->email; ?></p>
+    <br />
     <p class="cen">stphillipsbakery.com</p>
 
 </div>
@@ -250,23 +251,23 @@
         <?php if($queryup->serving_title){ ?>
         <tr><td>SERVING:</td><td><?php echo $queryup->serving_title; ?></td></tr>
         <?php } ?>
-        <?php if($queryup->tiers){ ?>
-        <tr><td>TIERS:</td><td><?php echo $queryup->tiers; ?></td></tr>
+        <?php if($queryup->orderTiers){ ?>
+        <tr><td>TIERS:</td><td><?php echo $queryup->orderTiers; ?></td></tr>
         <?php } ?>
         <tr><td colspan="2">&nbsp;</td></tr>
         <tr><td colspan="2">&nbsp;</td></tr>
         <?php if($queryup->printed_imag_surcharge > 0){ ?>
-            <tr><td>PRINTED IMAGE</td><td><?php echo $queryup->printed_imag_surcharge; ?></td></tr>
+            <tr><td>PRINTED IMAGE</td><td><?php echo "$".$queryup->printed_imag_surcharge; ?></td></tr>
         <?php } ?>
         <?php if($queryup->delivery_zone_surcharge){ ?>
-            <tr><td>DELIVERY:</td><td><?php echo $queryup->delivery_zone_surcharge; ?></td></tr>
+            <tr><td>DELIVERY:</td><td><?php echo "$".$queryup->delivery_zone_surcharge; ?></td></tr>
         <?php } ?>
         <?php if($queryup->magic_surcharge){ ?>
-            <tr><td>DISCOUNT:</td><td><?php echo $queryup->magic_surcharge; ?></td></tr>
+            <tr><td>DISCOUNT:</td><td><?php echo "$".$queryup->magic_surcharge; ?></td></tr>
         <?php } ?>
         <tr><td colspan="2">&nbsp;</td></tr>
         <tr><td colspan="2"> <hr /></td></tr>
-        <tr><td>TOTAL</td><td><?php if($queryup->override_price){ echo $queryup->override_price;}else{ echo $queryup->total_price;} ?></td></tr>
+        <tr><td>TOTAL</td><td><?php if($queryup->override_price){ echo "$".$queryup->override_price;}else{ echo "$".$queryup->total_price;} ?></td></tr>
         </tbody>
     </table>
 </div>

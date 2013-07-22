@@ -37,6 +37,13 @@
                                 </div>
 
                                 <div class="control-group">
+                                    <?php $vaughan_location = (isset($queryup[0]->vaughan_location))? $queryup[0]->vaughan_location:set_value('vaughan_location'); ?>
+                                    <label class="control-label"><?php echo $this->lang->line('vaughan_location');?></label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="vaughan_location" id="vaughan_location" value="1" <?php if($vaughan_location ==1){?> checked="checked" <?php } ?>>
+                                    </div>
+                                </div>
+                                <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('address1');?></label>
                                     <div class="controls">
                                         <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address1');?>" value="<?php echo(isset($queryup[0]->address1))? $queryup[0]->address1:set_value('address1'); ?>"   class="span12" name="address1" id="address1"  />

@@ -65,6 +65,7 @@ class Locations extends Crud_Controller
         $this->form_validation->set_rules('title', 'Location Title','required|trim|xss_clean|callback_checkTitle');
         $this->form_validation->set_rules('email', 'Email Address','valid_email');
         $this->form_validation->set_rules('location_id');
+        $this->form_validation->set_rules('vaughan_location','trim|xss_clean|callback_checkVaughanLocation');
         $this->form_validation->set_rules('address1');
         $this->form_validation->set_rules('address2');
         $this->form_validation->set_rules('city');
@@ -126,6 +127,14 @@ class Locations extends Crud_Controller
 
 
     }
+
+    function checkVaughanLocation($VaughanLocation){
+
+        $data = $this->input->post();
+        return  $this->locations_model->vaughanLocation($data['location_id'],$VaughanLocation);
+
+    }
+
 
 
     private function redirectToHome($redirect = NULL)

@@ -16,10 +16,6 @@
     </div>
     <br/>
     <!-- End Content -->
-    <?php
-
-    print_r($queryup);
-    ?>
     <div class="separator"></div>
     <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/servings/save" name="form1" id="form1">
  <div class="innerLR">

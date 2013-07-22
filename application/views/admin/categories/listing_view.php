@@ -14,7 +14,7 @@
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('categories');?></h3>
         <div class="buttons pull-right">
-            <a href="/admin/categories" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add page</a>
+            <a href="/admin/categories" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add New Cake Category</a>
         </div>
         <div class="clearfix"></div>
     </div>

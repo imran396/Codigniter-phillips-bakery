@@ -148,9 +148,9 @@
                         <div class="title">Serving</div><?php echo $queryup->serving_title; ?>
                     </div>
                     <?php } ?>
-                    <?php if( $queryup->tiers){ ?>
+                    <?php if( $queryup->orderTiers){ ?>
                     <div class="line">
-                        <div class="title">Tiers</div><?php echo $queryup->tiers; ?>
+                        <div class="title">Tiers</div><?php echo $queryup->orderTiers; ?>
                     </div>
                     <?php } ?>
                     <?php if( $queryup->magic_cake_id){ ?>

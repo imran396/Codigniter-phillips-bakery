@@ -11,9 +11,6 @@
     <br/>
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('customers');?></h3>
-        <div class="buttons pull-right">
-            <a href="/admin/customers" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add page</a>
-        </div>
         <div class="clearfix"></div>
     </div>
 <!-- End Content -->

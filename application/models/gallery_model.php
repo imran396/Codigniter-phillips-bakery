@@ -64,29 +64,33 @@ class Gallery_model extends CI_Model
     }
 
 
-    function fileDelete($id)
+    function galleryDelete($id)
     {
-        $row = $this->getGallery($id);
-        if (file_exists($row[0]->image))
+        $rows = $this->getGallery($id);
+        if (file_exists($rows->image))
         {
-            unlink($_SERVER['DOCUMENT_ROOT'].$row[0]->image);
+            unlink($_SERVER['DOCUMENT_ROOT'].$rows->image);
         }
-
-
+        $this->db->where(array('gallery_id'=>$id,'feature_image !='=>1))->delete('cake_gallery');
     }
 
 
-    public function delete($id)
+    public function imageDelete($id)
     {
 
-        $this->fileDelete($id);
-        $this->remove($id);
-        $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
+        $rows=$this->db->where(array('gallery_id'=>$id,'feature_image !='=>1))->get('cake_gallery')->row();
+        if($rows->image){
+            if (file_exists($rows->image))
+            {
+                unlink($_SERVER['DOCUMENT_ROOT'].$rows->image);
+            }
+            $this->db->where(array('gallery_id'=>$id,'feature_image !='=>1))->delete('cake_gallery');
+            $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
+        }else{
+            $this->session->set_flashdata('wrinn_msg',$this->lang->line('delete_msg'));
+        }
     }
 
-    public function remove($id){
-        $this->db->where(array('gallery_id'=>$id))->delete('cake_gallery');
-    }
 
     public function statusChange($id){
 
@@ -143,7 +147,7 @@ class Gallery_model extends CI_Model
     {
 
 
-        $result = $this->db->select('*')->where(array('cake_id'=>$cake_id))->get('cake_gallery');
+        $result = $this->db->select('*')->where(array('cake_id'=>$cake_id))->order_by('feature_image','desc')->get('cake_gallery');
         if($result ->num_rows() > 0){
             return $result->result();
         }else{

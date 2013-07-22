@@ -14,7 +14,7 @@
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('servings');?></h3>
         <div class="buttons pull-right">
-            <a href="/admin/servings" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add page</a>
+            <a href="/admin/servings" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add New Serving/Size</a>
         </div>
         <div class="clearfix"></div>
     </div>

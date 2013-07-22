@@ -842,6 +842,17 @@ $(function()
             });
     }
 
+    var oTable = $('.column-sorting').dataTable({
+     "iDisplayLength": 500,
+     "aoColumnDefs": [
+    { "bSortable":false, "aTargets": [ 0,4,5 ] }
+
+    ]
+    });
+
+    //Sort immediately with columns 0 and 1
+    oTable.fnSort( [ [1,'asc']] );
+
 
 
 

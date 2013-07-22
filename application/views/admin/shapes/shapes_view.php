@@ -15,7 +15,7 @@
         <div class="clearfix"></div>
     </div>
     <br/>
-    <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/shapes/save" name="form1" id="form1">
+    <form method="post" action="/admin/shapes/save" name="form1" id="form1">
  <div class="innerLR">
      <input type="hidden" name="shape_id" id="shape_id" value="<?php echo(isset($queryup[0]->shape_id))? $queryup[0]->shape_id : set_value('shape_id'); ?>" />
      <div class="tab-content" style="padding: 0;">

@@ -1,10 +1,9 @@
 Reply to this email and attach the example images you would
 like your baker to reference.
 
-Required By:	< Date dd/mm/yyyy >
 
 ------------------------------------------------------------
-ORDER #<?php echo $order_id.PHP_EOL; ?>
+ORDER #<?php echo $order_code.PHP_EOL; ?>
 <?php echo $order_date.PHP_EOL; ?>
 
 ------------------------------------------------------------

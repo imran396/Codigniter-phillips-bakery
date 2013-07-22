@@ -11,7 +11,7 @@
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('locations');?></h3>
         <div class="buttons pull-right">
-            <a href="/admin/locations" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add page</a>
+            <a href="/admin/locations" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add New Bakery Location</a>
         </div>
         <div class="clearfix"></div>
     </div>
