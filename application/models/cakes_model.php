@@ -29,7 +29,7 @@ class Cakes_model extends CI_Model
     {
 
         $filePath  = "assets/uploads/cakes/";
-        $file_name=resize_image($_FILES[image_name],$filePath,200,140);
+        $file_name=resize_image($_FILES['image_name'],$filePath,200,140);
         $this->fileDelete($id);
         $filePath  = $filePath.$file_name;
         $this->db->where(array('cake_id' => $id))->set(array('image' => $filePath))->update('cakes');
