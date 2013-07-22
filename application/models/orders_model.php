@@ -30,12 +30,17 @@ class Orders_model extends Crud_Model
 
     public function order_update($data,$order_id){
 
-
         $order_id = $this->update($data,$order_id);
         $dbdata =$this->getOrder($order_id);
         $order['order_id']= $dbdata->order_id;
         $order['order_code']=  $dbdata->order_code;
         $order['order_status']=  $dbdata->order_status;
+        if($dbdata->production_status =="" ||  $dbdata->order_status =="estimate"){
+            $this->db->where(array('order_id'=>$order_id))->set(array('production_status'=>'estimate'))->update('orders');
+        }else if($dbdata->order_status =="order"){
+            $this->db->where(array('order_id'=>$order_id))->set(array('production_status'=>'in-production'))->update('orders');
+        }
+        $dbdata =$this->getOrder($order_id);
         $order['production_status']=  $dbdata->production_status;
 
         return $order;
