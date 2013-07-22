@@ -73,6 +73,8 @@ class Orders extends API_Controller
         $order_status=isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'';
         if($order_status =='order'){
             $data['production_status']='in-production';
+        }else{
+            $data['production_status']='estimate';
         }
 
         $order_delivery['name']=isset($_REQUEST['name']) ? $_REQUEST['name']:'';
@@ -111,23 +113,17 @@ class Orders extends API_Controller
             $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak');
         }
 
-        $this->saveImage($orders['order_code']);
+        $this->saveBarcodeImage($orders['order_code']);
         $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
+        if($mailtouser =="yes"){
+            $this->sendEmail($orders['order_code']);
+        }
 
         if(strtolower($data['order_status']) == 'order'){
 
-            if($mailtouser =="yes"){
-
-                $this->sendEmail($orders['order_code']);
-            }
-            $this->sendOutput($orders);
+            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'production_status' =>  $orders['production_status']));
         }else{
-            if($mailtouser =="yes"){
-
-                $this->sendEmail($orders['order_code']);
-            }
-
-            $this->sendOutput(array('order_id'=> $orders['order_id']));
+            $this->sendOutput(array('order_id'=> $orders['order_id'],'production_status' =>  $orders['production_status']));
         }
 
     }
@@ -196,19 +192,14 @@ class Orders extends API_Controller
         }
 
         $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
-
+        if($mailtouser =="yes"){
+            $this->sendEmail($orders['order_code']);
+        }
         if(strtolower($data['order_status']) == 'order'){
-            if($mailtouser =="yes"){
 
-                $this->sendEmail($orders['order_code']);
-            }
-            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code']));
+            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'production_status' =>  $orders['production_status']));
         }else{
-            if($mailtouser =="yes"){
-
-                $this->sendEmail($orders['order_code']);
-            }
-            $this->sendOutput(array('order_id'=> $orders['order_id']));
+            $this->sendOutput(array('order_id'=> $orders['order_id'],'production_status' =>  $orders['production_status']));
         }
 
     }
@@ -220,7 +211,7 @@ class Orders extends API_Controller
         $data ['rows'] = $this->orders_model->getCustomerData($data['customer_id']);
         $body = $this->load->view('email/instructional_photo_view', $data,true);
         $this->email->set_newline("\r\n");
-        $this->email->from('imran@emicrograph.com', 'test');
+        $this->email->from('imran@emicrograph.com', 'St Phillip\'s Bakery');
         $this->email->reply_to($replyTo, $name);
         $this->email->to($data ['rows']->email);
         $this->email->subject('St Phillip\'s - Attach your images'.'|'.$data['order_code']);
@@ -270,7 +261,7 @@ class Orders extends API_Controller
 
     }
 
-    public function saveImage($order_code){
+    public function saveBarcodeImage($order_code){
 
         define('YOUR_DIRECTORY',realpath(APPPATH . "../web/assets/uploads/orders/barcode/"));
         $content = file_get_contents(site_url()."/api/orders/barcode_gen/".$order_code);
@@ -298,10 +289,9 @@ class Orders extends API_Controller
 
             }else{
 
-                $row=$this->data['queryup'];
-                $this->data['invoice_title']= $invoice;
                 $this->load->view('email/invoice_view', $this->data);
-                $this->sendEmail($row->order_code);
+                // $row=$this->data['queryup'];
+                //$this->sendEmail($row->order_code);
 
             }
 
@@ -329,8 +319,8 @@ class Orders extends API_Controller
         if(!empty($customer_email)){
 
             $body          = $this->load->view('email/invoice_body', $this->data,true);
-            $to      = 'shafiq@emicrograph.com';
-           // $subject ="Estimate";
+            //$to      = 'shafiq@emicrograph.com';
+            // $subject ="Estimate";
             $this->email->set_newline("\r\n");
             $this->email->from('shafiq@emicrograph.com', 'St Phillip\'s Bakery');
             $this->email->to($customer_email);
