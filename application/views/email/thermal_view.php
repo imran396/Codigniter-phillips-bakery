@@ -106,7 +106,7 @@ if(!empty($locations)){
             <li><?php echo $deliveryInfo->address_2; ?></li>
         <?php } ?>
         <?php if( $deliveryInfo->city || $deliveryInfo->postal ){ ?>
-            <li><?php if($deliveryInfo->city){  echo $deliveryInfo->city; } ?> , <?php if($deliveryInfo->province){  echo $deliveryInfo->province; } ?> , <?php if( $deliveryInfo->postal){ ?> ON <?php echo $deliveryInfo->postal; } ?></li>
+            <li><?php if($deliveryInfo->city){  echo $deliveryInfo->city; } ?>  <?php if($deliveryInfo->province){  echo ", ".$deliveryInfo->province; } ?>  <?php if( $deliveryInfo->postal){ ?> <?php echo $deliveryInfo->postal; } ?></li>
         <?php } ?>
         <li><?php echo $this->orders_model->phoneNoFormat($deliveryInfo->phone); ?></li>
         <?php if( $deliveryInfo->email){ ?>
@@ -205,7 +205,7 @@ if(!empty($locations)){
     <?php } ?></ul>
 
 <ul class="col_2">
-    <li><p><?php echo $queryup->matrix_price; ?></p></li>
+    <li><p><?php echo "$".$queryup->matrix_price; ?></p></li>
     <?php if($queryup->magic_cake_id){ ?>
         <li><p><?php echo $queryup->magic_cake_id; ?></p></li>
     <?php } ?>
