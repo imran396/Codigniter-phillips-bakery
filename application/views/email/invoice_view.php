@@ -111,7 +111,9 @@
     <li><?php echo $queryup->first_name.' '. $queryup->last_name ?></li>
     <li><?php echo $queryup->address_1; ?></li>
     <li><?php echo $queryup->address_2; ?></li>
-    <li><?php echo $queryup->city; ?>, <?php echo $queryup->province; ?> <?php echo $queryup->postal_code; ?></li>
+    <?php if($queryup->city !="" || $queryup->province !="" || $queryup->postal_code !=""  ){?>
+    <li><?php echo $queryup->city; ?> <?php if($queryup->province){ echo ",".$queryup->province; } ?> <?php echo $queryup->postal_code; ?></li>
+    <?php } ?>
     <li><?php echo $this->orders_model->phoneNoFormat($queryup->phone_number); ?>
     </li>
     <li><?php echo $queryup->email; ?></li>

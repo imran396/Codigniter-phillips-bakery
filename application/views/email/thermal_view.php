@@ -54,12 +54,12 @@
 $locations=$this->locations_model->getLocations($queryup->locationid);
 ?>
 <?php if($locations[0]->title){ ?><p class="cen"><?php echo $locations[0]->title; ?></p><?php } ?>
-<?php if($locations[0]->title){ ?><p class="cen"><?php echo $locations[0]->address1; ?></p><?php } ?>
-<?php if($locations[0]->title){ ?><p class="cen"><?php echo $locations[0]->address2; ?></p><?php } ?>
-<?php if($locations[0]->title){ ?><p class="cen"><?php echo $locations[0]->city; ?> , <?php echo $locations[0]->province; ?> <?php echo $locations[0]->postal_code; ?></p><?php } ?>
-<?php if($locations[0]->title){ ?><p class="cen"><?php echo $locations[0]->country; ?></p><?php } ?>
-<?php if($locations[0]->title){ ?><p class="cen"><?php echo $locations[0]->email; ?></p><?php } ?>
-<?php if($locations[0]->title){ ?><p class="cen"><?php echo $this->orders_model->phoneNoFormat($locations[0]->phone); ?></p><?php } ?>
+<?php if($locations[0]->address1){ ?><p class="cen"><?php echo $locations[0]->address1; ?></p><?php } ?>
+<?php if($locations[0]->address2){ ?><p class="cen"><?php echo $locations[0]->address2; ?></p><?php } ?>
+<?php if($locations[0]->city || $locations[0]->province || $locations[0]->postal_code){ ?><p class="cen"><?php echo $locations[0]->city; ?> , <?php echo $locations[0]->province; ?> <?php echo $locations[0]->postal_code; ?></p><?php } ?>
+<?php if($locations[0]->country){ ?><p class="cen"><?php echo $locations[0]->country; ?></p><?php } ?>
+<?php if($locations[0]->email){ ?><p class="cen"><?php echo $locations[0]->email; ?></p><?php } ?>
+<?php if($locations[0]->phone){ ?><p class="cen"><?php echo $this->orders_model->phoneNoFormat($locations[0]->phone); ?></p><?php } ?>
 
 <br />
 
