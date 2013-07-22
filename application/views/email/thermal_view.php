@@ -297,5 +297,7 @@ if(!empty($locations)){
 <p class="cen">
     <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
 </p>
-
+<br/>
+<br/>
+<br/>
 </div>
