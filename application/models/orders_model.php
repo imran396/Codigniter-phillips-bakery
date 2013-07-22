@@ -20,10 +20,11 @@ class Orders_model extends Crud_Model
         $order_code=(100000+$order_id);
 
         $this->db->set(array('order_code'=>$order_code))->where('order_id',$order_id)->update('orders');
-
+        $dbdata =$this->getOrder($order_id);
         $order['order_id']= $order_id;
         $order['order_code']= $order_code;
-
+        $order['order_status']=  $dbdata->order_status;
+        $order['production_status']=  $dbdata->production_status;
         return $order;
     }
 
@@ -35,6 +36,7 @@ class Orders_model extends Crud_Model
         $order['order_id']= $dbdata->order_id;
         $order['order_code']=  $dbdata->order_code;
         $order['order_status']=  $dbdata->order_status;
+        $order['production_status']=  $dbdata->production_status;
 
         return $order;
     }
@@ -50,7 +52,7 @@ class Orders_model extends Crud_Model
         $this->fileDelete($id);
         $this->db->set(array('on_cake_image' => $filePath))->where(array('order_id' => $id))->update('orders');
 
-      }
+    }
 
     public function instructionalImagesUpload($order_id){
 
