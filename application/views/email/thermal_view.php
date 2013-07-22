@@ -83,12 +83,21 @@ if(!empty($locations)){
 
 <ul class="col_1">
     <li><?php echo $queryup->first_name.' '. $queryup->last_name ?></li>
+    <?php if($queryup->address_1){?>
     <li><?php echo $queryup->address_1; ?></li>
+    <?php } ?>
+    <?php if($queryup->address_2){?>
     <li><?php echo $queryup->address_2; ?></li>
+    <?php } ?>
+    <?php if($queryup->city !="" || $queryup->province !="" || $queryup->postal_code !=""  ){?>
     <li><?php echo $queryup->city; ?>, <?php echo $queryup->province; ?> <?php echo $queryup->postal_code; ?></li>
-    <li><?php echo $this->orders_model->phoneNoFormat($queryup->phone_number); ?>
-    </li>
+    <?php } ?>
+    <?php if($queryup->phone_number){?>
+    <li><?php echo $this->orders_model->phoneNoFormat($queryup->phone_number); ?></li>
+    <?php } ?>
+    <?php if($queryup->email){?>
     <li><?php echo $queryup->email; ?></li>
+    <?php } ?>
 </ul>
 
 <ul class="col_2">
