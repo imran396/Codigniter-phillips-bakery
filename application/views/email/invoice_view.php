@@ -271,8 +271,11 @@
         <?php if($queryup->delivery_zone_surcharge){ ?>
             <tr><td>DELIVERY:</td><td><?php echo "$".$queryup->delivery_zone_surcharge; ?></td></tr>
         <?php } ?>
-        <?php if($queryup->magic_surcharge){ ?>
-            <tr><td>DISCOUNT:</td><td><?php echo "$".$queryup->magic_surcharge; ?></td></tr>
+         <?php if($queryup->magic_surcharge){ ?>
+            <tr><td>MAGIC SURCHARGE:</td><td><?php echo "$".$queryup->magic_surcharge; ?></td></tr>
+        <?php } ?>
+        <?php if($queryup->discount_price){ ?>
+            <tr><td>DISCOUNT:</td><td><?php echo "$".$queryup->discount_price; ?></td></tr>
         <?php } ?>
         <tr><td colspan="2">&nbsp;</td></tr>
         <tr><td colspan="2"> <hr /></td></tr>
