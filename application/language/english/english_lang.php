@@ -96,7 +96,7 @@ $lang['enter'] 		 	    = 'Enter';
 /* Categories */
 
 
-$lang['category_name'] 		 	    = 'Catalogue Name';
+$lang['category_name'] 		 	    = 'Categories';
 $lang['slug'] 		 	    = 'Slug';
 
 /*  Role */
