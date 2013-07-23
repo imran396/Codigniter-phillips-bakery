@@ -33,7 +33,7 @@
                 <table class="column-sorting table table-bordered table-primary js-table-sortable">
                     <thead>
                     <tr>
-                        <th class="center">No.</th>
+                 <!--       <th class="center">No.</th>-->
                         <th><?php echo $this->lang->line('cake_title');?></th>
                         <th><?php echo $this->lang->line('category_id');?></th>
                         <th><?php echo $this->lang->line('flavour_id');?></th>
@@ -49,7 +49,7 @@
                     $i=$var;
                     foreach($paging[0]->result() as  $rows ) :?>
                         <tr class="selectable" id="listItem_<?php echo $rows->cake_id; ?>" >
-                        <td class="center"><?php echo $i; ?></td>
+                       <!-- <td class="center"><?php /*echo $i; */?></td>-->
                         <td><?php echo $rows->title; ?></td>
                         <td><?php echo $rows->categories_name; ?></td>
                         <td><?php echo $rows->flavours_name; ?></td>

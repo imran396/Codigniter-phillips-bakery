@@ -69,7 +69,7 @@ class Gallery_model extends CI_Model
         $rows = $this->getGallery($id);
         if (file_exists($rows->image))
         {
-            unlink($_SERVER['DOCUMENT_ROOT'].$rows->image);
+            unlink($_SERVER['DOCUMENT_ROOT'].'/'.$rows->image);
         }
         $this->db->where(array('gallery_id'=>$id))->delete('cake_gallery');
     }
@@ -82,7 +82,7 @@ class Gallery_model extends CI_Model
         if($rows->image){
             if (file_exists($rows->image))
             {
-                unlink($_SERVER['DOCUMENT_ROOT'].$rows->image);
+                unlink($_SERVER['DOCUMENT_ROOT'].'/'.$rows->image);
             }
             $this->db->where(array('cake_id'=>$cake_id,'gallery_id'=>$id))->delete('cake_gallery');
             $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));

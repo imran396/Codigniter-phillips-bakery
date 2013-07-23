@@ -120,11 +120,17 @@
                                             <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('meta_tag');?>" value="<?php echo(isset($queryup[0]->meta_tag))? $queryup[0]->meta_tag:set_value('meta_tag'); ?>"   class="span10" name="meta_tag" id="meta_tag"  /><span data-original-title="<?php echo $this->lang->line('tag_msg'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action single glyphicons circle_question_mark" style="margin: 0;"><i></i></span>
                                         </div>
                                     </div>
+                                    <?php
+                                    $i=0;
+                                    if(!empty($galleries)){
+                                    ?>
+
                                     <div class="control-group control-group-ul">
                                         <div class="controls">
                                     <ul>
                                         <?php
                                         $i=0;
+                                        if(!empty($galleries)){
                                         foreach($galleries as $gallery):?>
                                             <li>
 
@@ -134,10 +140,11 @@
                             </span>
                                             </li>
 
-                                            <?php $i++; endforeach; ?>
+                                            <?php $i++; endforeach; } ?>
                                     </ul>
                                         </div>
                                     </div>
+                                        <?php  } ?>
                                     <div class="clear"></div>
                                     <div class="control-group">
 
