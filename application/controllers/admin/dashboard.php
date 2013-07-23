@@ -37,7 +37,7 @@ class Dashboard extends Crud_Controller
             }
         */
         $this->data['active']='dashboard';
-        $this->layout->view('admin/dashboard');
+        redirect('admin/orders/listing');
 
     }
 
