@@ -112,7 +112,7 @@ $lang['unpublish'] 		 	    = 'Un-publish';
 
 
 $lang['create_location'] 		 	    = 'Create Location';
-$lang['vaughan_location'] 		 	    = 'Vaughan Location';
+$lang['vaughan_location'] 		 	    = 'Vaughan';
 $lang['location_title'] 		 	    = 'Location Title';
 $lang['address1'] 		 	    = 'Address 1';
 $lang['address2'] 		 	    = 'Address 2';
