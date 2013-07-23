@@ -9,6 +9,8 @@ $array = array('roles','controls','access_controls');
         </div>-->
         <ul>
             <li class="heading"><span><?php echo $this->lang->line('menu_level');?></span></li>
+            <li class="glyphicons home <?php echo (!empty($active) && $active == 'dashboard') ? 'active' : ''; ?>"><a href="/admin/orders/listing"><i></i><span><?php echo $this->lang->line('orders'); ?></span></a></li>
+
             <li class="glyphicons cogwheels <?php echo (!empty($active) && ($active == 'productions' || $active == 'inproduction' ) ) ? 'active' : ''; ?>"><a href="/admin/productions"><i></i><span><?php echo $this->lang->line('production'); ?></span></a></li>
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'categories') ? 'active' : ''; ?>"><a href="/admin/categories/listing"><i></i><span><?php echo $this->lang->line('categories'); ?></span></a></li>
             <li class="hasSubmenu <?php echo (!empty($active) && ($active == 'cakes' || $active == 'gallery' )) ? 'active' : ''; ?>">
@@ -27,7 +29,7 @@ $array = array('roles','controls','access_controls');
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'locations') ? 'active' : ''; ?>"><a href="/admin/locations/listing"><i></i><span><?php echo $this->lang->line('locations'); ?></span></a></li>
 <!--            <li class="glyphicons cogwheels --><?php //echo (!empty($active) && $active == 'blackouts') ? 'active' : ''; ?><!--" ><a href="/admin/blackouts/listing"><i></i><span>--><?php //echo $this->lang->line('blackouts'); ?><!--</span></a></li>-->
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'zones') ? 'active' : ''; ?>"><a href="/admin/zones/listing"><i></i><span><?php echo $this->lang->line('zone'); ?></span></a></li>
-            <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'orders') ? 'active' : ''; ?>"><a href="/admin/orders/listing"><i></i><span><?php echo $this->lang->line('orders'); ?></span></a></li>
+
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'customers') ? 'active' : ''; ?>"><a href="/admin/customers/listing"><i></i><span><?php echo $this->lang->line('customers'); ?></span></a></li>
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'users') ? 'active' : ''; ?>"><a href="/admin/users/listing"><i></i><span><?php echo $this->lang->line('manage_users'); ?></span></a></li>
             <li class="hasSubmenu <?php echo (!empty($active) && in_array($active,$array) ) ? 'active' : ''; ?>">
