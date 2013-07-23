@@ -47,7 +47,7 @@
                                     <div class="controls">
                                         <div class="input-prepend input-append">
                                             <span class="add-on">$</span>
-                                            <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('surcharge');?>" value="<?php echo(isset($queryup[0]->surcharge))? $queryup[0]->surcharge:set_value('surcharge'); ?>"   class="span10" name="surcharge" id="appendedPrependedInput" class="span12">
+                                            <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('surcharge');?>" value="<?php echo(isset($queryup[0]->surcharge))? (int)$queryup[0]->surcharge :set_value('surcharge'); ?>"   class="span10" name="surcharge" id="appendedPrependedInput" class="span12">
                                             <span class="add-on">.00</span>
                                         </div>
 
