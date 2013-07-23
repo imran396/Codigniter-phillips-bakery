@@ -30,6 +30,7 @@
                     <tr>
                         <th class="center">No.</th>
                         <th><?php echo $this->lang->line('locations');?></th>
+                        <th><?php echo $this->lang->line('vaughan_location');?></th>
                         <th style="width: 1%;" class="center"><?php echo $this->lang->line('drag');?></th>
                         <th><?php echo $this->lang->line('action');?></th>
                     </tr>
@@ -42,6 +43,7 @@
                         <tr class="selectable" id="listItem_<?php echo $rows->location_id; ?>" >
                         <td class="center"><?php echo $i; ?></td>
                         <td><?php echo $rows->title; ?></td>
+                        <td><?php  if($rows->vaughan_location >0){ echo "Yes"; } ?></td>
                         <td class="center js-sortable-handle"><span  class="glyphicons btn-action single move" style="margin-right: 0;"><i></i></span></td>
                         <td>
 
