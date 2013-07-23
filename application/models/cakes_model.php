@@ -124,7 +124,6 @@ class Cakes_model extends CI_Model
         $insert['description'] = ($data['description'] !="") ? $data['description'] :'';
         $insert['category_id'] = ($data['category_id'] !="") ? $data['category_id'] :'';
         $insert['flavour_id'] = ($data['flavour_id'] !="") ? $data['flavour_id'] :'';
-        $insert['shape_id'] = ($data['shape_id'] !="") ? $data['shape_id'] :'';
         $insert['tiers'] = ($data['tiers'] !="") ? $data['tiers'] :'';
         $insert['meta_tag'] = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
         $insert['shape_id'] =($shape_id !="") ? serialize($shape_id):'';
