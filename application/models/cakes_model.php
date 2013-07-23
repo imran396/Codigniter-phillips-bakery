@@ -203,7 +203,7 @@ class Cakes_model extends CI_Model
     function searching($search,$start){
 
 
-        $per_page = 1;
+        $per_page = 10;
         $page     = intval($start);
         if ($page <= 0) $page = 1;
 

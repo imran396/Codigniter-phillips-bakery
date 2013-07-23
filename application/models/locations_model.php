@@ -14,12 +14,27 @@ class Locations_model extends Crud_Model
 
     public function create($data)
     {
-        $this->insert($data);
+
+       $vaughan_location = (!empty($data['vaughan_location'])) ? $data['vaughan_location'] :'';
+       $this->checkVaughan($vaughan_location);
+       if($this->checkVaughan($vaughan_location) > 0){
+         $data['vaughan_location']='';
+       }
+       $this->insert($data);
     }
 
     public function save($data, $id)
     {
+
+        if($this->checkVaughan() > 0){
+            $data['vaughan_location']=0;
+         }
         $this->update($data, $id);
+    }
+
+    private function  checkVaughan(){
+
+            return $dbcatid = $this->db->select('vaughan_location')->where('vaughan_location',1)->get('locations')->num_rows();
     }
 
     public function deleteDataExisting($data=0){
@@ -105,6 +120,8 @@ class Locations_model extends Crud_Model
         }
 
     }
+
+
 
     private function  checkUniqueVaughan($id){
 
