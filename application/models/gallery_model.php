@@ -71,20 +71,20 @@ class Gallery_model extends CI_Model
         {
             unlink($_SERVER['DOCUMENT_ROOT'].$rows->image);
         }
-        $this->db->where(array('gallery_id'=>$id,'feature_image !='=>1))->delete('cake_gallery');
+        $this->db->where(array('gallery_id'=>$id))->delete('cake_gallery');
     }
 
 
-    public function imageDelete($id)
+    public function imageDelete($cake_id,$id)
     {
 
-        $rows=$this->db->where(array('gallery_id'=>$id,'feature_image !='=>1))->get('cake_gallery')->row();
+        $rows=$this->db->where(array('cake_id'=>$cake_id,'gallery_id'=>$id))->get('cake_gallery')->row();
         if($rows->image){
             if (file_exists($rows->image))
             {
                 unlink($_SERVER['DOCUMENT_ROOT'].$rows->image);
             }
-            $this->db->where(array('gallery_id'=>$id,'feature_image !='=>1))->delete('cake_gallery');
+            $this->db->where(array('cake_id'=>$cake_id,'gallery_id'=>$id))->delete('cake_gallery');
             $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
         }else{
             $this->session->set_flashdata('wrinn_msg',$this->lang->line('delete_msg'));

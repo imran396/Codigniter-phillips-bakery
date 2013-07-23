@@ -298,3 +298,21 @@ div.dataTables_info {
 }
 
 
+.control-group-ul{
+    height: 80px
+}
+.control-group-ul ul{
+    list-style: none;
+}
+.control-group-ul ul li{
+    float: left;
+    width: 65px;
+}
+.control-group-ul ul li img {
+    border: 1px solid #CCCCCC;
+    float: left;
+    height: 50px;
+    width: 50px;
+}
+
+

@@ -12,16 +12,38 @@ class Cakes_model extends CI_Model
     public function create($data)
     {
         $id = $this->insert($data);
+        $this->galleryUpload($data,$id);
+//        if (!empty($_FILES["image_name"]["name"])) {
+//            //$this->doUpload($id);
+//        }
+    }
 
-        if (!empty($_FILES["image_name"]["name"])) {
-            $this->doUpload($id);
+    private function galleryUpload($data,$cake_id){
+
+        foreach ($data as $key => $value) {
+
+            if(strpos($key,'tmpname')){
+
+                $image="assets/uploads/gallery/".nl2br(htmlentities(stripslashes($value)));
+                $this->db->set(array('cake_id'=>$cake_id,'image'=>$image))->insert('cake_gallery');
+
+            }
+
         }
     }
 
     private function insert($data)
     {
-        $data['shape_id'] = ($data['shape_id'] !="") ? serialize($data['shape_id']):'';
-        $this->db->set($data)->insert('cakes');
+        $shape_id = ($data['shape_id'] !="") ? $data['shape_id'] :'';
+        $insert['title'] = ($data['title'] !="") ? $data['title'] :'';
+        $insert['description'] = ($data['description'] !="") ? $data['description'] :'';
+        $insert['category_id'] = ($data['category_id'] !="") ? $data['category_id'] :'';
+        $insert['flavour_id'] = ($data['flavour_id'] !="") ? $data['flavour_id'] :'';
+        $insert['shape_id'] = ($data['shape_id'] !="") ? $data['shape_id'] :'';
+        $insert['tiers'] = ($data['tiers'] !="") ? $data['tiers'] :'';
+        $insert['meta_tag'] = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
+        $insert['shape_id'] =($shape_id !="") ? serialize($shape_id):'';
+        $this->db->set($insert)->insert('cakes');
         return $this->db->insert_id();
     }
 
@@ -74,6 +96,7 @@ class Cakes_model extends CI_Model
     {
         $row = $this->getCakes($id);
 
+
         if (file_exists($row[0]->image)) {
             unlink($_SERVER['DOCUMENT_ROOT'] .'/'. $row[0]->image);
         }
@@ -87,18 +110,25 @@ class Cakes_model extends CI_Model
     public function save($data, $id)
     {
         $this->update($data, $id);
-
-        if (!empty($_FILES["image_name"]["name"])) {
+        $this->galleryUpload($data,$id);
+       /* if (!empty($_FILES["image_name"]["name"])) {
             $this->doUpload($id);
-        }
+        }*/
     }
 
     private function update($data, $id)
     {
 
-
-        $data['shape_id'] = ($data['shape_id'] !="") ? serialize($data['shape_id']):'';
-        $this->db->set($data)->where(array('cake_id' => $id))->update('cakes');
+        $shape_id = ($data['shape_id'] !="") ? $data['shape_id'] :'';
+        $insert['title'] = ($data['title'] !="") ? $data['title'] :'';
+        $insert['description'] = ($data['description'] !="") ? $data['description'] :'';
+        $insert['category_id'] = ($data['category_id'] !="") ? $data['category_id'] :'';
+        $insert['flavour_id'] = ($data['flavour_id'] !="") ? $data['flavour_id'] :'';
+        $insert['shape_id'] = ($data['shape_id'] !="") ? $data['shape_id'] :'';
+        $insert['tiers'] = ($data['tiers'] !="") ? $data['tiers'] :'';
+        $insert['meta_tag'] = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
+        $insert['shape_id'] =($shape_id !="") ? serialize($shape_id):'';
+        $this->db->set($insert)->where(array('cake_id' => $id))->update('cakes');
     }
 
     public function delete($id)
@@ -231,7 +261,8 @@ class Cakes_model extends CI_Model
         foreach($data as $key=>$row){
             $data[$key]['cake_id'] = (int) $data[$key]['cake_id'];
             $data[$key]['images'] = explode(',', $row['images']);
-            $data[$key]['shapes'] = unserialize($row['shape_id']);
+            $data[$key]['shapes'] = ($row['shape_id'] !="" ) ?  unserialize($row['shape_id']) : array();
+
         }
 
         return $data;
@@ -268,7 +299,7 @@ class Cakes_model extends CI_Model
             }
 
 
-            $data[$key]['shapes'] =  !empty($row['shapes']) ? unserialize($row['shapes']): "";
+            $data[$key]['shapes'] =  !empty($row['shapes']) ? unserialize($row['shapes']):array();
         }
 
         return $data;

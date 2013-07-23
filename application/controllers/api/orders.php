@@ -65,6 +65,7 @@ class Orders extends API_Controller
         $data['instructional_email_photo']=isset($_REQUEST['instructional_email_photo'])? $_REQUEST['instructional_email_photo']:'';
         $data['vaughan_location']=isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
         $data['order_status']=isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'';
+        $data['printed_imag_surcharge']=isset($_REQUEST['printed_imag_surcharge'])? $_REQUEST['printed_imag_surcharge']:'';
         $data['discount_price']=isset($_REQUEST['discount_price'])? $_REQUEST['discount_price']:'';
         $data['total_price']=isset($_REQUEST['total_price'])? $_REQUEST['total_price']:'';
         $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';
@@ -140,7 +141,7 @@ class Orders extends API_Controller
             'pickup_location_id','delivery_zone_id','delivery_zone_surcharge',
             'delivery_date','delivery_time','flavour_id','fondant','tiers','price_matrix_id','shape','matrix_price','cake_email_photo','magic_cake_id','magic_surcharge',
             'inscription','special_instruction','instructional_email_photo','vaughan_location','order_status','discount_price','total_price',
-            'override_price'
+            'override_price','printed_imag_surcharge'
         );
 
 
@@ -159,6 +160,10 @@ class Orders extends API_Controller
                 $order_delivery[$key] = $val;
             }
         }
+
+        print_r($data);
+        exit;
+
         $orders=$this->orders_model->order_update($data, $data['order_id']);
 
         if(isset($order_delivery)){

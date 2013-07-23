@@ -12,9 +12,9 @@
 
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('gallery');?></h3>
-        <div class="buttons pull-right">
+<!--        <div class="buttons pull-right">
             <a href="/admin/gallery" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add New Image</a>
-        </div>
+        </div>-->
         <div class="clearfix"></div>
     </div>
 <!-- End Content -->
@@ -42,7 +42,7 @@
                              <?php $x++; endforeach; ?>
 
                              <span style="display: block; margin-left:45px; margin-top: 8px ">
-                             <a data-original-title="<?php echo $this->lang->line('edit'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action glyphicons pencil btn-success" href="/admin/gallery/single_gallery/<?php echo $rows->cake_id; ?>"><i></i></a>
+                             <a data-original-title="<?php echo $this->lang->line('edit'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action glyphicons pencil btn-success" href="/admin/cakes/edit/<?php echo $rows->cake_id; ?>"><i></i></a>
                              <a data-original-title="<?php echo $this->lang->line('delete'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action glyphicons remove_2 btn-danger" href="/admin/gallery/remove/<?php echo $rows->cake_id; ?>"><i></i></a>
                             </span>
                          </li>

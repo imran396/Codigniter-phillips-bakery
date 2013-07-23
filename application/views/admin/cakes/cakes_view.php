@@ -28,7 +28,7 @@
                         </div>
                         <div class="widget-body" style="padding-bottom: 0;">
                             <div class="row-fluid">
-                                <div class="span6">
+                                <div class="span12">
                                     <div class="control-group">
                                         <label class="control-label"><?php echo $this->lang->line('cake_title');?></label>
                                         <div class="controls">
@@ -120,24 +120,49 @@
                                             <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('meta_tag');?>" value="<?php echo(isset($queryup[0]->meta_tag))? $queryup[0]->meta_tag:set_value('meta_tag'); ?>"   class="span10" name="meta_tag" id="meta_tag"  /><span data-original-title="<?php echo $this->lang->line('tag_msg'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action single glyphicons circle_question_mark" style="margin: 0;"><i></i></span>
                                         </div>
                                     </div>
+                                    <div class="control-group control-group-ul">
+                                        <div class="controls">
+                                    <ul>
+                                        <?php
+                                        $i=0;
+                                        foreach($galleries as $gallery):?>
+                                            <li>
 
+                                                <a title="" class="select-image select-image-group" rel="group-1" href="<?php echo base_url(); ?>/<?php echo $gallery->image; ?>"><img src="<?php echo base_url(); ?>/<?php echo $gallery->image; ?>" alt="" /></a>
+                             <span style="display: block; margin-left:12px; margin-top: 8px ">
+                             <a data-original-title="<?php echo $this->lang->line('delete'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action glyphicons remove_2 btn-danger" href="/admin/gallery/single_remove/<?php echo $gallery->cake_id; ?>/<?php echo $gallery->gallery_id; ?>"><i></i></a>
+                            </span>
+                                            </li>
+
+                                            <?php $i++; endforeach; ?>
+                                    </ul>
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
                                     <div class="control-group">
-                                        <label class="control-label"><?php echo $this->lang->line('upload_image');?></label>
+
+                                        <div id="pluploadUploader">
+                                            <p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
+                                        </div>
+
+                                    </div>
+                                   <!-- <div class="control-group">
+                                        <label class="control-label"><?php /*echo $this->lang->line('upload_image');*/?></label>
                                         <div class="controls">
                                             <div data-provides="fileupload" class="fileupload fileupload-new"><input type="hidden" value="" name="">
                                                 <div class="input-append">
                                                     <div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input class="" type="file" name="image_name"></span><a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
                                                 </div>
-                                                <?php $image= (isset($queryup[0]->image))? $queryup[0]->image:set_value('image');
+                                                <?php /*$image= (isset($queryup[0]->image))? $queryup[0]->image:set_value('image');
                                                 if($image){
-                                                ?>
+                                                */?>
                                                 <div style="width: 200px; height: 140px; border: 1px solid #000000">
-                                               <img src="<?php echo base_url($image); ?>" alt="">
+                                               <img src="<?php /*echo base_url($image); */?>" alt="">
                                                 </div>
-                                                <?php } ?>
+                                                <?php /*} */?>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
 
 
                                     <div class="control-group uniformjs">
@@ -177,3 +202,59 @@
     <!-- End Content -->
 
 </div>
+<!-- plupload -->
+<style type="text/css">@import url(/assets/theme/scripts/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css);</style>
+<!-- Third party script for BrowserPlus runtime (Google Gears included in Gears runtime now) -->
+<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
+<!-- Load plupload and all it's runtimes and finally the jQuery queue widget -->
+<script type="text/javascript" src="<?php echo base_url() ?>assets/theme/scripts/plupload/js/plupload.full.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/theme/scripts/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js"></script>
+
+<script type="text/javascript">
+    // Convert divs to queue widgets when the DOM is ready
+    $(function() {
+        $("#pluploadUploader").pluploadQueue({
+            // General settings
+            runtimes : 'gears,browserplus,html5',
+            url : '/admin/gallery/upload',
+            max_file_size : '10mb',
+            chunk_size : '2mb',
+            unique_names : true,
+            sortable: true,
+            // Resize images on clientside if we can
+            resize : {width : 730, height : 480, quality : 90},
+            // Specify what files to browse for
+            filters : [
+                {title : "Image files", extensions : "jpg,gif,png"},
+                {title : "Zip files", extensions : "zip"}
+            ],
+
+            // Flash settings
+            flash_swf_url : 'theme/scripts/plupload/js/plupload.flash.swf',
+
+            // Silverlight settings
+            silverlight_xap_url : 'theme/scripts/plupload/js/plupload.silverlight.xap'
+        });
+
+        // Client side form validation
+        /*$('#pluploadForm').submit(function(e) {
+         var uploader = $('#pluploadUploader').pluploadQueue();
+
+         // Files in queue upload them first
+         if (uploader.files.length > 0) {
+         // When all files are uploaded submit form
+         uploader.bind('StateChanged', function() {
+         if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
+         $('#pluploadForm').submit();
+         }
+         });
+
+         uploader.start();
+         } else {
+         alert('You must queue at least one file.');
+         }
+
+         return false;
+         });*/
+    });
+</script>

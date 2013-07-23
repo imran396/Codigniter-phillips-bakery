@@ -222,8 +222,8 @@ class Gallery extends Crud_Controller
     public function single_remove($cake_id,$id)
     {
 
-        $this->gallery_model->imageDelete($id);
-        $this->redirectToHome("single_gallery/".$cake_id);
+        $this->gallery_model->imageDelete($cake_id,$id);
+        redirect("admin/cakes/edit/".$cake_id);
 
     }
 

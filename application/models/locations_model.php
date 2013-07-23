@@ -22,15 +22,28 @@ class Locations_model extends Crud_Model
         $this->update($data, $id);
     }
 
-    public function deleteDataExistingx($data=0){
+    public function deleteDataExisting($data=0){
 
-        $count=$this->db->select('location_id')->where(array('location_id'=>$data))->get('price_matrix')->num_rows();
-        return $count;
+
+            $price_matrix=$this->db->select('location_id')->where(array('location_id'=>$data))->get('price_matrix')->num_rows();
+            $blackouts=$this->db->select('location_id')->where(array('location_id'=>$data))->get('blackouts')->num_rows();
+            $orders=$this->db->select('location_id')->where(array('location_id'=>$data))->get('orders')->num_rows();
+            $ickup_location=$this->db->select('pickup_location_id 	')->where(array('pickup_location_id'=>$data))->get('orders')->num_rows();
+
+        if($price_matrix > 0){
+            return $count = $price_matrix;
+        }else if($blackouts > 0){
+            return $count = $price_matrix;
+        }else if($orders > 0){
+            return $count = $price_matrix;
+        }else if($ickup_location > 0){
+            return $count = $ickup_location;
+        }
+
     }
 
     public function delete($id)
     {
-
 
         if(!$this->deleteDataExisting($id) > 0){
             $this->remove($id);

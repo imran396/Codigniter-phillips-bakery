@@ -6,10 +6,7 @@ class Zones_model extends Crud_Model
     public function __construct()
     {
         parent::__construct();
-
         $this->loadTable('zones','zone_id');
-
-
     }
 
     public function create($data)
@@ -24,8 +21,8 @@ class Zones_model extends Crud_Model
 
     public function deleteDataExisting($data=0){
 
-        $sql=sprintf("SELECT COUNT(zone_id) AS countValue FROM cakes  WHERE (zone_id = '{$data}' )");
-        return $count=$this->db->query($sql)->result()[0]->countValue;
+        $count=$this->db->select('delivery_zone_id')->where(array('delivery_zone_id'=>$data))->get('orders')->num_rows();
+        return $count;
     }
 
     public function delete($id)

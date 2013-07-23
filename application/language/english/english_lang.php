@@ -125,7 +125,7 @@ $lang['pos_api'] 		 	    = 'POS api';
 
 /* Cakes */
 
-$lang['category_id'] 		 	    = 'Cake Catalogue';
+$lang['category_id'] 		 	    = 'Cake Category';
 $lang['flavour_id'] 		 	    = 'Flavour Name';
 $lang['location_id'] 		 	    = 'Location Name';
 $lang['cake_title'] 		 	    = 'Cake Title';

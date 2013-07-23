@@ -10,7 +10,7 @@ class Cakes extends Crud_Controller
        // $this->load->library('image_lib');
         $this->load->helper('uploader');
         $this->layout->setLayout('layout_admin');
-        $this->load->model('cakes_model');
+        $this->load->model(array('cakes_model','gallery_model'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
@@ -19,8 +19,6 @@ class Cakes extends Crud_Controller
 
     public function index()
     {
-
-
 
         $this->data['catresult'] = $this->cakes_model->getCategories();
         $this->data['flvresult'] = $this->cakes_model->getFlavours();
@@ -75,6 +73,7 @@ class Cakes extends Crud_Controller
         $this->data['catresult'] = $this->cakes_model->getCategories();
         $this->data['flvresult'] = $this->cakes_model->getFlavours();
         $this->data['sapresult'] = $this->cakes_model->getShapes();
+        $this->data['galleries']=$this->gallery_model->getGallery($id);
         $this->layout->view('admin/cakes/cakes_view', $this->data);
     }
 
