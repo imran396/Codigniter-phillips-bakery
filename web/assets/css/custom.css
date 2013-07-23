@@ -319,4 +319,19 @@ div.dataTables_info {
     margin-top: -10px;
 }
 
+.navbar.main .appbrand {
+    border-right: 1px solid #424243;
+    color: #DEDEDE;
+    display: inline-block;
+    font-family: 'Raleway',sans-serif;
+    font-size: 18pt;
+    font-weight: 700;
+    height: 42px;
+    line-height: normal;
+    padding: 0 0 0 10px;
+    text-decoration: none;
+    text-transform: none!important;
+    width: 216px;
+}
+
 
