@@ -119,7 +119,7 @@ class Cakes_model extends CI_Model
     private function update($data, $id)
     {
 
-        $shape_id = ($data['shape_id'] !="") ? $data['shape_id'] :'';
+        $shape_id = (!empty($data['shape_id'])) ? $data['shape_id'] :'';
         $insert['title'] = ($data['title'] !="") ? $data['title'] :'';
         $insert['description'] = ($data['description'] !="") ? $data['description'] :'';
         $insert['category_id'] = ($data['category_id'] !="") ? $data['category_id'] :'';
