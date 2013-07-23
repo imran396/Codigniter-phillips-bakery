@@ -17,7 +17,8 @@
 
 // Account Changes
 $lang['site_title'] 		 	    = 'St. Phillips Bakery Admin Panel';
-$lang['site_name'] 		 	        = 'St. P. Bakery';
+$lang['site_name'] 		 	        = 'St. Phillip\'s';
+$lang['site_login'] 		 	    = 'St. Phillip\'s Bakery';
 $lang['admin_panel'] 		 	    = 'Admin Panel';
 $lang['list'] 		 	    = 'List';
 $lang['add_new'] 		 	    = 'Add new';
