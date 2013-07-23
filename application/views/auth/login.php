@@ -63,7 +63,7 @@
             <div style="text-align: center">
 
 <!--                <img src="/assets/img/bat_logo.png" />-->
-                <h2 style="text-align: center; margin-bottom: 30px; margin-top: 20px;"><?php echo $this->lang->line('site_name');?></h2>
+                <h2 style="text-align: center; margin-bottom: 30px; margin-top: 20px;"><?php echo $this->lang->line('site_login');?></h2>
 
             </div>
 
