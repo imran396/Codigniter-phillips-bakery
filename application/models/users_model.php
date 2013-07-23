@@ -110,8 +110,6 @@ class Users_model extends Crud_Model
     public function statusChange($username){
 
         $row=$this->getusers($username);
-        echo $row[0]->active;
-
         if($row[0]->active == 1 ){
             $status=0;
         }else{
