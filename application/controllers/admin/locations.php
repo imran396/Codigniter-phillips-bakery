@@ -8,7 +8,7 @@ class Locations extends Crud_Controller
         parent::__construct();
         $this->layout->setLayout('layout_admin');
         $this->load->model('locations_model');
-        $this->output->enable_profiler(TRUE);
+       // $this->output->enable_profiler(false);
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
