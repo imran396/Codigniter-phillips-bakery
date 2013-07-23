@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "admin/dashboard";
+$route['default_controller'] = "admin/orders/listing";
 $route['login'] = "auth/login";
 //$route['admin/users/save'] = "auth/create_user";
 $route['admin/users/password'] = "auth/change_password";
