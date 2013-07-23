@@ -59,7 +59,7 @@
                         <td>
                             <a href="/admin/users/status/<?php echo $rows->username; ?>" class="btn-action glyphicons btn <?php if($rows->active ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
                             <a class="btn-action glyphicons pencil btn-success" href="/admin/users/edit/<?php echo $rows->username; ?>"><i></i></a>
-                            <a class="btn-action glyphicons remove_2 btn-danger" href="/admin/users/remove/<?php echo $rows->username; ?>"><i></i></a>
+                            <a class="btn-action glyphicons remove_2 btn-danger" href="/admin/users/remove/<?php echo $rows->id; ?>"><i></i></a>
                             <a class="btn-action glyphicons qrcode" href="/admin/users/qrcode/<?php echo  $rows->employee_id; ?>"><i></i></a>
 
 

@@ -200,6 +200,42 @@ class Cakes_model extends CI_Model
         endforeach;
     }
 
+    function searching($search,$start){
+
+
+        $per_page = 1;
+        $page     = intval($start);
+        if ($page <= 0) $page = 1;
+
+
+        $limit      = ($page - 1) * $per_page;
+        $base_url   = site_url('admin/cakes/search/'.$search);
+
+        $this->db->select('cakes.cake_id');
+        $this->db->from('cakes');
+        $this->db->where('cakes.cake_id >',0);
+        $this->db->or_like('cakes.title',$search);
+        $this->db->or_like('meta_tag',$search);
+        $total_rows = $this->db->count_all_results();
+
+        $paging     = paginate($base_url, $total_rows, $start, $per_page);
+
+        $this->db->select('cakes.* , categories.title AS categories_name , flavours.title AS flavours_name');
+        $this->db->from('cakes');
+        $this->db->join('categories', 'categories.category_id = cakes.category_id', 'left');
+        $this->db->join('flavours', 'flavours.flavour_id = cakes.flavour_id', 'left');
+        $this->db->where('cake_id >',0);
+        $this->db->or_like('cakes.title',$search);
+        $this->db->or_like('meta_tag',$search);
+        $this->db->limit($per_page, $limit);
+        $this->db->order_by("cakes.ordering", "asc");
+
+        $query = $this->db->get();
+
+        return array($query, $paging, $total_rows, $limit);
+
+    }
+
     public function statusChange($id)
     {
         $row = $this->getcakes($id);

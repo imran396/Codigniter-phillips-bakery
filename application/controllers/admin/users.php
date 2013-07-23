@@ -225,7 +225,7 @@ class users extends Crud_Controller
 
     public function remove($id)
     {
-        $this->data['category'] = $this->users_model->delete($id);
+        $this->users_model->delete($id);
         $this->redirectToHome("listing");
 
     }

@@ -111,6 +111,7 @@ class Cakes extends Crud_Controller
 
 
         $getsearch = $this->input->get('search');
+
         if($getsearch){
            $search = $getsearch;
         }else{

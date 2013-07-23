@@ -7,7 +7,7 @@ class Users_model extends Crud_Model
     {
         parent::__construct();
 
-        $this->loadTable('shapes','shape_id');
+        $this->loadTable('users','id');
 
 
     }
@@ -24,16 +24,23 @@ class Users_model extends Crud_Model
 
     public function deleteDataExisting($data=0){
 
-        $sql=sprintf("SELECT COUNT(shape_id) AS countValue FROM cakes  WHERE (shape_id = '{$data}' )");
-        return $count=$this->db->query($sql)->result()[0]->countValue;
+
+        $employee_id=$this->db->select('employee_id')->where(array('employee_id'=>$data))->get('orders')->num_rows();
+        $manager_id=$this->db->select('manager_id')->where(array('manager_id'=>$data))->get('orders')->num_rows();
+
+        if($employee_id > 0){
+            return $count = $employee_id;
+        }else if($manager_id > 0){
+            return $count = $manager_id;
+        }
     }
 
     public function delete($id)
     {
 
-
         if(!$this->deleteDataExisting($id) > 0){
-            $this->remove($id);
+
+            $this->db->where('id',$id)->delete(array('users','meta'));
             $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
         }else{
 
