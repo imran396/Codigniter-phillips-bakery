@@ -16,6 +16,14 @@ class Orders extends Crud_Controller
 
     }
 
+    function index(){
+
+        $this->data['active']=$this->uri->segment(2,0);
+        //$this->orders_model->getListing();
+        $this->layout->view('admin/orders/order_view', $this->data);
+
+    }
+
     public function listing($starts=0)
     {
 
@@ -26,6 +34,8 @@ class Orders extends Crud_Controller
 
 
     }
+
+
 
     public function details($order_code)
     {
