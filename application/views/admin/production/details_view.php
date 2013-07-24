@@ -39,7 +39,7 @@
     <div class="pull-right">
         <div class="search-form">
             <div class="error-msg"></div>
-            <form action="/admin/productions/search" method="post">
+            <form action="/admin/productions/searchOrder" method="post">
                 <input type="text" class="validate[required]" name="search" id="search" value="" placeholder="Search Orders" class="error" />
                 <input type="button" id="searchButton" name="" value="Search" />
             </form>

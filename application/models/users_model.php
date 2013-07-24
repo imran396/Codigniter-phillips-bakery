@@ -15,9 +15,9 @@ class Users_model extends Crud_Model
 
     public function update($data, $id)
     {
-        $array = array('first_name'=>$data['first_name'],'last_name'=>$data['last_name'],'location_id'=>$data['location_id']);
+        $array = array('first_name'=>$data['first_name'],'last_name'=>$data['last_name']);
         $this->db->set($array)->where(array('id'=>$id))->update('meta');
-        $array = array('email'=>$data['email']);
+        $array = array('email'=>$data['email'],'group_id'=>$data['group_id']);
         $this->db->set($array)->where(array('id'=>$id))->update('users');
 
     }
