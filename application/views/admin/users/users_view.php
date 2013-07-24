@@ -60,7 +60,7 @@
                 <div class="span6">
                     <div class="control-group">
                         <label class="control-label" for="password"><?php echo $this->lang->line('password');?></label>
-                        <div class="controls"><input type="password" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('password');?>" value="<?php echo(isset($queryup[0]->password))? $queryup[0]->password:set_value('password'); ?>"  class="validate[required] span10" name="password" id="password"  /></div>
+                        <div class="controls"><input type="password" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('password');?>" value=""  class="validate[required] span10" name="password" id="password"  /></div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="confirm_password"><?php echo $this->lang->line('con_password');?></label>

@@ -49,7 +49,7 @@ $lang['tiers'] 		 	                            = 'Tiers';
 $lang['blackouts'] 		 	                        = 'Blackouts';
 $lang['cakes'] 		 	                            = 'Cakes';
 $lang['gallery'] 		 	                    = 'Cake Gallery';
-$lang['zone'] 		 	                    = 'Delivery zone';
+$lang['zone'] 		 	                    = 'Delivery Zones';
 $lang['employee'] 		 	                        = 'Employee';
 $lang['customers'] 		 	                        = 'Customers';
 $lang['orders'] 		 	                    = 'Cake Orders';
@@ -113,6 +113,7 @@ $lang['unpublish'] 		 	    = 'Un-publish';
 
 
 $lang['create_location'] 		 	    = 'Create Location';
+$lang['location_name'] 		 	    = 'Location Name';
 $lang['vaughan_location'] 		 	    = 'Vaughan';
 $lang['location_title'] 		 	    = 'Location Title';
 $lang['address1'] 		 	    = 'Address 1';
@@ -205,6 +206,7 @@ $lang['account_settings'] 		 	    = 'Account Settings';
 $lang['account_settings_info'] 		 	    = 'Account settings instruction';
 $lang['controller_name'] 		 	    = 'Controller name';
 $lang['inactive'] 		 	    = 'Inactive';
+$lang['employee_id'] 		 	    = 'Employee ID';
 
 /*        ---------------Production------------------    */
 

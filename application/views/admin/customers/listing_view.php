@@ -12,7 +12,7 @@
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('customers');?></h3>
         <div class="buttons pull-right">
-            <form action="/admin/cakes/search" method="get"><input type="text"  name="search" placeholder="serach by name,tag" id="search"><button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok mbutton"><i></i><?php echo $this->lang->line('search');?></button></form>
+            <form action="/admin/cakes/search" method="get"><input type="text"  name="search" placeholder="customer serach" id="search"><button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok mbutton"><i></i><?php echo $this->lang->line('search');?></button></form>
         </div>
         <div class="clearfix"></div>
     </div>

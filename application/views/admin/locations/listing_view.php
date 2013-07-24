@@ -49,7 +49,7 @@
 
                             <a href="/admin/locations/status/<?php echo $rows->location_id; ?>" class="btn-action glyphicons btn <?php if($rows->status ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
                             <a class="btn-action glyphicons pencil btn-success" href="/admin/locations/edit/<?php echo $rows->location_id; ?>"><i></i></a>
-                            <a class="btn-action glyphicons remove_2 btn-danger" href="/admin/locations/remove/<?php echo $rows->location_id; ?>"><i></i></a>
+                            <a  onclick="return confirm('Are you sure you want to delete?')"  class="btn-action glyphicons remove_2 btn-danger" href="/admin/locations/remove/<?php echo $rows->location_id; ?>"><i></i></a>
 
                         </td>
 
@@ -85,5 +85,7 @@
             }
         });
     });
+
+
 
 </script>

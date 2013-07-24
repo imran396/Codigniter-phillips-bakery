@@ -38,7 +38,7 @@
                     <thead>
                     <tr>
                         <th class="center">No.</th>
-                        <th><?php echo $this->lang->line('customer_id');?></th>
+                        <th><?php echo $this->lang->line('employee_id');?></th>
                         <th><?php echo $this->lang->line('username');?></th>
                         <th><?php echo $this->lang->line('name');?></th>
                         <th><?php echo $this->lang->line('role');?></th>

@@ -116,7 +116,7 @@
                             <tr>
                                 <td><strong><?php echo $rows->title; ?></strong></td>
                                 <td><a class="remove_a" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo $rows->blackout_date; ?>" ><?php echo $this->blackouts_model->dateFormate($blackout_date[0]); ?></a></td>
-                                <td align="right" style="text-align: right; padding-right: 15px"><a href="/admin/blackouts/remove/<?php echo $rows->blackout_id; ?>" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a></td>
+                                <td align="right" style="text-align: right; padding-right: 15px"><a onclick="return confirm('Are you sure you want to delete?')" href="/admin/blackouts/remove/<?php echo $rows->blackout_id; ?>" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a></td>
                             </tr>
                             <?php endforeach; ?>
 

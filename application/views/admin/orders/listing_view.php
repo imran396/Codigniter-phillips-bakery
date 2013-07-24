@@ -20,7 +20,7 @@
 <div class="innerLR hidden-paging" id="filterResult">
         <div class="widget">
             <div class="widget-body">
-                <table class="table table-bordered table-primary table-striped">
+                <table class="table table-bordered table-primary table-striped order-sortable">
                     <thead>
                     <tr>
                         <th width="70">Order #</th>

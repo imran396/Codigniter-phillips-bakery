@@ -334,4 +334,9 @@ div.dataTables_info {
     width: 216px;
 }
 
+.radio, .checkbox {
+    min-height: 20px;
+    padding-left: 20px!important;
+}
+
 

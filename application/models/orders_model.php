@@ -180,7 +180,9 @@ class Orders_model extends Crud_Model
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
         $this->db->limit($per_page,$limit);
-        $this->db->order_by("orders.order_id", "desc");
+        //$this->db->where('delivery_date =');
+        $this->db->order_by("orders.delivery_date", "desc");
+        //$this->db->order_by("orders.order_status", "desc");
         $query =$this->db->get()->result();
         return array($query,$paging,$total_rows,$limit);
 
