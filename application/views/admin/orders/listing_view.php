@@ -24,8 +24,8 @@
                     <thead>
                     <tr>
                         <th width="70">Order #</th>
-                        <th width="166">Customer Name</th>
                         <th width="93">Date</th>
+                        <th width="166">Customer Name</th>
                         <th width="110">Order Status</th>
                         <th width="150">Production Status</th>
                         <th>&nbsp;</th>
@@ -39,9 +39,10 @@
                         ?>
                         <tr>
                             <td class="center"><a href="/admin/orders/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
-                            <td><?php if($rows->first_name) echo $rows->first_name.' '.$rows->last_name; else echo "---"; ?></td>
                             <td class="center"><?php echo $this->productions_model->dateFormate($rows->delivery_date); ?></td>
-                            <td class="center"><?php if($rows->order_status) echo $rows->order_status; else echo '---'; ?></td>
+
+                            <td><?php if($rows->first_name) echo $rows->first_name.' '.$rows->last_name; else echo "---"; ?></td>
+                                                        <td class="center"><?php if($rows->order_status) echo $rows->order_status; else echo '---'; ?></td>
                             <td class="green"><?php if($rows->production_status) echo $rows->production_status;else echo '---';?></td>
                             <td><?php if($rows->order_status =='cancelled'){ ?> <a class="btn-action glyphicons remove_2 btn-danger" href="/admin/orders/remove/<?php echo $rows->order_code; ?>"><i></i></a><?php } ?>
 

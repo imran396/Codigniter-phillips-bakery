@@ -189,6 +189,8 @@ $lang['country'] 		 	    = 'Country';
 $lang['notes'] 		 	    = 'Notes';
 $lang['email_notification'] 		 	    = 'Email Notification';
 $lang['create_customer'] 		 	    = 'Create Customer';
+$lang['orders'] 		 	    = 'Orders';
+$lang['estimates'] 		 	    = 'Estimates';
 
 /*  Users */
 

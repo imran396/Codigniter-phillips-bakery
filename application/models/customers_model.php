@@ -79,6 +79,11 @@ class Customers_model extends Crud_Model
 
     }
 
+    function orderCount($customer_id,$order_status){
+
+        return $this->db->where(array('customer_id'=>$customer_id,'order_status'=>$order_status))->get('orders')->num_rows();
+    }
+
     public function statusChange($id){
 
         $row=$this->getcustomers($id);

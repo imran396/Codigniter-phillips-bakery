@@ -44,7 +44,7 @@
                 <input type="button" id="searchButton" name="" value="Search" />
             </form>
         </div>
-        <a href="javascript:void(0)" class="button"  onclick="printpage()" ><span class="icon icon-print"></span> Print Page</a>
+        <a href="<?php echo site_url('api/orders/productionInvoice/')?>?print=thermal&order_id=<?php echo $queryup->order_id ?>" class="button" target="_blank"  ><span class="icon icon-print"></span> Print Page</a>
     </div>
     <div class="separator"></div>
 </div>
@@ -52,8 +52,8 @@
 <div class="panel">
     <div class="pull-right">
         <div class="row-fluid row-widest">
-            <form action="" method="get" onsubmit="location" >
-            <select class="selectpicker span12" name="order_status" id="order_status" onchange="window.location=this.value" >
+            <form action="" method="get">
+            <select class="selectpicker span12" name="order_status" id="order_status" >
                 <?php if($this->productions_model->currentProductionStatus($queryup->production_status)){?>
                 <option class="label"><?php echo $this->productions_model->currentProductionStatus($queryup->production_status) ?></option>
                 <?php }else{ ?>
@@ -206,7 +206,8 @@
                                     <?php } ?>
                                     <?php if( $queryup->phone_number){ ?>
                                     <div class="line">
-                                        <div class="title">Phone</div><?php $from = $queryup->phone_number;
+                                        <div class="title">Phone</div>
+                                        <?php $from = $queryup->phone_number;
                                         echo $to = sprintf("%s-%s-%s",
                                             substr($from, 0, 3),
                                             substr($from, 3, 3),
