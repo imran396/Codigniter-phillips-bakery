@@ -161,8 +161,6 @@ class Orders extends API_Controller
             }
         }
 
-        print_r($data);
-        exit;
 
         $orders=$this->orders_model->order_update($data, $data['order_id']);
 
@@ -200,6 +198,8 @@ class Orders extends API_Controller
         if($mailtouser =="yes"){
             $this->sendEmail($orders['order_code']);
         }
+
+
         if(strtolower($data['order_status']) == 'order'){
 
             $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'production_status' =>  $orders['production_status']));
@@ -282,8 +282,6 @@ class Orders extends API_Controller
 
         $result= $this->productions_model->orderPrint($order_id);
 
-
-
         if($result ->num_rows() > 0 ){
 
             $this->data['queryup']=$result->row();
@@ -308,7 +306,71 @@ class Orders extends API_Controller
 
     }
 
+    function productionInvoice(){
 
+        $data=$_REQUEST;
+        $invoice =$data['print'];
+        $order_id = $data['order_id'];
+
+        $result= $this->productions_model->orderPrint($order_id);
+
+        if($result ->num_rows() > 0 ){
+
+            $this->data['queryup']=$result->row();
+
+            if($invoice =="thermal"){
+
+                $this->load->view('email/production_thermal_view', $this->data);
+
+            }else{
+
+                $this->load->view('email/invoice_view', $this->data);
+            }
+
+        }else{
+
+            return false;
+
+        }
+
+    }
+
+
+    public function mail_to_user(){
+
+
+        $order_id = $_REQUEST['order_id'];
+        $result= $this->productions_model->orderPrint($order_id);
+        if($result ->num_rows() > 0){
+        $this->data['queryup']=$result->row();
+        $customer_email=$this->data['queryup']->email;
+        if($this->data['queryup']->order_status =="order"){
+            $order_status="Invoice";
+        }else{
+            $order_status=ucfirst($this->data['queryup']->order_status);
+        }
+        if(!empty($customer_email)){
+
+            $body          = $this->load->view('email/invoice_body', $this->data,true);
+            $this->email->set_newline("\r\n");
+            $this->email->from('shafiq@emicrograph.com', 'St Phillip\'s Bakery');
+            $this->email->to($customer_email);
+            $this->email->subject('St Phillip\'s Bakery :'.$order_status);
+            $this->email->message(nl2br($body));
+            $this->email->send();
+        }
+
+            if(!empty($customer_email)){
+                $this->sendOutput(array('status'=>'success','email_id'=>$customer_email));
+            }else{
+                $this->sendOutput(array('status'=>'no_email','email_id'=>''));
+            }
+        }else{
+            $this->sendOutput(array('status'=>'invalid_order','email_id'=>''));
+        }
+
+
+    }
 
     public function sendEmail($order_code){
 
