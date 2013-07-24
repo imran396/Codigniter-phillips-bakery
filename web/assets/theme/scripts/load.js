@@ -834,32 +834,6 @@ $(function()
     }
 
 
-    var oTable = $('.column-sorting').dataTable({
-        "iDisplayLength": 500,
-        "aoColumnDefs": [
-            { "bSortable":false, "aTargets": [4,3] }
-
-        ]
-    });
-
-    var oTable = $('.flavour-sortable').dataTable({
-        "iDisplayLength": 500,
-        "aoColumnDefs": [
-            { "bSortable":false, "aTargets": [2,3] }
-
-        ]
-    });
-
-    var oTable = $('.order-sortable').dataTable({
-        "iDisplayLength": 500,
-        "aoColumnDefs": [
-            { "bSortable":false, "aTargets": [5] }
-
-        ]
-    });
-
-    //Sort immediately with columns 0 and 1
-    oTable.fnSort( [ [0,'asc']] );
 
 
 });
