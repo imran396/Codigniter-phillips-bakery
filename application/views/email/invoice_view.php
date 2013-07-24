@@ -279,7 +279,7 @@
         <?php } ?>
         <tr><td colspan="2">&nbsp;</td></tr>
         <tr><td colspan="2"> <hr /></td></tr>
-        <tr><td>TOTAL</td><td><?php if($queryup->override_price){ echo "$".$queryup->override_price;}else{ echo "$".$queryup->total_price;} ?></td></tr>
+        <tr><td>TOTAL</td><td><?php if($queryup->override_price > 0){ echo "$".$queryup->override_price;}else{ echo "$".$queryup->total_price;} ?></td></tr>
         </tbody>
     </table>
 </div>

@@ -1,3 +1,6 @@
+<script>
+ window.print();
+</script>
 <style type="text/css">
     *
     {
@@ -280,7 +283,7 @@ if(!empty($locations)){
 
 <ul class="col_2">
     <?php if($queryup->total_price){ ?>
-        <li><p><?php if($queryup->override_price > 0 ){ echo "$".$queryup->override_price;}else{ echo "$".$queryup->total_price;} ?></p></li>
+        <li><p><?php if($queryup->override_price > 0){ echo "$".$queryup->override_price;}else{ echo "$".$queryup->total_price;} ?></p></li>
     <?php } ?>
 </ul>
 <div class="clr"></div>

@@ -114,7 +114,7 @@ MAGIC SURCHARGE:                                <?php echo "$".$queryup->magic_s
 DISCOUNT:                                       <?php echo "$".$queryup->discount_price.PHP_EOL; ?>
 <?php } ?>
 ------------------------------------------------------------
-TOTAL:                                         <?php if($queryup->override_price){ echo "$".$queryup->override_price.PHP_EOL;}else{ echo "$".$queryup->total_price.PHP_EOL;} ?>
+TOTAL:                                         <?php if($queryup->override_price > 0 ){ echo "$".$queryup->override_price.PHP_EOL;}else{ echo "$".$queryup->total_price.PHP_EOL;} ?>
 
 ------------------------------------------------------------
 
