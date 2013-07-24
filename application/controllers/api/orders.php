@@ -106,19 +106,15 @@ class Orders extends API_Controller
             $this->orders_model->instructionalImagesUpload($orders['order_id']);
         }
 
-        if($data['cake_email_photo']== 'yes'){
+        if($data['cake_email_photo']== 1){
             $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony');
         }
 
-        if($data['instructional_email_photo']== 'yes'){
+        if($data['instructional_email_photo']== 1){
             $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak');
         }
 
         $this->saveBarcodeImage($orders['order_code']);
-        $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
-        if($mailtouser =="yes"){
-            $this->sendEmail($orders['order_code']);
-        }
 
         if(strtolower($data['order_status']) == 'order'){
 
@@ -178,11 +174,11 @@ class Orders extends API_Controller
             $this->orders_model->instructionalImagesUpload($orders['order_id']);
 
         }
-        if(isset($data['cake_email_photo'])== 'yes'){
+        if(isset($data['cake_email_photo'])== 1){
             $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony');
         }
 
-        if(isset($data['instructional_email_photo'])== 'yes'){
+        if(isset($data['instructional_email_photo'])== 1){
             $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak');
         }
 
@@ -192,11 +188,6 @@ class Orders extends API_Controller
             if(!empty($image)){
                 $this->orders_model->instructionalPhotoDelete($image,$orders['order_id']);
             }
-        }
-
-        $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
-        if($mailtouser =="yes"){
-            $this->sendEmail($orders['order_code']);
         }
 
 
