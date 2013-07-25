@@ -146,8 +146,8 @@
         <div class="row-fluid">
             <select class="selectpicker span12" name="fondant" id="fondant">
                 <option class="label">Fondant</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
             </select>
         </div>
         <div class="row-fluid row-wider">
@@ -298,7 +298,7 @@
                     <td class="center"><?php echo sentence_case($rows->delivery_type); ?></td>
                     <td class="center"><?php echo $this->productions_model->dateFormate($rows->delivery_date); ?></td>
                     <td class="center"><?php echo $rows->delivery_time; ?></td>
-                    <td><?php echo $rows->fondant; ?></td>
+                    <td><?php if($rows->fondant >0){echo "Yes"; }else{ echo "No"; }; ?></td>
                     <td><?php echo $rows->flavour_name; ?></td>
                     <td><?php echo $rows->magic_cake_id; ?></td>
                     <td class="green"><?php echo $rows->production_status;?></td>
