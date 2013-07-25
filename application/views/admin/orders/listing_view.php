@@ -40,27 +40,25 @@
                     <thead>
                     <tr>
                         <th width="70">Order #</th>
-                        <th width="93">Date</th>
+                        <th width="110">Delivery Date</th>
                         <th width="166">Customer Name</th>
-                        <th width="110">Order Status</th>
-                        <th width="150">Production Status</th>
-                        <th>&nbsp;</th>
+                        <th width="160">Order Status</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php
                     $var = ($paging[3] != '0')  ? ($paging[3]+1) : 1;
                     $i=$var;
-                    foreach($paging[0] as $rows):
+                      foreach($paging[0] as $rows):
                         ?>
                         <tr>
-                            <td class="center"><a href="/admin/orders/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
+                            <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
                             <td class="center"><?php echo $this->productions_model->dateFormate($rows->delivery_date); ?></td>
 
                             <td><?php if($rows->first_name) echo $rows->first_name.' '.$rows->last_name; else echo "---"; ?></td>
-                                                        <td class="center"><?php if($rows->order_status) echo $rows->order_status; else echo '---'; ?></td>
-                            <td class="green"><?php if($rows->production_status) echo $rows->production_status;else echo '---';?></td>
-                            <td><?php if($rows->order_status =='cancelled'){ ?> <a class="btn-action glyphicons remove_2 btn-danger" href="/admin/orders/remove/<?php echo $rows->order_code; ?>"><i></i></a><?php } ?>
+                            <td class="center"><?php echo $rows->orderstatus; ?></td>
+                            <td> <?php if($rows->order_status =='cancelled'){ ?><a class="btn-action glyphicons remove_2 btn-danger" href="/admin/orders/remove/<?php echo $rows->order_code; ?>"><i></i></a><?php } ?>
 
                             </td>
                            </tr>

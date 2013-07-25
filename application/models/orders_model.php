@@ -189,16 +189,46 @@ class Orders_model extends Crud_Model
         $base_url = site_url('admin/orders/listing/');
         $total_rows = $this->db->count_all_results('orders');
         $paging = production_paginate($base_url, $total_rows,$start,$per_page);
-        $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name,customers.first_name,customers.last_name');
+        $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name,customers.first_name,customers.last_name,order_status.description AS orderstatus');
         $this->db->from('orders');
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
+        $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
         $this->db->limit($per_page,$limit);
         //$this->db->where('delivery_date =');
         $this->db->order_by("orders.delivery_date", "desc");
         //$this->db->order_by("orders.order_status", "desc");
         $query =$this->db->get()->result();
+        return array($query,$paging,$total_rows,$limit);
+
+    }
+
+    function searching($search,$start){
+
+        $search=strtolower($search);
+        $query="SELECT orders.*,customers.first_name,customers.last_name,order_status.description AS orderstatus
+                FROM `orders`
+                LEFT JOIN customers ON (customers.customer_id = orders.customer_id)
+                LEFT JOIN order_status ON (order_status.production_status_code = orders.order_status)
+                WHERE(`order_id` > 0 AND  `order_code` = '$search')
+                || (`order_id` > 0 AND LOWER(`delivery_date`) = '$search')
+                || (`order_id` > 0 AND  LOWER(customers.first_name) LIKE '%$search')
+                || ( `order_id` > 0 AND LOWER(customers.last_name) LIKE '%$search')
+                || (`order_id` > 0 AND customers.phone_number = '$search')";
+
+
+        $per_page=10;
+        $page   = intval($start);
+        if($page<=0)  $page  = 1;
+        $limit=($page-1)*$per_page;
+        $base_url = site_url('admin/orders/search/'.$search);
+        $num = $this->db->query($query);
+        $total_rows = $num->num_rows();
+        $paging = paginate($base_url, $total_rows,$start,$per_page);
+        $limit = "LIMIT $limit , $per_page";
+        $pagequery=$query.$limit;
+        $query = $this->db->query($pagequery)->result();
         return array($query,$paging,$total_rows,$limit);
 
     }

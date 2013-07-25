@@ -194,7 +194,7 @@ jQuery(document).ready(function(){
     var oTable = $('.order-sortable').dataTable({
         "iDisplayLength": 500,
         "aoColumnDefs": [
-            { "bSortable":false, "aTargets": [5] }
+            { "bSortable":false, "aTargets": [4] }
 
         ]
     });

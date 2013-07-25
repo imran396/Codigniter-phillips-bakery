@@ -90,20 +90,33 @@ class Orders extends Crud_Controller
     }
 
 
-    public function search(){
+    function search($urlsearch=NULL,$start=0){
 
-        $request = $this->input->post('search');
-        if($request){
 
-            $order_code = $this->productions_model->doSearch($request);
-            if($order_code > 0){
-                echo $order_code;
-            }else{
-                return false;
-            }
+        $getsearch = $this->input->get('search');
+
+        if($getsearch){
+            $search = $getsearch;
+        }else{
+            $search = $urlsearch;
         }
 
+        if(!empty($search)){
+
+            $this->data['paging'] = $this->orders_model->searching($search,$start);
+            $this->data['active']=$this->uri->segment(2,0);
+            $this->layout->view('admin/orders/listing_view', $this->data);
+
+
+        }else{
+
+            $this->session->set_flashdata('warnings_msg',$this->lang->line('update_msg'));
+            $this->redirectToHome("listing");
+        }
+
+
     }
+
 
 
     public function remove($id)
