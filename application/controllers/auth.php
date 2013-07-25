@@ -15,6 +15,7 @@ class Auth extends Controller {
 		$this->load->library('form_validation');
 		$this->load->database();
 		$this->load->helper('url');
+		$this->load->model('orders_model');
 
         //$this->output->enable_profiler(TRUE);
 	}
@@ -50,8 +51,6 @@ class Auth extends Controller {
 	//log the user in
 	function login()
 	{
-
-
         $this->data['title'] = "Login";
         $this->data['query'] = $this->db->select('*')->where(array('status'=>1))->order_by('ordering','asc')->get('locations')->result();
 		if ($this->ion_auth->logged_in())
@@ -59,7 +58,6 @@ class Auth extends Controller {
 			//already logged in so no need to access this page
 			redirect($this->config->item('base_url'), 'refresh');
 		}
-
 
 		//validate form input
 		$this->form_validation->set_rules('username', 'User Name', 'required|trim');
@@ -81,6 +79,17 @@ class Auth extends Controller {
                     'locationid'  =>$location_id
                 );
                 $this->session->set_userdata($newdata);
+
+               $user_id =   $this->session->userdata('user_id');
+               $empolyee_code = $this->orders_model->getEmployeeCode($user_id);
+               $this->session->set_userdata(array('empolyee_code'=> $empolyee_code));
+
+                $data = array(
+                    'employee_id' => $empolyee_code,
+                    'audit_name' => 'login',
+                    'description' => $this->input->post('username'),
+                );
+                $this->orders_model->insertAuditLog($data);
 
                 redirect($this->config->item('base_url'), 'refresh');
 			}
@@ -114,9 +123,19 @@ class Auth extends Controller {
 	function logout()
 	{
 		$this->data['title'] = "Logout";
+        $session_data =  $this->session->all_userdata();
+        $data = array(
+            'employee_id' => $session_data['empolyee_code'],
+            'audit_name' => 'logout',
+            'description' => $session_data['username'],
+        );
 
 		//log the user out
 		$logout = $this->ion_auth->logout();
+
+        if($logout){
+            $this->orders_model->insertAuditLog($data);
+        }
 
 		//redirect them back to the page they came from
 		redirect('auth', 'refresh');
@@ -133,7 +152,8 @@ class Auth extends Controller {
 		{
 			redirect('auth/login', 'refresh');
 		}
-		$user = $this->ion_auth->get_user($this->session->userdata('user_id'));
+
+        $user = $this->ion_auth->get_user($this->session->userdata('user_id'));
 
 		if ($this->form_validation->run() == false)
 		{ //display the form

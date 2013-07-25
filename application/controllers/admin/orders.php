@@ -9,7 +9,7 @@ class Orders extends Crud_Controller
 
         $this->layout->setLayout('layout_admin');
         $this->load->helper('uploader');
-        $this->load->model(array('orders_model','productions_model','gallery_model'));
+        $this->load->model(array('orders_model','productions_model','gallery_model','cakes_model','categories_model'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
@@ -17,22 +17,22 @@ class Orders extends Crud_Controller
     }
 
     function index(){
-
         $this->data['active']=$this->uri->segment(2,0);
         //$this->orders_model->getListing();
-        $this->layout->view('admin/orders/order_view', $this->data);
+        $this->data['categories'] = $this->categories_model->getCategoryDropDownArray();
 
+        $this->data['catresult'] = $this->cakes_model->getCategories();
+        $this->data['flvresult'] = $this->cakes_model->getFlavours();
+        $this->data['sapresult'] = $this->cakes_model->getShapes();
+
+        $this->layout->view('admin/orders/orders_view', $this->data);
     }
 
     public function listing($starts=0)
     {
-
-
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['paging']=$this->orders_model->getListing($starts);
         $this->layout->view('admin/orders/listing_view', $this->data);
-
-
     }
 
 
@@ -51,9 +51,7 @@ class Orders extends Crud_Controller
         }
     }
 
-
     public function search(){
-
         $request = $this->input->post('search');
         if($request){
 
@@ -64,9 +62,7 @@ class Orders extends Crud_Controller
                 return false;
             }
         }
-
     }
-
 
     public function remove($id)
     {
@@ -74,8 +70,6 @@ class Orders extends Crud_Controller
         $this->redirectToHome("listing");
 
     }
-
-
 
     private function redirectToHome($redirect = NULL)
     {

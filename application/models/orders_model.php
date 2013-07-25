@@ -14,11 +14,8 @@ class Orders_model extends Crud_Model
 
 
     public function order_insert($data){
-
-
         $order_id = $this->insert($data);
         $order_code=(100000+$order_id);
-
         $this->db->set(array('order_code'=>$order_code))->where('order_id',$order_id)->update('orders');
         $dbdata =$this->getOrder($order_id);
         $order['order_id']= $order_id;
@@ -163,7 +160,6 @@ class Orders_model extends Crud_Model
 
     public function getListing($start)
     {
-
 
         $per_page=20;
         $page   = intval($start);

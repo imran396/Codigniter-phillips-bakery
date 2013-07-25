@@ -29,8 +29,6 @@ class Orders extends API_Controller
         $this->load->model('orders_model');
     }
 
-
-
     public function index()
     {
         $data = $this->orders_model->getAll();
@@ -69,8 +67,6 @@ class Orders extends API_Controller
         $data['discount_price']=isset($_REQUEST['discount_price'])? $_REQUEST['discount_price']:'';
         $data['total_price']=isset($_REQUEST['total_price'])? $_REQUEST['total_price']:'';
         $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';
-
-
         $order_status=isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'';
         if($order_status =='order'){
             $data['production_status']='in-production';
@@ -87,22 +83,31 @@ class Orders extends API_Controller
         $order_delivery['province']=isset($_REQUEST['province'])? $_REQUEST['province']:'';
         $order_delivery['delivery_instruction']=isset($_REQUEST['delivery_instruction'])? $_REQUEST['delivery_instruction']:'';
 
-
         $orders=$this->orders_model->order_insert($data);
 
-        if(strtolower($data['delivery_type']) == 'delivery'){
+        if(strtolower($data['delivery_type']) == 'delivery') {
 
             $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
         }
+//        print_r($data);
+//        die;
 
+        if($orders['order_id']) {
+            $empolyee_code = $this->orders_model->getEmployeeCode($data['employee_id']);
+
+            $data = array(
+                'employee_id' => $empolyee_code,
+                'audit_name' => 'order created',
+                'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
+            );
+            $this->orders_model->insertAuditLog($data);
+        }
 
         if(isset($_FILES['onCakeImage'])){
-
             $this->orders_model->doUpload($orders['order_id']);
         }
 
         if(isset($_FILES['instructionalImages'])){
-
             $this->orders_model->instructionalImagesUpload($orders['order_id']);
         }
 
@@ -116,6 +121,7 @@ class Orders extends API_Controller
 
         $this->saveBarcodeImage($orders['order_code']);
         $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
+
         if($mailtouser =="yes"){
             $this->sendEmail($orders['order_code']);
         }
@@ -129,12 +135,7 @@ class Orders extends API_Controller
 
     }
 
-
-
-
     public function update(){
-
-
         $array_orders_key =  array(
             'order_id','cake_id','customer_id','employee_id',
             'manager_id','location_id','order_date','delivery_type',
@@ -143,7 +144,6 @@ class Orders extends API_Controller
             'inscription','special_instruction','instructional_email_photo','vaughan_location','order_status','discount_price','total_price',
             'override_price','printed_imag_surcharge'
         );
-
 
         $array_delivery_key = array('name','phone','address_1','address_2','postal','city','province','delivery_instruction');
 
@@ -161,20 +161,29 @@ class Orders extends API_Controller
             }
         }
 
-        print_r($data);
-        exit;
+//        print_r($data);
+//        exit;
 
         $orders=$this->orders_model->order_update($data, $data['order_id']);
+
+        if($orders['order_id']) {
+            $empolyee_code = $this->orders_model->getEmployeeCode($data['empolyee_id']);
+
+            $data = array(
+                'employee_id' => $empolyee_code,
+                'audit_name' => 'order updated',
+                'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
+            );
+
+            $this->orders_model->insertAuditLog($data);
+        }
 
         if(isset($order_delivery)){
             $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
         }
-
-
         if(isset($_FILES['onCakeImage'])){
             $this->orders_model->doUpload($orders['order_id']);
         }
-
         if(isset($_FILES['instructionalImages'])){
 
             $this->orders_model->instructionalImagesUpload($orders['order_id']);
@@ -183,11 +192,9 @@ class Orders extends API_Controller
         if(isset($data['cake_email_photo'])== 'yes'){
             $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony');
         }
-
         if(isset($data['instructional_email_photo'])== 'yes'){
             $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak');
         }
-
         if(isset($_REQUEST['removedinstructionalImages'])){
 
             $image=$_REQUEST['removedinstructionalImages'];
@@ -206,7 +213,6 @@ class Orders extends API_Controller
         }else{
             $this->sendOutput(array('order_id'=> $orders['order_id'],'production_status' =>  $orders['production_status']));
         }
-
     }
 
 

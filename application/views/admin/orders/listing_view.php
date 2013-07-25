@@ -10,7 +10,9 @@
     <br/>
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('orders');?></h3>
-
+        <div class="buttons pull-right">
+            <a href="/admin/orders" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add New Order</a>
+        </div>
         <div class="clearfix"></div>
     </div>
 

@@ -6,10 +6,7 @@ class Categories_model extends Crud_Model
     public function __construct()
     {
         parent::__construct();
-
         $this->loadTable('categories','category_id');
-
-
     }
 
     public function create($data)
@@ -128,6 +125,13 @@ class Categories_model extends Crud_Model
         return $data;
     }
 
+    public function getCategoryDropDownArray(){
+        $data = $this->getAll();
+        foreach($data as $key => $val){
+            $dropdown_array[$val['category_id']] = $val['title'];
+        }
+        return $dropdown_array;
+    }
 
 
 
