@@ -336,6 +336,7 @@ class Cakes_model extends CI_Model
               FROM cakes As C
               LEFT JOIN cake_gallery AS G
                 ON ( C.cake_id = G.cake_id )
+              WHERE C.status =1
               GROUP BY C.cake_id";
 
         $data = $this->db->query($sql)->result_array();
