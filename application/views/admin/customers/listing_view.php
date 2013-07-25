@@ -66,8 +66,8 @@
                                 substr($from, 0, 3),
                                 substr($from, 3, 3),
                                 substr($from, 6, 8));?></td>
-                        <td><?php if($this->customers_model->orderCount($rows->customer_id,'order') > 0){ ?><a class="orderStatus" rel="order" id="<?php echo $rows->customer_id; ?>" href="javascript:void(0)"><?php echo $this->customers_model->orderCount($rows->customer_id,'order'); ?></a><?php }else{ echo 0; } ?></td>
-                        <td><?php if($this->customers_model->orderCount($rows->customer_id,'estimate') > 0){ ?><a class="orderStatus" rel="estimate" id="<?php echo $rows->customer_id; ?>" href="javascript:void(0)"><?php echo $this->customers_model->orderCount($rows->customer_id,'estimate'); ?></a><?php }else{ echo 0; } ?></td>
+                        <td><?php if($this->customers_model->orderCount($rows->customer_id,301) > 0){ ?><a class="orderStatus" rel="301" id="<?php echo $rows->customer_id; ?>" href="javascript:void(0)"><?php echo $this->customers_model->orderCount($rows->customer_id,301); ?></a><?php }else{ echo 0; } ?></td>
+                        <td><?php if($this->customers_model->orderCount($rows->customer_id,300) > 0){ ?><a class="orderStatus" rel="300" id="<?php echo $rows->customer_id; ?>" href="javascript:void(0)"><?php echo $this->customers_model->orderCount($rows->customer_id,300); ?></a><?php }else{ echo 0; } ?></td>
                         <td>
                             <a href="/admin/customers/status/<?php echo $rows->customer_id; ?>" class="btn-action glyphicons btn <?php if($rows->status ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
                             <a class="btn-action glyphicons pencil btn-success" href="/admin/customers/edit/<?php echo $rows->customer_id; ?>"><i></i></a>
@@ -112,7 +112,7 @@
     <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">Modal header</h3>
+            <h3 id="myModalLabel">Customer Order Lists</h3>
         </div>
         <div class="modal-body">
             <p>One fine body…</p>
