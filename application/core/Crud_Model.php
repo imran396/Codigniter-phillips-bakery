@@ -212,4 +212,17 @@ class Crud_Model extends CI_Model
     {
         $this->returnArray = $returnArray;
     }
+
+    public function insertAuditLog($data)
+    {
+        $this->db->insert('auditlog', $data);
+    }
+    public function getEmployeeCode($user_id){
+        $this->db->select('employee_id');
+        $this->db->from('meta');
+        $this->db->where('user_id', $user_id);
+        $meta_row = $this->db->get()->row();
+        return $meta_row->employee_id;
+    }
+
 }

@@ -20,6 +20,8 @@ class Customers extends API_Controller
     public function insert()
     {
             $data = $this->input->post();
+            $data_['employee_id'] = $data['employee_id'];
+            unset($data['employee_id']);
             $data['status']=1;
             $customer_id = $this->customers_model->create($data);
 
@@ -27,8 +29,19 @@ class Customers extends API_Controller
                 array(
                     'customer_id' => $customer_id
                 ),
-
             );
+
+          if($customer_id) {
+            $empolyee_code = $this->orders_model->getEmployeeCode($data_['employee_id']);
+
+           $data_customer = array(
+                'employee_id' => $empolyee_code,
+                'audit_name' => 'customer created',
+                'description' =>  'customer_id='. $data['customer_id'],
+            );
+            $this->orders_model->insertAuditLog($data_customer);
+          }
+
            $this->sendOutput($data);
 
     }
@@ -36,7 +49,20 @@ class Customers extends API_Controller
     public function update(){
 
             $data = $this->input->post();
+            $data_['employee_id'] = $data['employee_id'];
+            unset($data['employee_id']);
             $this->customers_model->save($data, $data['customer_id']);
+
+            if($data['customer_id']) {
+            $empolyee_code = $this->orders_model->getEmployeeCode($data_['employee_id']);
+
+            $data_customer = array(
+                'employee_id' => $empolyee_code,
+                'audit_name' => 'customer created',
+                'description' =>  'customer_id='. $data['customer_id'],
+            );
+            $this->orders_model->insertAuditLog($data_customer);
+         }
             $data = array(
             array(
                 'customer_id' => $data['customer_id']

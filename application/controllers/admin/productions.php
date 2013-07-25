@@ -13,7 +13,7 @@ class Productions extends Crud_Controller
         //$this->output->enable_profiler(TRUE);
         $loader = new Zend\Loader\StandardAutoloader(array('autoregister_zf' => true));
         $loader->register();
-
+        $this->load->helper('sentence_case');
         //$this->layout->setLayout('layout_admin');
         $this->layout->setLayout('layout_custom');
         $this->load->model(array('productions_model','gallery_model'));
@@ -112,9 +112,21 @@ class Productions extends Crud_Controller
 
 
 
-    public function status($order_code,$production_status){
+    public function status($order_code,$order_status){
 
-        $this->productions_model->statusChange($order_code,$production_status);
+       $this->productions_model->statusChange($order_code,$order_status);
+
+       $session_data =  $this->session->all_userdata();
+        $data = array(
+            'employee_id' => $session_data['empolyee_code'],
+            'audit_name' => 'orderstatus',
+            'description' => 'orderstatus='.$order_status.',ordercode='.$order_code,
+        );
+
+       if($order_code){
+           $this->productions_model->insertAuditLog($data);
+       }
+
         $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         redirect('admin/productions/details/'.$order_code);
 

@@ -110,10 +110,7 @@ $lang['unpublish'] 		 	    = 'Un-publish';
 
 /* Locations */
 
-
-
 $lang['create_location'] 		 	    = 'Create Location';
-$lang['location_name'] 		 	    = 'Location Name';
 $lang['vaughan_location'] 		 	    = 'Vaughan';
 $lang['location_title'] 		 	    = 'Location Title';
 $lang['address1'] 		 	    = 'Address 1';
@@ -138,8 +135,6 @@ $lang['end_price'] 		 	    = 'End Price';
 $lang['to'] 		 	    = 'To';
 $lang['add_gallery'] 		 	    = 'Add Gallery';
 $lang['list_cakes'] 		 	    = 'List of Cakes';
-
-
 
 $lang['select_one'] 		 	    = 'Select One';
 $lang['upload_image'] 		 	    = 'Upload Image';
@@ -225,3 +220,7 @@ $lang['cake_name'] 		 	    = 'Cake_Name';
 
 
 
+/* -------- Orders --------------*/
+$lang['Size and Servings'] = 'Size and Servings';
+$lang['cakes categories'] = 'Cakes Categories';
+$lang['auditlog'] = 'Audit Log';

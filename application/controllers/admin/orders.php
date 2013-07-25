@@ -9,7 +9,7 @@ class Orders extends Crud_Controller
 
         $this->layout->setLayout('layout_admin');
         $this->load->helper('uploader');
-        $this->load->model(array('orders_model','productions_model','cakes_model'));
+        $this->load->model(array('orders_model','productions_model','gallery_model'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
@@ -19,46 +19,8 @@ class Orders extends Crud_Controller
     function index(){
 
         $this->data['active']=$this->uri->segment(2,0);
-        $this->data['catresult'] = $this->cakes_model->getCategories();
-        $this->data['cakeresult'] = $this->orders_model->getCakes($category=0);
-        $this->data['flvresult'] = $this->cakes_model->getFlavours();
-        $this->data['sapresult'] = $this->cakes_model->getShapes();
+        //$this->orders_model->getListing();
         $this->layout->view('admin/orders/order_view', $this->data);
-
-    }
-
-    function getFlavour(){
-
-        $cake_id = $this->input->post('cake_id');
-        $row = $this->db->select('flavour_id')->where(array('cake_id' => $cake_id))->get('cakes')->row();
-        $flavour_id = unserialize($row->flavour_id);
-        $data ="";
-        foreach($flavour_id as $flavourid):
-            $res = $this->cakes_model->getFlavourName($flavourid);
-            $data .= "<option value='".$res->flavour_id."'>".$res->title."</option>";
-
-        endforeach;
-        echo $data;
-    }
-
-    function getServings(){
-
-        $flavour_id = $this->input->post('flavour_id');
-
-        $data ="";
-        foreach($matrix as $price):
-
-            $data .= "<option value='".$price->flavour_id."'>".$price->title."</option>";
-
-        endforeach;
-        echo $data;
-
-
-    }
-
-
-    public function getSerializeFlavour($cake_id){
-
 
     }
 

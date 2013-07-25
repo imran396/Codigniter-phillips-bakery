@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 
-class Productions_model extends Ci_Model
+class Productions_model extends Crud_Model
 {
     public function __construct()
     {

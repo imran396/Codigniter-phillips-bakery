@@ -23,7 +23,7 @@
 if(!class_exists('CI_Model')) { class CI_Model extends Model {} }
 
 
-class Ion_auth_model extends CI_Model
+class Ion_auth_model extends Crud_Model
 {
 	/**
 	 * Holds an array of tables used
@@ -594,6 +594,7 @@ class Ion_auth_model extends CI_Model
 
 	    $result = $query->row();
 
+
 	    if ($query->num_rows() == 1)
 	    {
 		$password = $this->hash_password_db($identity, $password);
@@ -601,7 +602,6 @@ class Ion_auth_model extends CI_Model
 		if ($result->password === $password)
 		{
 		    $this->update_last_login($result->id);
-
 		    $group_row = $this->db->select('name')->where('id', $result->group_id)->get($this->tables['groups'])->row();
 
 		    $session_data = array(
@@ -611,6 +611,7 @@ class Ion_auth_model extends CI_Model
 					'group_id'             => $result->group_id,
 					'group'                => $group_row->name
 					 );
+
 
 		    $this->session->set_userdata($session_data);
 

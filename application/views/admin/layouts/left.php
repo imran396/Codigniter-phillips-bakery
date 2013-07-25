@@ -43,6 +43,7 @@ $array = array('roles','controls','access_controls');
 
                 </ul>
             </li>
+            <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'auditlog') ? 'active' : ''; ?>"><a href="/admin/auditlog/listing"><i></i><span><?php echo $this->lang->line('auditlog'); ?></span></a></li>
 
         </ul>
 

@@ -3,14 +3,13 @@
         <ul class="breadcrumb">
             <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
             <li class="divider"></li>
-            <li><?php echo $this->lang->line('orders');?></li>
+            <li><?php echo $this->lang->line('auditlog');?></li>
         </ul>
     <br/>
     <?php $this->load->view('admin/layouts/message'); ?>
     <br/>
     <div class="heading-buttons">
-        <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('orders');?></h3>
-
+        <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('auditlog');?></h3>
         <div class="clearfix"></div>
     </div>
 
@@ -20,32 +19,30 @@
 <div class="innerLR hidden-paging" id="filterResult">
         <div class="widget">
             <div class="widget-body">
-                <table class="table table-bordered table-primary table-striped order-sortable">
+                <table class="table table-bordered table-primary table-striped">
                     <thead>
                     <tr>
-                        <th width="70">Order #</th>
-                        <th width="110">Delivery Date</th>
-                        <th width="166">Customer Name</th>
-                        <th width="160">Order Status</th>
-                        <th>Action</th>
+                        <th width="70">log #</th>
+                        <th width="166">Employee Id</th>
+                        <th width="93">Log Name</th>
+                        <th width="93">Description</th>
+                        <th width="93">Created</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php
                     $var = ($paging[3] != '0')  ? ($paging[3]+1) : 1;
                     $i=$var;
-                      foreach($paging[0] as $rows):
+                    foreach($paging[0]->result() as $rows):
+
                         ?>
                         <tr>
-                            <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
-                            <td class="center"><?php echo $this->productions_model->dateFormate($rows->delivery_date); ?></td>
-
-                            <td><?php if($rows->first_name) echo $rows->first_name.' '.$rows->last_name; else echo "---"; ?></td>
-                            <td class="center"><?php echo $rows->orderstatus; ?></td>
-                            <td> <?php if($rows->order_status =='cancelled'){ ?><a class="btn-action glyphicons remove_2 btn-danger" href="/admin/orders/remove/<?php echo $rows->order_code; ?>"><i></i></a><?php } ?>
-
-                            </td>
-                           </tr>
+                            <td> <?php echo $rows->id; ?></td>
+                            <td> <?php echo $rows->employee_id; ?></td>
+                            <td> <?php echo $rows->audit_name; ?></td>
+                            <td> <?php echo $rows->description; ?></td>
+                            <td> <?php echo $rows->created_time; ?></td>
+                        </tr>
                         <?php $i++; endforeach; ?>
 
                     </tbody>

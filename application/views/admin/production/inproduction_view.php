@@ -42,7 +42,6 @@
 
 
             var search =$("#search").val();
-            print_r(search);
             $.ajax({
                 url:"<?php echo site_url('admin/productions/search')?>",
                 data:"search="+search,
@@ -278,9 +277,9 @@
                     <th width="93">Date</th>
                     <th width="67">Time</th>
                     <th width="65">Fondant</th>
-                    <th width="84">Flavor</th>
-                    <th width="110">Magic Cake ID</th>
-                    <th width="75">Status</th>
+                    <th width="70">Flavor</th>
+                    <th width="120">Magic Cake ID</th>
+                    <th width="70">Status</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -295,14 +294,14 @@
                         <p class="list-code"><?php echo $rows->order_code; ?></p>
                     </td>
                     <td><?php echo $rows->first_name.' '.$rows->last_name; ?></td>
-                    <td><?php if($rows->cake_name){ echo $rows->cake_name;}else{ echo '---';} ?></td>
-                    <td class="center"><?php echo $rows->delivery_type; ?></td>
+                    <td><?php if($rows->cake_name){echo  sentence_case($rows->cake_name);}else{ echo '---';} ?></td>
+                    <td class="center"><?php echo sentence_case($rows->delivery_type); ?></td>
                     <td class="center"><?php echo $this->productions_model->dateFormate($rows->delivery_date); ?></td>
                     <td class="center"><?php echo $rows->delivery_time; ?></td>
                     <td><?php echo $rows->fondant; ?></td>
                     <td><?php echo $rows->flavour_name; ?></td>
                     <td><?php echo $rows->magic_cake_id; ?></td>
-                    <td class="green"><?php echo $rows->orderstatus;?></td>
+                    <td class="green"><?php echo $rows->production_status;?></td>
                 </tr>
                 <?php $i++; endforeach; ?>
 
