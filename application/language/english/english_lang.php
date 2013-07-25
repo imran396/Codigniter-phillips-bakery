@@ -119,7 +119,7 @@ $lang['city'] 		 	    = 'City';
 $lang['province'] 		 	    = 'Province';
 $lang['postal_code'] 		 	    = 'Postal Code';
 $lang['country'] 		 	    = 'Country';
-$lang['surcharge'] 		 	    = 'Sur-charge';
+$lang['surcharge'] 		 	    = 'Surcharge';
 $lang['pos_api'] 		 	    = 'POS api';
 
 /* Cakes */
