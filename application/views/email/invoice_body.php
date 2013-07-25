@@ -1,9 +1,11 @@
-SUBJECT: St. phillip's Bakery - Cake <?php if( $queryup->order_status =="estimate"){ echo ucfirst( $queryup->order_status); }else{ echo "Invoice"; } ?>
+SUBJECT: St. phillip's Bakery - Cake <?php if( $queryup->order_status ==300 ){ echo ucfirst( $queryup->orderstatus); }else{ echo "Invoice"; } ?>
 
 St. Phillips Bakery
 --------------------------
 <?php
 $locations=$this->locations_model->getLocations($queryup->locationid);
+
+if(!empty($locations)){
 ?>
 
 <?php echo $locations[0]->title.PHP_EOL; ?>
@@ -12,8 +14,8 @@ $locations=$this->locations_model->getLocations($queryup->locationid);
 <?php echo $locations[0]->city; ?> , <?php echo $locations[0]->province; ?> <?php echo $locations[0]->postal_code.PHP_EOL; ?>
 <?php echo $locations[0]->country.PHP_EOL; ?>
 <?php echo $locations[0]->email.PHP_EOL; ?>
-<?php echo $locations[0]->phone.PHP_EOL; ?>
-
+<?php echo $this->orders_model->phoneNoFormat($locations[0]->phone).PHP_EOL; ?>
+<?php } ?>
 
 
 ORDER ESTIMATE #<?php echo $queryup->order_code; ?> <?php echo $this->orders_model->getDateFormat($queryup->order_date).PHP_EOL; ?>
@@ -24,7 +26,7 @@ CUSTOMER DETAILS
 <?php echo $queryup->address_1.PHP_EOL; ?>
 <?php echo $queryup->address_2.PHP_EOL; ?>
 <?php echo $queryup->city; ?>, <?php echo $queryup->province; ?> <?php echo $queryup->postal_code.PHP_EOL; ?>
-<?php echo $this->orders_model->phoneNoFormat($queryup->phone_number); ?>
+<?php echo $this->orders_model->phoneNoFormat($queryup->phone_number).PHP_EOL; ?>
 <?php echo $queryup->email.PHP_EOL; ?>
 ------------------------------------------------------------
 ORDER INFORMATION
@@ -55,7 +57,7 @@ if( $deliveryInfo->city || $deliveryInfo->postal ){
 if($deliveryInfo->city){  echo $deliveryInfo->city; }  if($deliveryInfo->province){  echo ' , '.$deliveryInfo->province; }  if( $deliveryInfo->postal){ echo ', '.$deliveryInfo->postal.PHP_EOL; }
 }
 echo $this->orders_model->phoneNoFormat($deliveryInfo->phone).PHP_EOL;
-if( $deliveryInfo->email){ echo $deliveryInfo->email;  }
+if( $deliveryInfo->email){ echo $deliveryInfo->email.PHP_EOL;  }
 }?>
 
 ------------------------------------------------------------
@@ -119,5 +121,6 @@ TOTAL:                                         <?php if($queryup->override_price
 ------------------------------------------------------------
 
 Thank You
-<?php echo $locations[0]->email.PHP_EOL; ?>
+<?php
+if(!empty($locations)){ echo $locations[0]->email.PHP_EOL; } ?>
 stphillipsbakery.com

@@ -62,7 +62,7 @@
 
 <div id="wrapper">
 <div class="col_half left">
-    <h1><?php if( $queryup->order_status =="estimate"){ echo strtoupper( $queryup->order_status); }else{ echo "INVOICE"; } ?></h1>
+    <h1><?php if( $queryup->order_status ==300 ){ echo $queryup ->orderstatus; }else{ echo "INVOICE"; } ?></h1>
 </div>
 
 <div class="col_half right">
@@ -70,7 +70,7 @@
     $locations=$this->locations_model->getLocations($queryup->locationid);
     ?>
     <p  class="align-right">St. Phillip's Bakery</p>
-
+    <?php if(!empty($locations)){ ?>
     <?php if($locations[0]->title){ ?><p  class="align-right"><?php echo $locations[0]->title; ?></p><?php } ?>
     <?php if($locations[0]->address1){ ?><p  class="align-right"><?php echo $locations[0]->address1; ?></p><?php } ?>
     <?php if($locations[0]->address2){ ?><p  class="align-right"><?php echo $locations[0]->address2; ?></p><?php } ?>
@@ -78,6 +78,7 @@
     <?php if($locations[0]->country){ ?><p  class="align-right"><?php echo $locations[0]->country; ?></p><?php } ?>
     <?php if($locations[0]->email){ ?><p  class="align-right"><?php echo $locations[0]->email; ?></p><?php } ?>
     <?php if($locations[0]->phone){ ?><p  class="align-right"><?php echo $this->orders_model->phoneNoFormat($locations[0]->phone); ?></p><?php } ?>
+    <?php } ?>
 </div>
 <div class="clr"></div>
 
@@ -233,7 +234,8 @@
     </p>
     <br />
     <p class="cen">Thank You</p>
-    <p class="cen"><?php echo $locations[0]->email; ?></p>
+    <p class="cen"><?php
+        if(!empty($locations)){ echo $locations[0]->email; } ?></p>
     <br />
     <p class="cen">stphillipsbakery.com</p>
 

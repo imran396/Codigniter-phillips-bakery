@@ -79,11 +79,11 @@ class Servings extends Crud_Controller
 
             $this->servings_model->create($data);
 
-            $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
+            $this->session->set_flashdata('success_msg','New serving has been added successfully');
         } else {
             $this->servings_model->save($data, $data['serving_id']);
 
-            $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
+            $this->session->set_flashdata('success_msg','New serving has been updated successfully');
         }
 
     }

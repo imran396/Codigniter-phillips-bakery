@@ -154,8 +154,10 @@ $lang['fondant'] 		 	    = 'Fondant';
 
 
 $lang['add_servings'] 		 	    = 'Add Servings';
-$lang['serving_name'] 		 	    = 'Serving Name';
+$lang['serving_name'] 		 	    = 'Number of servings';
 $lang['size'] 		 	    = 'Size';
+$lang['size_shape'] 		 	    = 'Size & Shape';
+$lang['printing_surcharge'] 		 	    = 'Printing Surcharge';
 
 /* price matrix */
 $lang['price_matrix'] 		 	    = 'Price Matrix';
@@ -215,4 +217,11 @@ $lang['employee_id'] 		 	    = 'Employee ID';
 $lang['production'] 		 	    = 'Production';
 $lang['inproduction'] 		 	    = 'In Production';
 $lang['blackout'] 		 	    = 'Blackout';
+
+
+/* Manage Orders Label */
+
+$lang['cake_name'] 		 	    = 'Cake_Name';
+
+
 

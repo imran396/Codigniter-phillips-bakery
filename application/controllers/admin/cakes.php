@@ -9,6 +9,7 @@ class Cakes extends Crud_Controller
 
        // $this->load->library('image_lib');
         $this->load->helper('uploader');
+        //$this->output->enable_profiler(TRUE);
         $this->layout->setLayout('layout_admin');
         $this->load->model(array('cakes_model','gallery_model'));
         $log_status = $this->ion_auth->logged_in();
@@ -37,8 +38,6 @@ class Cakes extends Crud_Controller
 
     }
 
-
-
     public function save()
     {
 
@@ -59,9 +58,6 @@ class Cakes extends Crud_Controller
         $this->index();
 
     }
-
-
-
 
 
     public function edit($id)
@@ -98,11 +94,11 @@ class Cakes extends Crud_Controller
         if (empty($data['cake_id'])) {
 
             $this->cakes_model->create($data);
-            $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
+            $this->session->set_flashdata('success_msg','New cake has been added successfully');
         } else {
             $this->cakes_model->save($data, $data['cake_id']);
 
-            $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
+            $this->session->set_flashdata('success_msg','New cake has been updated successfully');
         }
 
     }

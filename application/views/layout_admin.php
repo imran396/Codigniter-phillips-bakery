@@ -167,6 +167,14 @@ jQuery(document).ready(function(){
 
     $("#category_id , #location_id , #flavour_id  ").select2();
 
+    var oTable = $('.cake-sorting').dataTable({
+        "iDisplayLength": 500,
+        "aoColumnDefs": [
+            { "bSortable":false, "aTargets": [3] }
+
+        ]
+    });
+
     var oTable = $('.column-sorting').dataTable({
         "iDisplayLength": 500,
         "aoColumnDefs": [

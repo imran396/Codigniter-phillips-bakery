@@ -13,13 +13,26 @@
         <div class="buttons pull-right">
             <a href="/admin/users" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add New Employee</a>
         </div>
+        <div class="buttons pull-right">
+            <?php
+            $searchval =  isset($_REQUEST['search']) ? $_REQUEST['search']:'';
+            $consearchseg =  $this->uri->segment(3,NULL);
+            $searchseg =  $this->uri->segment(4,NULL);
+            if($searchval){
+                $search=$searchval;
+            }else{
+                if($consearchseg =='search')
+                    $search=$searchseg;
+            }
+            ?>
+            <form action="/admin/users/search" method="get"><input type="text" value="<?php if(!empty($search)){echo $search;} ?>"  name="search" placeholder="Search employee" id="search"><button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok mbutton"><i></i><?php echo $this->lang->line('search');?></button></form>
+        </div>
         <div class="clearfix"></div>
     </div>
 <!-- End Content -->
 <div class="separator"></div>
 
 <br/>
-
 
 <div class="innerLR">
         <div class="widget widget-gray widget-body-white">

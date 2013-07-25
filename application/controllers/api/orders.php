@@ -65,7 +65,7 @@ class Orders extends API_Controller
         $data['instructional_email_photo']=isset($_REQUEST['instructional_email_photo'])? $_REQUEST['instructional_email_photo']:'';
         $data['vaughan_location']=isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
         $data['order_status']=isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'';
-        $data['printed_imag_surcharge']=isset($_REQUEST['printed_imag_surcharge'])? $_REQUEST['printed_imag_surcharge']:'';
+        $data['printed_image_surcharge']=isset($_REQUEST['printed_image_surcharge'])? $_REQUEST['printed_image_surcharge']:'';
         $data['discount_price']=isset($_REQUEST['discount_price'])? $_REQUEST['discount_price']:'';
         $data['total_price']=isset($_REQUEST['total_price'])? $_REQUEST['total_price']:'';
         $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';
@@ -116,11 +116,11 @@ class Orders extends API_Controller
 
         $this->saveBarcodeImage($orders['order_code']);
 
-        if(strtolower($data['order_status']) == 'order'){
+        if($data['order_status'] == 301 ){
 
-            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'production_status' =>  $orders['production_status']));
+            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
         }else{
-            $this->sendOutput(array('order_id'=> $orders['order_id'],'production_status' =>  $orders['production_status']));
+            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_status' =>  $orders['order_status']));
         }
 
     }
@@ -137,7 +137,7 @@ class Orders extends API_Controller
             'pickup_location_id','delivery_zone_id','delivery_zone_surcharge',
             'delivery_date','delivery_time','flavour_id','fondant','tiers','price_matrix_id','shape','matrix_price','cake_email_photo','magic_cake_id','magic_surcharge',
             'inscription','special_instruction','instructional_email_photo','vaughan_location','order_status','discount_price','total_price',
-            'override_price','printed_imag_surcharge'
+            'override_price','printed_image_surcharge'
         );
 
 
@@ -191,11 +191,11 @@ class Orders extends API_Controller
         }
 
 
-        if(strtolower($data['order_status']) == 'order'){
+        if($data['order_status'] == 301 ){
 
-            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'production_status' =>  $orders['production_status']));
+            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
         }else{
-            $this->sendOutput(array('order_id'=> $orders['order_id'],'production_status' =>  $orders['production_status']));
+            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_status' =>  $orders['order_status']));
         }
 
     }
@@ -280,7 +280,6 @@ class Orders extends API_Controller
             if($invoice =="thermal"){
 
                 $this->load->view('email/thermal_view', $this->data);
-
             }else{
 
                 $this->load->view('email/invoice_view', $this->data);
@@ -313,6 +312,7 @@ class Orders extends API_Controller
 
                 $this->load->view('email/production_thermal_view', $this->data);
 
+
             }else{
 
                 $this->load->view('email/invoice_view', $this->data);
@@ -335,11 +335,8 @@ class Orders extends API_Controller
         if($result ->num_rows() > 0){
         $this->data['queryup']=$result->row();
         $customer_email=$this->data['queryup']->email;
-        if($this->data['queryup']->order_status =="order"){
-            $order_status="Invoice";
-        }else{
-            $order_status=ucfirst($this->data['queryup']->order_status);
-        }
+        $order_status=$this->data['queryup']->orderstatus;
+
         if(!empty($customer_email)){
 
             $body          = $this->load->view('email/invoice_body', $this->data,true);
@@ -369,11 +366,7 @@ class Orders extends API_Controller
         $result= $this->productions_model->orderDetails($order_code);
         $this->data['queryup']=$result->row();
         $customer_email=$this->data['queryup']->email;
-           if($this->data['queryup']->order_status =="order"){
-               $order_status="Invoice";
-           }else{
-               $order_status=ucfirst($this->data['queryup']->order_status);
-           }
+
         if(!empty($customer_email)){
 
             $body          = $this->load->view('email/invoice_body', $this->data,true);
@@ -382,7 +375,7 @@ class Orders extends API_Controller
             $this->email->set_newline("\r\n");
             $this->email->from('shafiq@emicrograph.com', 'St Phillip\'s Bakery');
             $this->email->to($customer_email);
-            $this->email->subject('St Phillip\'s Bakery :'.$order_status);
+            $this->email->subject('St Phillip\'s Bakery :'.$this->data['queryup']->orderstatus);
             $this->email->message(nl2br($body));
             $this->email->send();
         }
@@ -390,20 +383,20 @@ class Orders extends API_Controller
 
     }
 
-    public function sendOrderEmail($order_code,$ordertype="Estimate"){
+   /* public function sendOrderEmail($order_code,$ordertype="Estimate"){
 
         // $this->load->helper(array('dompdf', 'file'));
         $result= $this->productions_model->orderDetails($order_code);
         $this->data['queryup']=$result->row();
         $this->data['invoice_title']= $ordertype;
         $body          = $this->load->view('email/invoice_body', $this->data,true);
-        /* $html          = $this->load->view('email/invoice_view', $this->data,true);
+         $html          = $this->load->view('email/invoice_view', $this->data,true);
          $invoiceNumber = str_pad($ordertype.'-'.$order_code,8,0,STR_PAD_LEFT);
          $pdf           = pdf_create($html, $invoiceNumber, false);
          $filePath      = realpath(APPPATH . "../web/assets/uploads/orders/pdf/"). DIRECTORY_SEPARATOR . $invoiceNumber.".pdf";
-         file_put_contents($filePath,$pdf);*/
-        // $this->sendEmail($body);
-    }
+         file_put_contents($filePath,$pdf);
+         $this->sendEmail($body);
+    }*/
 
 
 

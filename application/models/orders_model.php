@@ -12,6 +12,29 @@ class Orders_model extends Crud_Model
 
     }
 
+    /*------------Start Admin Panel Oredr */
+
+    function getCakes($category_id=0){
+
+        $this->db->select('cakes.cake_id,cakes.title,');
+        $this->db->from('cakes');
+        if($category_id > 0){
+            $this->db->where('category_id',$category_id);
+        }
+        $res = $this->db->get();
+        return $res->result();
+    }
+
+    function getPriceMatrix($flavour_id){
+        $matrix =
+            $this->db->select('flavour_id')
+                ->from('price_matrix')
+                ->where(array('flavour_id' => $flavour_id))
+                ->get()
+                ->result();
+    }
+
+    /*------------End Admin Panel Oredr */
 
     public function order_insert($data){
 
@@ -24,7 +47,6 @@ class Orders_model extends Crud_Model
         $order['order_id']= $order_id;
         $order['order_code']= $order_code;
         $order['order_status']=  $dbdata->order_status;
-        $order['production_status']=  $dbdata->production_status;
         return $order;
     }
 
@@ -36,13 +58,6 @@ class Orders_model extends Crud_Model
         $order['order_id']= $dbdata->order_id;
         $order['order_code']=  $dbdata->order_code;
         $order['order_status']=  $dbdata->order_status;
-        if($dbdata->production_status =="" ||  $dbdata->order_status =="estimate"){
-            $this->db->where(array('order_id'=>$order_id))->set(array('production_status'=>'estimate'))->update('orders');
-        }else if($dbdata->order_status =="order"){
-            $this->db->where(array('order_id'=>$order_id))->set(array('production_status'=>'in-production'))->update('orders');
-        }
-        $dbdata =$this->getOrder($order_id);
-        $order['production_status']=  $dbdata->production_status;
 
         return $order;
     }

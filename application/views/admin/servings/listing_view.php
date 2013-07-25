@@ -29,7 +29,7 @@
                     <tr>
                         <th class="center">No.</th>
                         <th><?php echo $this->lang->line('servings');?></th>
-                        <th><?php echo $this->lang->line('size');?></th>
+                        <th><?php echo $this->lang->line('size_shape');?></th>
                         <th style="width: 1%;" class="center"><?php echo $this->lang->line('drag');?></th>
                         <th><?php echo $this->lang->line('action');?></th>
                     </tr>

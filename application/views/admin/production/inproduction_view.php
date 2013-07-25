@@ -42,6 +42,7 @@
 
 
             var search =$("#search").val();
+            print_r(search);
             $.ajax({
                 url:"<?php echo site_url('admin/productions/search')?>",
                 data:"search="+search,
@@ -57,7 +58,7 @@
             })
         });
 
-        $('#production_status , #fondant , #flavour_id , #delivery_type , #datepicker , #datepicker2 , #delivery_start_time , #delivery_end_time').change(function(){
+        $('#order_status , #fondant , #flavour_id , #delivery_type , #datepicker , #datepicker2 , #delivery_start_time , #delivery_end_time').change(function(){
 
             timedely();
 
@@ -133,13 +134,13 @@
         <a href="" class="icon-refresh"></a>
         <span class="label">Filter By:</span>
         <div class="row-fluid">
-            <select class="selectpicker span12" name="production_status" id="production_status">
+            <select class="selectpicker span12" name="order_status" id="order_status">
                 <option class="label">Status</option>
                 <?php
                 $getOrderStatus = $this->productions_model->getOrderStatus();
                 foreach($getOrderStatus as $orderStatus):
                 ?>
-                <option value="<?php echo $orderStatus->title ?>"><?php echo $orderStatus->description ?></option>
+                <option value="<?php echo $orderStatus->production_status_code; ?>"><?php echo $orderStatus->description ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -301,7 +302,7 @@
                     <td><?php echo $rows->fondant; ?></td>
                     <td><?php echo $rows->flavour_name; ?></td>
                     <td><?php echo $rows->magic_cake_id; ?></td>
-                    <td class="green"><?php echo $rows->production_status;?></td>
+                    <td class="green"><?php echo $rows->orderstatus;?></td>
                 </tr>
                 <?php $i++; endforeach; ?>
 

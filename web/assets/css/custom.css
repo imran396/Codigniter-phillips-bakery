@@ -264,6 +264,7 @@ div.dataTables_info {
     margin: 0px;
     width: 220px;
     line-height: 30px;
+    font-size: 11px;
 }
 .custom-pagination{
     float: right;

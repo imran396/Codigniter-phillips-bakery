@@ -21,21 +21,19 @@ class Productions_model extends Ci_Model
         $base_url = site_url('admin/productions/inproduction/');
 
         $this->db->from('orders');
-        $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
-        $this->db->join('customers','customers.customer_id = orders.customer_id','left');
-        $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
-        $this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
+        $this->db->where(array("orders.location_id"=> $location_id,'order_status !='=>300));
         //$this->db->where(array('order_status'=>'order'));
         $total_rows = $this->db->count_all_results();
 
         $paging = production_paginate($base_url, $total_rows,$start,$per_page);
-        $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name,customers.first_name,customers.last_name');
+        $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name,customers.first_name,customers.last_name,order_status.description AS orderstatus');
         $this->db->from('orders');
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
+        $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
         $this->db->limit($per_page,$limit);
-        $this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
+        $this->db->where(array("orders.location_id"=> $location_id,'order_status !='=>300));
         //$this->db->where(array('order_status'=>'order'));
        // $this->db->or_where(array("orders.pickup_location_id"=> $location_id));
         $this->db->order_by("orders.order_code", "desc");
@@ -49,7 +47,7 @@ class Productions_model extends Ci_Model
 
         $location_id = $this->session->userdata('locationid');
 
-        $production_status = (strtolower($data['production_status']) != "status" ) ? strtolower($data['production_status']) :'';
+        $order_status = (strtolower($data['order_status']) != "status" ) ? strtolower($data['order_status']) :'';
         $fondant = (strtolower($data['fondant']) != "fondant" ) ? strtolower($data['fondant']) :'';
         $flavour_id = (strtolower($data['flavour_id']) != "flavour" ) ? strtolower($data['flavour_id']) :'';
         $delivery_type = (strtolower($data['delivery_type']) != "pickup/delivery" ) ? strtolower($data['delivery_type']) :'';
@@ -64,16 +62,17 @@ class Productions_model extends Ci_Model
         $data['orders.flavour_id'] =  $data['flavour_id'];
         unset($data['flavour_id']);
 
-        $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name, flavours.fondant AS fondant_name, customers.first_name,customers.last_name');
+        $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name, flavours.fondant AS fondant_name, customers.first_name,customers.last_name,order_status.description AS orderstatus');
         $this->db->from('orders');
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
+        $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
 
-        $this->db->where(array("orders.location_id"=> $location_id,'order_status'=>'order'));
+        $this->db->where(array("orders.location_id"=> $location_id,'order_status !='=>300));
         //$this->db->where(array('order_status'=>'order'));
-        if($production_status){
-            $this->db->like(array("orders.production_status"=> $production_status));
+        if($order_status){
+            $this->db->like(array("orders.order_status"=> $order_status));
         }
         if($fondant){
             $this->db->where(array("orders.fondant"=> $fondant));
@@ -111,7 +110,7 @@ class Productions_model extends Ci_Model
 
     public function orderDetails($order_code){
 
-        $this->db->select('orders.*, orders.location_id AS locationid , orders.tiers AS orderTiers  ,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, servings.size AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description');
+        $this->db->select('orders.*, orders.location_id AS locationid , orders.tiers AS orderTiers  ,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, servings.size AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description,order_status.description AS orderstatus');
         $this->db->from('orders');
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
@@ -119,6 +118,7 @@ class Productions_model extends Ci_Model
         $this->db->join('price_matrix','price_matrix.price_matrix_id = orders.price_matrix_id','left');
         $this->db->join('servings','servings.serving_id = price_matrix.serving_id','left');
         $this->db->join('zones','zones.zone_id = orders.delivery_zone_id','left');
+        $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
         $this->db->where(array("orders.order_code"=> $order_code));
         return $this->db->get();
 
@@ -126,7 +126,7 @@ class Productions_model extends Ci_Model
     }
      public function orderPrint($order_id){
 
-        $this->db->select('orders.*, orders.location_id AS locationid , orders.tiers AS orderTiers  ,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, servings.size AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description');
+        $this->db->select('orders.*, orders.location_id AS locationid , orders.tiers AS orderTiers  ,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, servings.size AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description,order_status.description AS orderstatus');
         $this->db->from('orders');
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
@@ -134,6 +134,7 @@ class Productions_model extends Ci_Model
         $this->db->join('price_matrix','price_matrix.price_matrix_id = orders.price_matrix_id','left');
         $this->db->join('servings','servings.serving_id = price_matrix.serving_id','left');
         $this->db->join('zones','zones.zone_id = orders.delivery_zone_id','left');
+        $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
         $this->db->where(array("orders.order_id"=> $order_id));
         return $this->db->get();
 

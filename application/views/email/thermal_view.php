@@ -45,7 +45,7 @@
     }
 </style>
 <div id="wrapper">
-<h1 class="cen">ORDER</h1>
+<h1><?php if( $queryup->order_status ==300 ){ echo $queryup ->orderstatus; }else{ echo "ORDER"; } ?></h1>
 <br />
 
 <p class="cen">St. Phillip's Bakery</p>
