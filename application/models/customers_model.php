@@ -73,10 +73,15 @@ class Customers_model extends Crud_Model
         $this->db->select('customers.*');
         $this->db->from('customers');
         $this->db->limit($per_page,$limit);
-        $this->db->order_by("customers.customer_id", "desc");
+        $this->db->order_by("customers.first_name", "asc");
         $query =$this->db->get();
         return array($query,$paging,$total_rows,$limit);
 
+    }
+
+    function orderCount($customer_id,$order_status){
+
+        return $this->db->where(array('customer_id'=>$customer_id,'order_status'=>$order_status))->get('orders')->num_rows();
     }
 
     public function statusChange($id){
@@ -150,4 +155,48 @@ class Customers_model extends Crud_Model
         return $data;
 
     }
+
+    function searching($search,$start){
+
+        $search=strtolower($search);
+        $query="SELECT customer_id,first_name,last_name,phone_number,status
+                FROM `customers`
+                WHERE(`customer_id` > 0 AND  LOWER(`first_name`) LIKE '%$search%')
+                || ( `customer_id` > 0 AND LOWER(`last_name`) LIKE '%$search%')
+                || (`customer_id` > 0 AND `phone_number` = '$search')";
+
+        $per_page=10;
+        $page   = intval($start);
+        if($page<=0)  $page  = 1;
+        $limit=($page-1)*$per_page;
+        $base_url = site_url('admin/customers/search/'.$search);
+        $num = $this->db->query($query);
+        $total_rows = $num->num_rows();
+        $paging = paginate($base_url, $total_rows,$start,$per_page);
+        $limit = "LIMIT $limit , $per_page";
+        $pagequery=$query.$limit;
+        $query = $this->db->query($pagequery);
+        return array($query,$paging,$total_rows,$limit);
+
+    }
+
+    function orderList($customer_id,$order_status){
+
+        $result = $this->db->where(array('customer_id'=>$customer_id,'order_status'=>$order_status))->order_by('delivery_date','desc')->get('orders');
+
+        if($result->num_rows() > 0){
+
+            $data="";
+            $data .="<table class='table table-bordered table-primary' >";
+            $data .="<thead><tr><th>Order Code</th><th>Delivery Date & Time</th><th>Delivery Type</th></tr></thead>";
+            foreach($result->result() as $rows ):
+            $data .="<tr><td><a href='/admin/productions/details/".$rows->order_code."'>".$rows->order_code."</a></td><td>".$rows->delivery_date."</td><td>".$rows->delivery_type."</td></tr>";
+            endforeach;
+            $data .="</table>";
+            return  $data;
+
+
+        }
+    }
+
 }

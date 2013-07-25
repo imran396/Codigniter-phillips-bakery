@@ -25,7 +25,7 @@
         <div class="widget widget-gray widget-body-white">
 
             <div class="widget-body" style="padding: 10px 0;">
-                <table class="table table-bordered table-primary js-table-sortable">
+                <table class="table table-bordered table-primary js-table-sortable flavour-sortable">
                     <thead>
                     <tr>
                         <th class="center">No.</th>
@@ -60,6 +60,11 @@
 
 </div>
 </div>
+<style type="text/css">
+    .row-fluid {
+        display: none;
+    }
+</style>
 <script type="text/javascript">
 
     $(document).ready(function() {

@@ -57,7 +57,7 @@
             })
         });
 
-        $('#production_status , #fondant , #flavour_id , #delivery_type , #datepicker , #datepicker2 , #delivery_start_time , #delivery_end_time').change(function(){
+        $('#order_status , #fondant , #flavour_id , #delivery_type , #datepicker , #datepicker2 , #delivery_start_time , #delivery_end_time').change(function(){
 
             timedely();
 
@@ -116,8 +116,8 @@
     <span class="tlogo">Cakes in Production</span>
     <div class="pull-right">
         <div class="search-form">
-            <div class="error-msg"></div>
-            <form action="/admin/productions/search" method="post">
+            <div class="error-msg"><?php echo $this->session->flashdata('nofound_msg')?></div>
+            <form action="/admin/productions/searchOrder" method="post">
                 <input type="text" class="validate[required]" name="search" id="search" value="" placeholder="Search Orders" class="error" />
                 <input type="button" id="searchButton" name="" value="Search" />
             </form>
@@ -133,13 +133,13 @@
         <a href="" class="icon-refresh"></a>
         <span class="label">Filter By:</span>
         <div class="row-fluid">
-            <select class="selectpicker span12" name="production_status" id="production_status">
+            <select class="selectpicker span12" name="order_status" id="order_status">
                 <option class="label">Status</option>
                 <?php
                 $getOrderStatus = $this->productions_model->getOrderStatus();
                 foreach($getOrderStatus as $orderStatus):
                 ?>
-                <option value="<?php echo $orderStatus->title ?>"><?php echo $orderStatus->description ?></option>
+                <option value="<?php echo $orderStatus->production_status_code; ?>"><?php echo $orderStatus->description ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -301,7 +301,7 @@
                     <td><?php echo $rows->fondant; ?></td>
                     <td><?php echo $rows->flavour_name; ?></td>
                     <td><?php echo $rows->magic_cake_id; ?></td>
-                    <td class="<?php //echo  order_status_class('300'); ?>"><?php echo $rows->production_status;?></td>
+                    <td class="green"><?php echo $rows->production_status;?></td>
                 </tr>
                 <?php $i++; endforeach; ?>
 

@@ -264,6 +264,7 @@ div.dataTables_info {
     margin: 0px;
     width: 220px;
     line-height: 30px;
+    font-size: 11px;
 }
 .custom-pagination{
     float: right;
@@ -332,6 +333,11 @@ div.dataTables_info {
     text-decoration: none;
     text-transform: none!important;
     width: 216px;
+}
+
+.radio, .checkbox {
+    min-height: 20px;
+    padding-left: 20px!important;
 }
 
 

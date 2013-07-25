@@ -56,10 +56,9 @@ class Productions extends Crud_Controller
         $data = $this->input->post();
         $this->data['query']=$this->productions_model->getFiltering($data);
         $this->load->view('admin/production/order_filtering_view', $this->data);
-
-
-
     }
+
+
 
 
     public function details($order_code=0)
@@ -91,6 +90,26 @@ class Productions extends Crud_Controller
         }
 
     }
+
+    public function searchOrder(){
+
+        $request = $this->input->post('search');
+        if($request){
+
+            $order_code = $this->productions_model->doSearch($request);
+            if($order_code > 0){
+
+                redirect('admin/productions/details/'.$order_code);
+
+            }else{
+
+                $this->session->set_flashdata('nofound_msg','<span>Error No Results</span>');
+                redirect('admin/productions/inproduction');
+            }
+        }
+
+    }
+
 
 
     public function status($order_code,$order_status){

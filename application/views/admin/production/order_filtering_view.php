@@ -29,7 +29,7 @@
                     <td><?php echo $rows->fondant; ?></td>
                     <td><?php echo $rows->flavour_name; ?></td>
                     <td><?php echo $rows->magic_cake_id; ?></td>
-                    <td class="green"><?php echo $rows->production_status;?></td>
+                    <td class="green"><?php echo $rows->orderstatus;?></td>
                 </tr>
                 <?php endforeach; ?>
 

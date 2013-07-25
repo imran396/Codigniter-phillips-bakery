@@ -8,6 +8,7 @@ class Customers extends Crud_Controller
         parent::__construct();
         $this->layout->setLayout('layout_admin');
         $this->load->model('customers_model');
+        //$this->output->enable_profiler(TRUE);
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
@@ -17,7 +18,6 @@ class Customers extends Crud_Controller
     public function index()
     {
 
-        $group = $this->session->userdata('group');
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/customers/customers_view', $this->data);
 
@@ -114,12 +114,43 @@ class Customers extends Crud_Controller
 
     public function checkTitle($title){
 
-
         $data = $this->input->post();
         return  $this->customers_model->checkcustomers($data['customer_id'],$title);
+    }
+
+    public function order_list(){
+        $customer_id = $this->input->post('customer_id');
+        $order_status = $this->input->post('order_status');
+        echo $this->customers_model->orderList($customer_id,$order_status);
+    }
+
+    function search($urlsearch=NULL,$start=0){
+
+
+        $getsearch = $this->input->get('search');
+
+        if($getsearch){
+            $search = $getsearch;
+        }else{
+            $search = $urlsearch;
+        }
+
+        if(!empty($search)){
+
+            $this->data['paging'] = $this->customers_model->searching($search,$start);
+            $this->data['active']=$this->uri->segment(2,0);
+            $this->layout->view('admin/customers/listing_view', $this->data);
+
+
+        }else{
+
+            $this->session->set_flashdata('warnings_msg',$this->lang->line('update_msg'));
+            $this->redirectToHome("listing");
+        }
 
 
     }
+
 
 
     private function redirectToHome($redirect = NULL)

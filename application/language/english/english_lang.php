@@ -17,8 +17,8 @@
 
 // Account Changes
 $lang['site_title'] 		 	    = 'St. Phillips Bakery Admin Panel';
-$lang['site_name'] 		 	        = 'St. Phillip\'s';
-$lang['site_login'] 		 	    = 'St. Phillip\'s Bakery';
+$lang['site_name'] 		 	        = 'St. Phillips';
+$lang['site_login'] 		 	    = 'St. Phillips Bakery';
 $lang['admin_panel'] 		 	    = 'Admin Panel';
 $lang['list'] 		 	    = 'List';
 $lang['add_new'] 		 	    = 'Add new';
@@ -49,7 +49,7 @@ $lang['tiers'] 		 	                            = 'Tiers';
 $lang['blackouts'] 		 	                        = 'Blackouts';
 $lang['cakes'] 		 	                            = 'Cakes';
 $lang['gallery'] 		 	                    = 'Cake Gallery';
-$lang['zone'] 		 	                    = 'Delivery zone';
+$lang['zone'] 		 	                    = 'Delivery Zones';
 $lang['employee'] 		 	                        = 'Employee';
 $lang['customers'] 		 	                        = 'Customers';
 $lang['orders'] 		 	                    = 'Cake Orders';
@@ -149,8 +149,10 @@ $lang['fondant'] 		 	    = 'Fondant';
 
 
 $lang['add_servings'] 		 	    = 'Add Servings';
-$lang['serving_name'] 		 	    = 'Serving Name';
+$lang['serving_name'] 		 	    = 'Number of servings';
 $lang['size'] 		 	    = 'Size';
+$lang['size_shape'] 		 	    = 'Size & Shape';
+$lang['printing_surcharge'] 		 	    = 'Printing Surcharge';
 
 /* price matrix */
 $lang['price_matrix'] 		 	    = 'Price Matrix';
@@ -184,6 +186,8 @@ $lang['country'] 		 	    = 'Country';
 $lang['notes'] 		 	    = 'Notes';
 $lang['email_notification'] 		 	    = 'Email Notification';
 $lang['create_customer'] 		 	    = 'Create Customer';
+$lang['orders'] 		 	    = 'Orders';
+$lang['estimates'] 		 	    = 'Estimates';
 
 /*  Users */
 
@@ -201,12 +205,20 @@ $lang['account_settings'] 		 	    = 'Account Settings';
 $lang['account_settings_info'] 		 	    = 'Account settings instruction';
 $lang['controller_name'] 		 	    = 'Controller name';
 $lang['inactive'] 		 	    = 'Inactive';
+$lang['employee_id'] 		 	    = 'Employee ID';
 
 /*        ---------------Production------------------    */
 
 $lang['production'] 		 	    = 'Production';
 $lang['inproduction'] 		 	    = 'In Production';
 $lang['blackout'] 		 	    = 'Blackout';
+
+
+/* Manage Orders Label */
+
+$lang['cake_name'] 		 	    = 'Cake_Name';
+
+
 
 /* -------- Orders --------------*/
 $lang['Size and Servings'] = 'Size and Servings';

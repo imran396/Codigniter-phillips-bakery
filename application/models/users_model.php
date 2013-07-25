@@ -15,9 +15,9 @@ class Users_model extends Crud_Model
 
     public function update($data, $id)
     {
-        $array = array('first_name'=>$data['first_name'],'last_name'=>$data['last_name'],'location_id'=>$data['location_id']);
+        $array = array('first_name'=>$data['first_name'],'last_name'=>$data['last_name']);
         $this->db->set($array)->where(array('id'=>$id))->update('meta');
-        $array = array('email'=>$data['email']);
+        $array = array('email'=>$data['email'],'group_id'=>$data['group_id']);
         $this->db->set($array)->where(array('id'=>$id))->update('users');
 
     }
@@ -70,7 +70,6 @@ class Users_model extends Crud_Model
     public function getListing($start)
     {
         $per_page=10;
-        $num_link=3;
         $page   = intval($start);
         if($page<=0)  $page  = 1;
         $limit=($page-1)*$per_page;
@@ -97,6 +96,33 @@ class Users_model extends Crud_Model
             ->join('meta','users.id =meta.user_id')
             ->join('groups','users.group_id =groups.id')
             ->where(array('username'=>$username))->get('users')->result();
+
+    }
+
+    function searching($search,$start){
+
+        $search=strtolower($search);
+        $query="SELECT users.*,meta.first_name,meta.last_name,groups.description,meta.employee_id
+                FROM `users`
+                LEFT JOIN meta ON (meta.user_id = users.id)
+                LEFT JOIN groups ON (groups.id = users.id)
+                WHERE(`user_id` > 0 AND  LOWER(meta.first_name) LIKE '%$search%')
+                || ( `user_id` > 0 AND LOWER(meta.last_name) LIKE '%$search%')
+                || ( users.id > 0 AND LOWER(users.username) LIKE '%$search%')
+                || (`user_id` > 0 AND LOWER(meta.employee_id) = '$search')";
+
+        $per_page=10;
+        $page   = intval($start);
+        if($page<=0)  $page  = 1;
+        $limit=($page-1)*$per_page;
+        $base_url = site_url('admin/users/search/'.$search);
+        $num = $this->db->query($query);
+        $total_rows = $num->num_rows();
+        $paging = paginate($base_url, $total_rows,$start,$per_page);
+        $limit = "LIMIT $limit , $per_page";
+        $pagequery=$query.$limit;
+        $query = $this->db->query($pagequery);
+        return array($query,$paging,$total_rows,$limit);
 
     }
 

@@ -63,13 +63,19 @@
                                         <label class="control-label"><?php echo $this->lang->line('flavour_id');?></label>
                                         <div class="controls">
                                             <div class="row-fluid">
-                                                <select class="validate[required] " style="width: 100%;"  name="flavour_id">
+                                                <select class="validate[required] " style="width: 100%;"  name="flavour_id[]"  multiple>
                                                     <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
                                                     <?php
-                                                    $flavour_id = (isset($queryup[0]->flavour_id))? $queryup[0]->flavour_id:set_value('flavour_id');
+
+                                                    if(isset($queryup[0]->cake_id) > 0){
+                                                        $flavour_id =($queryup[0]->flavour_id !="" ) ? $queryup[0]->flavour_id : serialize(array());
+                                                    }else{
+                                                        $flavour_id =(isset($queryup[0]->flavour_id)) ? $queryup[0]->flavour_id : serialize(array());
+                                                    }
+                                                    $flavourid=(unserialize($flavour_id));
                                                     foreach($flvresult as $flavour):
                                                         ?>
-                                                        <option value="<?php echo $flavour->flavour_id;  ?>" <?php if($flavour_id == $flavour->flavour_id){ echo "selected='selected'"; } ?> ><?php echo $flavour->title; ?></option>
+                                                        <option value="<?php echo $flavour->flavour_id;  ?>" <?php if( in_array($flavour->flavour_id, $flavourid) ){  echo "selected='selected'"; } ?> ><?php echo $flavour->title; ?></option>
                                                     <?php endforeach; ?>
 
                                                 </select>
@@ -78,40 +84,24 @@
                                     </div>
 
                                     <div class="control-group uniformjs">
-                                        <label class="control-label"><?php echo $this->lang->line('shapes');?></label>
+                                        <label class="control-label"><?php echo $this->lang->line('tiers');?></label>
                                         <div class="separator"></div>
                                         <?php
                                         if(isset($queryup[0]->cake_id) > 0){
-                                            $shape_id =($queryup[0]->shape_id !="" ) ? $queryup[0]->shape_id : serialize(array());
+                                            $tiers =($queryup[0]->tiers !="" ) ? $queryup[0]->tiers : serialize(array());
                                         }else{
-                                            $shape_id =(isset($queryup[0]->shape_id)) ? $queryup[0]->shape_id : serialize(array());
+                                            $tiers =(isset($queryup[0]->tiers)) ? $queryup[0]->tiers : serialize(array());
                                         }
 
-                                        $shapeid=(unserialize($shape_id));
-                                        foreach($sapresult as $shapes):
+                                        $tierid=(unserialize($tiers));
+                                        for($i=1; 10 >= $i ; $i++ ){
                                             ?>
 
                                             <label class="radio">
-                                                <input type="checkbox" class="radio" name="shape_id[]" value="<?php echo $shapes->title;?>" <?php if( in_array($shapes->title, $shapeid) ){?> checked="checked" <?php } ?> />
-                                                <?php echo $shapes->title;?>
+                                                <input type="checkbox" class="radio" name="tiers[]" value="<?php echo $i;?>" <?php if( in_array($i, $tierid) ){?> checked="checked" <?php } ?> />
+                                                <?php echo $i;?>
                                             </label>
-                                        <?php endforeach; ?>
-
-                                    </div>
-                                    <div class="control-group uniformjs">
-                                        <label class="control-label"><?php echo $this->lang->line('tiers');?></label>
-                                        <div class="separator"></div>
-                                        <select class=" " style="width: 100%;"  name="tiers">
-                                            <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
-                                            <?php
-                                            $tiers = (isset($queryup[0]->tiers))? $queryup[0]->tiers:set_value('tiers');
-                                            for($i=1; 10 >= $i ; $i++ ){
-                                                ?>
-                                                <?php echo set_select('myselect', 'one', TRUE); ?>
-                                                <option value="<?php echo $i;  ?>" <?php if($tiers== $i){ echo "selected='selected'"; } ?> ><?php echo $i .$this->lang->line('tiers'); ?></option>
-                                            <?php } ?>
-
-                                        </select>
+                                        <?php } ?>
 
                                     </div>
                                     <div class="control-group">

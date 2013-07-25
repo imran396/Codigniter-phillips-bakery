@@ -16,7 +16,18 @@
             <a href="/admin/cakes" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add New Cake</a>
         </div>
         <div class="buttons pull-right">
-           <form action="/admin/cakes/search" method="get"><input type="text"  name="search" placeholder="serach by name,tag" id="search"><button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok mbutton"><i></i><?php echo $this->lang->line('search');?></button></form>
+            <?php
+            $searchval =  isset($_REQUEST['search']) ? $_REQUEST['search']:'';
+            $consearchseg =  $this->uri->segment(3,NULL);
+            $searchseg =  $this->uri->segment(4,NULL);
+            if($searchval){
+                $search=$searchval;
+            }else{
+                if($consearchseg =='search')
+                $search=$searchseg;
+            }
+            ?>
+           <form action="/admin/cakes/search" method="get"><input type="text" value="<?php if(!empty($search)){echo $search;} ?>"  name="search" placeholder="serach by name,tag" id="search"><button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok mbutton"><i></i><?php echo $this->lang->line('search');?></button></form>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -30,30 +41,28 @@
         <div class="widget widget-body-white">
 
             <div class="widget-body" style="padding: 10px 0;">
-                <table class="column-sorting table table-bordered table-primary js-table-sortable">
+                <table class="cake-sorting table table-bordered table-primary js-table-sortable">
                     <thead>
                     <tr>
                  <!--       <th class="center">No.</th>-->
                         <th><?php echo $this->lang->line('cake_title');?></th>
                         <th><?php echo $this->lang->line('category_id');?></th>
                         <th><?php echo $this->lang->line('flavour_id');?></th>
-                        <th style="width: 1%;" class="center"><?php echo $this->lang->line('drag');?></th>
                         <th style="width: 90px"><?php echo $this->lang->line('action');?></th>
                     </tr>
                     </thead>
                     <tbody>
 
                     <?php
-
                     $var = ($paging[3] != '0')  ? ($paging[3]+1) : 1;
                     $i=$var;
-                    foreach($paging[0]->result() as  $rows ) :?>
+                    foreach($paging[0]->result() as  $rows ) :
+                    ?>
                         <tr class="selectable" id="listItem_<?php echo $rows->cake_id; ?>" >
                        <!-- <td class="center"><?php /*echo $i; */?></td>-->
                         <td><?php echo $rows->title; ?></td>
                         <td><?php echo $rows->categories_name; ?></td>
-                        <td><?php echo $rows->flavours_name; ?></td>
-                        <td class="center js-sortable-handle"><span  class="glyphicons btn-action single move" style="margin-right: 0;"><i data-original-title="<?php echo $this->lang->line('move'); ?>" data-placement="top" data-toggle="tooltip"></i></span></td>
+                        <td><?php if($rows->flavour_id){ echo $this->cakes_model->getSerializeFlavour($rows->cake_id); } ?></td>
                         <td>
                             <a data-original-title="<?php echo $this->lang->line('status'); ?>" data-placement="top" data-toggle="tooltip" href="/admin/cakes/status/<?php echo $rows->cake_id; ?>" class="btn-action glyphicons btn <?php if($rows->status ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
                             <a data-original-title="<?php echo $this->lang->line('edit'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action glyphicons pencil btn-success" href="/admin/cakes/edit/<?php echo $rows->cake_id; ?>"><i></i></a>
