@@ -343,9 +343,11 @@ class Cakes_model extends CI_Model
         foreach($data as $key=>$row){
             $data[$key]['cake_id'] = (int) $data[$key]['cake_id'];
             $data[$key]['category_id'] = (int) $data[$key]['category_id'];
-            $data[$key]['flavour_id'] = (int) $data[$key]['flavour_id'];
+            //$data[$key]['flavour_id'] = (int) $data[$key]['flavour_id'];
+            $data[$key]['flavour_id'] =  !empty($row['flavour_id']) ? unserialize($row['flavour_id']):array();
             $data[$key]['image'] = !empty($data[$key]['image']) ? base_url().$data[$key]['image'] : "";
-            $data[$key]['tiers'] = (int) $data[$key]['tiers'];
+            //$data[$key]['tiers'] = (int) $data[$key]['tiers'];
+            $data[$key]['tiers'] =  !empty($row['tiers']) ? unserialize($row['tiers']):array();
 
             $data[$key]['gallery_images'] = explode(',', $row['gallery_images']);
             $data[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$data[$key]['gallery_images']);
@@ -357,8 +359,6 @@ class Cakes_model extends CI_Model
                 $result[$key]['gallery_images'] = array();
             }
 
-
-            $data[$key]['shapes'] =  !empty($row['shapes']) ? unserialize($row['shapes']):array();
         }
 
         return $data;
