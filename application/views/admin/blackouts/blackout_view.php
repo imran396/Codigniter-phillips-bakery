@@ -104,7 +104,7 @@
                             <thead>
                             <tr>
                                 <th width="145">Flavor</th>
-                                <th width="132">Black out Dates</th>
+                                <th width="132">Blackout Dates</th>
                                 <th width="319"> </th>
                             </tr>
                             </thead>
