@@ -64,7 +64,7 @@
                     foreach($getOrderStatus as $production_status):
                         if($queryup->production_status != $production_status->title){
                         ?>
-                        <option value="<?php echo site_url('admin/productions/status/'.$queryup->order_code.'/'.$production_status->title)?>"><?php echo $production_status->description ?></option>
+                        <option value="<?php echo site_url('admin/productions/status/'.$queryup->order_code.'/'.$production_status->production_status_code)?>"><?php echo $production_status->description ?></option>
                     <?php } endforeach; ?>
                 </select>
 

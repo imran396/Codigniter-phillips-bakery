@@ -244,7 +244,7 @@ class Productions_model extends Crud_Model
 
     public function statusChange($order_code,$production_status){
 
-        $this->db->where(array('order_code'=>$order_code))->set(array('production_status'=>$production_status))->update('orders');
+        $this->db->where(array('order_code'=>$order_code))->set(array('order_status'=>$production_status))->update('orders');
 
     }
 

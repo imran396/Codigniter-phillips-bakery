@@ -26,7 +26,7 @@
                     <td class="center"><?php echo $rows->delivery_type; ?></td>
                     <td class="center"><?php echo $this->productions_model->dateFormate($rows->delivery_date); ?></td>
                     <td class="center"><?php echo $rows->delivery_time; ?></td>
-                    <td><?php echo $rows->fondant; ?></td>
+                    <td><?php if($rows->fondant >0){echo "Yes"; }else{ echo "No"; }; ?></td>
                     <td><?php echo $rows->flavour_name; ?></td>
                     <td><?php echo $rows->magic_cake_id; ?></td>
                     <td class="green"><?php echo $rows->orderstatus;?></td>
