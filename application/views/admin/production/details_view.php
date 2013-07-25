@@ -98,12 +98,15 @@
                 ?>
                 <li><a href=""><span class="plus"></span><span class="desc">Image On Cake</span><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
             <?php endforeach; } ?>
+        <?php if($queryup->on_cake_image){ ?>
+        <li><a href=""><span class="plus"></span><span class="desc">On Cake</span><img src="<?php echo base_url().$queryup->on_cake_image; ?>" alt="" /></a></li>
+        <?php } ?>
         <?php
         $instructionals = $this->productions_model->photoGallery($queryup->order_id);
         if(!empty($instructionals)){
         foreach($instructionals as $instructional){
             ?>
-            <li><a href=""><span class="plus"></span><span class="desc">On Cake</span><img src="<?php echo base_url().$instructional->instructional_photo; ?>" alt="" /></a></li>
+            <li><a href=""><img src="<?php echo base_url().$instructional->instructional_photo; ?>" alt="" /></a></li>
         <?php } } ?>
     </ul>
 </div><!-- End Slider -->
