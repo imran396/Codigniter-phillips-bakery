@@ -10,9 +10,9 @@
     <br/>
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('orders');?></h3>
-        <div class="buttons pull-right">
+    <!--    <div class="buttons pull-right">
             <a href="/admin/orders" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add New Order</a>
-        </div>
+        </div>-->
         <div class="buttons pull-right">
             <?php
             $searchval =  isset($_REQUEST['search']) ? $_REQUEST['search']:'';
