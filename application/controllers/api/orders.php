@@ -67,12 +67,7 @@ class Orders extends API_Controller
         $data['discount_price']=isset($_REQUEST['discount_price'])? $_REQUEST['discount_price']:'';
         $data['total_price']=isset($_REQUEST['total_price'])? $_REQUEST['total_price']:'';
         $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';
-        $order_status=isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'';
-        if($order_status =='order'){
-            $data['production_status']='in-production';
-        }else{
-            $data['production_status']='estimate';
-        }
+        $data['order_status']=isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'';
 
         $order_delivery['name']=isset($_REQUEST['name']) ? $_REQUEST['name']:'';
         $order_delivery['phone']=isset($_REQUEST['phone']) ? $_REQUEST['phone']:'';
@@ -91,17 +86,15 @@ class Orders extends API_Controller
         }
 
         if($orders['order_id']) {
-            $empolyee_code = $this->orders_model->getEmployeeCode($data['employee_id']);
 
+            $empolyee_code = $this->orders_model->getEmployeeCode($data['employee_id']);
             $data = array(
                 'employee_id' => $empolyee_code,
                 'audit_name' => 'order created',
                 'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
             );
             $this->orders_model->insertAuditLog($data);
-        }
 
-            $this->orders_model->doUpload($orders['order_id']);
         }
 
         if(isset($_FILES['instructionalImages'])){
@@ -133,6 +126,8 @@ class Orders extends API_Controller
     }
 
     public function update(){
+
+
         $array_orders_key =  array(
             'order_id','cake_id','customer_id','employee_id',
             'manager_id','location_id','order_date','delivery_type',
@@ -192,7 +187,6 @@ class Orders extends API_Controller
         if(isset($data['cake_email_photo'])== 1){
             $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony');
         }
-        if(isset($data['instructional_email_photo'])== 'yes'){
 
         if(isset($data['instructional_email_photo'])== 1){
             $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak');
@@ -205,13 +199,13 @@ class Orders extends API_Controller
             }
         }
 
-
         if($data['order_status'] == 301 ){
 
             $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
         }else{
             $this->sendOutput(array('order_id'=> $orders['order_id'],'order_status' =>  $orders['order_status']));
         }
+
     }
 
 
@@ -351,6 +345,11 @@ class Orders extends API_Controller
         $customer_email=$this->data['queryup']->email;
         $order_status=$this->data['queryup']->orderstatus;
 
+        if($order_status != 'estimate'){
+                $order_status="Order";
+        }else{
+                $order_status = $this->data['queryup']->orderstatus;
+        }
         if(!empty($customer_email)){
 
             $body          = $this->load->view('email/invoice_body', $this->data,true);
