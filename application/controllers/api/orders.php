@@ -105,12 +105,12 @@ class Orders extends API_Controller
             $this->orders_model->instructionalImagesUpload($orders['order_id']);
         }
 
-        if($data['cake_email_photo']== 1){
-            $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony');
+        if(isset($data['cake_email_photo'])== 1){
+            $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony','St Phillips - Attach your on cake image');
         }
 
-        if($data['instructional_email_photo']== 1){
-            $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak');
+        if(isset($data['instructional_email_photo']) == 1){
+            $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak','St Phillips - Attach your instructional images');
         }
 
         $this->saveBarcodeImage($orders['order_code']);
@@ -187,11 +187,11 @@ class Orders extends API_Controller
 
         }
         if(isset($data['cake_email_photo'])== 1){
-            $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony');
+            $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony','St Phillips - Attach your on cake image');
         }
 
         if(isset($data['instructional_email_photo'])== 1){
-            $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak');
+            $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak','St Phillips - Attach your instructional images');
         }
         if(isset($_REQUEST['removedinstructionalImages'])){
 
@@ -211,7 +211,7 @@ class Orders extends API_Controller
     }
 
 
-    private function mailgunSendMessage($orders, $data, $replyTo,$name){
+    private function mailgunSendMessage($orders, $data, $replyTo,$name,$subject=NULL){
 
         $data['order_code'] = $orders['order_code'];
         $data ['rows'] = $this->orders_model->getCustomerData($data['customer_id']);
@@ -221,12 +221,15 @@ class Orders extends API_Controller
             $this->email->from('imran@emicrograph.com', 'St Phillip\'s Bakery');
             $this->email->reply_to($replyTo, $name);
             $this->email->to($data ['rows']->email);
-            $this->email->subject('St Phillip\'s - Attach your images'.'|'.$data['order_code']);
+            $this->email->subject($subject.'|'.$data['order_code']);
             $this->email->message(nl2br($body));
             $this->email->send();
         }
 
     }
+
+
+
 
     public function mailgunInstructionalPhotoReply(){
 
