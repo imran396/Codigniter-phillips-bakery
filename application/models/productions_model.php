@@ -196,6 +196,7 @@ class Productions_model extends Crud_Model
     public function getzones($zone_id)
     {
 
+
         $res=$this->db->select('title')->where(array('zone_id'=>$zone_id))->get('zones');
         if($res ->num_rows() > 0 ){
             $row = $res->row();
@@ -228,9 +229,9 @@ class Productions_model extends Crud_Model
 
     }
 
-    public function currentProductionStatus($title){
+    public function currentProductionStatus($production_status_code){
 
-        $res =$this->db->select('description')->where(array('title'=>$title))->get('order_status');
+        $res =$this->db->select('description')->where(array('production_status_code'=>$production_status_code))->get('order_status');
         if($res->num_rows > 0){
             $row =$res->row();
 
@@ -244,7 +245,7 @@ class Productions_model extends Crud_Model
 
     public function statusChange($order_code,$production_status){
 
-        $this->db->where(array('order_code'=>$order_code))->set(array('order_status'=>$production_status))->update('orders');
+          $this->db->where(array('order_code'=>$order_code))->set(array('order_status'=>$production_status))->update('orders');
 
     }
 

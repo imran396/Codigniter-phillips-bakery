@@ -2,8 +2,9 @@ $(function()
 {
 	$(".popup").each(function()
 	{
-		var popup = $(this);
-		popup.find(".popup-close").click(function()
+
+        var popup = $(this);
+        popup.find(".popup-close").click(function()
 		{
 			$(".layer").remove();
 			popup.hide();
@@ -14,8 +15,10 @@ $(function()
 	
 	$(".popup-gallery").each(function()
 	{
-		var gallery = $(this);
-		
+
+
+        var gallery = $(this);
+
 		if (gallery.find(".gallery-slider li.selected").length == 0) gallery.find(".gallery-slider li:first").addClass("selected");
 		
 		gallery.find(".current-img").html('<img src="'+gallery.find(".gallery-slider .selected a").attr("href")+'" alt="" />');
@@ -39,8 +42,13 @@ $(function()
 		
 		$(".slider-img a").click(function()
 		{
-			var layer = $('<div class="layer" />');
-			$("body").append(layer);
+
+            var initalpopupimagepath = $(this).find('img').attr('src');
+            $(".current-img").html('<img src="'+ initalpopupimagepath+'">');
+
+            var layer = $('<div class="layer" />');
+
+            $("body").append(layer);
 			$(".layer").height($("body").height() + 50).show();
 			
 			$("#gallery-popup").show();

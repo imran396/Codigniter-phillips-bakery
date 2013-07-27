@@ -44,6 +44,8 @@ class Orders_model extends Crud_Model
         $order['order_id']= $order_id;
         $order['order_code']= $order_code;
         $order['order_status']=  $dbdata->order_status;
+
+
         return $order;
     }
 
@@ -57,6 +59,20 @@ class Orders_model extends Crud_Model
         $order['order_status']=  $dbdata->order_status;
 
         return $order;
+    }
+
+    public function galleryUpload($data,$order_id){
+
+        foreach ($data as $key => $value) {
+
+            if(strpos($key,'tmpname')){
+
+                $image="assets/uploads/gallery/".nl2br(htmlentities(stripslashes($value)));
+                $this->db->set(array('instructional_order_id'=>$order_id,'instructional_photo'=>$image))->insert('instructional_photo');
+
+            }
+
+        }
     }
 
 

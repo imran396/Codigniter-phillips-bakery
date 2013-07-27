@@ -60,6 +60,23 @@ class Blackouts extends Crud_Controller
         $this->layout->view('admin/servings/servings_view', $this->data);
     }
 
+    function checkLessCurrentDate(){
+
+        $curdate=date('m/d/Y');
+        $blackout_date      = explode(',',$this->input->post('blackout_date'));
+        $final          = array();
+
+        foreach($blackout_date as $date){
+
+            if($date < $curdate){
+
+                $final[]=$date;
+            }
+        }
+
+        echo count($final);
+    }
+
 
 
 

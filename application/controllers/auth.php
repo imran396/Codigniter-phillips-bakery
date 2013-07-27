@@ -15,7 +15,6 @@ class Auth extends Controller {
 		$this->load->library('form_validation');
 		$this->load->database();
 		$this->load->helper('url');
-		$this->load->model('orders_model');
 
         //$this->output->enable_profiler(TRUE);
 	}
@@ -84,12 +83,12 @@ class Auth extends Controller {
                $empolyee_code = $this->orders_model->getEmployeeCode($user_id);
                $this->session->set_userdata(array('empolyee_code'=> $empolyee_code));
 
-                $data = array(
+                $log = array(
                     'employee_id' => $empolyee_code,
                     'audit_name' => 'login',
                     'description' => $this->input->post('username'),
                 );
-                $this->orders_model->insertAuditLog($data);
+                $this->log_model->insertAuditLog($log);
 
                 redirect($this->config->item('base_url'), 'refresh');
 			}
@@ -124,7 +123,7 @@ class Auth extends Controller {
 	{
 		$this->data['title'] = "Logout";
         $session_data =  $this->session->all_userdata();
-        $data = array(
+        $log = array(
             'employee_id' => $session_data['empolyee_code'],
             'audit_name' => 'logout',
             'description' => $session_data['username'],
@@ -134,7 +133,7 @@ class Auth extends Controller {
 		$logout = $this->ion_auth->logout();
 
         if($logout){
-            $this->orders_model->insertAuditLog($data);
+            $this->logs_model->insertAuditLog($log);
         }
 
 		//redirect them back to the page they came from

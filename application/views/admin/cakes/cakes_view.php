@@ -60,11 +60,11 @@
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label"><?php echo $this->lang->line('flavour_id');?></label>
+                                        <label class="control-label">Available Flavours</label>
                                         <div class="controls">
                                             <div class="row-fluid">
                                                 <select class="validate[required] " style="width: 100%;"  name="flavour_id[]"  multiple>
-                                                    <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
+                                                    <option value="" >---<?php echo $this->lang->line('select');?>---</option>
                                                     <?php
 
                                                     if(isset($queryup[0]->cake_id) > 0){
@@ -94,7 +94,7 @@
                                         }
 
                                         $tierid=(unserialize($tiers));
-                                        for($i=1; 10 >= $i ; $i++ ){
+                                        for($i=1; 7 >= $i ; $i++ ){
                                             ?>
 
                                             <label class="radio">
