@@ -85,7 +85,7 @@ class Gallery_model extends CI_Model
                 unlink($_SERVER['DOCUMENT_ROOT'].'/'.$rows->image);
             }
             $this->db->where(array('cake_id'=>$cake_id,'gallery_id'=>$id))->delete('cake_gallery');
-            $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
+            $this->session->set_flashdata('delete_msg',"Gallery image has been deleted successfully");
         }else{
             $this->session->set_flashdata('wrinn_msg',$this->lang->line('delete_msg'));
         }

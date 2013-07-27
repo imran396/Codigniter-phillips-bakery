@@ -31,7 +31,7 @@ class Zones_model extends Crud_Model
 
         if(!$this->deleteDataExisting($id) > 0){
             $this->remove($id);
-            $this->session->set_flashdata('delete_msg',"Delivery Zone has been deleted successfully");
+            $this->session->set_flashdata('delete_msg',"Delivery zone has been deleted successfully");
         }else{
 
             $this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
