@@ -80,7 +80,7 @@ class Auth extends Controller {
                 $this->session->set_userdata($newdata);
 
                $user_id =   $this->session->userdata('user_id');
-               $empolyee_code = $this->orders_model->getEmployeeCode($user_id);
+               $empolyee_code = $this->logs_model->getEmployeeCode($user_id);
                $this->session->set_userdata(array('empolyee_code'=> $empolyee_code));
 
                 $log = array(
