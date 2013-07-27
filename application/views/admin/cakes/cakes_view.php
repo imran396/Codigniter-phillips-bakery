@@ -60,7 +60,7 @@
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label"><Available Flavours</label>
+                                        <label class="control-label">Available Flavours</label>
                                         <div class="controls">
                                             <div class="row-fluid">
                                                 <select class="validate[required] " style="width: 100%;"  name="flavour_id[]"  multiple>

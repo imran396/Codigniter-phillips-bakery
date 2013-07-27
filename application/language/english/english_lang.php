@@ -137,6 +137,7 @@ $lang['add_gallery'] 		 	    = 'Add Gallery';
 $lang['list_cakes'] 		 	    = 'List of Cakes';
 
 $lang['select_one'] 		 	    = 'Select One';
+$lang['select'] 		 	    = 'Select';
 
 $lang['upload_image'] 		 	    = 'Upload Image';
 $lang['create_cake'] 		 	    = 'Create Cake';
