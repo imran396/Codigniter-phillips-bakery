@@ -60,6 +60,27 @@ class Audit_model extends Crud_Model
 
     }
 
+    public function getListing($start)
+    {
+
+        $per_page = 10;
+        $page     = intval($start);
+        if ($page <= 0) $page = 1;
+
+
+        $limit      = ($page - 1) * $per_page;
+        $base_url   = site_url('admin/auditlog/listing');
+        $total_rows = $this->db->count_all_results('auditlog');
+        $paging     = paginate($base_url, $total_rows, $start, $per_page);
+
+        $this->db->select('*');
+        $this->db->from('auditlog');
+        $this->db->limit($per_page, $limit);
+        $this->db->order_by("auditlog.created_time", "desc");
+        $query = $this->db->get();
+
+        return array($query, $paging, $total_rows, $limit);
+    }
 
     public function sortingList()
     {
