@@ -88,7 +88,7 @@ class Auth extends Controller {
                     'audit_name' => 'login',
                     'description' => $this->input->post('username'),
                 );
-                $this->log_model->insertAuditLog($log);
+                $this->logs_model->insertAuditLog($log);
 
                 redirect($this->config->item('base_url'), 'refresh');
 			}
