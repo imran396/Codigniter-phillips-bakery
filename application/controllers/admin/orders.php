@@ -206,69 +206,6 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     }
 
-    private function mailgunSendMessage($orders, $data, $replyTo,$name){
-
-        $data['order_code'] = $orders['order_code'];
-        $data ['rows'] = $this->orders_model->getCustomerData($data['customer_id']);
-        $body = $this->load->view('email/instructional_photo_view', $data,true);
-        $this->email->set_newline("\r\n");
-        $this->email->from('imran@emicrograph.com', 'St Phillip\'s Bakery');
-        $this->email->reply_to($replyTo, $name);
-        $this->email->to($data ['rows']->email);
-        $this->email->subject('St Phillip\'s - Attach your images'.'|'.$data['order_code']);
-        $this->email->message(nl2br($body));
-        $this->email->send();
-
-    }
-
-    public function mailgunInstructionalPhotoReply(){
-
-        $request = $this->input->post();
-        $order_array = explode('|',$request['subject']);
-
-        $order_code=  $order_array['1'];
-
-        $row=$this->db->select('order_id')->where(array('order_code'=> $order_code))->get('orders')->row();
-        $request['order_id'] = $row->order_id ;
-
-        if($request){
-            $this->orders_model->instructionalImagesUploadByemail($request);
-        }
-
-    }
-
-    public function mailgunCakeOnImageReply(){
-        $request = $this->input->post();
-        $order_array = explode('|',$request['subject']);
-
-        $order_code =  $order_array['1'];
-        $row=$this->db->select('order_id')->where(array('order_code'=> $order_code))->get('orders')->row();
-        $request['order_id'] = $row->order_id ;
-
-        if($request){
-            $this->orders_model->cakeOnimage($request);
-        }
-
-    }
-
-
-    public function barcode_gen($order_code) {
-
-        $this->load->library('Zend');
-        $this->zend->load('Zend/Barcode/Barcode');
-        $barcodeOptions = array('text' => "$order_code",'drawText'=>false);
-        $rendererOptions = array();
-        Zend\Barcode\Barcode::factory('code39', 'image', $barcodeOptions, $rendererOptions)->render();
-
-    }
-
-    public function saveBarcodeImage($order_code){
-
-        define('YOUR_DIRECTORY',realpath(APPPATH . "../web/assets/uploads/orders/barcode/"));
-        $content = file_get_contents(site_url()."/api/orders/barcode_gen/".$order_code);
-        file_put_contents(YOUR_DIRECTORY.$order_code.".png",$content);
-    }
-
 
 
     public function listing($starts=0)
@@ -353,12 +290,12 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
        }
 
-        if(isset($data['cake_email_photo']) == 1){
-            $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony');
+        if(isset($data['cake_email_photo'])== 1){
+            $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony','St Phillips - Attach your on cake image');
         }
 
         if(isset($data['instructional_email_photo'])== 1){
-            $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak');
+            $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak','St Phillips - Attach your instructional images');
         }
 
         $this->saveBarcodeImage($orders['order_code']);
@@ -383,20 +320,37 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     }
 
+    private function mailgunSendMessage($orders, $data, $replyTo,$name,$subject){
+
+        $data['order_code'] = $orders['order_code'];
+        $data ['rows'] = $this->orders_model->getCustomerData($data['customer_id']);
+        $body = $this->load->view('email/instructional_photo_view', $data,true);
+        $this->email->set_newline("\r\n");
+        $this->email->from('imran@emicrograph.com', 'St Phillip\'s Bakery');
+        $this->email->reply_to($replyTo, $name);
+        $this->email->to($data ['rows']->email);
+        $this->email->subject('St Phillip\'s - Attach your images'.'|'.$data['order_code']);
+        $this->email->message(nl2br($body));
+        $this->email->send();
+
+    }
 
 
-    public function details($order_code)
-    {
-        $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->setLayout('layout_custom');
-        $result= $this->productions_model->orderDetails($order_code);
-        if($result ->num_rows > 0 ){
-            $this->data['queryup']=$result->row();
-            $this->layout->view('admin/orders/details_view', $this->data);
-        }else{
-            redirect('admin/productions/inproduction');
+    public function barcode_gen($order_code) {
 
-        }
+        $this->load->library('Zend');
+        $this->zend->load('Zend/Barcode/Barcode');
+        $barcodeOptions = array('text' => "$order_code",'drawText'=>false);
+        $rendererOptions = array();
+        Zend\Barcode\Barcode::factory('code39', 'image', $barcodeOptions, $rendererOptions)->render();
+
+    }
+
+    public function saveBarcodeImage($order_code){
+
+        define('YOUR_DIRECTORY',realpath(APPPATH . "../web/assets/uploads/orders/barcode/"));
+        $content = file_get_contents(site_url()."/api/orders/barcode_gen/".$order_code);
+        file_put_contents(YOUR_DIRECTORY.$order_code.".png",$content);
     }
 
 
