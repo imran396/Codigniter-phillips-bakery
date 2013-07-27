@@ -57,7 +57,7 @@ class Customers extends API_Controller
             if($data['customer_id']) {
 
                 $empolyee_code = $this->logs_model->getEmployeeCode($employee['employee_id']);
-                if(!empty($empolyee_code)){
+                if(!empty( $empolyee_code )){
                     $log = array(
                         'employee_id' => $empolyee_code,
                         'audit_name' => 'customer created',
