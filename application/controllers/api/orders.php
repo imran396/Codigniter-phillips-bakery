@@ -86,13 +86,15 @@ class Orders extends API_Controller
 
         if($orders['order_id']) {
 
-            $empolyee_code = $this->logs_model->getEmployeeCode($data['employee_id']);
-            $log = array(
-                'employee_id' => $empolyee_code,
-                'audit_name' => 'order created',
-                'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
-            );
-            $this->logs_model->insertAuditLog($log);
+            if(isset($_REQUEST['employee_id'])){
+                $empolyee_code = $this->logs_model->getEmployeeCode($_REQUEST['employee_id']);
+                $log = array(
+                    'employee_id' => $empolyee_code,
+                    'audit_name' => 'order created',
+                    'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
+                );
+                $this->logs_model->insertAuditLog($log);
+            }
 
         }
 
@@ -160,16 +162,17 @@ class Orders extends API_Controller
 
         if($orders['order_id']) {
 
+            if(isset($_REQUEST['employee_id'])){
 
-            $empolyee_code = $this->logs_model->getEmployeeCode($data['employee_id']);
+                $empolyee_code = $this->logs_model->getEmployeeCode($_REQUEST['employee_id']);
+                $log = array(
+                    'employee_id' => $empolyee_code,
+                    'audit_name' => 'order updated',
+                    'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
+                );
 
-            $log = array(
-                'employee_id' => $empolyee_code,
-                'audit_name' => 'order updated',
-                'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
-            );
-
-            $this->logs_model->insertAuditLog($log);
+                $this->logs_model->insertAuditLog($log);
+            }
         }
 
         if(isset($order_delivery)){
