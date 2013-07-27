@@ -9,6 +9,11 @@ class Revel_Employee extends Revel_Model
 
     public function create($data)
     {
-        return $this->postResource('Employee', $data);
+        return $this->postResource('Employee', $data, true);
+    }
+
+    public function delete($id)
+    {
+        return $this->deleteResource('Employee', $id, true);
     }
 }

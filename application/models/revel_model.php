@@ -10,25 +10,56 @@ class Revel_Model extends CI_Model
         $this->revel = $this->config->item('revel');
     }
 
-    protected function getResource($resource, $format = 'json')
+    protected function getResource($resource, $offset = 0, $limit = 20, $format = 'json', $debug = false)
     {
-        $client = new HttpRequest($this->revel['endpoint'] . '/resources/' . $resource . '/?format=' . $format);
+        $params = array('offset' => $offset, 'limit' => $limit, 'format' => $format);
+        $client = new HttpRequest($this->revel['endpoint'] . '/resources/' . $resource . '/?' . http_build_query($params));
 
         $client->addHeaders(array('API-AUTHENTICATION' => $this->revel['api_key'] . ':' . $this->revel['api_secret']));
         $client->send();
+
+        if ($debug) {
+            echo '<pre>' . $client->getRawRequestMessage() . PHP_EOL . PHP_EOL . $client->getRawResponseMessage() . '</pre>';
+        }
 
         return $client->getResponseBody();
     }
 
-    protected function postResource($resource, $data)
+    protected function postResource($resource, $data, $debug = false)
     {
         $client = new HttpRequest($this->revel['endpoint'] . '/resources/' . $resource . '/');
 
-        $client->addHeaders(array('API-AUTHENTICATION' => $this->revel['api_key'] . ':' . $this->revel['api_secret']));
+        $client->addHeaders(array(
+            'API-AUTHENTICATION' => $this->revel['api_key'] . ':' . $this->revel['api_secret'],
+            'Content-type' => 'application/json'
+        ));
 
-        $client->setBody(str_replace('\\/', '/', json_encode($data, 64)));
+        $client->setBody(str_replace('\\/', '/', json_encode($data)));
         $client->setMethod(HTTP_METH_POST);
         $client->send();
+
+        if ($debug) {
+            echo '<pre>' . $client->getRawRequestMessage() . PHP_EOL . PHP_EOL . $client->getRawResponseMessage() . '</pre>';
+        }
+
+        return $client->getResponseBody();
+    }
+
+    protected function deleteResource($resource, $id, $debug = false)
+    {
+        $client = new HttpRequest($this->revel['endpoint'] . '/resources/' . $resource . '/' . $id . '/');
+
+        $client->addHeaders(array(
+            'API-AUTHENTICATION' => $this->revel['api_key'] . ':' . $this->revel['api_secret'],
+            'Content-type' => 'application/json'
+        ));
+
+        $client->setMethod(HTTP_METH_DELETE);
+        $client->send();
+
+        if ($debug) {
+            echo '<pre>' . $client->getRawRequestMessage() . PHP_EOL . PHP_EOL . $client->getRawResponseMessage() . '</pre>';
+        }
 
         return $client->getResponseBody();
     }
