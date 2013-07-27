@@ -151,7 +151,7 @@ $lang['fondant'] 		 	    = 'Fondant';
 
 
 $lang['add_servings'] 		 	    = 'Add Servings';
-$lang['serving_name'] 		 	    = 'Number of servings';
+$lang['serving_name'] 		 	    = 'Number of Servings';
 $lang['size'] 		 	    = 'Size';
 $lang['size_shape'] 		 	    = 'Size & Shape';
 $lang['printing_surcharge'] 		 	    = 'Printing Surcharge';
