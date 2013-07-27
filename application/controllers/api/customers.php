@@ -20,8 +20,6 @@ class Customers extends API_Controller
     public function insert()
     {
             $data = $this->input->post();
-            $employee['employee_id'] = $data['employee_id'];
-            unset($data['employee_id']);
             $data['status']=1;
             $customer_id = $this->customers_model->create($data);
 
@@ -33,14 +31,16 @@ class Customers extends API_Controller
 
             if($customer_id) {
 
-                $empolyee_code = $this->logs_model->getEmployeeCode($employee['employee_id']);
-                 if(!empty($empolyee_code)){
-                    $log = array(
-                        'employee_id' => $empolyee_code,
-                        'audit_name' => 'customer created',
-                        'description' =>  'customer_id='. $customer_id
-                    );
-                    $this->logs_model->insertAuditLog($log);
+                if(isset($_REQUEST['employee_id'])){
+                    $empolyee_code = $this->logs_model->getEmployeeCode($_REQUEST['employee_id']);
+                     if(!empty($empolyee_code)){
+                        $log = array(
+                            'employee_id' => $empolyee_code,
+                            'audit_name' => 'customer created',
+                            'description' =>  'customer_id='. $customer_id
+                        );
+                        $this->logs_model->insertAuditLog($log);
+                    }
                 }
             }
 
@@ -51,19 +51,19 @@ class Customers extends API_Controller
     public function update(){
 
             $data = $this->input->post();
-            $employee['employee_id'] = $data['employee_id'];
-            unset($data['employee_id']);
             $this->customers_model->save($data, $data['customer_id']);
             if($data['customer_id']) {
 
-                $empolyee_code = $this->logs_model->getEmployeeCode($employee['employee_id']);
-                if(!empty( $empolyee_code )){
-                    $log = array(
-                        'employee_id' => $empolyee_code,
-                        'audit_name' => 'customer created',
-                        'description' =>  'customer_id='. $data['customer_id']
-                    );
-                    $this->logs_model->insertAuditLog($log);
+                if(isset($_REQUEST['employee_id'])){
+                    $empolyee_code = $this->logs_model->getEmployeeCode($_REQUEST['employee_id']);
+                    if(!empty( $empolyee_code )){
+                        $log = array(
+                            'employee_id' => $empolyee_code,
+                            'audit_name' => 'customer created',
+                            'description' =>  'customer_id='. $data['customer_id']
+                        );
+                        $this->logs_model->insertAuditLog($log);
+                    }
                 }
             }
             $data = array(
