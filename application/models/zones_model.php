@@ -31,7 +31,7 @@ class Zones_model extends Crud_Model
 
         if(!$this->deleteDataExisting($id) > 0){
             $this->remove($id);
-            $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
+            $this->session->set_flashdata('delete_msg',"Delivery Zone has been deleted successfully");
         }else{
 
             $this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
@@ -42,10 +42,10 @@ class Zones_model extends Crud_Model
     public function  checkUniqueTitle($id){
 
         if(!empty($id)){
-            return $dbcatid = $this->db->select('title')
+            $row = $dbcatid = $this->db->select('title')
                 ->where('zone_id',$id)
-                ->get('zones')->result()[0]->title;
-
+                ->get('zones')->row();
+            return $row->title;
         }
 
     }

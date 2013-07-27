@@ -41,7 +41,7 @@ class Users_model extends Crud_Model
         if(!$this->deleteDataExisting($id) > 0){
 
             $this->db->where('id',$id)->delete(array('users','meta'));
-            $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
+            $this->session->set_flashdata('delete_msg',"Employee has been deleted successfully");
         }else{
 
             $this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
@@ -49,16 +49,6 @@ class Users_model extends Crud_Model
 
     }
 
-    public function  checkUniqueTitle($id){
-
-        if(!empty($id)){
-            return $dbcatid = $this->db->select('title')
-                ->where('shape_id',$id)
-                ->get('shapes')->result()[0]->title;
-
-        }
-
-    }
 
     public function getGroup()
     {
@@ -146,23 +136,6 @@ class Users_model extends Crud_Model
     }
 
 
-    public function checkshapes($id,$title)
-    {
-        $dbtitle = $this->checkUniqueTitle($id);
-        if($title != $dbtitle ){
-
-            $sql=sprintf("SELECT COUNT(shape_id) AS countValue FROM shapes WHERE (LOWER(title) = LOWER('{$title}'))");
-            $count=$this->db->query($sql)->result();
-            if($count[0]->countValue > 0 )
-            {
-                $this->form_validation->set_message('checkTitle', $title.' %s '.$this->lang->line('duplicate_msg'));
-                return FALSE;
-            }else{
-                return TRUE;
-            }
-        }
-
-    }
 
     public function getAll(){
         $this->db->select('users.id,meta.employee_id,meta.first_name,meta.last_name,groups.name as role');
