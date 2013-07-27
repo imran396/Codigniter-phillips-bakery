@@ -161,7 +161,7 @@ class Orders extends API_Controller
         if($orders['order_id']) {
 
 
-            $empolyee_code = $this->logs_model->getEmployeeCode($data['empolyee_id']);
+            $empolyee_code = $this->logs_model->getEmployeeCode($data['employee_id']);
 
             $log = array(
                 'employee_id' => $empolyee_code,
@@ -215,14 +215,16 @@ class Orders extends API_Controller
 
         $data['order_code'] = $orders['order_code'];
         $data ['rows'] = $this->orders_model->getCustomerData($data['customer_id']);
-        $body = $this->load->view('email/instructional_photo_view', $data,true);
-        $this->email->set_newline("\r\n");
-        $this->email->from('imran@emicrograph.com', 'St Phillip\'s Bakery');
-        $this->email->reply_to($replyTo, $name);
-        $this->email->to($data ['rows']->email);
-        $this->email->subject('St Phillip\'s - Attach your images'.'|'.$data['order_code']);
-        $this->email->message(nl2br($body));
-        $this->email->send();
+        if(!empty($data ['rows']->email)){
+            $body = $this->load->view('email/instructional_photo_view', $data,true);
+            $this->email->set_newline("\r\n");
+            $this->email->from('imran@emicrograph.com', 'St Phillip\'s Bakery');
+            $this->email->reply_to($replyTo, $name);
+            $this->email->to($data ['rows']->email);
+            $this->email->subject('St Phillip\'s - Attach your images'.'|'.$data['order_code']);
+            $this->email->message(nl2br($body));
+            $this->email->send();
+        }
 
     }
 
