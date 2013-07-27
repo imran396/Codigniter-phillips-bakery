@@ -133,5 +133,7 @@
 <!--Layout Options-->
 <!--<script src="<?php //echo base_url() ?>/assets/theme/scripts/layout.js"></script>-->
 <link rel="stylesheet" type="text/css" href="/assets/multi-datepicker/css/mdp.css">
+
+
 </body>
 </html>

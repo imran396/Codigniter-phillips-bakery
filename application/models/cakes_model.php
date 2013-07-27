@@ -224,6 +224,37 @@ class Cakes_model extends CI_Model
         return $this->db->select('*')->where('status', 1)->order_by('ordering','asc')->get('shapes')->result();
     }
 
+    public function getZones()
+    {
+
+        return $this->db->select('*')->where('status', 1)->order_by('title','asc')->get('zones')->result();
+
+    }
+    public function getLocations()
+    {
+
+        return $this->db->select('*')->where('status', 1)->order_by('title','asc')->get('locations')->result();
+
+    }
+    public function getCustomers()
+    {
+
+        return $this->db->select('customer_id,first_name,last_name')->where('status', 1)->order_by('first_name','asc')->get('customers')->result();
+
+    }
+    public function getEmployees($group_id)
+    {
+
+        return $this->db
+            ->select('users.id,users.group_id,users.username,users.email,meta.first_name,meta.last_name,meta.location_id, users.active')
+            ->join('meta','users.id =meta.user_id')
+            ->join('groups','users.group_id =groups.id')
+            ->where(array('users.group_id'=>$group_id,'active'=>1))->order_by('first_name','asc')->get('users')->result();
+
+
+    }
+
+
     public function sortingList()
     {
 

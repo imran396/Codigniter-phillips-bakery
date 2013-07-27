@@ -244,6 +244,7 @@
 	line-height: 33px;
 	height: 33px;
 	vertical-align: middle;
+
 }
 
 .container-new .navbar.main .button {
@@ -285,6 +286,8 @@
 .container-new .button:hover {
 	text-decoration: none;
 }
+
+.button{text-decoration: none!important}
 
 .container-new .filters {
 	background: none;
@@ -1711,3 +1714,46 @@
 	margin-right: 9px;
 	float: right;
 }
+
+
+.note-header table{
+    padding-bottom: 5px;
+    display: block;
+}
+.note-header table tr td.notes-title{
+    color: #86BD43;
+    float: left;
+    font-weight: bold;
+    width: auto;
+    float: left;
+
+}
+.note-header table tr td.notes-title-added{
+    width: 60px;
+
+}
+.note-header table tr td.notes-title-date{
+    width: 120px;
+
+}
+.note-header table tr td.notes-title-time{
+    width: 130px;
+
+}
+
+
+.note-header table tr td span.note-text{
+    color: #201D1D;
+    width: auto;
+    font-weight: normal;
+    text-align: left;
+    padding-left: 4px;
+}
+
+.note-header table tr td.note-text-name{
+width: 115px;
+}
+
+
+
+

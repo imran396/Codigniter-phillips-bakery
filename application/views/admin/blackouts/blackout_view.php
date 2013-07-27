@@ -43,6 +43,46 @@
         $('#with-altField').multiDatesPicker({
             altField: '#altField'
         });
+
+        $('.btn-dark').click(function(){
+
+
+            var location_id = $('#location_id').val();
+            var flavour_id = $('#flavour_id').val();
+            var blackout_date = $('#altField').val();
+            if(location_id == "Select One"){
+                alert('Error. Please select location.');
+                return false;
+            }
+            if(flavour_id =="Select One"){
+                alert('Error. Please select flavour.');
+                return false;
+            }
+            if(blackout_date ==""){
+                alert('Error. Please select date.');
+                return false;
+            }
+            $.ajax({
+                url:"<?php echo site_url('admin/blackouts/checkLessCurrentDate')?>",
+                data:"blackout_date="+blackout_date,
+                type:"post",
+                success: function(val){
+
+                    if(val > 0){
+
+                        alert('Error. You cannot select a date in the past. Please try again.');
+                        return false;
+                    }else{
+                        $('#from').submit();
+                    }
+
+
+                }
+            })
+
+
+
+        })
     });
     // -->
 </script>
@@ -59,6 +99,15 @@
         </div>
         <div class="separator"></div>
     </div>
+
+    <style>
+        .dropdown-menu ul{
+            max-height: 300px!important;
+            overflow-y:scroll;
+            overflow-x:hidden;
+        }
+    </style>
+
     <div id="wrapper">
         <div class="double">
             <div class="col left-bar">
@@ -67,7 +116,7 @@
                 <div class="box box-narrow">
                     <div class="label">Select <?php echo $this->lang->line('location'); ?></div>
                     <div class="row-fluid row-widest">
-                        <select class="selectpicker span12" name="location_id">
+                        <select class="selectpicker span12" name="location_id" id="location_id">
                             <option><?php echo $this->lang->line('select_one'); ?></option>
                             <?php foreach($locations as $rows):?>
                                 <option value="<?php echo $rows->location_id; ?>" ><?php echo $rows->title;?></option>
@@ -76,7 +125,7 @@
                     </div>
                     <div class="label">Select <?php echo $this->lang->line('flavour'); ?></div>
                     <div class="row-fluid row-widest">
-                        <select class="selectpicker span12" name="flavour_id">
+                        <select class="selectpicker span12" name="flavour_id" id="flavour_id">
                            <option><?php echo $this->lang->line('select_one'); ?></option>
                             <?php foreach($blockouts as $rows):?>
                            <option value="<?php echo $rows->flavour_id; ?>" ><?php echo $rows->title;?></option>
@@ -91,7 +140,7 @@
                     </div>
                     <div class="buttons">
                         <input type="hidden" name="blackouts_id" value="<?php echo isset($queryup[0]->blackouts_id) ? $queryup[0]->blackouts_id :''; ?>">
-                        <input type="submit" value="Add to blackouts"  class="btn btn-dark">
+                        <input type="button" value="Add to blackouts"  class="btn btn-dark">
                     </div>
                 </div><!-- End Box -->
                 </form>
@@ -100,7 +149,7 @@
                 <h3>Existing Blackouts</h3>
                 <div class="widget">
                     <div class="widget-body">
-                        <table class="table table-striped table-bordered">
+                        <table class="table table-striped table-bordered blackout-sortable">
                             <thead>
                             <tr>
                                 <th width="145">Flavor</th>
@@ -108,14 +157,14 @@
                                 <th width="319"> </th>
                             </tr>
                             </thead>
-                            <tbody class="overflow">
+                            <tbody style="height: 250px">
                             <?php
                             foreach($paging[0] as $rows ):
                                 $blackout_date=explode(',',$rows->blackout_date);
                             ?>
                             <tr>
                                 <td><strong><?php echo $rows->title; ?></strong></td>
-                                <td><a class="remove_a" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo $rows->blackout_date; ?>" ><?php echo $this->blackouts_model->dateFormate($blackout_date[0]); ?></a></td>
+                                <td><a class="remove_a" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo $rows->blackout_date; ?>" ><?php echo $this->blackouts_model->dateFormate(end($blackout_date)); ?></a></td>
                                 <td align="right" style="text-align: right; padding-right: 15px"><a onclick="return confirm('Are you sure you want to delete?')" href="/admin/blackouts/remove/<?php echo $rows->blackout_id; ?>" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a></td>
                             </tr>
                             <?php endforeach; ?>
@@ -135,7 +184,18 @@
         </div>
     </div><!-- End Wrapper -->
 </div>
+<script type="text/javascript" language="javascript">
+    jQuery(document).ready(function(){
 
+        var oTable = $('.blackout-sortable').dataTable({
+            "iDisplayLength": 500,
+            "aoColumnDefs": [
+                { "bSortable":false, "aTargets": [2] }
+
+            ]
+        });
+    });
+</script>
 <style type="text/css">
     .remove_a {
         color: #201D1D !important;

@@ -26,7 +26,7 @@ class Orders extends API_Controller
         $this->load->model(array('orders_model','productions_model','gallery_model','locations_model'));
         $this->load->helper('dompdf');
         $this->load->library('email',$this->config);
-        $this->load->model('orders_model');
+
     }
 
     public function index()
@@ -53,7 +53,6 @@ class Orders extends API_Controller
         $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:'No';
         $data['price_matrix_id']=isset($_REQUEST['price_matrix_id'])? $_REQUEST['price_matrix_id']:'';
         $data['tiers']=isset($_REQUEST['tiers'])? $_REQUEST['tiers']:'';
-        $data['shape']=isset($_REQUEST['shape'])? $_REQUEST['shape']:'';
         $data['matrix_price']=isset($_REQUEST['matrix_price'])? $_REQUEST['matrix_price']:'';
         $data['cake_email_photo']=isset($_REQUEST['cake_email_photo'])? $_REQUEST['cake_email_photo']:'';
         $data['magic_cake_id']=isset($_REQUEST['magic_cake_id'])? $_REQUEST['magic_cake_id']:'';
@@ -87,14 +86,18 @@ class Orders extends API_Controller
 
         if($orders['order_id']) {
 
-            $empolyee_code = $this->orders_model->getEmployeeCode($data['employee_id']);
-            $data = array(
+            $empolyee_code = $this->logs_model->getEmployeeCode($data['employee_id']);
+            $log = array(
                 'employee_id' => $empolyee_code,
                 'audit_name' => 'order created',
                 'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
             );
-            $this->orders_model->insertAuditLog($data);
+            $this->logs_model->insertAuditLog($log);
 
+        }
+
+        if(isset($_FILES['onCakeImage'])){
+            $this->orders_model->doUpload($orders['order_id']);
         }
 
         if(isset($_FILES['instructionalImages'])){
@@ -132,7 +135,7 @@ class Orders extends API_Controller
             'order_id','cake_id','customer_id','employee_id',
             'manager_id','location_id','order_date','delivery_type',
             'pickup_location_id','delivery_zone_id','delivery_zone_surcharge',
-            'delivery_date','delivery_time','flavour_id','fondant','tiers','price_matrix_id','shape','matrix_price','cake_email_photo','magic_cake_id','magic_surcharge',
+            'delivery_date','delivery_time','flavour_id','fondant','tiers','price_matrix_id','matrix_price','cake_email_photo','magic_cake_id','magic_surcharge',
             'inscription','special_instruction','instructional_email_photo','vaughan_location','order_status','discount_price','total_price',
             'override_price','printed_image_surcharge'
         );
@@ -153,21 +156,20 @@ class Orders extends API_Controller
             }
         }
 
-//        print_r($data);
-//        exit;
-
         $orders=$this->orders_model->order_update($data, $data['order_id']);
 
         if($orders['order_id']) {
-            $empolyee_code = $this->orders_model->getEmployeeCode($data['empolyee_id']);
 
-            $data = array(
+
+            $empolyee_code = $this->logs_model->getEmployeeCode($data['empolyee_id']);
+
+            $log = array(
                 'employee_id' => $empolyee_code,
                 'audit_name' => 'order updated',
                 'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
             );
 
-            $this->orders_model->insertAuditLog($data);
+            $this->logs_model->insertAuditLog($log);
         }
 
         if(isset($order_delivery)){

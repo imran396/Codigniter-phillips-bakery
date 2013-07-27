@@ -108,11 +108,12 @@
             <div class="scrolled">
                 <div class="info">
                     <?php
-                    if($this->productions_model->getLocations($queryup->location_id)){ ?>
+                    if($this->productions_model->getLocations($queryup->locationid)){ ?>
                     <div class="line">
                         <div class="title">Bakery location</div><?php echo $this->productions_model->getLocations($queryup ->location_id); ?>
                     </div>
                     <?php } ?>
+
                     <?php if( $queryup->delivery_date){ ?>
                     <div class="line">
                         <div class="title">Pickup / delivery date</div><?php echo $this->productions_model->dateFormate($queryup->delivery_date); ?>

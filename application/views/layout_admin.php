@@ -128,6 +128,7 @@
 <script src="<?php echo base_url() ?>assets/bootstrap/extend/bootbox.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/bootstrap/extend/bootstrap-wysihtml5/js/wysihtml5-0.3.0_rc2.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/bootstrap/extend/bootstrap-wysihtml5/js/bootstrap-wysihtml5-0.0.2.js" type="text/javascript"></script>
+<script src="<?php echo base_url() ?>assets/multi-datepicker/js/jquery.timepicker.js" type="text/javascript"></script>
 <!-- Theme -->
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/custom.css?var=1" />
 <!-- Custom Onload Script -->
@@ -137,6 +138,10 @@
 <!--<script src="<?php //echo base_url() ?>/assets/theme/scripts/layout.js"></script>-->
 <script type="text/javascript" language="javascript">
 jQuery(document).ready(function(){
+
+
+    jQuery('#timepicker').timepicker();
+
 
     jQuery("#form1").validationEngine(
         {
@@ -165,7 +170,7 @@ jQuery(document).ready(function(){
         this.value = this.value.replace(/[^0-9\.]/g,'');
     });
 
-    $("#category_id , #location_id , #flavour_id  ").select2();
+    $("#category_id , #location_id , #flavour_id , #customer_id , #employee_id ,  #manager_id, .search_dropdown   ").select2();
 
     var oTable = $('.cake-sorting').dataTable({
         "iDisplayLength": 500,
@@ -208,6 +213,9 @@ jQuery(document).ready(function(){
 
 });
 
+
 </script>
+
 </body>
 </html>
+

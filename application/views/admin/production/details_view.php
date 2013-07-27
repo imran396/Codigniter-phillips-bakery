@@ -33,7 +33,7 @@
 
 <div class="container-fluid fixed container-new">
 <div class="navbar main">
-    <div class="icon-wrapper"><a href="/admin" class="icon-home"></a></div>
+    <div class="icon-wrapper"><a href="/admin/productions" class="icon-home"></a></div>
     <a href="/admin/productions/inproduction" class="back"><span>Back</span></a>
     <span class="tlogo">Cakes Order Detail</span>
     <div class="pull-right">
@@ -52,17 +52,17 @@
 <div class="panel">
     <div class="pull-right">
         <div class="row-fluid row-widest">
-            <form action="" method="get">
-            <select class="selectpicker span12" name="order_status" id="order_status" >
-                <?php if($this->productions_model->currentProductionStatus($queryup->production_status)){?>
-                <option class="label"><?php echo $this->productions_model->currentProductionStatus($queryup->production_status) ?></option>
+            <form action="" method="get" onsubmit="location">
+            <select class="selectpicker span12" name="order_status" id="order_status" onchange="window.location=this.value">
+                <?php if($this->productions_model->currentProductionStatus($queryup->order_status)){?>
+                <option class="label"><?php echo $this->productions_model->currentProductionStatus($queryup->order_status) ?></option>
                 <?php }else{ ?>
                 <option class="label">Status</option>
                 <?php } ?>
                     <?php
                     $getOrderStatus = $this->productions_model->getOrderStatus();
                     foreach($getOrderStatus as $production_status):
-                        if($queryup->production_status != $production_status->title){
+                        if($queryup->order_status != $production_status->production_status_code){
                         ?>
                         <option value="<?php echo site_url('admin/productions/status/'.$queryup->order_code.'/'.$production_status->production_status_code)?>"><?php echo $production_status->description ?></option>
                     <?php } endforeach; ?>
@@ -84,7 +84,7 @@
             </div>
         </div>
     </div>
-    <div class="title" style="height: 20px"><?php echo $queryup->title ?></div>
+    <div class="title" style="height: 20px"><?php if($queryup->title){ echo $queryup->title; }else{ echo "Custom Order"; } ?></div>
     <div class="customer"><?php echo $queryup->first_name.' '. $queryup->last_name ?></div>
     <div class="separator"></div>
 </div><!-- end of panel -->
@@ -92,14 +92,15 @@
     <ul>
         <?php
         $cake_id=$queryup->cake_id;
+        if(empty($queryup->on_cake_image)){
         $galleries = $this->gallery_model->getGallery($cake_id);
         if(!empty($galleries)){
             foreach($galleries as $gallery):
                 ?>
-                <li><a href=""><span class="plus"></span><span class="desc">Image On Cake</span><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
-            <?php endforeach; } ?>
+                <li><a href=""><!--<span class="plus"></span><span class="desc">Image On Cake</span>--><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
+            <?php endforeach; } } ?>
         <?php if($queryup->on_cake_image){ ?>
-        <li><a href=""><span class="plus"></span><span class="desc">On Cake</span><img src="<?php echo base_url().$queryup->on_cake_image; ?>" alt="" /></a></li>
+        <li><a href=""><span class="plus"></span><span class="desc">Image On Cake</span><img src="<?php echo base_url().$queryup->on_cake_image; ?>" alt="" /></a></li>
         <?php } ?>
         <?php
         $instructionals = $this->productions_model->photoGallery($queryup->order_id);
@@ -116,17 +117,25 @@
             <div class="scrolled">
                 <div class="info">
                     <?php
-                    if($this->productions_model->getLocations($queryup->location_id)){ ?>
+                    if($this->productions_model->getLocations($queryup->locationid)){ ?>
                     <div class="line">
-                        <div class="title">Bakery location</div><?php echo $this->productions_model->getLocations($queryup ->location_id); ?>
+                        <div class="title">Bakery location</div><?php echo $this->productions_model->getLocations($queryup ->locationid); ?>
                     </div>
                     <?php } ?>
+                    <div class="line">
+                        <div class="title">Order ID</div><?php echo $queryup->order_code; ?>
+                    </div>
                     <?php if( $queryup->delivery_date){ ?>
                     <div class="line">
                         <div class="title">Pickup / delivery date</div><?php echo $this->productions_model->dateFormate($queryup->delivery_date); ?>
                     </div>
                     <?php } ?>
-                    <?php if( $this->productions_model->getZones($queryup->delivery_zone_id) > 0){ ?>
+                    <?php if($queryup->delivery_type){ ?>
+                        <div class="line">
+                            <div class="title">Delivery type</div><?php echo sentence_case($queryup->delivery_type); ?>
+                        </div>
+                    <?php } ?>
+                    <?php if( $queryup->delivery_zone_id > 0){ ?>
                     <div class="line">
                         <div class="title">Delivery zone</div><?php echo $this->productions_model->getZones($queryup->delivery_zone_id); ?>
                     </div>
@@ -161,10 +170,31 @@
                         <div class="title">Magic cake id</div><?php echo $queryup->magic_cake_id; ?>
                     </div>
                     <?php } ?>
-                    <?php if( $queryup->magic_surcharge){ ?>
+                    <?php if( $queryup->matrix_price > 0){ ?>
+                        <div class="line">
+                            <div class="title">Cake price</div><?php echo $queryup->matrix_price; ?>
+                        </div>
+                    <?php } ?>
+                    <?php if( $queryup->magic_surcharge > 0){ ?>
                     <div class="line">
                         <div class="title">Magic cake surcharge</div><?php echo $queryup->magic_surcharge; ?>
                     </div>
+                    <?php } ?>
+
+                    <?php if( $queryup->printed_image_surcharge > 0){ ?>
+                        <div class="line">
+                            <div class="title">Printed Image Surcharge</div><?php echo $queryup->printed_image_surcharge; ?>
+                        </div>
+                    <?php } ?>
+                    <?php if( $queryup->delivery_zone_surcharge > 0){ ?>
+                        <div class="line">
+                            <div class="title">Delivery Zone Surcharge</div><?php echo $queryup->delivery_zone_surcharge; ?>
+                        </div>
+                    <?php } ?>
+                    <?php if( $queryup->discount_price > 0){ ?>
+                        <div class="line">
+                            <div class="title">Discount Price</div><?php echo $queryup->discount_price; ?>
+                        </div>
                     <?php } ?>
                     <?php if( $queryup->inscription){ ?>
                     <div class="line">
@@ -237,42 +267,37 @@
                                         <div class="title">Postal Code</div><?php echo $queryup->postal_code; ?>
                                     </div>
                                     <?php } ?>
+                                    <?php
+
+                                    if($this->productions_model->orderNotes($queryup->order_id)){
+                                    ?>
 
                                     <div class="line last">
+
                                         <div class="title title-big">Added Notes</div>
                                         <?php
 
-                                        if($this->productions_model->orderNotes($queryup->order_id)){
                                         $notes = $this->productions_model->orderNotes($queryup->order_id);
-
-
                                         foreach( $notes as $orderNotes):
                                             $createdate = $orderNotes->create_date;
-                                            $date = date("D M Y",$createdate);
+                                            $date = date("D,M",$createdate);
                                             $time = date("g:i a",$createdate);
 
                                         ?>
                                         <div class="note">
                                             <div class="note-header">
-                                                <?php if( $orderNotes->first_name){ ?>
-                                                <div class="row-fluid row-widest-custom" >
-                                                    <div class="title" style="padding-bottom: 0px" >Added by:</div>
-                                                   <?php echo $orderNotes->first_name.' '.$orderNotes->last_name; ?>
-                                                </div>
-                                                <?php } ?>
-                                                <div class="row-fluid row-widest-custom" >
-                                                    <div class="title" style="padding-bottom:0px ">Date added:</div>
-                                                    <?php echo $date; ?>
-                                                </div>
-                                                <div class="row-fluid row-widest-custom">
-                                                    <div class="title" style="padding-bottom:0px">Time added:</div>
-                                                    <?php echo $time; ?>
-                                                </div>
+                                                <table><tr>
+                                                        <td class="notes-title notes-title-added">Added by:</td><td class="note-text note-text-name"><?php echo $orderNotes->first_name.' '.$orderNotes->last_name; ?></td>
+                                                        <td class="notes-title notes-title-date">Date added:<span class="note-text" ><?php echo $date; ?></span></td>
+                                                        <td class="notes-title notes-title-time">Time added:<span class="note-text" ><?php echo $time; ?></span></td>
+                                                    </tr>
+                                                </table>
                                             </div>
                                             <?php echo $orderNotes->notes; ?>
                                         </div>
-                                        <?php endforeach; } ?>
+                                        <?php endforeach;  ?>
                                     </div>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -349,13 +374,17 @@
             <ul>
                 <?php
                 $cake_id=$queryup->cake_id;
+                if(empty($queryup->on_cake_image)){
                 $galleries = $this->gallery_model->getGallery($cake_id);
                 if(!empty($galleries)){
                     foreach($galleries as $gallery):
                         ?>
 
                         <li><a href="<?php echo base_url().$gallery->image; ?>"><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
-                    <?php endforeach; } ?>
+                <?php endforeach; } } ?>
+                <?php if($queryup->on_cake_image){ ?>
+                    <li><a href="<?php echo base_url().$instructional->instructional_photo; ?>"><img src="<?php echo base_url().$queryup->on_cake_image; ?>" alt="" /></a></li>
+                <?php } ?>
                 <?php
                 $instructionals = $this->productions_model->photoGallery($queryup->order_id);
                 if(!empty($instructionals)){

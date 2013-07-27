@@ -94,7 +94,7 @@
                                         }
 
                                         $tierid=(unserialize($tiers));
-                                        for($i=1; 10 >= $i ; $i++ ){
+                                        for($i=1; 7 >= $i ; $i++ ){
                                             ?>
 
                                             <label class="radio">

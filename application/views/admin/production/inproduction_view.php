@@ -63,6 +63,13 @@
 
         });
 
+        $('.btn-block').click(function(){
+            timedely();
+
+        });
+
+
+
         $('.scan_button').on('click',function(){
             $("input[name = search]").focus();
             $("input[name = search]").attr('placeholder','');
@@ -110,6 +117,7 @@
     }
 </script>
 
+
 <div class="container-fluid fixed container-new">
 <div class="navbar main">
     <div class="icon-wrapper"><a href="/admin/productions" class="icon-home"></a></div>
@@ -152,11 +160,11 @@
         </div>
         <div class="row-fluid row-wider">
             <select class="selectpicker span12" id="flavour_id" name="flavour_id">
-                <option class="label">flavour</option>
+                <option class="label">Flavour</option>
                 <?php
                 $getFlavours = $this->productions_model->getFlavours();
                 foreach($getFlavours as $flavours):
-                    ?>
+                ?>
                     <option value="<?php echo $flavours->flavour_id ?>"><?php echo $flavours->title ?></option>
                 <?php endforeach; ?>
 
@@ -301,7 +309,7 @@
                     <td><?php if($rows->fondant >0){echo "Yes"; }else{ echo "No"; }; ?></td>
                     <td><?php echo $rows->flavour_name; ?></td>
                     <td><?php echo $rows->magic_cake_id; ?></td>
-                    <td class="green"><?php echo $rows->production_status;?></td>
+                    <td class="<?php if($rows->order_status ==303){ echo 'red'; }else{ echo 'green'; } ?>"><?php echo $this->productions_model->currentProductionStatus($rows->order_status);?></td>
                 </tr>
                 <?php $i++; endforeach; ?>
 

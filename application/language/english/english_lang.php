@@ -127,11 +127,11 @@ $lang['pos_api'] 		 	    = 'POS api';
 $lang['category_id'] 		 	    = 'Cake Category';
 $lang['flavour_id'] 		 	    = 'Flavour Name';
 $lang['location_id'] 		 	    = 'Location Name';
-$lang['cake_title'] 		 	    = 'Cake Title';
+$lang['cake_title'] 		 	    = 'Cake Name';
 $lang['description'] 		 	    = 'Description';
 $lang['meta_tag'] 		 	    = 'Meta Tag';
 $lang['start_price'] 		 	    = 'Start Price';
-$lang['end_price'] 		 	    = 'End Price';
+$lang['price'] 		 	    = 'Price';
 $lang['to'] 		 	    = 'To';
 $lang['add_gallery'] 		 	    = 'Add Gallery';
 $lang['list_cakes'] 		 	    = 'List of Cakes';
@@ -207,6 +207,8 @@ $lang['controller_name'] 		 	    = 'Controller name';
 $lang['inactive'] 		 	    = 'Inactive';
 $lang['employee_id'] 		 	    = 'Employee ID';
 
+
+
 /*        ---------------Production------------------    */
 
 $lang['production'] 		 	    = 'Production';
@@ -216,9 +218,41 @@ $lang['blackout'] 		 	    = 'Blackout';
 
 /* Manage Orders Label */
 
-$lang['cake_name'] 		 	    = 'Cake_Name';
+$lang['cake_name'] 		 	    = 'Cake Name';
+$lang['delivery_type'] 		 	    = 'Pickup';
+$lang['pickup'] 		 	    = 'Pickup';
+$lang['delivery'] 		 	    = 'Delivery';
+$lang['pickup_location'] 		 	    = 'Pickup Location';
+$lang['delivery_time'] 		 	    = 'Delivery Time';
+$lang['date'] 		 	    = 'Date';
+$lang['onCakeImage'] 		 	    = 'On Cake Image';
+$lang['magic_cake_id'] 		 	    = 'Magic Cake ID';
+$lang['surcharge_amount'] 		 	    = 'Surcharge Amount';
+$lang['inscription'] 		 	    = 'Inscription';
+$lang['special_instruction'] 		 	    = 'Special Instruction';
+$lang['delivery_instruction'] 		 	    = 'Delivery Instruction';
+$lang['customer_name'] 		 	    = 'Customer Name';
+$lang['employee_name'] 		 	    = 'Employee Name';
+$lang['manager_name'] 		 	    = 'Manager Name';
+
+$lang['save_print'] 		 	    = 'Save & Print';
+$lang['save_email'] 		 	    = 'Save & Email';
+$lang['is_estimate'] 		 	    = 'Is Estimate';
+$lang['on_cake_image'] 		 	    = 'Add an image on cake(Applicable surcharge will be add)';
+$lang['is_vaughan_location'] 		= 'Cake made in Vaughan location';
+$lang['instructional_email_photo'] 	= 'Customer will email instructional photo';
+$lang['cake_email_photo'] 		 	= 'Customer will email photo';
+$lang['delivery_zone'] 		 	    = 'Delivery Zone';
 
 
+$lang['matrix_price'] 		 	    = 'Cake Price';
+$lang['discount_price'] 		 	    = 'Discount Price';
+$lang['printed_image_surcharge'] 		 	    = 'Printed Image Surcharge';
+$lang['magic_surcharge'] 		 	    = 'Magic Surcharge';
+$lang['delivery_zone_surcharge'] 		 	    = 'Delivery Zone Surcharge';
+$lang['override_price'] 		 	    = 'Override Price';
+$lang['total_price'] 		 	    = 'Total Price';
+$lang['total'] 		 	    = 'Total';
 
 /* -------- Orders --------------*/
 $lang['Size and Servings'] = 'Size and Servings';

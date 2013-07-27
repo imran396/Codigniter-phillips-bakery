@@ -1,7 +1,7 @@
 <div class="container-fluid fixed container-new">
     <div class="navbar main">
         <div class="icon-wrapper"><a href="<?php echo site_url()?>" class="icon-home"></a></div>
-        <span class="tlogo">Cakes Ordering System</span>
+        <span class="tlogo">Cake Ordering System</span>
 <!--        <div class="pull-right">-->
 <!--            <div class="search-form">-->
 <!--                <div class="error-msg"><span>Error No Results</span></div>-->

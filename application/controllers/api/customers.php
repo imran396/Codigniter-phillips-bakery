@@ -31,16 +31,16 @@ class Customers extends API_Controller
                 ),
             );
 
-          if($customer_id) {
-            $empolyee_code = $this->orders_model->getEmployeeCode($data_['employee_id']);
+            if($customer_id) {
 
-           $data_customer = array(
-                'employee_id' => $empolyee_code,
-                'audit_name' => 'customer created',
-                'description' =>  'customer_id='. $data['customer_id'],
-            );
-            $this->orders_model->insertAuditLog($data_customer);
-          }
+                $empolyee_code = $this->logs_model->getEmployeeCode($data_['employee_id']);
+                $log = array(
+                    'employee_id' => $empolyee_code,
+                    'audit_name' => 'customer created',
+                    'description' =>  'customer_id='. $data['customer_id'],
+                );
+                $this->logs_model->insertAuditLog($log);
+            }
 
            $this->sendOutput($data);
 
@@ -53,22 +53,24 @@ class Customers extends API_Controller
             unset($data['employee_id']);
             $this->customers_model->save($data, $data['customer_id']);
 
-            if($data['customer_id']) {
-            $empolyee_code = $this->orders_model->getEmployeeCode($data_['employee_id']);
-
-            $data_customer = array(
-                'employee_id' => $empolyee_code,
-                'audit_name' => 'customer created',
-                'description' =>  'customer_id='. $data['customer_id'],
-            );
-            $this->orders_model->insertAuditLog($data_customer);
-         }
-            $data = array(
+        $data = array(
             array(
                 'customer_id' => $data['customer_id']
             ),
 
         );
+
+        if($data['customer_id']) {
+                $empolyee_code = $this->logs_model->getEmployeeCode($data_['employee_id']);
+
+                    $log = array(
+                    'employee_id' => $empolyee_code,
+                    'audit_name' => 'customer created',
+                    'description' =>  'customer_id='. $data['customer_id'],
+                );
+                $this->logs_model->insertAuditLog($log);
+        }
+
         $this->sendOutput($data);
     }
 
