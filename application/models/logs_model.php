@@ -16,9 +16,15 @@ class Logs_model extends Crud_Model
 
             $this->db->select('employee_id');
             $this->db->from('meta');
-            $this->db->where('user_id', $user_id);
-            $meta_row = $this->db->get()->row();
-            return $meta_row->employee_id;
+            $this->db->where(array('user_id'=> $user_id));
+            $meta_row = $this->db->get();
+            if($meta_row->num_rows() > 0 ){
+                $row =$meta_row->row();
+                return $row->employee_id;
+            }
+        return false;
+
+
     }
 
     public function insertAuditLog($data)

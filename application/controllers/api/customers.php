@@ -38,7 +38,7 @@ class Customers extends API_Controller
                     $log = array(
                         'employee_id' => $empolyee_code,
                         'audit_name' => 'customer created',
-                        'description' =>  'customer_id='. $data['customer_id']
+                        'description' =>  'customer_id='. $customer_id
                     );
                     $this->logs_model->insertAuditLog($log);
                 }
