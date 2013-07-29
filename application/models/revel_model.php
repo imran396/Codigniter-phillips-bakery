@@ -79,7 +79,7 @@ class Revel_Model extends CI_Model
         return $client->getResponseBody();
     }
 
-    protected function generateUUID()
+    public function generateUUID()
     {
         return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
 
