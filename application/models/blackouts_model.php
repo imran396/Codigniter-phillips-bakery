@@ -58,12 +58,6 @@ class Blackouts_model extends Crud_Model
 
     }
 
-    public function update($id)
-    {
-        $this->db->set(array('controller_name'=>strtolower(trim($this->input->post('controller_name')))))->where(array('control_id'=>$id))->update('user_control');
-    }
-
-
 
     public function delete($id)
     {

@@ -254,6 +254,17 @@ class Orders_model extends Crud_Model
 
     }
 
+    public function getVaughanLocation(){
+
+        $row = $this->db->select('location_id')->where('vaughan_location',1)->get('locations')->row();
+        if(!empty( $row->location_id)){
+            return $vaughan_location = $row->location_id;
+        }
+        return false;
+
+    }
+
+
     public function sortingList($order_id)
     {
 

@@ -82,12 +82,12 @@
                                             </div>
                                         </div>
                                     </div>
-
+<!--
                                     <div class="control-group uniformjs">
-                                        <label class="control-label"><?php echo $this->lang->line('tiers');?></label>
+                                        <label class="control-label"><?php /*echo $this->lang->line('tiers');*/?></label>
                                         <div class="separator"></div>
                                         <?php
-                                        if(isset($queryup[0]->cake_id) > 0){
+/*                                        if(isset($queryup[0]->cake_id) > 0){
                                             $tiers =($queryup[0]->tiers !="" ) ? $queryup[0]->tiers : serialize(array());
                                         }else{
                                             $tiers =(isset($queryup[0]->tiers)) ? $queryup[0]->tiers : serialize(array());
@@ -95,15 +95,15 @@
 
                                         $tierid=(unserialize($tiers));
                                         for($i=1; 7 >= $i ; $i++ ){
-                                            ?>
+                                            */?>
 
                                             <label class="radio">
-                                                <input type="checkbox" class="radio" name="tiers[]" value="<?php echo $i;?>" <?php if( in_array($i, $tierid) ){?> checked="checked" <?php } ?> />
-                                                <?php echo $i;?>
+                                                <input type="checkbox" class="radio" name="tiers[]" value="<?php /*echo $i;*/?>" <?php /*if( in_array($i, $tierid) ){*/?> checked="checked" <?php /*} */?> />
+                                                <?php /*echo $i;*/?>
                                             </label>
-                                        <?php } ?>
+                                        <?php /*} */?>
 
-                                    </div>
+                                    </div>-->
                                     <div class="control-group">
                                         <label class="control-label"><?php echo $this->lang->line('meta_tag');?></label>
                                         <div class="controls">
