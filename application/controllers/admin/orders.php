@@ -352,6 +352,16 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
         $data['order_date']=date('m-d-Y');
 
+        $vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
+        if($vaughan_location == 1 ){
+            echo $vaughan_location = $this->orders_model->getVaughanLocation();
+            $data['kitchen_location_id'] = $vaughan_location;
+
+        }else{
+
+            $data['kitchen_location_id'] = isset($_REQUEST['location_id'])? $_REQUEST['location_id']:'';
+        }
+
         if($orderID > 0 ){
             $orders=$this->orders_model->order_update($data,$orderID);
             $this->session->set_flashdata('success_msg','New order has been updated successfully');

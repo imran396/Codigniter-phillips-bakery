@@ -98,7 +98,7 @@ class Cakes extends Crud_Controller
         } else {
             $this->cakes_model->save($data, $data['cake_id']);
 
-            $this->session->set_flashdata('success_msg','New cake has been updated successfully');
+            $this->session->set_flashdata('success_msg','Cake has been updated successfully');
         }
 
     }

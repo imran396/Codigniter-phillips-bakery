@@ -68,6 +68,15 @@ class Orders extends API_Controller
         $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';
         $data['order_status']=isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'';
 
+        $vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
+        if($vaughan_location == 1 ){
+            $vaughan_location = $this->orders_model->getVaughanLocation();
+            $data['kitchen_location_id'] = $vaughan_location;
+        }else{
+            $data['kitchen_location_id'] = isset($_REQUEST['location_id'])? $_REQUEST['location_id']:'';
+        }
+
+
         $order_delivery['name']=isset($_REQUEST['name']) ? $_REQUEST['name']:'';
         $order_delivery['phone']=isset($_REQUEST['phone']) ? $_REQUEST['phone']:'';
         $order_delivery['address_1']=isset($_REQUEST['address_1'])? $_REQUEST['address_1']:'';
@@ -142,6 +151,8 @@ class Orders extends API_Controller
             'override_price','printed_image_surcharge'
         );
 
+
+
         $array_delivery_key = array('name','phone','address_1','address_2','postal','city','province','delivery_instruction');
 
 
@@ -156,6 +167,14 @@ class Orders extends API_Controller
 
                 $order_delivery[$key] = $val;
             }
+        }
+
+        $vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
+        if($vaughan_location == 1 ){
+            $vaughan_location = $this->orders_model->getVaughanLocation();
+            $data['kitchen_location_id'] = $vaughan_location;
+        }else{
+            $data['kitchen_location_id'] = isset($_REQUEST['location_id'])? $_REQUEST['location_id']:'';
         }
 
         $orders=$this->orders_model->order_update($data, $data['order_id']);
