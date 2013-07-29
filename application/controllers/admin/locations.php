@@ -88,11 +88,11 @@ class Locations extends Crud_Controller
 
             $this->locations_model->create($data);
 
-            $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
+            $this->session->set_flashdata('success_msg',"New location has been added successfully");
         } else {
             $this->locations_model->save($data, $data['location_id']);
 
-            $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
+            $this->session->set_flashdata('success_msg',"Location has been updated successfully");
         }
 
     }

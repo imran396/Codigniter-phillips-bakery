@@ -79,11 +79,11 @@ class Zones extends Crud_Controller
 
             $this->zones_model->create($data);
 
-            $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
+            $this->session->set_flashdata('success_msg',"New delivery zone has been added successfully");
         } else {
             $this->zones_model->save($data, $data['zone_id']);
 
-            $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
+            $this->session->set_flashdata('success_msg',"Delivery zone has been updated successfully");
         }
 
     }

@@ -78,11 +78,11 @@ class Categories extends Crud_Controller
 
             $this->categories_model->create($data);
 
-            $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
+            $this->session->set_flashdata('success_msg',"New category has been added successfully");
         } else {
             $this->categories_model->save($data, $data['category_id']);
 
-            $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
+            $this->session->set_flashdata('success_msg',"Category has been updated successfully");
         }
 
     }

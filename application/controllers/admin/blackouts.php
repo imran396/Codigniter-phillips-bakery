@@ -123,7 +123,7 @@ class Blackouts extends Crud_Controller
 
     private function redirectToHome($redirect = NULL)
     {
-        redirect('admin/blackouts/'.$redirect);
+        redirect('admin/blackouts'.$redirect);
     }
 
 }

@@ -89,11 +89,11 @@ class Customers extends Crud_Controller
 
             $this->customers_model->create($data);
 
-            $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
+            $this->session->set_flashdata('success_msg',"New customer has been added successfully");
         } else {
             $this->customers_model->save($data, $data['customer_id']);
 
-            $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
+            $this->session->set_flashdata('success_msg',"Customer has been updated successfully");
         }
 
     }

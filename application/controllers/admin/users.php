@@ -61,7 +61,7 @@ class users extends Crud_Controller
             if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data))
             { //check to see if we are creating the user
                 //redirect them back to the admin page
-                $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
+                $this->session->set_flashdata('success_msg',"New employee has been added successfully");
                 redirect('admin/users/listing', 'refresh');
             }else{
 
