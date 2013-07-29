@@ -362,7 +362,6 @@
 
     </div>
 </div>
-
 <hr class="separator" />
 <div class="widget-head">
     <h4 class="heading glyphicons edit"><i></i><?php echo $this->lang->line('customer_information');?></h4>
