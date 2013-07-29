@@ -10,9 +10,9 @@
     <br/>
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('orders');?></h3>
-    <!--    <div class="buttons pull-right">
+        <div class="buttons pull-right">
             <a href="/admin/orders" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add New Order</a>
-        </div>-->
+        </div>
         <div class="buttons pull-right">
             <?php
             $searchval =  isset($_REQUEST['search']) ? $_REQUEST['search']:'';
@@ -54,11 +54,13 @@
                         ?>
                         <tr>
                             <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
-                            <td class="center"><?php echo $this->productions_model->dateFormate($rows->delivery_date); ?></td>
+                            <td class="center"><?php echo $rows->delivery_date; //$this->productions_model->dateFormate($rows->delivery_date); ?></td>
 
                             <td><?php if($rows->first_name) echo $rows->first_name.' '.$rows->last_name; else echo "---"; ?></td>
                             <td class="center"><?php echo $rows->orderstatus; ?></td>
-                            <td> <?php if($rows->order_status =='cancelled'){ ?><a class="btn-action glyphicons remove_2 btn-danger" href="/admin/orders/remove/<?php echo $rows->order_code; ?>"><i></i></a><?php } ?>
+                            <td>
+                                <a href="/admin/orders/edit/<?php echo $rows->order_id; ?>" class="btn-action glyphicons pencil btn-success"><i></i></a>
+                                <?php if($rows->order_status =='cancelled'){ ?><a class="btn-action glyphicons remove_2 btn-danger" href="/admin/orders/remove/<?php echo $rows->order_code; ?>"><i></i></a><?php } ?>
 
                             </td>
                            </tr>

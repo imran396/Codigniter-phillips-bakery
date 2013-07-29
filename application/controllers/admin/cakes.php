@@ -130,12 +130,22 @@ class Cakes extends Crud_Controller
 
     }
 
-    public function sorting(){
+    public function sorting($cake_id){
 
-        $this->cakes_model->sortingList();
+        $this->gallery_model->sortingList($cake_id);
         echo $this->lang->line('update_msg');
 
     }
+
+    public function single_remove($cake_id)
+    {
+
+        $gallery_id = $this->input->post('gallery_id');
+        $this->gallery_model->imageDelete($cake_id,$gallery_id);
+        echo "success";
+
+    }
+
 
     public function status($id){
 

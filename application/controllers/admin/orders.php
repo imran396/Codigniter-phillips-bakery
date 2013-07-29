@@ -206,6 +206,18 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     }
 
+    public function getTotalPrice(){
+
+        $matrix_price = $this->input->post('matrix_price');
+        $printed_image_surcharge = $this->input->post('printed_image_surcharge');
+        $magic_surcharge = $this->input->post('magic_surcharge');
+        $delivery_zone_surcharge = $this->input->post('delivery_zone_surcharge');
+        $discount_price = $this->input->post('discount_price');
+
+        echo $total=((floatval($matrix_price)+floatval($printed_image_surcharge)+floatval($magic_surcharge)+floatval($delivery_zone_surcharge))-floatval($discount_price));
+
+    }
+
 
 
     public function listing($starts=0)
@@ -219,9 +231,88 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     }
 
+    public function edit($order_id){
+
+        $this->data['queryup'] = $this->orders_model->getAdminOrder($order_id);
+
+
+        //print_r($this->data['queryup'][0]->customer_id);
+        //exit;
+
+        $flavour_id =  $this->data['queryup'][0]->flavour_id;
+        $price_matrix_id =  $this->data['queryup'][0]->price_matrix_id;
+
+        $query="SELECT price_matrix.price_matrix_id, price_matrix.price, servings.title AS servings_title, servings.printing_surcharge, servings.size, flavours. *
+FROM price_matrix
+LEFT JOIN servings ON price_matrix.serving_id = servings.serving_id
+LEFT JOIN flavours ON price_matrix.flavour_id = flavours.flavour_id
+WHERE price_matrix.flavour_id = $flavour_id && price >0";
+        $matrix = $this->db->query($query)->result();
+        $servings ="";
+        foreach($matrix as $priceserv):
+
+            $selected = ($price_matrix_id == $priceserv->price_matrix_id ) ? "selected='selected'" : "";
+            $servings .= "<option ".$selected." value='".$priceserv->price_matrix_id."'>".$priceserv->servings_title."</option>";
+
+        endforeach;
+
+
+
+
+        $size ="";
+        foreach($matrix as $pricesize):
+
+            $selected = ($price_matrix_id == $pricesize->price_matrix_id ) ? "selected='selected'" : "";
+            $size .= "<option ".$selected." value='".$pricesize->price_matrix_id."'>".$pricesize->size."</option>";
+
+        endforeach;
+
+
+        $cprice ="";
+        foreach($matrix as $price):
+
+            $selected = ($price_matrix_id == $price->price_matrix_id ) ? "selected='selected'" : "";
+            $cprice .= "<option ".$selected."  value='".$price->price."'>".$price->price."</option>";
+
+        endforeach;
+
+        $matrix_price="";
+        foreach($matrix as $price):
+
+            if ($price_matrix_id == $price->price_matrix_id ){
+
+                $matrix_price = $price->price;
+            }
+
+
+        endforeach;
+
+        $this->data['servings']=$servings;
+        $this->data['size']=$size;
+        $this->data['cprice']=$cprice;
+        $this->data['matrix_price']=$matrix_price;
+
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->data['catresult'] = $this->cakes_model->getCategories();
+        $this->data['cakeresult'] = $this->orders_model->getCakes($category=0);
+        $this->data['flvresult'] = $this->cakes_model->getFlavours();
+        $this->data['sapresult'] = $this->cakes_model->getShapes();
+        $this->data['zoneresult'] = $this->cakes_model->getZones();
+        $this->data['locationresult'] = $this->cakes_model->getlocations();
+        $this->data['customerresult'] = $this->cakes_model->getCustomers();
+        $this->data['employeeresult'] = $this->cakes_model->getEmployees($group_id=2);
+        $this->data['managerresult'] = $this->cakes_model->getEmployees($group_id=3);
+        $this->layout->view('admin/orders/order_view', $this->data);
+
+    }
+
+
     public function save(){
 
         $data =$this->input->post();
+        $orderID = $this->input->post('order_id');
+
+
         $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
         $data['customer_id']=isset($_REQUEST['customer_id'])? $_REQUEST['customer_id']:'';
         $data['employee_id']=isset($_REQUEST['employee_id'])? $_REQUEST['employee_id']:'';
@@ -261,6 +352,14 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
         $data['order_date']=date('m-d-Y');
 
+        if($orderID > 0 ){
+            $orders=$this->orders_model->order_update($data,$orderID);
+            $this->session->set_flashdata('success_msg','New order has been updated successfully');
+        }else{
+            $orders=$this->orders_model->order_insert($data);
+            $this->session->set_flashdata('success_msg','New order has been added successfully');
+        }
+
         $order_delivery['name']=isset($_REQUEST['name']) ? $_REQUEST['name']:'';
         $order_delivery['phone']=isset($_REQUEST['phone']) ? $_REQUEST['phone']:'';
         $order_delivery['address_1']=isset($_REQUEST['address_1'])? $_REQUEST['address_1']:'';
@@ -271,24 +370,20 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $order_delivery['delivery_instruction']=isset($_REQUEST['delivery_instruction'])? $_REQUEST['delivery_instruction']:'';
 
 
-
-        $orders=$this->orders_model->order_insert($data);
-
         if(strtolower($data['delivery_type']) == 'delivery') {
 
             $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
         }
 
-
-        if(isset($_FILES['onCakeImage'])){
+        if($_FILES['onCakeImage']['name'] !=""){
             $this->orders_model->doUpload($orders['order_id']);
         }
 
-       if($pluploadUploader_count > 0){
+        if($pluploadUploader_count > 0){
 
             $this->orders_model->galleryUpload($data,$orders['order_id']);
 
-       }
+        }
 
         if(isset($data['cake_email_photo'])== 1){
             $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony','St Phillips - Attach your on cake image');
@@ -299,24 +394,65 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         }
 
         $this->saveBarcodeImage($orders['order_code']);
+
         $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
-        if($mailtouser =="yes"){
+
+        if($mailtouser == 1){
             $this->sendEmail($orders['order_code']);
         }
 
-        if($orders['order_id']) {
+        if($orderID > 0 ){
 
-            $empolyee_code = $this->logs_model->getEmployeeCode($data['employee_id']);
-            $log = array(
-                'employee_id' => $empolyee_code,
-                'audit_name' => 'order created',
-                'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
-            );
-            $this->logs_model->insertAuditLog($log);
+            if(isset($_REQUEST['employee_id'])){
+
+                    $empolyee_code = $this->logs_model->getEmployeeCode($_REQUEST['employee_id']);
+                    $log = array(
+                        'employee_id' => $empolyee_code,
+                        'audit_name' => 'order updated',
+                        'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
+                    );
+                    $this->logs_model->insertAuditLog($log);
+            }
+            $this->session->set_flashdata('success_msg','New order has been updated successfully');
+
+        }else{
+
+            if(isset($_REQUEST['employee_id'])){
+
+                $empolyee_code = $this->logs_model->getEmployeeCode($_REQUEST['employee_id']);
+                $log = array(
+                    'employee_id' => $empolyee_code,
+                    'audit_name' => 'order created',
+                    'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
+                );
+                $this->logs_model->insertAuditLog($log);
+            }
+            $this->session->set_flashdata('success_msg','New order has been added successfully');
+        }
+        redirect('admin/orders/edit/'.$orders['order_id']);
+
+
+    }
+
+    public function sendEmail($order_code){
+
+
+        $result= $this->productions_model->orderDetails($order_code);
+        $this->data['queryup']=$result->row();
+        $customer_email=$this->data['queryup']->email;
+
+        if(!empty($customer_email)){
+
+            $body = $this->load->view('email/invoice_body', $this->data,true);
+            $this->email->set_newline("\r\n");
+            $this->email->from('shafiq@emicrograph.com', 'St Phillip\'s Bakery');
+            $this->email->to($customer_email);
+            $this->email->subject('St Phillip\'s Bakery :'.$this->data['queryup']->orderstatus);
+            $this->email->message(nl2br($body));
+            $this->email->send();
 
         }
-        $this->session->set_flashdata('success_msg','New order has been added successfully');
-        redirect('admin/orders/listing');
+
 
     }
 
@@ -381,7 +517,20 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     }
 
+    public function sorting($order_id=0){
 
+
+        $this->orders_model->sortingList($order_id);
+        echo $this->lang->line('update_msg');
+
+    }
+
+    public function instructional_gallery_delete($order_id){
+
+        $path = $this->input->post('path');
+        $this->orders_model->instructionalGalleryDelete($order_id,$path);
+        echo "success";
+    }
 
     public function remove($id)
     {

@@ -220,6 +220,14 @@ $lang['blackout'] 		 	    = 'Blackout';
 
 /* Manage Orders Label */
 
+$lang['cake_information'] 		 	    = 'Cake Information';
+$lang['customer_information'] 		 	    = 'Customer,Employee & Manager';
+$lang['date_location'] 		 	    = 'Date & Location';
+$lang['delivery_information'] 		 	    = 'Delivery Information';
+$lang['cake_instruction'] 		 	    = 'Custom Cake Instruction';
+$lang['click_for_image'] 		 	    = 'Click for large image';
+
+
 $lang['cake_name'] 		 	    = 'Cake Name';
 $lang['delivery_type'] 		 	    = 'Pickup';
 $lang['pickup'] 		 	    = 'Pickup';
@@ -229,7 +237,7 @@ $lang['delivery_time'] 		 	    = 'Delivery Time';
 $lang['date'] 		 	    = 'Date';
 $lang['onCakeImage'] 		 	    = 'On Cake Image';
 $lang['magic_cake_id'] 		 	    = 'Magic Cake ID';
-$lang['surcharge_amount'] 		 	    = 'Surcharge Amount';
+$lang['magic_surcharge'] 		 	    = 'Magic Surcharge';
 $lang['inscription'] 		 	    = 'Inscription';
 $lang['special_instruction'] 		 	    = 'Special Instruction';
 $lang['delivery_instruction'] 		 	    = 'Delivery Instruction';
@@ -240,7 +248,7 @@ $lang['manager_name'] 		 	    = 'Manager Name';
 $lang['save_print'] 		 	    = 'Save & Print';
 $lang['save_email'] 		 	    = 'Save & Email';
 $lang['is_estimate'] 		 	    = 'Is Estimate';
-$lang['on_cake_image'] 		 	    = 'Add an image on cake(Applicable surcharge will be add)';
+$lang['custom_cake_surcharge'] 		 	    = 'Add an image on cake(Applicable surcharge will be add)';
 $lang['is_vaughan_location'] 		= 'Cake made in Vaughan location';
 $lang['instructional_email_photo'] 	= 'Customer will email instructional photo';
 $lang['cake_email_photo'] 		 	= 'Customer will email photo';

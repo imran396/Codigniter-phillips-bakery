@@ -202,6 +202,8 @@ jQuery(document).ready(function(){
             { "bSortable":false, "aTargets": [4] }
 
         ]
+
+
     });
 
     //Sort immediately with columns 0 and 1

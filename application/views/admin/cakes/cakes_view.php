@@ -110,33 +110,31 @@
                                             <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('meta_tag');?>" value="<?php echo(isset($queryup[0]->meta_tag))? $queryup[0]->meta_tag:set_value('meta_tag'); ?>"   class="span10" name="meta_tag" id="meta_tag"  /><span data-original-title="<?php echo $this->lang->line('tag_msg'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action single glyphicons circle_question_mark" style="margin: 0;"><i></i></span>
                                         </div>
                                     </div>
-                                    <?php
-                                    $i=0;
-                                    if(!empty($galleries)){
-                                    ?>
 
-                                    <div class="control-group control-group-ul">
-                                        <div class="controls">
-                                    <ul>
                                         <?php
                                         $i=0;
                                         if(!empty($galleries)){
-                                        foreach($galleries as $gallery):?>
-                                            <li>
+                                            ?>
 
-                                                <a title="" class="select-image select-image-group" rel="group-1" href="<?php echo base_url(); ?>/<?php echo $gallery->image; ?>"><img src="<?php echo base_url(); ?>/<?php echo $gallery->image; ?>" alt="" /></a>
-                             <span style="display: block; margin-left:12px; margin-top: 8px ">
-                             <a data-original-title="<?php echo $this->lang->line('delete'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action glyphicons remove_2 btn-danger" href="/admin/gallery/single_remove/<?php echo $gallery->cake_id; ?>/<?php echo $gallery->gallery_id; ?>"><i></i></a>
-                            </span>
-                                            </li>
+                                            <div class="">
+                                                <table style="width: 100%" class="table table-bordered table-condensed js-table-sortable" style="height: 40px; margin-bottom: 20px;overflow-x: scroll">
+                                                    <?php
+                                                    $i=0;
+                                                    foreach($galleries as $gallery):?>
 
-                                            <?php $i++; endforeach; } ?>
-                                    </ul>
-                                        </div>
-                                    </div>
+                                                        <tr class="selectable" id="listItem_<?php echo $gallery->gallery_id; ?>" >
+                                                            <td><?php echo $gallery->ordering; ?></td>
+                                                            <td><a title="" class="select-image select-image-group" rel="group-1" href="<?php echo base_url(); ?>/<?php echo $gallery->image; ?>"><?php  echo $this->gallery_model->fileName($gallery->image);?><?php //echo $this->lang->line('click_for_image');?></a> </td>
+                                                            <td class="center js-sortable-handle"><span  class="glyphicons btn-action single move" style="margin-right: 0;"><i></i></span></td>
+                                                            <td>
+                                                            <a onclick="return confirm('Are you sure you want to delete?')" data-original-title="<?php echo $this->lang->line('delete'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action glyphicons remove_2 btn-danger" id="<?php echo $gallery->gallery_id; ?>"><i></i></a></td>
+                                                        </tr>
+                                                        <?php $i++; endforeach;  ?>
+                                                </table>
+                                            </div>
                                         <?php  } ?>
-                                    <div class="clear"></div>
-                                    <div class="control-group">
+                                        <div class="clear"></div>
+                                       <div class="control-group">
 
                                         <div id="pluploadUploader">
                                             <p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
@@ -254,4 +252,56 @@
          return false;
          });*/
     });
+</script>
+<link rel="stylesheet" href="/assets/lightbox/colorbox.css" />
+<script src="/assets/lightbox/jquery.colorbox.js"></script>
+<script>
+    $(document).ready(function(){
+        //Examples of how to assign the Colorbox event to elements
+        $(".select-image-group").colorbox();
+    });
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+        $(".js-table-sortable").sortable({
+            opacity: '0.5',
+            axis:'vertically',
+            handle : '.js-sortable-handle',
+            update : function () {
+                var order = $(this).sortable('serialize');
+                $.ajax({
+                    type: "POST",
+                    url:"<?php echo site_url('admin/cakes/sorting/'.$this->uri->segment(4,0))?>",
+                    data:order,
+                    cache: false,
+                    success: function(html){
+                        alert(html);
+                        $('#loader').html(html);
+                    }
+                });
+            }
+        });
+
+        $('.btn-danger').click(function(){
+
+            var gallery_id = $(this).attr('id');
+            $.ajax({
+                type: "POST",
+                url:"<?php echo site_url('admin/cakes/single_remove/'.$this->uri->segment(4,0))?>",
+                data:'gallery_id='+gallery_id,
+                cache: false,
+                success: function(val){
+                    if(val =='success'){
+                        alert(html);
+                        $('#listItem_'+gallery_id).remove();
+                    }
+
+                }
+            });
+
+        })
+    });
+
 </script>

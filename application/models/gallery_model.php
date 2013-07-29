@@ -104,6 +104,20 @@ class Gallery_model extends CI_Model
 
     }
 
+    public function sortingList($cake_id)
+    {
+
+        $i=1;
+        foreach ($_POST['listItem'] as $position => $item) :
+            $array=array('ordering'=>$i);
+            $this->db->set($array);
+            $this->db->where(array('gallery_id 	'=>$item,'cake_id'=>$cake_id));
+            $this->db->update('cake_gallery');
+            $i++;
+        endforeach;
+    }
+
+
 
     public function getCakeList()
     {
@@ -147,12 +161,18 @@ class Gallery_model extends CI_Model
     {
 
 
-        $result = $this->db->select('*')->where(array('cake_id'=>$cake_id))->order_by('feature_image','desc')->get('cake_gallery');
+        $result = $this->db->select('*')->where(array('cake_id'=>$cake_id))->order_by('ordering','asc')->get('cake_gallery');
         if($result ->num_rows() > 0){
             return $result->result();
         }else{
             return false;
         }
+
+    }
+
+    function fileName($fileName){
+        $filename=explode("/",$fileName);
+        return end($filename);
 
     }
 

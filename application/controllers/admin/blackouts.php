@@ -9,7 +9,7 @@ class Blackouts extends Crud_Controller
 
         //$this->layout->setLayout('layout_admin');
         $this->layout->setLayout('layout_custom');
-        $this->load->model('blackouts_model');
+        $this->load->model(array('blackouts_model','orders_model'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
@@ -26,6 +26,19 @@ class Blackouts extends Crud_Controller
         $this->layout->view('admin/blackouts/blackout_view', $this->data);
 
     }
+
+    public function edit($id,$start=0)
+    {
+        $this->data['paging'] = $this->blackouts_model->getListing($start);
+        $this->data['locations'] = $this->blackouts_model->getLocations();
+        $this->data['flavours'] = $this->blackouts_model->getFlavours();
+        $this->data['queryup'] = $this->db->where('blackout_id',$id)->get('blackouts')->row();
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->layout->view('admin/blackouts/blackout_view', $this->data);
+
+    }
+
+
 
     public function listing($start=0)
     {

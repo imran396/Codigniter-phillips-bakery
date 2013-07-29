@@ -174,7 +174,7 @@ class Productions_model extends Crud_Model
 
     public function photoGallery($order_id){
 
-        return $this->db->where(array('instructional_order_id'=>$order_id))->get('instructional_photo')->result();
+        return $this->db->where(array('instructional_order_id'=>$order_id))->order_by('ordering','asc')->get('instructional_photo')->result();
 
     }
 

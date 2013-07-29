@@ -15,6 +15,7 @@ class Customers_model extends Crud_Model
     public function create($data)
     {
         $id = $this->insert($data);
+        $this->db->set(array('customer_id'=>$id,'notes'=>$data['notes'],'create_date'=>time()))->insert('customer_notes');
         return $id;
     }
 
@@ -22,6 +23,9 @@ class Customers_model extends Crud_Model
     {
 
         $this->update($data, $id);
+        if(!empty($data['notes'])){
+        $this->db->set(array('customer_id'=>$id,'notes'=>$data['notes'],'create_date'=>time()))->insert('customer_notes');
+        }
     }
 
     public function deleteDataExisting($data=0){
@@ -58,6 +62,10 @@ class Customers_model extends Crud_Model
     {
         return $this->db->select('*')->where(array('customer_id'=>$customer_id))->get('customers')->result();
 
+    }
+
+    function getCustomerNotes($customer_id){
+        return $this->db->select('*')->where(array('customer_id'=>$customer_id))->order_by('create_date','desc')->get('customer_notes')->result();
     }
 
     public function getListing($start)

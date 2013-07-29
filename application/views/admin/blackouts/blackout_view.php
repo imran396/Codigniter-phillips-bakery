@@ -41,6 +41,8 @@
                         });
             });
         $('#with-altField').multiDatesPicker({
+            <?php echo isset($queryup->blackout_date) ?
+            'addDates: '. json_encode(explode(',', $queryup->blackout_date))."," :''; ?>
             altField: '#altField'
         });
 
@@ -112,34 +114,65 @@
         <div class="double">
             <div class="col left-bar">
                 <form name="from" id="from" action="/admin/blackouts/save" method="post">
-                <h3>Create a New Blackout</h3>
-                <div class="box box-narrow">
+                <h3>Create a New Blackout  </h3>
+
+                    <div class="box box-narrow">
                     <div class="label">Select <?php echo $this->lang->line('location'); ?></div>
                     <div class="row-fluid row-widest">
                         <select class="selectpicker span12" name="location_id" id="location_id">
-                            <option><?php echo $this->lang->line('select_one'); ?></option>
-                            <?php foreach($locations as $rows):?>
-                                <option value="<?php echo $rows->location_id; ?>" ><?php echo $rows->title;?></option>
-                            <?php endforeach; ?>
+                        <?php
+
+                        $location_id = (isset($queryup->location_id))? $queryup->location_id:set_value('location_id');
+                        if($location_id > 0){
+                            $locationfield['location_id']=$location_id;
+                            ?>
+                            <option value="<?php echo $location_id; ?>" ><?php echo $this->orders_model->getGlobalName('locations',$locationfield); ?></option>
+                        <?php }else{ ?>
+                            <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
+                        <?php
+                        }
+                        foreach($locations as $location):
+                            if($location_id != $location->location_id){
+                                ?>
+                                <option value="<?php echo $location->location_id;  ?>" ><?php echo $location->title; ?></option>
+                            <?php } endforeach; ?>
+
+
+
                         </select>
                     </div>
                     <div class="label">Select <?php echo $this->lang->line('flavour'); ?></div>
                     <div class="row-fluid row-widest">
                         <select class="selectpicker span12" name="flavour_id" id="flavour_id">
-                           <option><?php echo $this->lang->line('select_one'); ?></option>
-                            <?php foreach($blockouts as $rows):?>
-                           <option value="<?php echo $rows->flavour_id; ?>" ><?php echo $rows->title;?></option>
-                            <?php endforeach; ?>
+                            <?php
+                            $flavour_id = (isset($queryup->flavour_id))? $queryup->flavour_id:set_value('flavour_id');
+
+                            if($flavour_id > 0){
+                                $flavourfield['flavour_id']=$flavour_id;
+                                ?>
+                                <option value="<?php echo $flavour_id; ?>" ><?php echo $this->orders_model->getGlobalName('flavours',$flavourfield); ?></option>
+                            <?php }else{ ?>
+                                <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
+                            <?php
+                            }
+                            foreach($flavours as $flavour):
+                                if($flavour_id != $flavour->flavour_id){
+                                    ?>
+                                    <option value="<?php echo $flavour->flavour_id;  ?>" ><?php echo $flavour->title; ?></option>
+                                <?php } endforeach; ?>
                         </select>
                     </div>
+
                     <div class="label">Select Date / Multiple Date</div>
-<!--                    <div class="dates">Date Sept 17 to Sept 26, 2013</div>-->
+                        <?php //echo isset($queryup->blackout_date) ? $queryup->blackout_date :''; ?>
+<!--
+<div class="dates">Date Sept 17 to Sept 26, 2013</div>-->
                     <div class="controls">
                         <div id="with-altField"></div>
                         <input type="hidden" id="altField" name="blackout_date">
                     </div>
                     <div class="buttons">
-                        <input type="hidden" name="blackouts_id" value="<?php echo isset($queryup[0]->blackouts_id) ? $queryup[0]->blackouts_id :''; ?>">
+                        <input type="hidden" name="blackouts_id" value="<?php echo isset($queryup->blackouts_id) ? $queryup->blackouts_id :''; ?>">
                         <input type="button" value="Add to blackouts"  class="btn btn-dark">
                     </div>
                 </div><!-- End Box -->
@@ -165,7 +198,9 @@
                             <tr>
                                 <td><strong><?php echo $rows->title; ?></strong></td>
                                 <td><a class="remove_a" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo $rows->blackout_date; ?>" ><?php echo $this->blackouts_model->dateFormate(end($blackout_date)); ?></a></td>
-                                <td align="right" style="text-align: right; padding-right: 15px"><a onclick="return confirm('Are you sure you want to delete?')" href="/admin/blackouts/remove/<?php echo $rows->blackout_id; ?>" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a></td>
+                                <td align="right" style="text-align: right; padding-right: 15px">
+                                    <a href="/admin/blackouts/edit/<?php echo $rows->blackout_id; ?>" class="btn btn-green"><img src="<?php echo base_url()?>/assets/images-new/icon-pencil.png" alt=""> Edit</a>
+                                    <a onclick="return confirm('Are you sure you want to delete?')" href="/admin/blackouts/remove/<?php echo $rows->blackout_id; ?>" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a></td>
                             </tr>
                             <?php endforeach; ?>
 

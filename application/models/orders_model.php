@@ -156,6 +156,17 @@ class Orders_model extends Crud_Model
 
     }
 
+    public function instructionalGalleryDelete($order_id,$image)
+    {
+
+            if (file_exists($image)) {
+                unlink($_SERVER['DOCUMENT_ROOT'].'/'.$image);
+            }
+            $this->db->where(array('instructional_order_id'=>$order_id,'instructional_photo'=>trim($image)))->delete('instructional_photo');
+
+    }
+
+
     public function delivery_order($order_delivery,$order_id){
 
         $order_delivery['delivery_order_id'] =  $order_id;
@@ -189,9 +200,77 @@ class Orders_model extends Crud_Model
             ->get()->row();
     }
 
+    public function getAdminOrder($order_id){
+
+        return $this->db
+            ->select('orders.*,order_delivery.*')
+            ->from('orders')
+            ->join('order_delivery','order_delivery.delivery_order_id = orders.order_id','left')
+            ->where(array('orders.order_id'=>$order_id))
+            ->get()->result();
+    }
+
+    public function getGlobalName($table_name,$field){
+
+        $location = $this->db
+            ->select('title')
+            ->from($table_name)
+            ->where($field)
+            ->get();
+        if($location->num_rows() > 0){
+            $row = $location->row();
+            return $row->title;
+        }
+        return false;
+    }
+
+    function getCustomerName($table_name,$field){
+
+        $customer = $this->db
+            ->select('first_name,last_name')
+            ->from($table_name)
+            ->where($field)
+            ->get();
+        if($customer->num_rows() > 0){
+            $row = $customer->row();
+            return $row->first_name.' '.$row->last_name;
+        }
+        return false;
+
+    }
+
+    function getEmployeeName($user_id){
+
+        $customer = $this->db
+            ->select('first_name,last_name')
+            ->from('meta')
+            ->where($user_id)
+            ->get();
+        if($customer->num_rows() > 0){
+            $row = $customer->row();
+            return $row->first_name.' '.$row->last_name;
+        }
+        return false;
+
+    }
+
+    public function sortingList($order_id)
+    {
+
+        $i=1;
+        foreach ($_POST['listItem'] as $position => $item) :
+            $array=array('ordering'=>$i);
+            $this->db->set($array);
+            $this->db->where(array('instructional_photo_id 	'=>$item,'instructional_order_id'=>$order_id));
+            $this->db->update('instructional_photo');
+        $i++;
+        endforeach;
+    }
+
     public function getListing($start)
     {
 
+        $curdate =date('m/d/Y');
         $per_page=20;
         $page   = intval($start);
         if( $page<=0 )  $page  = 1;
@@ -199,7 +278,8 @@ class Orders_model extends Crud_Model
 
 
         $base_url = site_url('admin/orders/listing/');
-        $total_rows = $this->db->count_all_results('orders');
+
+        $total_rows = $this->db->where('delivery_date >',$curdate)->count_all_results('orders');
         $paging = production_paginate($base_url, $total_rows,$start,$per_page);
         $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name,customers.first_name,customers.last_name,order_status.description AS orderstatus');
         $this->db->from('orders');
@@ -208,8 +288,8 @@ class Orders_model extends Crud_Model
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
         $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
         $this->db->limit($per_page,$limit);
-        //$this->db->where('delivery_date =');
-        $this->db->order_by("orders.delivery_date", "desc");
+        $this->db->where('delivery_date >=',$curdate);
+        $this->db->order_by("orders.delivery_date", "asc");
         //$this->db->order_by("orders.order_status", "desc");
         $query =$this->db->get()->result();
         return array($query,$paging,$total_rows,$limit);
@@ -224,7 +304,7 @@ class Orders_model extends Crud_Model
                 LEFT JOIN customers ON (customers.customer_id = orders.customer_id)
                 LEFT JOIN order_status ON (order_status.production_status_code = orders.order_status)
                 WHERE(`order_id` > 0 AND  `order_code` = '$search')
-                || (`order_id` > 0 AND LOWER(`delivery_date`) = '$search')
+                || (`order_id` > 0 AND LOWER(`delivery_date`) >= '$search')
                 || (`order_id` > 0 AND  LOWER(customers.first_name) LIKE '%$search')
                 || ( `order_id` > 0 AND LOWER(customers.last_name) LIKE '%$search')
                 || (`order_id` > 0 AND customers.phone_number = '$search')";

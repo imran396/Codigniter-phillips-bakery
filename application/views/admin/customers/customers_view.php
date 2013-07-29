@@ -29,7 +29,7 @@
                     </div>
                     <div class="widget-body" style="padding-bottom: 0;">
                         <div class="row-fluid">
-                            <div class="span6">
+                            <div>
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('first_name');?></label>
                                     <div class="controls">
@@ -91,19 +91,38 @@
                                         <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('country');?>" value="<?php echo(isset($queryup[0]->country))? $queryup[0]->country:set_value('country'); ?>"   class="span10" name="country" id="country"  />
                                     </div>
                                 </div>
+                                <?php if(!empty($customernotes)){ ?>
+                                <div class="">
+                                    <table style="width: 100%" class="table table-bordered table-condensed js-table-sortable" style="height: 40px; margin-bottom: 20px;overflow-x: scroll">
+                                        <?php
+                                        $i=1;
+                                        foreach($customernotes as $notes):?>
+
+                                            <tr class="selectable" id="listItem_<?php echo $notes->order_notes_id; ?>" >
+                                                <td><?php echo $i; ?></td>
+                                                <td><?php echo $notes->notes; ?></td>
+                                                <td><?php echo dateFormatStr($notes->create_date); ?></td>
+
+                                                <td>
+                                                    <a onclick="return confirm('Are you sure you want to delete?')" data-original-title="<?php echo $this->lang->line('delete'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action glyphicons remove_2 btn-danger" id="<?php echo $notes->order_notes_id; ?>"><i></i></a></td>
+                                            </tr>
+                                            <?php $i++; endforeach;  ?>
+                                    </table>
+                                </div>
+                                <?php } ?>
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('notes');?></label>
                                     <div class="controls">
-                                        <textarea rows="" class="midium-textarea" cols="" name="notes" id="notes"> <?php echo (isset($queryup[0]->notes))? $queryup[0]->notes:set_value('notes'); ?></textarea>
+                                        <textarea rows="" class="midium-textarea" cols="" name="notes" id="notes"></textarea>
                                     </div>
                                 </div>
-                                <div class="control-group">
-                                    <?php $email_notification = (isset($queryup[0]->email_notification))? $queryup[0]->email_notification:0; ?>
-                                    <label class="control-label"><?php echo $this->lang->line('email_notification');?><input type="checkbox" style="margin-left:20px " name="email_notification" id="email_notification" value="1" <?php if($email_notification ==1){ echo "checked='checked'"; } ?>></label>
+                               <!-- <div class="control-group">
+                                    <?php /*$email_notification = (isset($queryup[0]->email_notification))? $queryup[0]->email_notification:0; */?>
+                                    <label class="control-label"><?php /*echo $this->lang->line('email_notification');*/?><input type="checkbox" style="margin-left:20px " name="email_notification" id="email_notification" value="1" <?php /*if($email_notification ==1){ echo "checked='checked'"; } */?>></label>
                                     <div class="controls">
 
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="control-group uniformjs">
                                     <label class="control-label"><?php echo $this->lang->line('status');?></label>
                                     <div class="separator"></div>

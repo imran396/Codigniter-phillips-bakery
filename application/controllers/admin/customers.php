@@ -57,6 +57,8 @@ class Customers extends Crud_Controller
     {
 
         $this->data['queryup'] = $this->customers_model->getcustomers($id);
+
+        $this->data['customernotes'] = $this->customers_model->getCustomerNotes($id);
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/customers/customers_view', $this->data);
     }
