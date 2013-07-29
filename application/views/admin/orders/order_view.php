@@ -118,6 +118,14 @@
 
         });
 
+        <?php $cake_email_photo = (isset($queryup[0]->cake_email_photo))? $queryup[0]->cake_email_photo:'';
+        if($cake_email_photo == 1){
+        ?>
+        $("#cakeemailphoto").hide();
+        <?php } ?>
+
+
+
         $('#instructional_email_photo').click(function() {
 
             if( $(this).is(':checked') ){
@@ -126,6 +134,11 @@
                 $("#instructionalemailphoto").show();
             }
         });
+        <?php $instructional_email_photo = (isset($queryup[0]->instructional_email_photo))? $queryup[0]->instructional_email_photo:'';
+        if($instructional_email_photo == 1){
+        ?>
+        $("#instructionalemailphoto").hide();
+        <?php } ?>
 
 
         jQuery('#printed_image_surcharge').keyup(function () {

@@ -90,7 +90,7 @@ $lang['user'] 		 	    = 'User';
 $lang['add_categories'] 		 	    = 'Add Categories';
 $lang['add_edit'] 		 	    = 'Add/Edit';
 $lang['save_changes'] 		 	    = 'Save changes';
-$lang['cancel'] 		 	    = 'Cancel';
+$lang['cancel'] 		 	    = 'Reset';
 $lang['enter'] 		 	    = 'Enter';
 
 
