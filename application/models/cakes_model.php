@@ -379,7 +379,7 @@ class Cakes_model extends CI_Model
             $data[$key]['flavour_id'] =  !empty($row['flavour_id']) ? unserialize($row['flavour_id']):array();
             $data[$key]['image'] = !empty($data[$key]['image']) ? base_url().$data[$key]['image'] : "";
             //$data[$key]['tiers'] = (int) $data[$key]['tiers'];
-            $data[$key]['tiers'] =  !empty($row['tiers']) ? unserialize($row['tiers']):array();
+            $data[$key]['tiers'] = array('1');
 
             $data[$key]['gallery_images'] = explode(',', $row['gallery_images']);
             $data[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$data[$key]['gallery_images']);

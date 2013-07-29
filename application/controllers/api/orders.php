@@ -76,7 +76,6 @@ class Orders extends API_Controller
             $data['kitchen_location_id'] = isset($_REQUEST['location_id'])? $_REQUEST['location_id']:'';
         }
 
-
         $order_delivery['name']=isset($_REQUEST['name']) ? $_REQUEST['name']:'';
         $order_delivery['phone']=isset($_REQUEST['phone']) ? $_REQUEST['phone']:'';
         $order_delivery['address_1']=isset($_REQUEST['address_1'])? $_REQUEST['address_1']:'';
@@ -130,11 +129,11 @@ class Orders extends API_Controller
             $this->sendEmail($orders['order_code']);
         }
 
-        if($data['order_status'] == 301 ){
+        if($data['order_status'] == 300 ){
 
-            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
-        }else{
             $this->sendOutput(array('order_id'=> $orders['order_id'],'order_status' =>  $orders['order_status']));
+        }else{
+            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
         }
 
     }
@@ -223,12 +222,13 @@ class Orders extends API_Controller
             }
         }
 
-        if($data['order_status'] == 301 ){
+        if($data['order_status'] == 300 ){
 
-            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
-        }else{
             $this->sendOutput(array('order_id'=> $orders['order_id'],'order_status' =>  $orders['order_status']));
+        }else{
+            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
         }
+
 
     }
 

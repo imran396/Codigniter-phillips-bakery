@@ -37,28 +37,44 @@ class Orders_model extends Crud_Model
     /*------------End Admin Panel Oredr */
 
     public function order_insert($data){
-        $order_id = $this->insert($data);
-        $order_code=(100000+$order_id);
-        $this->db->set(array('order_code'=>$order_code))->where('order_id',$order_id)->update('orders');
+
+        $order_date = $data['order_date'];
+        $customer_id = $data['customer_id'];
+        $orderDbID = $this->checkDuplicateInsert($customer_id , $order_date);
+        if($orderDbID > 0){
+            $order_id = $this->update($data,$orderDbID);
+        }else{
+            $order_id = $this->insert($data);
+            $order_code=(100000+$order_id);
+            $this->db->set(array('order_code'=>$order_code))->where('order_id',$order_id)->update('orders');
+        }
         $dbdata =$this->getOrder($order_id);
         $order['order_id']= $order_id;
-        $order['order_code']= $order_code;
+        $order['order_code']= $dbdata->order_code;
         $order['order_status']=  $dbdata->order_status;
-
-
         return $order;
     }
 
     public function order_update($data,$order_id){
 
-
-        $order_id = $this->update($data,$order_id);
-        $dbdata =$this->getOrder($order_id);
-        $order['order_id']= $dbdata->order_id;
-        $order['order_code']=  $dbdata->order_code;
-        $order['order_status']=  $dbdata->order_status;
+            $order_id = $this->update($data,$order_id);
+            $dbdata =$this->getOrder($order_id);
+            $order['order_id']= $dbdata->order_id;
+            $order['order_code']=  $dbdata->order_code;
+            $order['order_status']=  $dbdata->order_status;
 
         return $order;
+    }
+
+    private function checkDuplicateInsert($customer_id , $order_date){
+
+        $row = $this->db->select('order_id')->where(array('customer_id'=>$customer_id , 'order_date'=>$order_date))->get('orders');
+        if($row->num_rows() > 0  ){
+
+            $res =$row->row();
+            return $res->order_id;
+        }
+
     }
 
     public function galleryUpload($data,$order_id){
