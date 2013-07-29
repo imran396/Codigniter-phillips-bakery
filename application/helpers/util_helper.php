@@ -64,4 +64,28 @@ function timeFormat($time){
     return date("H:i",$dateTime);
 }
 
+function wordLimit($text,$n=10){
+    $text=strip_tags($text);  // not neccssary for none HTML
+// $text=strip_shortcodes($text); // uncomment only inside wordpress system
+    $text = trim(preg_replace("/\s+/"," ",$text));
+    $word_array = explode(" ", $text);
+    if (count($word_array) <= $n)
+        return implode(" ",$word_array);
+    else
+    {
+        $text='';
+        foreach ($word_array as $length=>$word)
+        {
+            $text.=$word ;
+            if($length==$n) break;
+            else $text.=" ";
+        }
+    }
+    if(count($word_array) > $n ){
+        return $text."...";
+    }else{
+        return $text;
+    }
+}
+
 ?>

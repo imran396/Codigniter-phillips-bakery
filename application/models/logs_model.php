@@ -53,4 +53,28 @@ class Logs_model extends Crud_Model
         return array($query, $paging, $total_rows, $limit);
     }
 
+    function searching($search,$start){
+
+        $search=strtolower($search);
+        $query="SELECT auditlog.*
+                FROM `auditlog`
+                WHERE(`id` > 0 AND  LOWER(`employee_id`) LIKE '%$search%')
+                || ( `id` > 0 AND LOWER(`audit_name`) LIKE '%$search%')
+                || (`id` > 0 AND `description` LIKE '%$search%')";
+
+        $per_page=10;
+        $page   = intval($start);
+        if($page<=0)  $page  = 1;
+        $limit=($page-1)*$per_page;
+        $base_url = site_url('admin/auditlog/search/'.$search);
+        $num = $this->db->query($query);
+        $total_rows = $num->num_rows();
+        $paging = paginate($base_url, $total_rows,$start,$per_page);
+        $limit = "LIMIT $limit , $per_page";
+        $pagequery=$query.$limit;
+        $query = $this->db->query($pagequery);
+        return array($query,$paging,$total_rows,$limit);
+
+    }
+
 }

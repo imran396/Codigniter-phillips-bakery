@@ -19,4 +19,31 @@ class Auditlog extends Crud_Controller
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/auditlog/listing_view', $this->data);
     }
+
+    function search($urlsearch=NULL,$start=0){
+
+
+        $getsearch = $this->input->get('search');
+
+        if($getsearch){
+            $search = $getsearch;
+        }else{
+            $search = $urlsearch;
+        }
+
+        if(!empty($search)){
+
+            $this->data['paging'] = $this->logs_model->searching($search,$start);
+            $this->data['active']=$this->uri->segment(2,0);
+            $this->layout->view('admin/auditlog/listing_view', $this->data);
+
+
+        }else{
+
+            $this->session->set_flashdata('warnings_msg',$this->lang->line('update_msg'));
+            $this->redirectToHome("listing");
+        }
+
+
+    }
 }
