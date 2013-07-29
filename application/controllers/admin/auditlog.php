@@ -41,7 +41,7 @@ class Auditlog extends Crud_Controller
         }else{
 
             $this->session->set_flashdata('warnings_msg',$this->lang->line('update_msg'));
-            $this->redirectToHome("listing");
+            redirect("admin/auditlog/listing");
         }
 
 

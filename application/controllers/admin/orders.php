@@ -350,7 +350,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
             $data['order_status']=301;;
         }
 
-        $data['order_date']=date('m-d-Y');
+        $data['order_date']=time();
 
         $vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
         if($vaughan_location == 1 ){
