@@ -45,13 +45,39 @@ class Cakes_model extends CI_Model
         $insert['meta_tag'] = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
 
         $insert['flavour_id'] =($flavour_id !="") ? serialize($flavour_id):'';
-        $insert['tiers'] =($tiers !="") ? serialize($tiers):'';
+       // $insert['tiers'] =($tiers !="") ? serialize($tiers):'';
 
 
         $this->db->set($insert)->insert('cakes');
         return $this->db->insert_id();
     }
+    public function save($data, $id)
+    {
+        $this->update($data, $id);
+        $this->galleryUpload($data,$id);
+        /* if (!empty($_FILES["image_name"]["name"])) {
+             $this->doUpload($id);
+         }*/
+    }
 
+    private function update($data, $id)
+    {
+
+        $flavour_id = (!empty($data['flavour_id'])) ? $data['flavour_id'] :'';
+        $tiers = (!empty($data['tiers'])) ? $data['tiers'] :'';
+
+        $insert['title'] = ($data['title'] !="") ? $data['title'] :'';
+        $insert['description'] = ($data['description'] !="") ? $data['description'] :'';
+        $insert['category_id'] = ($data['category_id'] !="") ? $data['category_id'] :'';
+        $insert['flavour_id'] = ($data['flavour_id'] !="") ? $data['flavour_id'] :'';
+        // $insert['tiers'] = ($data['tiers'] !="") ? $data['tiers'] :'';
+        $insert['meta_tag'] = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
+
+        $insert['flavour_id'] =($flavour_id !="") ? serialize($flavour_id):'';
+        $insert['tiers'] =($tiers !="") ? serialize($tiers):'';
+
+        $this->db->set($insert)->where(array('cake_id' => $id))->update('cakes');
+    }
     public function doUpload($id)
     {
 
@@ -137,33 +163,7 @@ class Cakes_model extends CI_Model
 
     }
 
-    public function save($data, $id)
-    {
-        $this->update($data, $id);
-        $this->galleryUpload($data,$id);
-       /* if (!empty($_FILES["image_name"]["name"])) {
-            $this->doUpload($id);
-        }*/
-    }
 
-    private function update($data, $id)
-    {
-
-        $flavour_id = (!empty($data['flavour_id'])) ? $data['flavour_id'] :'';
-        $tiers = (!empty($data['tiers'])) ? $data['tiers'] :'';
-
-        $insert['title'] = ($data['title'] !="") ? $data['title'] :'';
-        $insert['description'] = ($data['description'] !="") ? $data['description'] :'';
-        $insert['category_id'] = ($data['category_id'] !="") ? $data['category_id'] :'';
-        $insert['flavour_id'] = ($data['flavour_id'] !="") ? $data['flavour_id'] :'';
-        $insert['tiers'] = ($data['tiers'] !="") ? $data['tiers'] :'';
-        $insert['meta_tag'] = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
-
-        $insert['flavour_id'] =($flavour_id !="") ? serialize($flavour_id):'';
-        $insert['tiers'] =($tiers !="") ? serialize($tiers):'';
-
-        $this->db->set($insert)->where(array('cake_id' => $id))->update('cakes');
-    }
 
     public function delete($id)
     {
