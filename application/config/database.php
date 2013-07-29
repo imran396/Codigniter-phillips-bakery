@@ -48,7 +48,7 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-/*$db['default']['hostname'] = 'localhost';
+$db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
 $db['default']['password'] = 'dhaka1';
 $db['default']['database'] = 'phillips';
@@ -62,9 +62,9 @@ $db['default']['char_set'] = 'utf8';
 $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
-$db['default']['stricton'] = FALSE;*/
+$db['default']['stricton'] = FALSE;
 
-$db['default']['hostname'] = 'mysql.emicrodevsite.com';
+/*$db['default']['hostname'] = 'mysql.emicrodevsite.com';
 $db['default']['username'] = 'collabdevteam';
 $db['default']['password'] = 'dhaka135';
 $db['default']['database'] = 'ci_phillips';
@@ -78,7 +78,7 @@ $db['default']['char_set'] = 'utf8';
 $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
-$db['default']['stricton'] = FALSE;
+$db['default']['stricton'] = FALSE;*/
 
 
 /* End of file database.php */
