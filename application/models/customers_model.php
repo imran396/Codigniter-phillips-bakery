@@ -15,7 +15,9 @@ class Customers_model extends Crud_Model
     public function create($data)
     {
         $id = $this->insert($data);
-        $this->db->set(array('customer_id'=>$id,'notes'=>$data['notes'],'create_date'=>time()))->insert('customer_notes');
+        if(!empty($data['notes'])){
+            $this->db->set(array('customer_id'=>$id,'notes'=>$data['notes'],'create_date'=>time()))->insert('customer_notes');
+        }
         return $id;
     }
 
