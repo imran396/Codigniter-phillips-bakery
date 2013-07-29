@@ -3,6 +3,9 @@
 class Revel_Model extends CI_Model
 {
     protected $revel;
+    protected $response;
+    protected $headers;
+    protected $code;
 
     public function __construct()
     {
@@ -17,6 +20,10 @@ class Revel_Model extends CI_Model
 
         $client->addHeaders(array('API-AUTHENTICATION' => $this->revel['api_key'] . ':' . $this->revel['api_secret']));
         $client->send();
+
+        $this->code     = $client->getResponseCode();
+        $this->response = $client->getResponseBody();
+        $this->headers  = $client->getResponseHeader();
 
         if ($debug) {
             echo '<pre>' . $client->getRawRequestMessage() . PHP_EOL . PHP_EOL . $client->getRawResponseMessage() . '</pre>';
@@ -38,6 +45,10 @@ class Revel_Model extends CI_Model
         $client->setMethod(HTTP_METH_POST);
         $client->send();
 
+        $this->code     = $client->getResponseCode();
+        $this->response = $client->getResponseBody();
+        $this->headers  = $client->getResponseHeader();
+
         if ($debug) {
             echo '<pre>' . $client->getRawRequestMessage() . PHP_EOL . PHP_EOL . $client->getRawResponseMessage() . '</pre>';
         }
@@ -56,6 +67,10 @@ class Revel_Model extends CI_Model
 
         $client->setMethod(HTTP_METH_DELETE);
         $client->send();
+
+        $this->code     = $client->getResponseCode();
+        $this->response = $client->getResponseBody();
+        $this->headers  = $client->getResponseHeader();
 
         if ($debug) {
             echo '<pre>' . $client->getRawRequestMessage() . PHP_EOL . PHP_EOL . $client->getRawResponseMessage() . '</pre>';
