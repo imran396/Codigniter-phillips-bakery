@@ -87,9 +87,9 @@
 
             </form>
 
-            <form class="form-qrcode" method="POST" action="">
+<!--            <form class="form-qrcode" method="POST" action="">
 
-                <strong><b style="color:red;"><?php echo $message;?></b></strong>
+                <strong><b style="color:red;"><?php /*echo $message;*/?></b></strong>
                 <h4 class="form-signin-heading">&nbsp;</h4>
                 <div class="uniformjs">
                     <input type="text" class="input-block-level" placeholder="Enter QR Code" id="employee_id" name="employee_id">
@@ -98,7 +98,7 @@
                 <div style="text-align: center"><button class="btn btn-large btn-primary" id="login_qrcode" type="button">Login QR Code</button></div>
 
             </form>
-
+-->
 
         </div>
 

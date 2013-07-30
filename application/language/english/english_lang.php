@@ -29,6 +29,8 @@ $lang['drag'] 		 	    = 'Drag';
 /* Mail Gun Information  */
 
 $lang['global_email'] 		 	    = 'info@stphillipsbakery.com';
+$lang['global_email_subject'] 		 	    = 'info@stphillipsbakery.com';
+
 $lang['mailgun_cakeonimage_email'] 		 	    = 'dan@gsi.mailgun.org';
 $lang['mailgun_cakeonimage_name'] 		 	    = 'Dan Branco';
 $lang['mailgun_cakeonimage_subject'] 		 	= 'St Phillips - Attach your on cake image';

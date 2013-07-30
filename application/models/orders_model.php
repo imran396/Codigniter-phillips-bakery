@@ -396,9 +396,6 @@ class Orders_model extends Crud_Model
                 $result[$key]['price_matrix_id'] = (int) $result[$key]['price_matrix_id'];
                 $result[$key]['delivery_order_id'] = (int) $result[$key]['delivery_order_id'];
 
-                $result[$key]['instructional_photo'] = explode(',', $val['instructional_photo']);
-                $result[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$result[$key]['instructional_photo']);
-
                 if(!empty($result[$key]['instructional_photo'])){
                     $result[$key]['instructional_photo'] = explode(',', $val['instructional_photo']);
                     $result[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$result[$key]['instructional_photo']);
@@ -439,7 +436,10 @@ class Orders_model extends Crud_Model
         }
 
 
-        $sql = "SELECT
+
+
+
+        $res = "SELECT
               O.*,
               OD.*,
               GROUP_CONCAT(I.instructional_photo ORDER BY I.instructional_photo_id 	 ASC SEPARATOR ',') as instructional_photo
@@ -449,12 +449,13 @@ class Orders_model extends Crud_Model
 
               LEFT JOIN order_delivery AS OD
                 ON ( OD.delivery_order_id = O.order_id )
-             WHERE ($where)
-
+               WHERE ($where)
               GROUP BY O.order_id ORDER BY O.delivery_date DESC";
 
-        if($sql){
-            $result = $this->db->or_like($data)->query($sql)->result_array();
+
+        if($res){
+            $result = $this->db->query($res)->result_array();
+
             foreach($result  as $key => $val){
 
                 $result[$key]['order_id'] = (int) $result[$key]['order_id'];
@@ -469,9 +470,6 @@ class Orders_model extends Crud_Model
                 $result[$key]['flavour_id'] = (int) $result[$key]['flavour_id'];
                 $result[$key]['price_matrix_id'] = (int) $result[$key]['price_matrix_id'];
                 $result[$key]['delivery_order_id'] = (int) $result[$key]['delivery_order_id'];
-                $result[$key]['on_cake_image'] = str_replace('assets',$imageurlprefix,$result[$key]['on_cake_image']);
-                $result[$key]['instructional_photo'] = explode(',', $val['instructional_photo']);
-                $result[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$result[$key]['instructional_photo']);
 
                 if(!empty($result[$key]['instructional_photo'])){
                     $result[$key]['instructional_photo'] = explode(',', $val['instructional_photo']);
@@ -479,8 +477,6 @@ class Orders_model extends Crud_Model
                 }else{
                     $result[$key]['instructional_photo'] = array();
                 }
-
-
 
             }
             return $result;
