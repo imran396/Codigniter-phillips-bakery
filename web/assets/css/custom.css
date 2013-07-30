@@ -339,5 +339,6 @@ div.dataTables_info {
     min-height: 20px;
     padding-left: 20px!important;
 }
+.dataTables_filter{ display: none!important;}
 
 

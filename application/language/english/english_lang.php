@@ -112,7 +112,7 @@ $lang['unpublish'] 		 	    = 'Un-publish';
 
 $lang['create_location'] 		 	    = 'Create Location';
 $lang['vaughan_location'] 		 	    = 'Vaughan';
-$lang['location_title'] 		 	    = 'Location Title';
+$lang['location_name'] 		 	    = 'Location Name';
 $lang['address1'] 		 	    = 'Address 1';
 $lang['address2'] 		 	    = 'Address 2';
 $lang['city'] 		 	    = 'City';
@@ -121,6 +121,8 @@ $lang['postal_code'] 		 	    = 'Postal Code';
 $lang['country'] 		 	    = 'Country';
 $lang['surcharge'] 		 	    = 'Surcharge';
 $lang['pos_api'] 		 	    = 'POS api';
+$lang['store_print_ip'] 		 	    = 'Store Print IP';
+$lang['kitchen_print_ip'] 		 	    = 'Kitchen Print IP';
 
 /* Cakes */
 
@@ -230,7 +232,7 @@ $lang['click_for_image'] 		 	    = 'Click for large image';
 
 $lang['cake_name'] 		 	    = 'Cake Name';
 $lang['delivery_type'] 		 	    = 'Pickup';
-$lang['pickup'] 		 	    = 'Pickup';
+$lang['pickup'] 		 	    = 'Pickup/Delivery';
 $lang['delivery'] 		 	    = 'Delivery';
 $lang['pickup_location'] 		 	    = 'Pickup Location';
 $lang['delivery_time'] 		 	    = 'Delivery Time';

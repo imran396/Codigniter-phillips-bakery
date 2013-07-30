@@ -96,7 +96,7 @@
     $(document).ready(function() {
 
         $('.order-sortable').dataTable( {
-            "aaSorting": [[0,'desc']],
+            "aaSorting": [[1,'asc']],
             "aoColumns": [
                 null,
                 {"sTYpe":   "date-dd-mmm-yyyy" },
@@ -107,7 +107,9 @@
             "aoColumnDefs": [
              { "bSortable":false, "aTargets": [4] }
 
-             ]
+             ],
+            "bPaginate": false,
+             "iDisplayLength": 200
         } );
 
     } );

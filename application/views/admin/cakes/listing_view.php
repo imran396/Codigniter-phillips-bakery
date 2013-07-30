@@ -83,9 +83,26 @@
         </div>
 </div>
 <style type="text/css">
-    .row-fluid{display: none}
     .mbutton{ margin-top:-10px }
 </style>
+<script type="text/javascript" language="javascript" src="<?php echo base_url() ?>/assets/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+        $(document).ready(function() {
+
+            $('.cake-sorting').dataTable( {
+                "aaSorting": [[0,'asc']],
+                "aoColumnDefs": [
+                    { "bSortable":false, "aTargets": [3 ] }
+
+                ],
+                "iDisplayLength": 50,
+                "bPaginate": false
+            } );
+
+        } );
+
+</script>
 <script type="text/javascript">
 
     $(document).ready(function() {

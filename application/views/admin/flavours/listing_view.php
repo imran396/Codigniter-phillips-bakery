@@ -65,6 +65,24 @@
         display: none;
     }
 </style>
+<script type="text/javascript" language="javascript" src="<?php echo base_url() ?>/assets/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+    $(document).ready(function() {
+
+        $('.flavour-sortable').dataTable( {
+            "aaSorting": [[1,'asc']],
+            "aoColumnDefs": [
+                { "bSortable":false, "aTargets": [2,3 ] }
+
+            ],
+            "iDisplayLength": 50,
+            "bPaginate": false
+        } );
+
+    } );
+
+</script>
 <script type="text/javascript">
 
     $(document).ready(function() {

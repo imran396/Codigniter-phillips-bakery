@@ -249,7 +249,8 @@
                 { "bSortable":false, "aTargets": [2] }
 
             ],
-            "iDisplayLength": 500
+            "iDisplayLength": 500,
+            "bPaginate": false
         } );
 
     } );

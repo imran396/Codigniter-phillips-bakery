@@ -41,7 +41,7 @@
         <div class="widget widget-gray widget-body-white">
 
             <div class="widget-body" style="padding: 10px 0;">
-                <table class="table table-bordered table-primary">
+                <table class="table table-bordered table-primary customers-sortable">
                     <thead>
                     <tr>
                         <th class="center">No.</th>
@@ -109,6 +109,7 @@
 
         })
     </script>
+
     <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
