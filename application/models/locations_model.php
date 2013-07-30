@@ -180,7 +180,7 @@ class Locations_model extends Crud_Model
 
     public function getAll()
     {
-        $data = $this->db->select('location_id as id ,title,address1,address2,city,emial,phone,province,postal_code,country,pos_api,store_print_ip,kitchen_print_ip')->order_by('location_id','DSC')->get('locations')->result_array();
+        $data = $this->db->select('location_id as id ,title,address1,address2,city,email,phone,province,postal_code,country,pos_api,store_print_ip,kitchen_print_ip')->order_by('location_id','DSC')->get('locations')->result_array();
 
         foreach($data as $key => $val){
             $data[$key]['id'] = (int) $data[$key]['id'];
