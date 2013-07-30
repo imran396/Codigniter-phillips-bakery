@@ -275,7 +275,7 @@
 <div class="innerLR" id="filterResult">
     <div class="widget">
         <div class="widget-body">
-            <table id="example" class="production-sortable table table-striped table-bordered">
+            <table id="example" class="order-sortable production-sortable table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th width="70">Order #</th>
