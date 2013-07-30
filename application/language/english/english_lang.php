@@ -26,6 +26,19 @@ $lang['action'] 		 	    = 'Action';
 $lang['list_of'] 		 	    = 'List of';
 $lang['drag'] 		 	    = 'Drag';
 
+/* Mail Gun Information  */
+
+$lang['global_email'] 		 	    = 'info@stphillipsbakery.com';
+$lang['mailgun_cakeonimage_email'] 		 	    = 'dan@gsi.mailgun.org';
+$lang['mailgun_cakeonimage_name'] 		 	    = 'Dan Branco';
+$lang['mailgun_cakeonimage_subject'] 		 	= 'St Phillips - Attach your on cake image';
+
+$lang['mailgun_instructional_email'] 		 	= 'spenser@gsi.mailgun.org';
+$lang['mailgun_instructional_name'] 		 	= 'Spenser';
+$lang['mailgun_instructional_subject'] 		 	= 'St Phillips - Attach your instructional image';
+
+/* ---------- Malling Subject information */
+
 /* Left menu level*/
 
 $lang['menu_level'] 		 	                    = 'Menu Level';
@@ -231,8 +244,8 @@ $lang['click_for_image'] 		 	    = 'Click for large image';
 
 
 $lang['cake_name'] 		 	    = 'Cake Name';
-$lang['delivery_type'] 		 	    = 'Pickup';
-$lang['pickup'] 		 	    = 'Pickup/Delivery';
+$lang['delivery_type'] 		 	    = 'Pickup/Delivery';
+$lang['pickup'] 		 	    = 'Pickup';
 $lang['delivery'] 		 	    = 'Delivery';
 $lang['pickup_location'] 		 	    = 'Pickup Location';
 $lang['delivery_time'] 		 	    = 'Delivery Time';

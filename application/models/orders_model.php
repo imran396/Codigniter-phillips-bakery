@@ -363,17 +363,27 @@ class Orders_model extends Crud_Model
 
     public function getAll(){
 
-        $res = $this->db
-            ->select('orders.*,order_delivery.*')
+        $imageurlprefix = base_url().'assets';
+
+        $sql = $this->db
+            ->select('orders.*,order_delivery.*,instructional_photo.*')
             ->from('orders')
             ->join('order_delivery','order_delivery.delivery_order_id = orders.order_id','left')
             ->join('instructional_photo','instructional_photo.instructional_order_id = orders.order_id','left')
             ->order_by('order_id','desc')
             ->get();
 
+/*        $sql = "SELECT
+              O.*,G.*,OD.*,
+              GROUP_CONCAT(G.instructional_photo ORDER BY G.instructional_order_id ASC SEPARATOR ',') as gallery_images
+              FROM orders As O
+              LEFT JOIN instructional_photo AS G ON ( O.order_id = G.instructional_order_id)
+              LEFT JOIN order_delivery AS OD ON ( O.order_id = OD.delivery_order_id )
+              ORDER BY delivery_date DESC";*/
 
-        if($res){
-            $result =  $res->result_array();
+        if($sql){
+           // $res= $this->db->query($sql);
+            $result =  $sql->result_array();
             foreach($result  as $key => $val){
 
                 $result[$key]['order_id'] = (int) $result[$key]['order_id'];
@@ -388,6 +398,15 @@ class Orders_model extends Crud_Model
                 $result[$key]['flavour_id'] = (int) $result[$key]['flavour_id'];
                 $result[$key]['price_matrix_id'] = (int) $result[$key]['price_matrix_id'];
                 $result[$key]['delivery_order_id'] = (int) $result[$key]['delivery_order_id'];
+
+                $result[$key]['on_cake_image'] = str_replace('assets',$imageurlprefix,$result[$key]['on_cake_image']);
+                if(!empty($result[$key]['gallery_images'])){
+                    $result[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$result[$key]['gallery_images']);
+                    $result[$key]['instructional_photo'] = explode(',',$result[$key]['instructional_photo']);
+                }else{
+                    $result[$key]['instructional_photo'] = array();
+                }
+
 
             }
             return $result;
@@ -428,6 +447,7 @@ class Orders_model extends Crud_Model
               LEFT JOIN instructional_photo AS G ON ( O.order_id = G.instructional_order_id)
               LEFT JOIN order_delivery AS OD ON ( O.order_id = OD.delivery_order_id )
               WHERE ($where)
+              ORDER BY delivery_date DESC
               GROUP BY O.order_id";
 
 
