@@ -368,7 +368,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         }else{
             $orders=$this->orders_model->order_insert($data);
 
-            if($orders['order_id']){
+           /* if($orders['order_id']){
                 $RevelOrderData = array(
                     'order_code' => $orders['order_code'],
                     'discount'=> $orders['discount_price'],
@@ -376,7 +376,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
                 );
 
                 $this->revel_order->create($RevelOrderData);
-            }
+            }*/
 
             $this->session->set_flashdata('success_msg','New order has been added successfully');
         }

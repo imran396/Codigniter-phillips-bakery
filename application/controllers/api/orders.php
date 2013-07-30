@@ -129,7 +129,7 @@ class Orders extends API_Controller
             $this->sendEmail($orders['order_code']);
         }
 
-        if($orders['order_id']){
+        /*if($orders['order_id']){
             $RevelOrderData = array(
                 'order_code' => $orders['order_code'],
                 'discount'=> $orders['discount_price'],
@@ -137,7 +137,7 @@ class Orders extends API_Controller
             );
 
             $this->revel_order->create($RevelOrderData);
-        }
+        }*/
 
         if($data['order_status'] == 300 ){
 
