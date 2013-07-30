@@ -97,7 +97,7 @@
         if(!empty($galleries)){
             foreach($galleries as $gallery):
                 ?>
-                <li><a href=""><!--<span class="plus"></span><span class="desc">Image On Cake</span>--><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
+                <li><a href=""><span class="plus"></span><!--<span class="desc">Image On Cake</span>--><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
             <?php endforeach; } } ?>
         <?php if($queryup->on_cake_image){ ?>
         <li><a href=""><span class="plus"></span><span class="desc">Image On Cake</span><img src="<?php echo base_url().$queryup->on_cake_image; ?>" alt="" /></a></li>
