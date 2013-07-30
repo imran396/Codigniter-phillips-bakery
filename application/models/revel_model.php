@@ -50,7 +50,7 @@ class Revel_Model extends CI_Model
         $this->headers  = $client->getResponseHeader();
 
         if ($debug) {
-            echo '<pre>' . $client->getRawRequestMessage() . PHP_EOL . PHP_EOL . $client->getRawResponseMessage() . '</pre>';
+          //  echo '<pre>' . $client->getRawRequestMessage() . PHP_EOL . PHP_EOL . $client->getRawResponseMessage() . '</pre>';
         }
 
         return $client->getResponseBody();
