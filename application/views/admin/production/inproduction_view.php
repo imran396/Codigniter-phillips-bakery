@@ -18,7 +18,7 @@
             data:result,
             type:"post",
             beforeSend: function(){
-                $('#beforloading').fadeIn(5000).html('<img src="<?php echo base_url() ?>assets/images/loading.gif">');
+                $('#beforloading').fadeIn(5000).html('<img src="<?php echo base_url() ?>/assets/images/loading.gif">');
             },
             success: function(val){
                 $('#filterResult').html(val);
@@ -74,6 +74,7 @@
             var currentdate = new Date();
             var startTime=formatAMPM(currentdate);
             $("input[name = delivery_start_time]").val(startTime);
+            $("input[name = delivery_end_time]").val(startTime);
             $(".timedropdown").hide();
         })
 
