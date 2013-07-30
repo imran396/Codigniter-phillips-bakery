@@ -21,7 +21,7 @@ class Productions_model extends Crud_Model
         $base_url = site_url('admin/productions/inproduction/');
 
         $this->db->from('orders');
-        $this->db->where(array("orders.location_id"=> $location_id,'order_status !='=>300));
+        $this->db->where(array("orders.kitchen_location_id"=> $location_id,'order_status !='=>300));
         //$this->db->where(array('order_status'=>'order'));
         $total_rows = $this->db->count_all_results();
 
