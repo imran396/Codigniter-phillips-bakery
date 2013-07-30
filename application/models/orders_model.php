@@ -438,17 +438,20 @@ class Orders_model extends Crud_Model
             $where .=" AND `customer_id` =". $customer_id;
         }
 
+
         $sql = "SELECT
-              O.*,G.*,OD.*,
-              GROUP_CONCAT(G.instructional_photo ORDER BY G.instructional_order_id ASC SEPARATOR ',') as gallery_images
+              O.*,
+              OD.*,
+              GROUP_CONCAT(I.instructional_photo ORDER BY I.instructional_photo_id 	 ASC SEPARATOR ',') as instructional_photo
               FROM orders As O
-              LEFT JOIN instructional_photo AS G ON ( O.order_id = G.instructional_order_id)
-              LEFT JOIN order_delivery AS OD ON ( O.order_id = OD.delivery_order_id )
-              WHERE ($where)
+              LEFT JOIN instructional_photo AS I
+                ON ( I.instructional_order_id = O.order_id )
+
+              LEFT JOIN order_delivery AS OD
+                ON ( OD.delivery_order_id = O.order_id )
+             WHERE ($where)
+
               GROUP BY O.order_id ORDER BY O.delivery_date DESC";
-
-
-
 
         if($sql){
             $result = $this->db->or_like($data)->query($sql)->result_array();
@@ -467,9 +470,12 @@ class Orders_model extends Crud_Model
                 $result[$key]['price_matrix_id'] = (int) $result[$key]['price_matrix_id'];
                 $result[$key]['delivery_order_id'] = (int) $result[$key]['delivery_order_id'];
                 $result[$key]['on_cake_image'] = str_replace('assets',$imageurlprefix,$result[$key]['on_cake_image']);
-                if(!empty($result[$key]['gallery_images'])){
-                    $result[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$result[$key]['gallery_images']);
-                    $result[$key]['instructional_photo'] = explode(',',$result[$key]['instructional_photo']);
+                $result[$key]['instructional_photo'] = explode(',', $val['instructional_photo']);
+                $result[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$result[$key]['instructional_photo']);
+
+                if(!empty($result[$key]['instructional_photo'])){
+                    $result[$key]['instructional_photo'] = explode(',', $val['instructional_photo']);
+                    $result[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$result[$key]['instructional_photo']);
                 }else{
                     $result[$key]['instructional_photo'] = array();
                 }
