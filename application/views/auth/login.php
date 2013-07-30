@@ -83,10 +83,22 @@
                     </select>
                     <label class="checkbox"><input type="checkbox" value="1" name="remember">Remember me</label>
                 </div>
-
-                <div style="text-align: center"><button class="btn btn-large btn-primary" type="submit">Login</button></div>
+                      <div style="text-align: center"><button class="btn btn-large btn-primary" type="submit">Login</button></div>
 
             </form>
+
+            <form class="form-qrcode" method="POST" action="">
+
+                <strong><b style="color:red;"><?php echo $message;?></b></strong>
+                <h4 class="form-signin-heading">&nbsp;</h4>
+                <div class="uniformjs">
+                    <input type="text" class="input-block-level" placeholder="Enter QR Code" id="employee_id" name="employee_id">
+                </div>
+
+                <div style="text-align: center"><button class="btn btn-large btn-primary" id="login_qrcode" type="button">Login QR Code</button></div>
+
+            </form>
+
 
         </div>
 
@@ -143,6 +155,24 @@
             $("#location_id").select2();
         });
 
+    </script>
+    <script language="javascript">
+        $(document).ready(function(){
+
+            $('#login_qrcode').click(function() {
+
+                var employee_id =$("#employee_id").val();
+alert(employee_id);
+                $.ajax({
+                    url:"<?php echo site_url('auth/qrlogin')?>",
+                    data:"employee_id="+employee_id,
+                    type:"post",
+                    success: function(val){
+alert(val);
+                    }
+                })
+            });
+        });
     </script>
 </body>
 </html>

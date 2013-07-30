@@ -85,8 +85,10 @@
 <!--<script src="<?php //echo base_url() ?>/assets/theme/scripts/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>-->
 
 <!-- DataTables -->
-<script src="<?php echo base_url() ?>assets/theme/scripts/DataTables/media/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo base_url() ?>assets/theme/scripts/DataTables/media/js/DT_bootstrap.js"></script>
+<!--<script src="<?php /*echo base_url() */?>assets/theme/scripts/DataTables/media/js/jquery.dataTables.min.js"></script>
+<script src="<?php /*echo base_url() */?>assets/theme/scripts/DataTables/media/js/DT_bootstrap.js"></script>-->
+
+<!--<script type="text/javascript" language="javascript" src="<?php /*echo base_url() */?>assets/media/js/jquery.dataTables.js"></script>-->
 
 <!-- MiniColors -->
 <script src="<?php echo base_url() ?>assets/theme/scripts/jquery-miniColors/jquery.miniColors.js"></script>
@@ -136,6 +138,7 @@
 
 <!--Layout Options-->
 <!--<script src="<?php //echo base_url() ?>/assets/theme/scripts/layout.js"></script>-->
+
 <script type="text/javascript" language="javascript">
 jQuery(document).ready(function(){
 
@@ -171,46 +174,6 @@ jQuery(document).ready(function(){
     });
 
     $("#category_id , #location_id , #flavour_id , #customer_id , #employee_id ,  #manager_id, .search_dropdown   ").select2();
-
-    var oTable = $('.cake-sorting').dataTable({
-        "iDisplayLength": 500,
-        "aoColumnDefs": [
-            { "bSortable":false, "aTargets": [3] }
-
-        ]
-    });
-
-    var oTable = $('.column-sorting').dataTable({
-        "iDisplayLength": 500,
-        "aoColumnDefs": [
-            { "bSortable":false, "aTargets": [4,3] }
-
-        ]
-    });
-
-    var oTable = $('.flavour-sortable').dataTable({
-        "iDisplayLength": 500,
-        "aoColumnDefs": [
-            { "bSortable":false, "aTargets": [2,3] }
-
-        ]
-    });
-
-    var oTable = $('.order-sortable').dataTable({
-        "iDisplayLength": 500,
-        "aoColumnDefs": [
-            { "bSortable":false, "aTargets": [4] }
-
-        ]
-
-
-    });
-
-    //Sort immediately with columns 0 and 1
-    oTable.fnSort( [ [0,'asc']] );
-
-
-
 
 
 });

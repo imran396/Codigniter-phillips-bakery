@@ -105,7 +105,7 @@ class Blackouts_model extends Crud_Model
             ->select('flavours.title,blackouts.blackout_id,blackouts.flavour_id,blackouts.blackout_date')
             ->from('blackouts')
             ->join('flavours','flavours.flavour_id=blackouts.flavour_id','inner')
-            ->order_by('blackout_id','desc')
+            ->order_by('blackout_date','desc')
             ->limit($per_page,$limit)
             ->get()->result();
 

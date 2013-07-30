@@ -1,6 +1,8 @@
+
 <script type="text/javascript" src="/assets/multi-datepicker/js/jquery.ui.core.js"></script>
 <script type="text/javascript" src="/assets/multi-datepicker/js/jquery.ui.datepicker.js"></script>
 <script type="text/javascript" src="/assets/multi-datepicker/js/jquery-ui.multidatespicker.js"></script>
+
 
 <script type="text/javascript">
     <!--
@@ -182,7 +184,7 @@
                 <h3>Existing Blackouts</h3>
                 <div class="widget">
                     <div class="widget-body">
-                        <table class="table table-striped table-bordered blackout-sortable">
+                        <table id="example" class="table table-striped table-bordered blackout-sortable">
                             <thead>
                             <tr>
                                 <th width="145">Flavor</th>
@@ -197,7 +199,7 @@
                             ?>
                             <tr>
                                 <td><strong><?php echo $rows->title; ?></strong></td>
-                                <td><a class="remove_a" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo $rows->blackout_date; ?>" ><?php echo $this->blackouts_model->dateFormate(end($blackout_date)); ?></a></td>
+                                <td><a class="remove_a" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo $rows->blackout_date; ?>" ><?php echo end($blackout_date); // $this->blackouts_model->dateFormate(end($blackout_date)); ?></a></td>
                                 <td align="right" style="text-align: right; padding-right: 15px">
                                     <a href="/admin/blackouts/edit/<?php echo $rows->blackout_id; ?>" class="btn btn-green"><img src="<?php echo base_url()?>/assets/images-new/icon-pencil.png" alt=""> Edit</a>
                                     <a onclick="return confirm('Are you sure you want to delete?')" href="/admin/blackouts/remove/<?php echo $rows->blackout_id; ?>" class="btn btn-red"><img src="<?php echo base_url() ?>assets/images/icon-trash.png" alt="" /> Remove</a></td>
@@ -219,17 +221,39 @@
         </div>
     </div><!-- End Wrapper -->
 </div>
-<script type="text/javascript" language="javascript">
-    jQuery(document).ready(function(){
+<script type="text/javascript" language="javascript" src="<?php echo base_url() ?>/assets/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        jQuery.fn.dataTableExt.oSort['date-dd-mmm-yyyy-asc'] = function (a, b) {
+            "use strict"; //let's avoid tom-foolery in this function
+            var ordA = customDateDDMMMYYYYToOrd(a),
+                ordB = customDateDDMMMYYYYToOrd(b);
+            return (ordA < ordB) ? -1 : ((ordA > ordB) ? 1 : 0);
+        };
 
-        var oTable = $('.blackout-sortable').dataTable({
-            "iDisplayLength": 500,
+        jQuery.fn.dataTableExt.oSort['date-dd-mmm-yyyy-desc'] = function (a, b) {
+            "use strict"; //let's avoid tom-foolery in this function
+            var ordA = customDateDDMMMYYYYToOrd(a),
+                ordB = customDateDDMMMYYYYToOrd(b);
+            return (ordA < ordB) ? -1 : ((ordA > ordB) ? 1 : 0);
+        };
+
+    } );
+    $(document).ready(function() {
+
+        $('#example').dataTable( {
+
+            "aaSorting": [[1,'desc']],
+
             "aoColumnDefs": [
                 { "bSortable":false, "aTargets": [2] }
 
-            ]
-        });
-    });
+            ],
+            "iDisplayLength": 500
+        } );
+
+    } );
+
 </script>
 <style type="text/css">
     .remove_a {

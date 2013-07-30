@@ -33,10 +33,8 @@ class Productions_model extends Crud_Model
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
         $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
         $this->db->limit($per_page,$limit);
-        $this->db->where(array('vaughan_location !='=>1,"orders.location_id"=> $location_id,'order_status !='=>300));
-        //$this->db->where(array('order_status'=>'order'));
-       // $this->db->or_where(array("orders.pickup_location_id"=> $location_id));
-        $this->db->order_by("orders.order_code", "desc");
+        $this->db->where(array("orders.kitchen_location_id"=> $location_id,'order_status !='=>300));
+        $this->db->order_by("orders.delivery_date", "desc");
         $query =$this->db->get()->result();
 
         return array($query,$paging,$total_rows,$limit);
@@ -68,8 +66,7 @@ class Productions_model extends Crud_Model
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
         $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
-        $this->db->where(array('vaughan_location !='=>1,"orders.location_id"=> $location_id,'order_status !='=>300));
-        //$this->db->where(array('order_status'=>'order'));
+        $this->db->where(array("orders.kitchen_location_id"=> $location_id,'order_status !='=>300));
         if($order_status){
             $this->db->like(array("orders.order_status"=> $order_status));
         }
@@ -93,7 +90,7 @@ class Productions_model extends Crud_Model
             $this->db->where(array("orders.delivery_time <="=> $end_time));
         }
 
-        $this->db->order_by("orders.order_id", "desc");
+        $this->db->order_by("orders.delivery_date", "desc");
         $query =$this->db->get()->result();
         //echo $this->db->last_query();
         return $query;

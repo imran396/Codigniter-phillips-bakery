@@ -36,7 +36,7 @@
 <div class="innerLR hidden-paging" id="filterResult">
         <div class="widget">
             <div class="widget-body">
-                <table class="table table-bordered table-primary table-striped order-sortable">
+                <table  class="table table-bordered table-primary table-striped order-sortable">
                     <thead>
                     <tr>
                         <th width="70">Order #</th>
@@ -75,7 +75,44 @@
     <?php } ?>
     </div><!-- End Wrapper -->
 </div>
+<script type="text/javascript" language="javascript" src="<?php echo base_url() ?>/assets/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        jQuery.fn.dataTableExt.oSort['date-dd-mmm-yyyy-asc'] = function (a, b) {
+            "use strict"; //let's avoid tom-foolery in this function
+            var ordA = customDateDDMMMYYYYToOrd(a),
+                ordB = customDateDDMMMYYYYToOrd(b);
+            return (ordA < ordB) ? -1 : ((ordA > ordB) ? 1 : 0);
+        };
 
-<script type="text/javascript">
+        jQuery.fn.dataTableExt.oSort['date-dd-mmm-yyyy-desc'] = function (a, b) {
+            "use strict"; //let's avoid tom-foolery in this function
+            var ordA = customDateDDMMMYYYYToOrd(a),
+                ordB = customDateDDMMMYYYYToOrd(b);
+            return (ordA < ordB) ? -1 : ((ordA > ordB) ? 1 : 0);
+        };
+
+    } );
+    $(document).ready(function() {
+
+        $('.order-sortable').dataTable( {
+            "aaSorting": [[0,'desc']],
+            "aoColumns": [
+                null,
+                {"sTYpe":   "date-dd-mmm-yyyy" },
+                null,
+                null,
+                null
+            ],
+            "aoColumnDefs": [
+             { "bSortable":false, "aTargets": [4] }
+
+             ]
+        } );
+
+    } );
 
 </script>
+
+
+

@@ -115,11 +115,11 @@ class Orders extends API_Controller
             $this->orders_model->instructionalImagesUpload($orders['order_id']);
         }
 
-        if(isset($data['cake_email_photo'])== 1){
+        if($data['cake_email_photo'] == 1){
             $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony','St Phillips - Attach your on cake image');
         }
 
-        if(isset($data['instructional_email_photo']) == 1){
+        if($data['instructional_email_photo'] == 1){
             $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak','St Phillips - Attach your instructional images');
         }
 
@@ -207,11 +207,11 @@ class Orders extends API_Controller
             $this->orders_model->instructionalImagesUpload($orders['order_id']);
 
         }
-        if(isset($data['cake_email_photo'])== 1){
+        if($data['cake_email_photo'] == 1){
             $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony','St Phillips - Attach your on cake image');
         }
 
-        if(isset($data['instructional_email_photo'])== 1){
+        if($data['instructional_email_photo'] == 1){
             $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak','St Phillips - Attach your instructional images');
         }
         if(isset($_REQUEST['removedinstructionalImages'])){

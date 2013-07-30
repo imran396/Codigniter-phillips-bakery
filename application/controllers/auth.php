@@ -118,6 +118,11 @@ class Auth extends Controller {
 		}
 	}
 
+    function qrlogin(){
+
+        $employee_id = $this->input->post('employee_id');
+    }
+
 	//log the user out
 	function logout()
 	{

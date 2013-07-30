@@ -80,8 +80,10 @@
 <!--<script src="<?php //echo base_url() ?>/assets/theme/scripts/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>-->
 
 <!-- DataTables -->
-<script src="<?php echo base_url() ?>assets/theme/scripts/DataTables/media/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo base_url() ?>assets/theme/scripts/DataTables/media/js/DT_bootstrap.js"></script>
+<!--<script src="--><?php //echo base_url() ?><!--assets/theme/scripts/DataTables/media/js/jquery.dataTables.min.js"></script>-->
+<!--<script src="--><?php //echo base_url() ?><!--assets/theme/scripts/DataTables/media/js/DT_bootstrap.js"></script>-->
+
+
 
 <!-- MiniColors -->
 <script src="<?php echo base_url() ?>assets/theme/scripts/jquery-miniColors/jquery.miniColors.js"></script>
@@ -133,7 +135,6 @@
 <!--Layout Options-->
 <!--<script src="<?php //echo base_url() ?>/assets/theme/scripts/layout.js"></script>-->
 <link rel="stylesheet" type="text/css" href="/assets/multi-datepicker/css/mdp.css">
-
 
 </body>
 </html>

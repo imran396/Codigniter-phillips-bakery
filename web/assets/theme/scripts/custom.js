@@ -90,14 +90,20 @@ $(function()
 			return false;
 		});
 	});
-	
-	$('.scrolled').jScrollPane(
-		{
-			showArrows: true,
-			horizontalGutter: 8,
-			verticalGutter: 8
-		}
-	);
+	try{
+        $('.scrolled').jScrollPane(
+            {
+                showArrows: true,
+                horizontalGutter: 8,
+                verticalGutter: 8
+            }
+        );
+    }catch(e){
+
+    }
+
+try{
+
 
     $('.date-pick')
 
@@ -136,6 +142,10 @@ $(function()
                 console.log(selectedDates);
             }
         );
+
+}catch (e){
+
+}
 
    /* last update ----   */
 
