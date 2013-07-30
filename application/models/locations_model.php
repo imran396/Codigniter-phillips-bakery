@@ -184,7 +184,6 @@ class Locations_model extends Crud_Model
 
         foreach($data as $key => $val){
             $data[$key]['id'] = (int) $data[$key]['id'];
-            $data[$key]['surcharge'] = (float) $data[$key]['surcharge'];
         }
         return $data;
     }
