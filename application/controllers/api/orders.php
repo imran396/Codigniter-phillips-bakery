@@ -114,13 +114,15 @@ class Orders extends API_Controller
 
             $this->orders_model->instructionalImagesUpload($orders['order_id']);
         }
-
-        if($data['cake_email_photo'] == 1){
-            $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony','St Phillips - Attach your on cake image');
+        if(isset($data['cake_email_photo'])){
+            if($data['cake_email_photo'] == 1){
+                $this->mailgunSendMessage($orders ,$data,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'));
+            }
         }
-
-        if($data['instructional_email_photo'] == 1){
-            $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak','St Phillips - Attach your instructional images');
+        if(isset($data['instructional_email_photo'])){
+            if($data['instructional_email_photo'] == 1){
+                $this->mailgunSendMessage($orders ,$data,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'));
+            }
         }
 
         $this->saveBarcodeImage($orders['order_code']);
@@ -139,7 +141,7 @@ class Orders extends API_Controller
             $this->revel_order->create($RevelOrderData);
         }*/
 
-        if($data['order_status'] == 300 ){
+        if($orders['order_status'] == 300 ){
 
             $this->sendOutput(array('order_id'=> $orders['order_id'],'order_status' =>  $orders['order_status']));
         }else{
@@ -217,12 +219,15 @@ class Orders extends API_Controller
             $this->orders_model->instructionalImagesUpload($orders['order_id']);
 
         }
-        if($data['cake_email_photo'] == 1){
-            $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony','St Phillips - Attach your on cake image');
+        if(isset($_REQUEST['cake_email_photo'])){
+            if($_REQUEST['cake_email_photo'] == 1){
+                $this->mailgunSendMessage($orders ,$data,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'));
+            }
         }
-
-        if($data['instructional_email_photo'] == 1){
-            $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak','St Phillips - Attach your instructional images');
+        if(isset($_REQUEST['instructional_email_photo'])){
+            if($_REQUEST['instructional_email_photo'] == 1){
+                $this->mailgunSendMessage($orders ,$data,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'));
+            }
         }
         if(isset($_REQUEST['removedinstructionalImages'])){
 
@@ -232,7 +237,7 @@ class Orders extends API_Controller
             }
         }
 
-        if($data['order_status'] == 300 ){
+        if($orders['order_status'] == 300 ){
 
             $this->sendOutput(array('order_id'=> $orders['order_id'],'order_status' =>  $orders['order_status']));
         }else{
@@ -245,15 +250,16 @@ class Orders extends API_Controller
 
     private function mailgunSendMessage($orders, $data, $replyTo,$name,$subject=NULL){
 
-        $data['order_code'] = $orders['order_code'];
-        $data ['rows'] = $this->orders_model->getCustomerData($data['customer_id']);
+        $order_id = $data['order_id'];
+        $result= $this->productions_model->orderPrint($order_id);
+        $data['rows']=$result->row();
         if(!empty($data ['rows']->email)){
             $body = $this->load->view('email/instructional_photo_view', $data,true);
             $this->email->set_newline("\r\n");
-            $this->email->from('imran@emicrograph.com', 'St Phillip\'s Bakery');
+            $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
             $this->email->reply_to($replyTo, $name);
             $this->email->to($data ['rows']->email);
-            $this->email->subject($subject.'|'.$data['order_code']);
+            $this->email->subject($subject.'|'. $data['rows']->order_code);
             $this->email->message(nl2br($body));
             $this->email->send();
         }
@@ -393,7 +399,7 @@ class Orders extends API_Controller
 
             $body          = $this->load->view('email/invoice_body', $this->data,true);
             $this->email->set_newline("\r\n");
-            $this->email->from('shafiq@emicrograph.com', 'St Phillip\'s Bakery');
+            $this->email->from('info@stphillipsbakery.com', 'St Phillips Bakery');
             $this->email->to($customer_email);
             $this->email->subject('St Phillip\'s Bakery :'.$order_status);
             $this->email->message(nl2br($body));
@@ -425,9 +431,9 @@ class Orders extends API_Controller
             //$to      = 'shafiq@emicrograph.com';
             // $subject ="Estimate";
             $this->email->set_newline("\r\n");
-            $this->email->from('shafiq@emicrograph.com', 'St Phillip\'s Bakery');
+            $this->email->from('info@stphillipsbakery.com', 'St Phillips Bakery');
             $this->email->to($customer_email);
-            $this->email->subject('St Phillip\'s Bakery :'.$this->data['queryup']->orderstatus);
+            $this->email->subject('St Phillips Bakery :'.$this->data['queryup']->orderstatus);
             $this->email->message(nl2br($body));
             $this->email->send();
         }

@@ -3,8 +3,8 @@ like your baker to reference.
 
 
 ------------------------------------------------------------
-ORDER #<?php echo $order_code.PHP_EOL; ?>
-<?php echo $order_date.PHP_EOL; ?>
+ORDER #<?php echo  $rows->order_code.PHP_EOL; ?>
+<?php echo  date("d/m/Y",$rows->order_date).PHP_EOL; ?>
 
 ------------------------------------------------------------
 CUSTOMER DETAILS

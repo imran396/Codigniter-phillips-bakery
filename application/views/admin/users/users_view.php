@@ -66,10 +66,10 @@
                         <label class="control-label" for="confirm_password"><?php echo $this->lang->line('con_password');?></label>
                         <div class="controls"><input type="password" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('con_password');?>" value=""  class="validate[required,equals[password]] span10" name="password_confirm" id="password_confirm"  /></div>
                     </div>
-                    <div class="control-group">
-                        <label class="control-label" for="email"><?php echo $this->lang->line('email');?></label>
-                        <div class="controls"><input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('email');?>" value="<?php echo(isset($queryup[0]->email))? $queryup[0]->email:set_value('email'); ?>"  class="validate[custom[email]] span12" name="email" id="email"  /></div>
-                    </div>
+               <!--     <div class="control-group">
+                        <label class="control-label" for="email"><?php /*echo $this->lang->line('email');*/?></label>
+                        <div class="controls"><input type="text" placeholder="<?php /*echo $this->lang->line('enter').' '.$this->lang->line('email');*/?>" value="<?php /*echo(isset($queryup[0]->email))? $queryup[0]->email:set_value('email'); */?>"  class="validate[custom[email]] span12" name="email" id="email"  /></div>
+                    </div>-->
            <!--         <div class="control-group">
 
                         <label class="control-label"><?php /*echo $this->lang->line('location');*/?></label>

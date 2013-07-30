@@ -406,12 +406,12 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
         }
 
-        if(isset($data['cake_email_photo'])== 1){
-            $this->mailgunSendMessage($orders ,$data,'rony@imran3968.mailgun.org','Rony','St Phillips - Attach your on cake image');
+        if($data['cake_email_photo'] == 1){
+            $this->mailgunSendMessage($orders ,$data,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'));
         }
 
-        if(isset($data['instructional_email_photo'])== 1){
-            $this->mailgunSendMessage($orders ,$data,'mak@imran3968.mailgun.org','Mak','St Phillips - Attach your instructional images');
+        if($data['instructional_email_photo'] == 1){
+            $this->mailgunSendMessage($orders ,$data,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'));
         }
 
         $this->saveBarcodeImage($orders['order_code']);

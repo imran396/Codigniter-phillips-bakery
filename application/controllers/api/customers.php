@@ -78,7 +78,8 @@ class Customers extends API_Controller
 
     public function search(){
             $request = $this->input->get();
-            if($request){
+
+        if($request){
                 $data = $this->customers_model->search($request);
                 $this->sendOutput($data);
             }
