@@ -297,7 +297,7 @@
                         <p class="list-code"><?php echo $rows->order_code; ?></p>
                     </td>
                     <td><?php echo $rows->first_name.' '.$rows->last_name; ?></td>
-                    <td><?php if($rows->cake_name){echo  sentence_case($rows->cake_name);}else{ echo '---';} ?></td>
+                    <td><?php if($rows->cake_name){echo  sentence_case($rows->cake_name);}else{ echo 'Custom Cake';} ?></td>
                     <td class="center"><?php echo sentence_case($rows->delivery_type); ?></td>
                     <td class="center"><?php echo $this->productions_model->dateFormate($rows->delivery_date); ?></td>
                     <td class="center"><?php echo $rows->delivery_time; ?></td>

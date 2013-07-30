@@ -171,7 +171,7 @@ class Customers_model extends Crud_Model
         $query="SELECT customer_id,first_name,last_name,phone_number,status
                 FROM `customers`
                 WHERE(`customer_id` > 0 AND  LOWER(`first_name`) LIKE '%$search%')
-                || ( `customer_id` > 0 AND LOWER(`last_name`) LIKE '%$search%')
+                || ( `customer_id` > 0 AND LOWER(`last_name`) = '%$search%')
                 || (`customer_id` > 0 AND `phone_number` = '$search')";
 
         $per_page=10;

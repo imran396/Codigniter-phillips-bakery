@@ -84,7 +84,7 @@
             </div>
         </div>
     </div>
-    <div class="title" style="height: 20px"><?php if($queryup->title){ echo $queryup->title; }else{ echo "Custom Order"; } ?></div>
+    <div class="title" style="height: 20px"><?php if($queryup->title){ echo $queryup->title; }else{ echo "Custom Cake"; } ?></div>
     <div class="customer"><?php echo $queryup->first_name.' '. $queryup->last_name ?></div>
     <div class="separator"></div>
 </div><!-- end of panel -->
@@ -259,7 +259,7 @@
                                     <?php } ?>
                                     <?php if( $queryup->address_2){ ?>
                                         <div class="line">
-                                            <div class="title">Address</div><?php echo $queryup->address_2; ?>
+                                            <div class="title">Address 2</div><?php echo $queryup->address_2; ?>
                                         </div>
                                     <?php } ?>
                                     <?php if( $queryup->postal_code){ ?>
@@ -280,7 +280,7 @@
                                         $notes = $this->productions_model->orderNotes($queryup->order_id);
                                         foreach( $notes as $orderNotes):
                                             $createdate = $orderNotes->create_date;
-                                            $date = date("D,M",$createdate);
+                                            $date = date("D j M",$createdate);
                                             $time = date("g:i a",$createdate);
 
                                         ?>
