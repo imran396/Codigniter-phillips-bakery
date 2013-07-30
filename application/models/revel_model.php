@@ -50,7 +50,7 @@ class Revel_Model extends CI_Model
         $this->headers  = $client->getResponseHeader();
 
         if ($debug) {
-            echo '<pre>' . $client->getRawRequestMessage() . PHP_EOL . PHP_EOL . $client->getRawResponseMessage() . '</pre>';
+          //  echo '<pre>' . $client->getRawRequestMessage() . PHP_EOL . PHP_EOL . $client->getRawResponseMessage() . '</pre>';
         }
 
         return $client->getResponseBody();
@@ -79,7 +79,7 @@ class Revel_Model extends CI_Model
         return $client->getResponseBody();
     }
 
-    protected function generateUUID()
+    public function generateUUID()
     {
         return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
 

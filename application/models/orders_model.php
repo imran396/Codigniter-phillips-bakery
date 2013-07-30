@@ -52,6 +52,10 @@ class Orders_model extends Crud_Model
         $order['order_id']= $order_id;
         $order['order_code']= $dbdata->order_code;
         $order['order_status']=  $dbdata->order_status;
+        $order['discount_price']=  $dbdata->discount_price;
+        $order['override_price']=  $dbdata->override_price;
+        $order['total_price']=  $dbdata->total_price;
+
         return $order;
     }
 
@@ -62,6 +66,9 @@ class Orders_model extends Crud_Model
             $order['order_id']= $dbdata->order_id;
             $order['order_code']=  $dbdata->order_code;
             $order['order_status']=  $dbdata->order_status;
+            $order['discount_price']=  $dbdata->discount_price;
+            $order['override_price']=  $dbdata->override_price;
+            $order['total_price']=  $dbdata->total_price;
 
         return $order;
     }

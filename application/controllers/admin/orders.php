@@ -367,6 +367,17 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
             $this->session->set_flashdata('success_msg','New order has been updated successfully');
         }else{
             $orders=$this->orders_model->order_insert($data);
+
+            if($orders['order_id']){
+                $RevelOrderData = array(
+                    'order_code' => $orders['order_code'],
+                    'discount'=> $orders['discount_price'],
+                    'subtotal'=> $orders['total_price'],
+                );
+
+                $this->revel_order->create($RevelOrderData);
+            }
+
             $this->session->set_flashdata('success_msg','New order has been added successfully');
         }
 
@@ -437,8 +448,9 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
                 );
                 $this->logs_model->insertAuditLog($log);
             }
-            $this->session->set_flashdata('success_msg','New order has been added successfully');
+
         }
+
         redirect('admin/orders/edit/'.$orders['order_id']);
 
 

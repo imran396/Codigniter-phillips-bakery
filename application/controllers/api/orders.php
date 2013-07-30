@@ -129,6 +129,16 @@ class Orders extends API_Controller
             $this->sendEmail($orders['order_code']);
         }
 
+        if($orders['order_id']){
+            $RevelOrderData = array(
+                'order_code' => $orders['order_code'],
+                'discount'=> $orders['discount_price'],
+                'subtotal'=> $orders['total_price'],
+            );
+
+            $this->revel_order->create($RevelOrderData);
+        }
+
         if($data['order_status'] == 300 ){
 
             $this->sendOutput(array('order_id'=> $orders['order_id'],'order_status' =>  $orders['order_status']));
