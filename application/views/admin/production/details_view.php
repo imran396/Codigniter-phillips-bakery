@@ -107,7 +107,7 @@
         if(!empty($instructionals)){
         foreach($instructionals as $instructional){
             ?>
-            <li><a href=""><img src="<?php echo base_url().$instructional->instructional_photo; ?>" alt="" /></a></li>
+            <li><a href=""><span class="plus"></span><img src="<?php echo base_url().$instructional->instructional_photo; ?>" alt="" /></a></li>
         <?php } } ?>
     </ul>
 </div><!-- End Slider -->
