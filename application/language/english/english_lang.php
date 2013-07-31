@@ -29,15 +29,15 @@ $lang['drag'] 		 	    = 'Drag';
 /* Mail Gun Information  */
 
 $lang['global_email'] 		 	    = 'info@stphillipsbakery.com';
-$lang['global_email_subject'] 		 	    = 'St Phillips Bakery';
+$lang['global_email_subject'] 		 	    = 'St. Phillips Bakery';
 
 $lang['mailgun_cakeonimage_email'] 		 	    = 'dan@gsi.mailgun.org';
 $lang['mailgun_cakeonimage_name'] 		 	    = 'Dan Branco';
-$lang['mailgun_cakeonimage_subject'] 		 	= 'St Phillips - Attach your on cake image';
+$lang['mailgun_cakeonimage_subject'] 		 	= 'St. Phillips Bakery - Attach your on cake image';
 
 $lang['mailgun_instructional_email'] 		 	= 'spenser@gsi.mailgun.org';
 $lang['mailgun_instructional_name'] 		 	= 'Spenser';
-$lang['mailgun_instructional_subject'] 		 	= 'St Phillips - Attach your instructional image';
+$lang['mailgun_instructional_subject'] 		 	= 'St. Phillips Bakery - Attach your instructional image';
 
 /* ---------- Malling Subject information */
 
