@@ -1,4 +1,4 @@
-St Phillip's - Attach your reference images
+<?php echo $this->lang->line('global_email_subject'); ?> - Attach your reference images
 
 Reply to this email and attach the example images you would
 like your baker to reference.

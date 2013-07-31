@@ -69,7 +69,7 @@
     <?php
     $locations=$this->locations_model->getLocations($queryup->locationid);
     ?>
-    <p  class="align-right">St. Phillip's Bakery</p>
+    <p  class="align-right"><?php echo $this->lang->line('global_email_subject'); ?></p>
     <?php if(!empty($locations)){ ?>
     <?php if($locations[0]->title){ ?><p  class="align-right"><?php echo $locations[0]->title; ?></p><?php } ?>
     <?php if($locations[0]->address1){ ?><p  class="align-right"><?php echo $locations[0]->address1; ?></p><?php } ?>

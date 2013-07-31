@@ -48,7 +48,7 @@
 <h1><?php if( $queryup->order_status ==300 ){ echo $queryup ->orderstatus; }else{ echo "ORDER"; } ?></h1>
 <br />
 
-<p class="cen">St. Phillip's Bakery</p>
+<p class="cen"><?php echo $this->lang->line('global_email_subject'); ?></p>
 <hr />
 <?php
 $locations=$this->locations_model->getLocations($queryup->locationid);

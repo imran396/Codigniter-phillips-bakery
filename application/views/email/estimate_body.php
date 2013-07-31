@@ -1,6 +1,6 @@
-SUBJECT: St. phillip's Bakery - Cake Estimate
+<?php echo $this->lang->line('global_email_subject'); ?> Bakery - Cake Estimate
 
-St. Phillips Bakery
+<?php echo $this->lang->line('global_email_subject'); ?>
 --------------------------
 <?php
 $locations=$this->locations_model->getLocations($queryup->location_id);
