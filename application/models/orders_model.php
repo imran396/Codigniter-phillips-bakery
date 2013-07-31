@@ -166,7 +166,7 @@ class Orders_model extends Crud_Model
     {
         $dbdata = $this->getOrder($id);
         if (file_exists($dbdata->on_cake_image)) {
-            unlink($_SERVER['DOCUMENT_ROOT'] . $dbdata->on_cake_image);
+            unlink($_SERVER['DOCUMENT_ROOT'] .'/'.$dbdata->on_cake_image);
         }
     }
 
@@ -177,7 +177,7 @@ class Orders_model extends Crud_Model
 
             $returnvalue=parse_url($imagePath, PHP_URL_PATH);
             if (file_exists($returnvalue)) {
-                unlink($_SERVER['DOCUMENT_ROOT'].$returnvalue);
+                unlink($_SERVER['DOCUMENT_ROOT'] .'/'.$returnvalue);
             }
             $this->db->where(array('instructional_order_id'=>$order_id,'instructional_photo'=>trim($returnvalue,'/')))->delete('instructional_photo');
        }

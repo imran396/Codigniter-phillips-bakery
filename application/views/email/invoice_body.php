@@ -1,4 +1,4 @@
-SUBJECT: St. phillip's Bakery - Cake <?php if( $queryup->order_status ==300 ){ echo ucfirst( $queryup->orderstatus); }else{ echo "Invoice"; } ?>
+St. phillip's Bakery - Cake <?php if( $queryup->order_status ==300 ){ echo ucfirst( $queryup->orderstatus); }else{ echo "Invoice"; } ?>
 
 St. Phillips Bakery
 --------------------------

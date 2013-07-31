@@ -169,9 +169,9 @@ $(document).ready(function(){
         return text;
     });*/
 
-    $("#phone_number").each(function(){
+ /*   $("#phone_number").each(function(){
         $(this).val($(this).val().replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3"));
-    });
+    });*/
 
 });
 </script>
