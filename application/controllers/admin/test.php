@@ -20,7 +20,7 @@ class Test extends Crud_Controller
     public function establishment()
     {
         header("Content-type=> application/json");
-        echo $this->revel_establishment->getAll();
+        var_dump($this->revel_establishment->getAll());
     }
 
     // **************************** LOCATIONS ****************************
@@ -28,7 +28,7 @@ class Test extends Crud_Controller
     public function locations()
     {
         header("Content-type=> application/json");
-        echo $this->revel_location->getAll();
+        var_dump($this->revel_location->getAll());
     }
 
     public function createLocation()
@@ -44,7 +44,7 @@ class Test extends Crud_Controller
     public function employees()
     {
         header("Content-type=> application/json");
-        echo $this->revel_employee->getAll();
+        var_dump($this->revel_employee->getAll());
     }
 
     public function createEmployee()
@@ -88,14 +88,14 @@ class Test extends Crud_Controller
 
     public function products()
     {
-        echo $this->revel_product->getAll();
+        var_dump($this->revel_product->getAll());
     }
 
     // **************************** CUSTOMERS ****************************
 
     public function customers()
     {
-        echo $this->revel_customer->getAll();
+        var_dump($this->revel_customer->getAll());
     }
 
     public function createCustomers()
@@ -125,8 +125,9 @@ class Test extends Crud_Controller
     {
         $data = array(
             'product_id'  => 271,
-            'subtotal'    => 150,
-            'discount'    => 0
+            'subtotal'    => 153,
+            'discount'    => 0,
+            'order_code'  => rand(100, 500)
         );
 
         $this->revel_order->create($data);
