@@ -100,7 +100,7 @@ class Revel_Order extends Revel_Model
                 "created_at"           => "/resources/PosStation/3/",
                 "delivery_clock_in"    => null,
                 "local_id"             => 57189,
-                "remaining_due"        => "11.1",
+                "remaining_due"        => $data['subtotal'],
                 "created_date"         => date('c'),
                 "rounding_delta"       => 0
             ),

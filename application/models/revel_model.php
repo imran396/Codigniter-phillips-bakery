@@ -1,5 +1,7 @@
 <?php
 
+include_once realpath(APPPATH .'libraries') . '/httpful.phar';
+
 class Revel_Model extends CI_Model
 {
     protected $revel;
@@ -16,67 +18,55 @@ class Revel_Model extends CI_Model
     protected function getResource($resource, $offset = 0, $limit = 20, $format = 'json', $debug = false)
     {
         $params = array('offset' => $offset, 'limit' => $limit, 'format' => $format);
-        $client = new HttpRequest($this->revel['endpoint'] . '/resources/' . $resource . '/?' . http_build_query($params));
+        $client = \Httpful\Request::get($this->revel['endpoint'] . '/resources/' . $resource . '/?' . http_build_query($params));
 
         $client->addHeaders(array('API-AUTHENTICATION' => $this->revel['api_key'] . ':' . $this->revel['api_secret']));
-        $client->send();
+        $response = $client->send();
 
-        $this->code     = $client->getResponseCode();
-        $this->response = $client->getResponseBody();
-        $this->headers  = $client->getResponseHeader();
+        $this->code     = $response->code;
+        $this->response = $response->body;
+        $this->headers  = $response->headers;
 
         if ($debug) {
-            echo '<pre>' . $client->getRawRequestMessage() . PHP_EOL . PHP_EOL . $client->getRawResponseMessage() . '</pre>';
+            var_dump($response);
         }
 
-        return $client->getResponseBody();
+        return $response->raw_body;
     }
 
     protected function postResource($resource, $data, $debug = false)
     {
-        $client = new HttpRequest($this->revel['endpoint'] . '/resources/' . $resource . '/');
+        $client = \Httpful\Request::post($this->revel['endpoint'] . '/resources/' . $resource . '/');
 
-        $client->addHeaders(array(
-            'API-AUTHENTICATION' => $this->revel['api_key'] . ':' . $this->revel['api_secret'],
-            'Content-type' => 'application/json'
-        ));
+        $client->addHeaders(array('API-AUTHENTICATION' => $this->revel['api_key'] . ':' . $this->revel['api_secret']));
+        $client->sendsAndExpects('json');
 
-        $client->setBody(str_replace('\\/', '/', json_encode($data)));
-        $client->setMethod(HTTP_METH_POST);
-        $client->send();
+        $client->body(str_replace('\\/', '/', json_encode($data)));
+        $response = $client->send();
 
-        $this->code     = $client->getResponseCode();
-        $this->response = $client->getResponseBody();
-        $this->headers  = $client->getResponseHeader();
+        $this->code     = $response->code;
+        $this->response = $response->body;
+        $this->headers  = $response->headers;
 
         if ($debug) {
-          //  echo '<pre>' . $client->getRawRequestMessage() . PHP_EOL . PHP_EOL . $client->getRawResponseMessage() . '</pre>';
+            var_dump($response);
         }
 
-        return $client->getResponseBody();
+        return $response->raw_body;
     }
 
     protected function deleteResource($resource, $id, $debug = false)
     {
-        $client = new HttpRequest($this->revel['endpoint'] . '/resources/' . $resource . '/' . $id . '/');
+        $client = \Httpful\Request::delete($this->revel['endpoint'] . '/resources/' . $resource . '/' . $id . '/');
 
-        $client->addHeaders(array(
-            'API-AUTHENTICATION' => $this->revel['api_key'] . ':' . $this->revel['api_secret'],
-            'Content-type' => 'application/json'
-        ));
+        $client->addHeaders(array('API-AUTHENTICATION' => $this->revel['api_key'] . ':' . $this->revel['api_secret']));
+        $response = $client->send();
 
-        $client->setMethod(HTTP_METH_DELETE);
-        $client->send();
+        $this->code     = $response->code;
+        $this->response = $response->body;
+        $this->headers  = $response->headers;
 
-        $this->code     = $client->getResponseCode();
-        $this->response = $client->getResponseBody();
-        $this->headers  = $client->getResponseHeader();
-
-        if ($debug) {
-            echo '<pre>' . $client->getRawRequestMessage() . PHP_EOL . PHP_EOL . $client->getRawResponseMessage() . '</pre>';
-        }
-
-        return $client->getResponseBody();
+        return $response->raw_body;
     }
 
     public function generateUUID()
