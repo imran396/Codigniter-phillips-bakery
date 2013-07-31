@@ -22,9 +22,8 @@ class Orders extends API_Controller
         require_once 'Zend/Loader/StandardAutoloader.php';
         $loader = new Zend\Loader\StandardAutoloader(array('autoregister_zf' => true));
         $loader->register();
-        $this->load->helper('uploader');
+        $this->load->helper(array('uploader','dompdf'));
         $this->load->model(array('orders_model','productions_model','gallery_model','locations_model'));
-        $this->load->helper('dompdf');
         $this->load->library('email',$this->config);
 
     }
@@ -37,6 +36,7 @@ class Orders extends API_Controller
 
     public function insert()
     {
+
         $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
         $data['customer_id']=isset($_REQUEST['customer_id'])? $_REQUEST['customer_id']:'';
         $data['employee_id']=isset($_REQUEST['employee_id'])? $_REQUEST['employee_id']:'';
@@ -112,17 +112,18 @@ class Orders extends API_Controller
 
         if(isset($_FILES['instructionalImages'])){
 
-            $this->orders_model->instructionalImagesUpload($orders['order_id']);
+               $this->orders_model->instructionalImagesUpload($orders['order_id']);
         }
-        if(isset($data['cake_email_photo'])){
-            if($data['cake_email_photo'] == 1){
-                $this->mailgunSendMessage($orders ,$data,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'));
-            }
+
+        $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
+        if($cake_email_photo == 1 ){
+
+            $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'));
         }
-        if(isset($data['instructional_email_photo'])){
-            if($data['instructional_email_photo'] == 1){
-                $this->mailgunSendMessage($orders ,$data,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'));
-            }
+        $instructional_email_photo = isset($_REQUEST['instructional_email_photo']) ? $_REQUEST['instructional_email_photo']:'';
+        if($instructional_email_photo == 1){
+
+            $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'));
         }
 
         $this->saveBarcodeImage($orders['order_code']);
@@ -219,16 +220,17 @@ class Orders extends API_Controller
             $this->orders_model->instructionalImagesUpload($orders['order_id']);
 
         }
-        if(isset($_REQUEST['cake_email_photo'])){
-            if($_REQUEST['cake_email_photo'] == 1){
-                $this->mailgunSendMessage($orders ,$data,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'));
-            }
+        $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
+        if($cake_email_photo == 1 ){
+
+            $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'));
         }
-        if(isset($_REQUEST['instructional_email_photo'])){
-            if($_REQUEST['instructional_email_photo'] == 1){
-                $this->mailgunSendMessage($orders ,$data,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'));
-            }
+        $instructional_email_photo = isset($_REQUEST['instructional_email_photo']) ? $_REQUEST['instructional_email_photo']:'';
+        if($instructional_email_photo == 1){
+
+            $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'));
         }
+
         if(isset($_REQUEST['removedinstructionalImages'])){
 
             $image=$_REQUEST['removedinstructionalImages'];
@@ -248,9 +250,9 @@ class Orders extends API_Controller
     }
 
 
-    private function mailgunSendMessage($orders, $data, $replyTo,$name,$subject=NULL){
+    private function mailgunSendMessage($orders, $replyTo,$name,$subject=NULL){
 
-        $order_id = $data['order_id'];
+        $order_id = $orders['order_id'];
         $result= $this->productions_model->orderPrint($order_id);
         $data['rows']=$result->row();
         if(!empty($data ['rows']->email)){
@@ -265,9 +267,6 @@ class Orders extends API_Controller
         }
 
     }
-
-
-
 
     public function mailgunInstructionalPhotoReply(){
 

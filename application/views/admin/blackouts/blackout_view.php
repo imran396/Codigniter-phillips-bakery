@@ -3,6 +3,11 @@
 <script type="text/javascript" src="/assets/multi-datepicker/js/jquery.ui.datepicker.js"></script>
 <script type="text/javascript" src="/assets/multi-datepicker/js/jquery-ui.multidatespicker.js"></script>
 
+<?php
+$blackoutdate=isset($queryup->blackout_date)?$queryup->blackout_date:'';
+$blackoutdate=explode(',',$blackoutdate);
+$lastdate = end($blackoutdate);
+?>
 
 <script type="text/javascript">
     <!--
@@ -46,6 +51,9 @@
             <?php echo isset($queryup->blackout_date) ?
             'addDates: '. json_encode(explode(',', $queryup->blackout_date))."," :''; ?>
             altField: '#altField'
+            <?php if($lastdate){ ?>
+            , defaultDate:'<?php echo $lastdate; ?>'
+            <?php } ?>
         });
 
         $('.btn-dark').click(function(){

@@ -9,6 +9,7 @@ class Auditlog extends Crud_Controller
         $this->layout->setLayout('layout_admin');
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
+        $this->load->helper('csv');
         //$this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
 
     }
@@ -20,7 +21,16 @@ class Auditlog extends Crud_Controller
         $this->layout->view('admin/auditlog/listing_view', $this->data);
     }
 
-    function search($urlsearch=NULL,$start=0){
+    public function csvfile()
+    {
+
+        $query = $this->db->get('auditlog');
+        query_to_csv($query, TRUE, 'toto.csv');
+
+    }
+
+    function search($urlsearch=NULL,$start=0)
+    {
 
 
         $getsearch = $this->input->get('search');

@@ -11,6 +11,9 @@
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('auditlog');?></h3>
         <div class="buttons pull-right">
+            <a href="/admin/auditlog/csvfile" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Export CSV</a>
+        </div>
+        <div class="buttons pull-right">
             <?php
             $searchval =  isset($_REQUEST['search']) ? $_REQUEST['search']:'';
             $consearchseg =  $this->uri->segment(3,NULL);
@@ -23,6 +26,7 @@
             }
             ?>
             <form action="/admin/auditlog/search" method="get"><input type="text" value="<?php if(!empty($search)){echo $search;} ?>"  name="search" placeholder="Enter search" id="search"><button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok mbutton"><i></i><?php echo $this->lang->line('search');?></button></form>
+
         </div>
         <div class="clearfix"></div>
     </div>

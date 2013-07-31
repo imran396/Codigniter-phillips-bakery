@@ -160,3 +160,18 @@
 <!-- End Content -->
 
 </div>
+<script type="text/javascript">
+$(document).ready(function(){
+    /*$("#phone_number").text(function(i, text) {
+        var phone = $("#phone_number").val();
+        alert(phone);
+        text = phone.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+        return text;
+    });*/
+
+    $("#phone_number").each(function(){
+        $(this).val($(this).val().replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3"));
+    });
+
+});
+</script>

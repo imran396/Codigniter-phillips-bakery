@@ -114,30 +114,20 @@ class Orders_model extends Crud_Model
     public function instructionalImagesUpload($order_id){
 
 
-            /*** the upload directory ***/
-            $upload_dir=  "assets/uploads/gallery/";
-            /*** check if a file has been submitted ***/
-            if(isset($_FILES['instructionalImages']['tmp_name']))
-            {
-                /** loop through the array of files ***/
-                for($i=0; $i < count($_FILES['instructionalImages']['tmp_name']);$i++)
-                {
+        $filePath  = "assets/uploads/gallery/";
+        $i=0;
+        foreach($_FILES['instructionalImages']['name'] as $key => $file_name ){
 
-                    $n = rand(10e16, 10e20);
-                    $rand = base_convert($n, 10, 36);
-
-                        // copy the file to the specified dir
-                    $file_name=$rand.'-'.$_FILES['instructionalImages']['name'][$i];
-                    if(@copy($_FILES['instructionalImages']['tmp_name'][$i],$upload_dir.'/'.$file_name))
-                    {
-                            /*** give praise and thanks to the php gods ***/
-                         $instructional_photo =$upload_dir.$file_name;
-                         $this->db->set(array('instructional_order_id'=>$order_id,'instructional_photo' => $instructional_photo))->insert('instructional_photo');
-                    }
-
-
-                }
-            }
+            $imgarr[$i]['name'] = $_FILES['instructionalImages']['name'][$key];
+            $imgarr[$i]['type'] = $_FILES['instructionalImages']['type'][$key];
+            $imgarr[$i]['size'] = $_FILES['instructionalImages']['size'][$key];
+            $imgarr[$i]['tmp_name'] = $_FILES['instructionalImages']['tmp_name'][$key];
+            $imgarr[$i]['error'] = $_FILES['instructionalImages']['error'][$key];
+            $file_name = resize_image($imgarr[$i],$filePath,730,480);
+            $instructional_photo  = $filePath.$file_name;
+            $this->db->set(array('instructional_order_id'=>$order_id,'instructional_photo' => $instructional_photo))->insert('instructional_photo');
+            $i++;
+        }
 
     }
 

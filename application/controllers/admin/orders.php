@@ -189,9 +189,12 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $query="SELECT servings.printing_surcharge FROM price_matrix
         LEFT JOIN servings ON price_matrix.serving_id = servings.serving_id
         WHERE price_matrix.price_matrix_id = $price_matrix_id";
-        $matrix = $this->db->query($query)->row();
+        if($this->db->query($query)->num_rows() > 0){
 
-        echo $matrix->printing_surcharge;
+            $matrix = $this->db->query($query)->row();
+            echo $matrix->printing_surcharge;
+        }
+
 
     }
 
@@ -364,7 +367,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
         if($orderID > 0 ){
             $orders=$this->orders_model->order_update($data,$orderID);
-            $this->session->set_flashdata('success_msg','New order has been updated successfully');
+            $this->session->set_flashdata('success_msg','Order has been updated successfully');
         }else{
             $orders=$this->orders_model->order_insert($data);
 
@@ -405,19 +408,20 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
             $this->orders_model->galleryUpload($data,$orders['order_id']);
 
         }
+        $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
+        if($cake_email_photo == 1 ){
 
-        if($data['cake_email_photo'] == 1){
-            $this->mailgunSendMessage($orders ,$data,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'));
+            $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'));
         }
+        $instructional_email_photo = isset($_REQUEST['instructional_email_photo']) ? $_REQUEST['instructional_email_photo']:'';
+        if($instructional_email_photo == 1){
 
-        if($data['instructional_email_photo'] == 1){
-            $this->mailgunSendMessage($orders ,$data,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'));
+            $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'));
         }
 
         $this->saveBarcodeImage($orders['order_code']);
 
-        $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
-
+        $mailtouser = isset($_REQUEST['mailtouser']) ? $_REQUEST['mailtouser']:'';
         if($mailtouser == 1){
             $this->sendEmail($orders['order_code']);
         }
@@ -478,21 +482,23 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     }
 
-    private function mailgunSendMessage($orders, $data, $replyTo,$name,$subject){
+    private function mailgunSendMessage($orders, $replyTo,$name,$subject=NULL){
 
-        $data['order_code'] = $orders['order_code'];
-        $data ['rows'] = $this->orders_model->getCustomerData($data['customer_id']);
-        $body = $this->load->view('email/instructional_photo_view', $data,true);
-        $this->email->set_newline("\r\n");
-        $this->email->from('imran@emicrograph.com', 'St Phillip\'s Bakery');
-        $this->email->reply_to($replyTo, $name);
-        $this->email->to($data ['rows']->email);
-        $this->email->subject('St Phillip\'s - Attach your images'.'|'.$data['order_code']);
-        $this->email->message(nl2br($body));
-        $this->email->send();
+        $order_id = $orders['order_id'];
+        $result= $this->productions_model->orderPrint($order_id);
+        $data['rows']=$result->row();
+        if(!empty($data ['rows']->email)){
+            $body = $this->load->view('email/instructional_photo_view', $data,true);
+            $this->email->set_newline("\r\n");
+            $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
+            $this->email->reply_to($replyTo, $name);
+            $this->email->to($data ['rows']->email);
+            $this->email->subject($subject.'|'. $data['rows']->order_code);
+            $this->email->message(nl2br($body));
+            $this->email->send();
+        }
 
     }
-
 
     public function barcode_gen($order_code) {
 

@@ -245,7 +245,7 @@
 <div class="row-fluid">
     <div class="span6">
         <div class="control-group" >
-            <label class="control-label" ><?php echo $this->lang->line('pickup_location');?></label>
+            <label class="control-label" ><?php echo $this->lang->line('bakery_location');?></label>
             <div class="controls">
                 <select  id="location_id" style="width: 100%;"  name="location_id" class="search_dropdown">
                     <?php
@@ -343,7 +343,7 @@
             <label class="control-label" for="username"><?php echo $this->lang->line('serving_name');?></label>
             <div class="controls">
                 <select class="search_dropdown1" id="servings" style="width: 100%;"  name="price_matrix_id">
-                <?php echo $servings; ?>
+                <?php if(!empty($servings)){ echo $servings;} ?>
                 </select>
             </div>
         </div>
@@ -360,7 +360,7 @@
             <label class="control-label" ><?php echo $this->lang->line('size_shape');?></label>
             <div class="controls">
                 <select class="search_dropdown1" id="size" style="width: 100%;"  name="size">
-                    <?php echo $size; ?>
+                    <?php if(!empty($size)){  echo $size; } ?>
                 </select>
             </div>
         </div>
@@ -368,7 +368,7 @@
             <label class="control-label" for="email"><?php echo $this->lang->line('price');?></label>
             <div class="controls">
                 <select disabled="" id="price" style="width: 100%;"  name="matrix_price">
-                    <?php echo $cprice; ?>
+                    <?php if(!empty($cprice)){  echo $cprice;} ?>
                 </select>
             </div>
         </div>
@@ -524,7 +524,7 @@
                     }
 
                     foreach($zoneresult as $zone):
-                        if($delivery_zone_id ==  $zone->zone_id ){
+                        if($delivery_zone_id !=  $zone->zone_id ){
                         ?>
                         <option value="<?php echo $zone->zone_id;  ?>" ><?php echo $zone->title; ?></option>
                     <?php } endforeach; ?>
@@ -669,7 +669,7 @@
         <div class="control-group">
             <label class="control-label" ><?php echo $this->lang->line('magic_surcharge');?></label>
             <div class="controls">
-                <input type="text" value="<?php echo $magic_surcharge = (isset($queryup[0]->magic_surcharge))? $queryup[0]->magic_surcharge:set_value('magic_surcharge'); ?>" class="numbersOnly" id="magic_surcharge"  name="magic_surcharge" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('surcharge_amount');?>" >
+                <input type="text" value="<?php echo $magic_surcharge = (isset($queryup[0]->magic_surcharge))? $queryup[0]->magic_surcharge:set_value('magic_surcharge'); ?>" class="numbersOnly" id="cake_magic_surcharge"  name="magic_surcharge" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('surcharge_amount');?>" >
             </div>
         </div>
 
