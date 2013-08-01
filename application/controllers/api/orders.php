@@ -402,6 +402,7 @@ class Orders extends API_Controller
         }else{
                 $orderstatus = $this->data['queryup']->orderstatus;
         }
+        $pdfname =$this->data['queryup']->order_code;
 
         if(!empty($customer_email)){
 
@@ -411,6 +412,7 @@ class Orders extends API_Controller
             $this->email->to($customer_email);
             $this->email->subject($this->lang->line('global_email_subject').':'.$orderstatus);
             $this->email->message(nl2br($body));
+            $this->email->attach('/var/www/phillips-bakery/web/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
             $this->email->send();
         }
 
