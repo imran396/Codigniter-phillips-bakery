@@ -12,11 +12,9 @@ class Orders extends Crud_Controller
         $loader = new Zend\Loader\StandardAutoloader(array('autoregister_zf' => true));
         $loader->register();
         $this->layout->setLayout('layout_admin');
-
         $this->load->library('email');
         $this->load->helper(array('uploader','idgenerator'));
-        $this->load->model(array('orders_model','productions_model','cakes_model','revel_order'));
-
+        $this->load->model(array('orders_model','productions_model','gallery_model','locations_model','cakes_model'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
@@ -363,28 +361,15 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         }else{
             $orders=$this->orders_model->order_insert($data);
 
-            if($orders['order_code'] && $orders['order_status'] != '300' ){
-
-                $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
-                $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
-                $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
-
+           /* if($orders['order_id']){
                 $RevelOrderData = array(
                     'order_code' => $orders['order_code'],
-                    'revel_product_id' =>  $revel_product,
-                    'revel_customer_id' => $revel_customer,
-                    'revel_location_id' => $revel_location,
                     'discount'=> $orders['discount_price'],
                     'subtotal'=> $orders['total_price'],
                 );
 
-                $status_code_revel =  $this->revel_order->create($RevelOrderData);
-
-                $orders['revel_order_id']  = $status_code_revel;
-                $orders['order_code'] = $status_code_revel;
-                $orders = $this->orders_model->order_update($orders, $orders['order_id']);
-
-            }
+                $this->revel_order->create($RevelOrderData);
+            }*/
 
             $this->session->set_flashdata('success_msg','New order has been added successfully');
         }
@@ -472,7 +457,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $result= $this->productions_model->orderDetails($order_code);
         $this->data['queryup']=$result->row();
         $customer_email=$this->data['queryup']->email;
-        $pdfname =$this->data['queryup']->order_code;
+        $pdfname ='stpb-'.$this->data['queryup']->order_code;
         if(!empty($customer_email)){
 
             $body = $this->load->view('email/invoice_body', $this->data,true);
@@ -481,7 +466,9 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
             $this->email->to($customer_email);
             $this->email->subject($this->lang->line('global_email').':'.$this->data['queryup']->orderstatus);
             $this->email->message(nl2br($body));
-            $this->email->attach('/var/www/phillips-bakery/web/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
+            if (file_exists($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf')) {
+                $this->email->attach($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
+            }
             $this->email->send();
 
         }
@@ -530,7 +517,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $result= $this->productions_model->orderDetails($order_code);
         if($result ->num_rows() > 0 ){
             $this->data['queryup']=$result->row();
-            $pdfname =$this->data['queryup']->order_code;
+            $pdfname ='stpb-'.$this->data['queryup']->order_code;
 
             $html          =$this->load->view('email/invoice_view', $this->data,true);
             $invoiceNumber = str_pad($pdfname,8,0,STR_PAD_LEFT);
@@ -596,7 +583,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     private function redirectToHome($redirect = NULL)
     {
-        redirect('admin/servings/'.$redirect);
+        redirect('admin/orders/'.$redirect);
     }
 
 }

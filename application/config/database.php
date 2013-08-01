@@ -82,7 +82,7 @@ $db['default']['stricton'] = FALSE;*/
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = '62O4jMyJcHlY';
+$db['default']['password'] = 'commonrbs';
 $db['default']['database'] = 'phillips';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
