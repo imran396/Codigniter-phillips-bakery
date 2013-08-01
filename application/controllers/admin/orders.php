@@ -460,15 +460,16 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $result= $this->productions_model->orderDetails($order_code);
         $this->data['queryup']=$result->row();
         $customer_email=$this->data['queryup']->email;
-
+        $pdfname =$this->data['queryup']->order_code;
         if(!empty($customer_email)){
 
             $body = $this->load->view('email/invoice_body', $this->data,true);
             $this->email->set_newline("\r\n");
-            $this->email->from('shafiq@emicrograph.com', 'St Phillip\'s Bakery');
+            $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
             $this->email->to($customer_email);
-            $this->email->subject('St Phillip\'s Bakery :'.$this->data['queryup']->orderstatus);
+            $this->email->subject($this->lang->line('global_email').':'.$this->data['queryup']->orderstatus);
             $this->email->message(nl2br($body));
+            $this->email->attach('/var/www/phillips-bakery/web/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
             $this->email->send();
 
         }
