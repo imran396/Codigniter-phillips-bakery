@@ -132,6 +132,10 @@ class Revel_Order extends Revel_Model
             $rid = 'revel_location_id';
             $condition = array('location_id'=> $id);
         }
+        elseif ( $table == 'orders' ) {
+            $rid = 'revel_order_id';
+            $condition = array('order_id'=> $id);
+        }
         $row =  $this->db->select($rid)->where($condition)->get($table);
 
         if( $row->num_rows() > 0 ) {

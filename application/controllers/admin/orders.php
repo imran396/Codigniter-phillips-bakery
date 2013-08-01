@@ -378,7 +378,10 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
                     'subtotal'=> $orders['total_price'],
                 );
 
-                $orders['revel_order_id']  = $this->revel_order->create($RevelOrderData);
+                $status_code_revel =  $this->revel_order->create($RevelOrderData);
+
+                $orders['revel_order_id']  = $status_code_revel;
+                $orders['order_code'] = $status_code_revel;
                 $orders = $this->orders_model->order_update($orders, $orders['order_id']);
 
             }

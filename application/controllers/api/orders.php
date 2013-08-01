@@ -5,7 +5,6 @@ include_once __DIR__ . '/API_Controller.php';
 class Orders extends API_Controller
 {
 
-
     public function __construct()
     {
         parent::__construct();
@@ -13,9 +12,9 @@ class Orders extends API_Controller
         require_once 'Zend/Loader/StandardAutoloader.php';
         $loader = new Zend\Loader\StandardAutoloader(array('autoregister_zf' => true));
         $loader->register();
-        $this->load->helper(array('uploader','dompdf'));
+        $this->load->helper(array('uploader','dompdf','idgenerator'));
         $this->load->model(array('orders_model','productions_model','gallery_model','locations_model'));
-        $this->load->library('email',$this->config);
+        $this->load->library('email');
 
     }
 
@@ -27,7 +26,9 @@ class Orders extends API_Controller
 
     public function insert()
     {
+        //echo returnGenerateID();
 
+        //$data['order_code']=returnGenerateID();
         $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
         $data['customer_id']=isset($_REQUEST['customer_id'])? $_REQUEST['customer_id']:'';
         $data['employee_id']=isset($_REQUEST['employee_id'])? $_REQUEST['employee_id']:'';
@@ -103,7 +104,7 @@ class Orders extends API_Controller
 
         if(isset($_FILES['instructionalImages'])){
 
-               $this->orders_model->instructionalImagesUpload($orders['order_id']);
+            $this->orders_model->instructionalImagesUpload($orders['order_id']);
         }
 
         $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
@@ -111,6 +112,7 @@ class Orders extends API_Controller
 
             $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'));
         }
+
         $instructional_email_photo = isset($_REQUEST['instructional_email_photo']) ? $_REQUEST['instructional_email_photo']:'';
         if($instructional_email_photo == 1){
 
@@ -118,11 +120,12 @@ class Orders extends API_Controller
         }
 
         $this->saveBarcodeImage($orders['order_code']);
+        $this->createPDF($orders['order_code']);
+
         $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
-        if($mailtouser =="yes"){
+        if($mailtouser ==1){
             $this->sendEmail($orders['order_code']);
         }
-
 
         if($orders['order_code'] && $orders['order_status'] != '300' ){
             $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
@@ -138,12 +141,15 @@ class Orders extends API_Controller
                 'subtotal'=> $orders['total_price'],
             );
 
-            $orders['revel_order_id']  = $this->revel_order->create($RevelOrderData);
+            $status_code_revel =  $this->revel_order->create($RevelOrderData);
 
+            $orders['revel_order_id']  = $status_code_revel;
+            $orders['order_code'] = $status_code_revel;
             $orders=$this->orders_model->order_update($orders, $orders['order_id']);
 
 
         }
+
 
         if($orders['order_status'] == 300 ){
 
@@ -234,6 +240,8 @@ class Orders extends API_Controller
             $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'));
         }
 
+        $this->createPDF($orders['order_code']);
+
         $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
         if($mailtouser =="yes"){
             $this->sendEmail($orders['order_code']);
@@ -246,6 +254,31 @@ class Orders extends API_Controller
                 $this->orders_model->instructionalPhotoDelete($image,$orders['order_id']);
             }
         }
+
+        $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
+
+        if(empty($revel_order_id) && $orders['order_status'] != '300' ){
+            $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
+            $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
+            $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+
+            $RevelOrderData = array(
+                'order_code' => $orders['order_code'],
+                'revel_product_id' =>  $revel_product,
+                'revel_customer_id' => $revel_customer,
+                'revel_location_id' => $revel_location,
+                'discount'=> $orders['discount_price'],
+                'subtotal'=> $orders['total_price'],
+            );
+            $status_code_revel =  $this->revel_order->create($RevelOrderData);
+
+            $orders['revel_order_id']  = $status_code_revel;
+            $orders['order_code'] = $status_code_revel;
+
+            $orders=$this->orders_model->order_update($orders, $orders['order_id']);
+
+        }
+
 
         if($orders['order_status'] == 300 ){
 
@@ -393,28 +426,28 @@ class Orders extends API_Controller
         $order_id = $_REQUEST['order_id'];
         $result= $this->productions_model->orderPrint($order_id);
         if($result ->num_rows() > 0){
-        $this->data['queryup']=$result->row();
-        $customer_email=$this->data['queryup']->email;
-        $order_status=$this->data['queryup']->order_status;
+            $this->data['queryup']=$result->row();
+            $customer_email=$this->data['queryup']->email;
+            $order_status=$this->data['queryup']->order_status;
 
-        if($order_status == 301){
+            if($order_status == 301){
                 $orderstatus="Order";
-        }else{
+            }else{
                 $orderstatus = $this->data['queryup']->orderstatus;
-        }
-        $pdfname =$this->data['queryup']->order_code;
+            }
+            $pdfname =$this->data['queryup']->order_code;
 
-        if(!empty($customer_email)){
+            if(!empty($customer_email)){
 
-            $body          = $this->load->view('email/invoice_body', $this->data,true);
-            $this->email->set_newline("\r\n");
-            $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
-            $this->email->to($customer_email);
-            $this->email->subject($this->lang->line('global_email_subject').':'.$orderstatus);
-            $this->email->message(nl2br($body));
-            $this->email->attach('/var/www/phillips-bakery/web/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
-            $this->email->send();
-        }
+                $body          = $this->load->view('email/invoice_body', $this->data,true);
+                $this->email->set_newline("\r\n");
+                $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
+                $this->email->to($customer_email);
+                $this->email->subject($this->lang->line('global_email_subject').':'.$orderstatus);
+                $this->email->message(nl2br($body));
+                $this->email->attach('/var/www/phillips-bakery/web/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
+                $this->email->send();
+            }
 
             if(!empty($customer_email)){
                 $this->sendOutput(array('status'=>'success','email_id'=>$customer_email));
@@ -443,12 +476,14 @@ class Orders extends API_Controller
 
         if(!empty($customer_email)){
 
+            $pdfname =$this->data['queryup']->order_code;
             $body          = $this->load->view('email/invoice_body', $this->data,true);
             $this->email->set_newline("\r\n");
             $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
             $this->email->to($customer_email);
             $this->email->subject($this->lang->line('global_email_subject').':'.$orderstatus);
             $this->email->message(nl2br($body));
+            $this->email->attach('/var/www/phillips-bakery/web/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
             $this->email->send();
 
         }
@@ -456,20 +491,37 @@ class Orders extends API_Controller
 
     }
 
-   /* public function sendOrderEmail($order_code,$ordertype="Estimate"){
+    public function createPDF($order_code){
 
-        // $this->load->helper(array('dompdf', 'file'));
+        $this->load->helper(array('dompdf', 'file'));
         $result= $this->productions_model->orderDetails($order_code);
-        $this->data['queryup']=$result->row();
-        $this->data['invoice_title']= $ordertype;
-        $body          = $this->load->view('email/invoice_body', $this->data,true);
-         $html          = $this->load->view('email/invoice_view', $this->data,true);
-         $invoiceNumber = str_pad($ordertype.'-'.$order_code,8,0,STR_PAD_LEFT);
-         $pdf           = pdf_create($html, $invoiceNumber, false);
-         $filePath      = realpath(APPPATH . "../web/assets/uploads/orders/pdf/"). DIRECTORY_SEPARATOR . $invoiceNumber.".pdf";
-         file_put_contents($filePath,$pdf);
-         $this->sendEmail($body);
-    }*/
+        if($result ->num_rows() > 0 ){
+            $this->data['queryup']=$result->row();
+            $pdfname =$this->data['queryup']->order_code;
+
+            $html          =$this->load->view('email/invoice_view', $this->data,true);
+            $invoiceNumber = str_pad($pdfname,8,0,STR_PAD_LEFT);
+            $pdf           = pdf_create($html, $invoiceNumber, false);
+            $filePath      = realpath(APPPATH . "../web/assets/uploads/orders/pdf/"). DIRECTORY_SEPARATOR . $invoiceNumber.".pdf";
+            file_put_contents($filePath,$pdf);
+            //echo $pdffile_path = $filePath;
+        }
+    }
+
+    /* public function sendOrderEmail($order_code,$ordertype="Estimate"){
+
+         // $this->load->helper(array('dompdf', 'file'));
+         $result= $this->productions_model->orderDetails($order_code);
+         $this->data['queryup']=$result->row();
+         $this->data['invoice_title']= $ordertype;
+         $body          = $this->load->view('email/invoice_body', $this->data,true);
+          $html          = $this->load->view('email/invoice_view', $this->data,true);
+          $invoiceNumber = str_pad($ordertype.'-'.$order_code,8,0,STR_PAD_LEFT);
+          $pdf           = pdf_create($html, $invoiceNumber, false);
+          $filePath      = realpath(APPPATH . "../web/assets/uploads/orders/pdf/"). DIRECTORY_SEPARATOR . $invoiceNumber.".pdf";
+          file_put_contents($filePath,$pdf);
+          $this->sendEmail($body);
+     }*/
 
 
 
