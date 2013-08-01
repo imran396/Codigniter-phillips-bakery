@@ -14,7 +14,7 @@ class Orders extends Crud_Controller
         $this->layout->setLayout('layout_admin');
         $this->load->library('email');
         $this->load->helper(array('uploader','idgenerator'));
-        $this->load->model(array('orders_model','productions_model','cakes_model'));
+        $this->load->model(array('orders_model','productions_model','gallery_model','locations_model','cakes_model'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
@@ -460,7 +460,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $result= $this->productions_model->orderDetails($order_code);
         $this->data['queryup']=$result->row();
         $customer_email=$this->data['queryup']->email;
-        $pdfname =$this->data['queryup']->order_code;
+        $pdfname ='stpb-'.$this->data['queryup']->order_code;
         if(!empty($customer_email)){
 
             $body = $this->load->view('email/invoice_body', $this->data,true);
@@ -469,7 +469,9 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
             $this->email->to($customer_email);
             $this->email->subject($this->lang->line('global_email').':'.$this->data['queryup']->orderstatus);
             $this->email->message(nl2br($body));
-            $this->email->attach('/var/www/phillips-bakery/web/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
+            if (file_exists($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf')) {
+                $this->email->attach($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
+            }
             $this->email->send();
 
         }
@@ -518,7 +520,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $result= $this->productions_model->orderDetails($order_code);
         if($result ->num_rows() > 0 ){
             $this->data['queryup']=$result->row();
-            $pdfname =$this->data['queryup']->order_code;
+            $pdfname ='stpb-'.$this->data['queryup']->order_code;
 
             $html          =$this->load->view('email/invoice_view', $this->data,true);
             $invoiceNumber = str_pad($pdfname,8,0,STR_PAD_LEFT);
@@ -584,7 +586,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     private function redirectToHome($redirect = NULL)
     {
-        redirect('admin/servings/'.$redirect);
+        redirect('admin/orders/'.$redirect);
     }
 
 }

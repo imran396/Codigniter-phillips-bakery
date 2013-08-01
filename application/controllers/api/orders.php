@@ -398,7 +398,7 @@ class Orders extends API_Controller
         }else{
                 $orderstatus = $this->data['queryup']->orderstatus;
         }
-        $pdfname =$this->data['queryup']->order_code;
+        $pdfname ='stpb-'.$this->data['queryup']->order_code;
 
         if(!empty($customer_email)){
 
@@ -408,7 +408,9 @@ class Orders extends API_Controller
             $this->email->to($customer_email);
             $this->email->subject($this->lang->line('global_email_subject').':'.$orderstatus);
             $this->email->message(nl2br($body));
-            $this->email->attach('/var/www/phillips-bakery/web/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
+            if (file_exists($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf')) {
+            $this->email->attach($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
+            }
             $this->email->send();
         }
 
@@ -439,14 +441,16 @@ class Orders extends API_Controller
 
         if(!empty($customer_email)){
 
-            $pdfname =$this->data['queryup']->order_code;
+            $pdfname ='stpb-'.$this->data['queryup']->order_code;
             $body          = $this->load->view('email/invoice_body', $this->data,true);
             $this->email->set_newline("\r\n");
             $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
             $this->email->to($customer_email);
             $this->email->subject($this->lang->line('global_email_subject').':'.$orderstatus);
             $this->email->message(nl2br($body));
-            $this->email->attach('/var/www/phillips-bakery/web/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
+            if (file_exists($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf')) {
+                $this->email->attach($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
+            }
             $this->email->send();
 
         }
@@ -463,7 +467,7 @@ class Orders extends API_Controller
             $pdfname =$this->data['queryup']->order_code;
 
             $html          =$this->load->view('email/invoice_view', $this->data,true);
-            $invoiceNumber = str_pad($pdfname,8,0,STR_PAD_LEFT);
+            $invoiceNumber = str_pad('stpb-'.$pdfname,8,0,STR_PAD_LEFT);
             $pdf           = pdf_create($html, $invoiceNumber, false);
             $filePath      = realpath(APPPATH . "../web/assets/uploads/orders/pdf/"). DIRECTORY_SEPARATOR . $invoiceNumber.".pdf";
             file_put_contents($filePath,$pdf);
