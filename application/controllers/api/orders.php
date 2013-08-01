@@ -132,15 +132,27 @@ class Orders extends API_Controller
             $this->sendEmail($orders['order_code']);
         }
 
-        /*if($orders['order_id']){
+
+        if($orders['order_code'] && $orders['order_status'] != '300' ){
+            $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
+            $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
+            $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+
             $RevelOrderData = array(
                 'order_code' => $orders['order_code'],
+                'revel_product_id' =>  $revel_product,
+                'revel_customer_id' => $revel_customer,
+                'revel_location_id' => $revel_location,
                 'discount'=> $orders['discount_price'],
                 'subtotal'=> $orders['total_price'],
             );
 
-            $this->revel_order->create($RevelOrderData);
-        }*/
+            $orders['revel_order_id']  = $this->revel_order->create($RevelOrderData);
+
+            $orders=$this->orders_model->order_update($orders, $orders['order_id']);
+
+
+        }
 
         if($orders['order_status'] == 300 ){
 

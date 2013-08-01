@@ -33,10 +33,11 @@ class Test extends Crud_Controller
 
     public function createLocation()
     {
-        $this->revel_location->create(array(
-            'name' => 'Kallaynpur POS',
+      $data =  $this->revel_location->create(array(
+            'title' => 'Kallaynpur POS',
 
         ));
+      var_dump($data);
     }
 
     // **************************** EMPLOYEES ****************************

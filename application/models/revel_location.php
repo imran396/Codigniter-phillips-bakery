@@ -21,7 +21,7 @@ class Revel_Location extends Revel_Model
             'is_bar'                          => false,
             'kitchen_view'                    => false,
             'mac'                             => 'B8:C7:5D:DA:19:6F',
-            'name'                            => $data['name'],
+            'name'                            => $data['title'],
             'network_key'                     => 'eno',
             'no_cash_drawer'                  => false,
             'payment_options_array'           => array(1, 2, 3, 4, 5, 6, 7, 8),
@@ -29,6 +29,8 @@ class Revel_Location extends Revel_Model
             'uuid'                            => $this->generateUUID(),
         );
 
-        return $this->postResource('PosStation', $data, true);
+        $this->postResource('PosStation', $data, true);
+        return basename($this->headers['location']);
+
     }
 }

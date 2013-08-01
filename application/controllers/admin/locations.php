@@ -8,6 +8,7 @@ class Locations extends Crud_Controller
         parent::__construct();
         $this->layout->setLayout('layout_admin');
         $this->load->model('locations_model');
+        $this->load->model('revel_location');
        // $this->output->enable_profiler(false);
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
@@ -17,14 +18,12 @@ class Locations extends Crud_Controller
 
     public function index()
     {
-
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/locations/locations_view', $this->data);
 
     }
 
     public function listing(){
-
         $this->data['result'] = $this->locations_model->getListing();
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/locations/listing_view', $this->data);
@@ -33,7 +32,6 @@ class Locations extends Crud_Controller
 
     public function save()
     {
-
         if (!empty($_POST)) {
             $this->addValidation();
             if ($this->form_validation->run()) {
@@ -85,6 +83,10 @@ class Locations extends Crud_Controller
 
         $data = $this->input->post();
         if (empty($data['location_id'])) {
+
+            if(isset($data['title'])){
+                $data['revel_location_id'] = $this->revel_location->create($data);
+            }
 
             $this->locations_model->create($data);
 

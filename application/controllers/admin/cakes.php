@@ -11,7 +11,7 @@ class Cakes extends Crud_Controller
         $this->load->helper('uploader');
         //$this->output->enable_profiler(TRUE);
         $this->layout->setLayout('layout_admin');
-        $this->load->model(array('cakes_model','gallery_model'));
+        $this->load->model(array('cakes_model','gallery_model','revel_product'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
@@ -92,8 +92,10 @@ class Cakes extends Crud_Controller
 
         $data = $this->input->post();
         if (empty($data['cake_id'])) {
-
-            $this->cakes_model->create($data);
+            if(isset($data['title'])){
+                $data['revel_product_id']= $this->revel_product->create($data);
+                $this->cakes_model->create($data);
+            }
             $this->session->set_flashdata('success_msg','New cake has been added successfully');
         } else {
             $this->cakes_model->save($data, $data['cake_id']);

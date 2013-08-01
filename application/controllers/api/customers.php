@@ -8,6 +8,7 @@ class Customers extends API_Controller
     {
         parent::__construct();
         $this->load->model('customers_model');
+        $this->load->model('revel_customer');
     }
 
     public function index()
@@ -21,6 +22,11 @@ class Customers extends API_Controller
     {
             $data = $this->input->post();
             $data['status']=1;
+
+            if(isset($data)){
+                $data['revel_customer_id']= $this->revel_customer->create($data);
+            }
+
             $customer_id = $this->customers_model->create($data);
 
             $data = array(

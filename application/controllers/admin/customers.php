@@ -8,6 +8,7 @@ class Customers extends Crud_Controller
         parent::__construct();
         $this->layout->setLayout('layout_admin');
         $this->load->model('customers_model');
+        $this->load->model('revel_customer');
         //$this->output->enable_profiler(TRUE);
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
@@ -87,7 +88,11 @@ class Customers extends Crud_Controller
         $data = $this->input->post();
         if (empty($data['customer_id'])) {
 
-            $this->customers_model->create($data);
+            if(isset($data)){
+                $data['revel_customer_id']= $this->revel_customer->create($data);
+                $this->customers_model->create($data);
+            }
+
 
             $this->session->set_flashdata('success_msg',"New customer has been added successfully");
         } else {

@@ -42,14 +42,25 @@ class Revel_Model extends CI_Model
         $client->sendsAndExpects('json');
 
         $client->body(str_replace('\\/', '/', json_encode($data)));
-        $response = $client->send();
+
+        try {
+            $response = $client->send();
+        } catch (HttpException $ex) {
+            if (isset($ex->innerException)){
+                echo $ex->innerException->getMessage();
+                exit;
+            } else {
+                echo $ex;
+                exit;
+            }
+        }
 
         $this->code     = $response->code;
         $this->response = $response->body;
         $this->headers  = $response->headers;
 
         if ($debug) {
-            var_dump($response);
+            //var_dump($response);
         }
 
         return $response->raw_body;

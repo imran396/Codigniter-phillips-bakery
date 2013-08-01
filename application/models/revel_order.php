@@ -22,7 +22,7 @@ class Revel_Order extends Revel_Model
                 "uuid"                   => $this->generateUUID(),
                 "temp_sort"              => time(),
                 "created_by"             => "/enterprise/User/1/",
-                "station"                => "/resources/PosStation/3/",
+                "station"                => isset($data['revel_product_id']) ? "/resources/PosStation/".$data['revel_location_id']."/" : null,
                 "course_number"          => 0,
                 "shared"                 => 0,
                 "voided_by"              => null,
@@ -31,7 +31,7 @@ class Revel_Order extends Revel_Model
                 "split_with_seat"        => 0,
                 "discount_taxed"         => null,
                 "exchanged"              => 0,
-                "product"                => "/resources/Product/271/",
+                "product"                => isset($data['revel_product_id']) ? "/resources/Product/".$data['revel_product_id']."/": null,
                 "combo_used"             => null,
                 "updated_by"             => "/enterprise/User/1/",
                 "product_name_override"  => null,
@@ -94,10 +94,10 @@ class Revel_Order extends Revel_Model
                 "subtotal"             => $data['subtotal'],
                 "service_charge"       => 0,
                 "discount_amount"      => $data['discount'],
-                "customer"             => null,
+                "customer"             => isset($data['revel_customer_id']) ? "/resources/Customer/".$data['revel_customer_id']."/" : null,
                 "final_total"          => $data['subtotal'],
                 "number_of_people"     => 1,
-                "created_at"           => "/resources/PosStation/3/",
+                "created_at"           => isset($data['revel_location_id']) ? "/resources/PosStation/".$data['revel_location_id']."/": null,
                 "delivery_clock_in"    => null,
                 "local_id"             => 57189,
                 "remaining_due"        => $data['subtotal'],
@@ -109,7 +109,7 @@ class Revel_Order extends Revel_Model
                     "order_closed_by" => null,
                     "opened"          => date('c'),
                     "order_opened_by" => "/enterprise/User/1/",
-                    "order_opened_at" => "/resources/PosStation/3/",
+                    "order_opened_at" => isset($data['revel_location_id']) ? "/resources/PosStation/".$data['revel_location_id']."/": null,
                     "closed"          => null,
                     "order"           => null,
                     "uuid"            => $this->generateUUID()
@@ -117,6 +117,30 @@ class Revel_Order extends Revel_Model
             )
         );
 
-        return $this->postResource('OrderAllInOne', $revelData, true);
+        $this->postResource('OrderAllInOne', $revelData, true);
+        return basename($this->headers['location']);
+    }
+
+    public function getRevelID($table, $id){
+        if( $table == 'cakes' ) {
+            $rid = 'revel_product_id';
+            $condition = array('cake_id'=> $id);
+        } elseif ( $table == 'customers' ) {
+            $rid = 'revel_customer_id';
+            $condition = array('customer_id'=> $id);
+        } elseif ( $table == 'locations' ) {
+            $rid = 'revel_location_id';
+            $condition = array('location_id'=> $id);
+        }
+        $row =  $this->db->select($rid)->where($condition)->get($table);
+
+        if( $row->num_rows() > 0 ) {
+           $res = $row->row();
+           return $res->$rid;
+       } else {
+           return null;
+       }
+
+
     }
 }
