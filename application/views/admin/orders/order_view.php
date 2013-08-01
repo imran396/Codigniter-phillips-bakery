@@ -1,4 +1,3 @@
-
 <script type="text/javascript">
 
     /* when document is ready */
@@ -214,9 +213,7 @@
         });
 
 
-        $('#delivery_time').timepicker({
-            ampm: true
-        });
+        $('#delivery_time').timepicker();
 
  });
 </script>
@@ -545,7 +542,7 @@
         <div class="control-group">
             <label class="control-label" ><?php echo $this->lang->line('delivery_time');?></label>
             <div class="controls">
-                <input type="text" id="delivery_time"  value="<?php echo (isset($queryup[0]->delivery_time))? $queryup[0]->delivery_time:set_value('delivery_time'); ?>" name="delivery_time"  style="width: 70px;" class="">
+                <input type="text" id="delivery_time"  value="<?php  $deliverytime=(isset($queryup[0]->delivery_time))? $queryup[0]->delivery_time:set_value('delivery_time'); if($deliverytime) echo timeFormat($deliverytime); ?>" name="delivery_time"  style="width: 70px;" class="">
             </div>
         </div>
 
@@ -910,6 +907,7 @@
     });
 
 </script>
+
 
 
 

@@ -50,7 +50,7 @@ function dateFormatStr($date=NULL){
     return $udate;
 }
 
-function phoneNoFormat(){
+function phoneNoFormat($phone){
     return  $to = sprintf("%s-%s-%s",
         substr($phone, 0, 3),
         substr($phone, 3, 3),
@@ -63,6 +63,15 @@ function timeFormat($time){
     $dateTime=strtotime($date.' '.$time);
     return date("H:i",$dateTime);
 }
+
+function timeFormatAmPm($time){
+
+    $date=date('d-m-y');
+    $dateTime=strtotime($date.' '.$time);
+    return date("h:i A",$dateTime);
+}
+
+
 
 function wordLimit($text,$n=10){
     $text=strip_tags($text);  // not neccssary for none HTML

@@ -4,19 +4,6 @@ set_include_path(get_include_path() . PATH_SEPARATOR . realpath(APPPATH .'librar
 class Orders extends Crud_Controller
 {
 
-
-    public $config = array(
-        'protocol' => 'smtp',
-        'smtp_host' => 'ssl://smtp.googlemail.com',
-        'smtp_port' => 465,
-        'smtp_user' => 'imran@emicrograph.com',
-        'smtp_pass' => 'i1m2r3a4n',
-        'charset'   => 'iso-8859-1',
-        'mailtype' => 'html'
-    );
-
-
-
     public function __construct()
     {
         parent::__construct();
@@ -25,7 +12,8 @@ class Orders extends Crud_Controller
         $loader = new Zend\Loader\StandardAutoloader(array('autoregister_zf' => true));
         $loader->register();
         $this->layout->setLayout('layout_admin');
-        $this->load->helper('uploader');
+        $this->load->library('email');
+        $this->load->helper(array('uploader','idgenerator'));
         $this->load->model(array('orders_model','productions_model','cakes_model'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
@@ -315,7 +303,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $data =$this->input->post();
         $orderID = $this->input->post('order_id');
 
-
+        //$data['order_code']=returnGenerateID();
         $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
         $data['customer_id']=isset($_REQUEST['customer_id'])? $_REQUEST['customer_id']:'';
         $data['employee_id']=isset($_REQUEST['employee_id'])? $_REQUEST['employee_id']:'';
@@ -327,7 +315,9 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $data['delivery_zone_id']=isset($_REQUEST['delivery_zone_id'])? $_REQUEST['delivery_zone_id']:'';
         $data['delivery_zone_surcharge']=isset($_REQUEST['delivery_zone_surcharge'])? $_REQUEST['delivery_zone_surcharge']:'';
         $data['delivery_date']=isset($_REQUEST['delivery_date'])? $_REQUEST['delivery_date']:'';
-        $data['delivery_time']=isset($_REQUEST['delivery_time'])? $_REQUEST['delivery_time']:'';
+        $deliverytime=isset($_REQUEST['delivery_time'])? $_REQUEST['delivery_time']:'';
+        $data['delivery_time']=($deliverytime !="") ? timeFormatAmPm($deliverytime):'';
+
         $data['flavour_id']=isset($_REQUEST['flavour_id'])? $_REQUEST['flavour_id']:'';
         $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:'No';
         $data['price_matrix_id']=isset($_REQUEST['price_matrix_id'])? $_REQUEST['price_matrix_id']:'';
@@ -345,6 +335,9 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $data['total_price']=isset($_REQUEST['total_price'])? $_REQUEST['total_price']:'';
         $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';
         $pluploadUploader_count=isset($_REQUEST['pluploadUploader_count'])? $_REQUEST['pluploadUploader_count']:'';
+
+
+
         $estimate=isset($_REQUEST['estimate'])? $_REQUEST['estimate']:'';
 
         if($estimate ==300){
