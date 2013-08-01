@@ -446,6 +446,7 @@ class Orders extends API_Controller
             $this->email->message(nl2br($body));
             $this->email->attach('/var/www/phillips-bakery/web/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
             $this->email->send();
+
         }
 
 
