@@ -12,14 +12,11 @@ class Orders extends Crud_Controller
         $loader = new Zend\Loader\StandardAutoloader(array('autoregister_zf' => true));
         $loader->register();
         $this->layout->setLayout('layout_admin');
-<<<<<<< HEAD
-        $this->load->helper('uploader');
-        $this->load->model(array('orders_model','productions_model','cakes_model','revel_order'));
-=======
+
         $this->load->library('email');
         $this->load->helper(array('uploader','idgenerator'));
-        $this->load->model(array('orders_model','productions_model','cakes_model'));
->>>>>>> origin/master
+        $this->load->model(array('orders_model','productions_model','cakes_model','revel_order'));
+
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
@@ -306,11 +303,6 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
     public function save(){
         $data =$this->input->post();
         $orderID = $this->input->post('order_id');
-<<<<<<< HEAD
-=======
-
-        //$data['order_code']=returnGenerateID();
->>>>>>> origin/master
         $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
         $data['customer_id']=isset($_REQUEST['customer_id'])? $_REQUEST['customer_id']:'';
         $data['employee_id']=isset($_REQUEST['employee_id'])? $_REQUEST['employee_id']:'';
