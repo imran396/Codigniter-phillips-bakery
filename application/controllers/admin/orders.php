@@ -4,19 +4,6 @@ set_include_path(get_include_path() . PATH_SEPARATOR . realpath(APPPATH .'librar
 class Orders extends Crud_Controller
 {
 
-
-    public $config = array(
-        'protocol' => 'smtp',
-        'smtp_host' => 'ssl://smtp.googlemail.com',
-        'smtp_port' => 465,
-        'smtp_user' => 'imran@emicrograph.com',
-        'smtp_pass' => 'i1m2r3a4n',
-        'charset'   => 'iso-8859-1',
-        'mailtype' => 'html'
-    );
-
-
-
     public function __construct()
     {
         parent::__construct();
@@ -25,8 +12,14 @@ class Orders extends Crud_Controller
         $loader = new Zend\Loader\StandardAutoloader(array('autoregister_zf' => true));
         $loader->register();
         $this->layout->setLayout('layout_admin');
+<<<<<<< HEAD
         $this->load->helper('uploader');
         $this->load->model(array('orders_model','productions_model','cakes_model','revel_order'));
+=======
+        $this->load->library('email');
+        $this->load->helper(array('uploader','idgenerator'));
+        $this->load->model(array('orders_model','productions_model','cakes_model'));
+>>>>>>> origin/master
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
@@ -313,6 +306,11 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
     public function save(){
         $data =$this->input->post();
         $orderID = $this->input->post('order_id');
+<<<<<<< HEAD
+=======
+
+        //$data['order_code']=returnGenerateID();
+>>>>>>> origin/master
         $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
         $data['customer_id']=isset($_REQUEST['customer_id'])? $_REQUEST['customer_id']:'';
         $data['employee_id']=isset($_REQUEST['employee_id'])? $_REQUEST['employee_id']:'';
@@ -324,7 +322,9 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $data['delivery_zone_id']=isset($_REQUEST['delivery_zone_id'])? $_REQUEST['delivery_zone_id']:'';
         $data['delivery_zone_surcharge']=isset($_REQUEST['delivery_zone_surcharge'])? $_REQUEST['delivery_zone_surcharge']:'';
         $data['delivery_date']=isset($_REQUEST['delivery_date'])? $_REQUEST['delivery_date']:'';
-        $data['delivery_time']=isset($_REQUEST['delivery_time'])? $_REQUEST['delivery_time']:'';
+        $deliverytime=isset($_REQUEST['delivery_time'])? $_REQUEST['delivery_time']:'';
+        $data['delivery_time']=($deliverytime !="") ? timeFormatAmPm($deliverytime):'';
+
         $data['flavour_id']=isset($_REQUEST['flavour_id'])? $_REQUEST['flavour_id']:'';
         $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:'No';
         $data['price_matrix_id']=isset($_REQUEST['price_matrix_id'])? $_REQUEST['price_matrix_id']:'';
@@ -342,6 +342,9 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $data['total_price']=isset($_REQUEST['total_price'])? $_REQUEST['total_price']:'';
         $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';
         $pluploadUploader_count=isset($_REQUEST['pluploadUploader_count'])? $_REQUEST['pluploadUploader_count']:'';
+
+
+
         $estimate=isset($_REQUEST['estimate'])? $_REQUEST['estimate']:'';
 
         if($estimate ==300){
@@ -427,6 +430,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         }
 
         $this->saveBarcodeImage($orders['order_code']);
+        $this->createPDF($orders['order_code']);
 
         $mailtouser = isset($_REQUEST['mailtouser']) ? $_REQUEST['mailtouser']:'';
         if($mailtouser == 1){
@@ -473,15 +477,16 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $result= $this->productions_model->orderDetails($order_code);
         $this->data['queryup']=$result->row();
         $customer_email=$this->data['queryup']->email;
-
+        $pdfname =$this->data['queryup']->order_code;
         if(!empty($customer_email)){
 
             $body = $this->load->view('email/invoice_body', $this->data,true);
             $this->email->set_newline("\r\n");
-            $this->email->from('shafiq@emicrograph.com', 'St Phillip\'s Bakery');
+            $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
             $this->email->to($customer_email);
-            $this->email->subject('St Phillip\'s Bakery :'.$this->data['queryup']->orderstatus);
+            $this->email->subject($this->lang->line('global_email').':'.$this->data['queryup']->orderstatus);
             $this->email->message(nl2br($body));
+            $this->email->attach('/var/www/phillips-bakery/web/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
             $this->email->send();
 
         }
@@ -523,6 +528,24 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $content = file_get_contents(site_url()."/api/orders/barcode_gen/".$order_code);
         file_put_contents(YOUR_DIRECTORY.$order_code.".png",$content);
     }
+
+    public function createPDF($order_code){
+
+        $this->load->helper(array('dompdf', 'file'));
+        $result= $this->productions_model->orderDetails($order_code);
+        if($result ->num_rows() > 0 ){
+            $this->data['queryup']=$result->row();
+            $pdfname =$this->data['queryup']->order_code;
+
+            $html          =$this->load->view('email/invoice_view', $this->data,true);
+            $invoiceNumber = str_pad($pdfname,8,0,STR_PAD_LEFT);
+            $pdf           = pdf_create($html, $invoiceNumber, false);
+            $filePath      = realpath(APPPATH . "../web/assets/uploads/orders/pdf/"). DIRECTORY_SEPARATOR . $invoiceNumber.".pdf";
+            file_put_contents($filePath,$pdf);
+            //echo $pdffile_path = $filePath;
+        }
+    }
+
 
 
     function search($urlsearch=NULL,$start=0){

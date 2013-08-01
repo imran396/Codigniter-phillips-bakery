@@ -5,16 +5,6 @@ include_once __DIR__ . '/API_Controller.php';
 class Orders extends API_Controller
 {
 
-    public $config = array(
-        'protocol' => 'smtp',
-        'smtp_host' => 'ssl://smtp.googlemail.com',
-        'smtp_port' => 465,
-        'smtp_user' => 'imran@emicrograph.com',
-        'smtp_pass' => 'i1m2r3a4n',
-        'charset'   => 'iso-8859-1',
-        'mailtype' => 'html'
-    );
-
     public function __construct()
     {
         parent::__construct();
@@ -22,9 +12,9 @@ class Orders extends API_Controller
         require_once 'Zend/Loader/StandardAutoloader.php';
         $loader = new Zend\Loader\StandardAutoloader(array('autoregister_zf' => true));
         $loader->register();
-        $this->load->helper(array('uploader','dompdf'));
+        $this->load->helper(array('uploader','dompdf','idgenerator'));
         $this->load->model(array('orders_model','productions_model','gallery_model','locations_model'));
-        $this->load->library('email',$this->config);
+        $this->load->library('email');
 
     }
 
@@ -37,6 +27,10 @@ class Orders extends API_Controller
     public function insert()
     {
 
+
+        //echo returnGenerateID();
+
+        //$data['order_code']=returnGenerateID();
         $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
         $data['customer_id']=isset($_REQUEST['customer_id'])? $_REQUEST['customer_id']:'';
         $data['employee_id']=isset($_REQUEST['employee_id'])? $_REQUEST['employee_id']:'';
@@ -120,6 +114,7 @@ class Orders extends API_Controller
 
             $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'));
         }
+
         $instructional_email_photo = isset($_REQUEST['instructional_email_photo']) ? $_REQUEST['instructional_email_photo']:'';
         if($instructional_email_photo == 1){
 
@@ -127,8 +122,10 @@ class Orders extends API_Controller
         }
 
         $this->saveBarcodeImage($orders['order_code']);
+        $this->createPDF($orders['order_code']);
+
         $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
-        if($mailtouser =="yes"){
+        if($mailtouser ==1){
             $this->sendEmail($orders['order_code']);
         }
 
@@ -242,6 +239,8 @@ class Orders extends API_Controller
 
             $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'));
         }
+
+        $this->createPDF($orders['order_code']);
 
         $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
         if($mailtouser =="yes"){
@@ -450,16 +449,35 @@ class Orders extends API_Controller
 
         if(!empty($customer_email)){
 
+            $pdfname =$this->data['queryup']->order_code;
             $body          = $this->load->view('email/invoice_body', $this->data,true);
             $this->email->set_newline("\r\n");
             $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
             $this->email->to($customer_email);
             $this->email->subject($this->lang->line('global_email_subject').':'.$orderstatus);
             $this->email->message(nl2br($body));
+            $this->email->attach('/var/www/phillips-bakery/web/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
             $this->email->send();
         }
 
 
+    }
+
+    public function createPDF($order_code){
+
+        $this->load->helper(array('dompdf', 'file'));
+        $result= $this->productions_model->orderDetails($order_code);
+        if($result ->num_rows() > 0 ){
+            $this->data['queryup']=$result->row();
+            $pdfname =$this->data['queryup']->order_code;
+
+            $html          =$this->load->view('email/invoice_view', $this->data,true);
+            $invoiceNumber = str_pad($pdfname,8,0,STR_PAD_LEFT);
+            $pdf           = pdf_create($html, $invoiceNumber, false);
+            $filePath      = realpath(APPPATH . "../web/assets/uploads/orders/pdf/"). DIRECTORY_SEPARATOR . $invoiceNumber.".pdf";
+            file_put_contents($filePath,$pdf);
+            //echo $pdffile_path = $filePath;
+        }
     }
 
    /* public function sendOrderEmail($order_code,$ordertype="Estimate"){

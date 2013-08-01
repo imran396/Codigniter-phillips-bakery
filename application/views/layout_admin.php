@@ -138,7 +138,6 @@
 
 <!--Layout Options-->
 <!--<script src="<?php //echo base_url() ?>/assets/theme/scripts/layout.js"></script>-->
-
 <script type="text/javascript" language="javascript">
 jQuery(document).ready(function(){
 
