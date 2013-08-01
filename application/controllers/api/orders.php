@@ -448,6 +448,7 @@ class Orders extends API_Controller
             $this->email->subject($this->lang->line('global_email_subject').':'.$orderstatus);
             $this->email->message(nl2br($body));
             $this->email->send();
+
         }
 
 
