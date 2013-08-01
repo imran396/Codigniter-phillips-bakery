@@ -684,7 +684,8 @@
                 <div data-provides="fileupload" class="fileupload fileupload-new">
                     <div class="input-append">
                         <div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input class="" type="file" name="onCakeImage"></span><a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
-                        <?php if(isset($queryup[0]->on_cake_image)){ ?><span><img src="<?php  echo base_url().$queryup[0]->on_cake_image;?>" alt="" style="height: 80px; width: 80px; margin-left: 20px;"></span><?php } ?>
+                        <?php $on_cake_image = (isset($queryup[0]->on_cake_image))? $queryup[0]->on_cake_image:''; ?>"
+                        <?php if($on_cake_image){ ?><span><img src="<?php  echo base_url().$queryup[0]->on_cake_image;?>" alt="" style="height: 80px; width: 80px; margin-left: 20px;"></span><?php } ?>
                     </div>
                 </div>
             </div>
