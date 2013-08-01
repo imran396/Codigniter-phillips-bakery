@@ -231,6 +231,11 @@ class Orders extends API_Controller
             $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'));
         }
 
+        $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
+        if($mailtouser =="yes"){
+            $this->sendEmail($orders['order_code']);
+        }
+
         if(isset($_REQUEST['removedinstructionalImages'])){
 
             $image=$_REQUEST['removedinstructionalImages'];
@@ -387,20 +392,21 @@ class Orders extends API_Controller
         if($result ->num_rows() > 0){
         $this->data['queryup']=$result->row();
         $customer_email=$this->data['queryup']->email;
-        $order_status=$this->data['queryup']->orderstatus;
+        $order_status=$this->data['queryup']->order_status;
 
-        if($order_status != 'estimate'){
-                $order_status="Order";
+        if($order_status == 301){
+                $orderstatus="Order";
         }else{
-                $order_status = $this->data['queryup']->orderstatus;
+                $orderstatus = $this->data['queryup']->orderstatus;
         }
+
         if(!empty($customer_email)){
 
             $body          = $this->load->view('email/invoice_body', $this->data,true);
             $this->email->set_newline("\r\n");
-            $this->email->from('info@stphillipsbakery.com', 'St Phillips Bakery');
+            $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
             $this->email->to($customer_email);
-            $this->email->subject('St Phillip\'s Bakery :'.$order_status);
+            $this->email->subject($this->lang->line('global_email_subject').':'.$orderstatus);
             $this->email->message(nl2br($body));
             $this->email->send();
         }
@@ -423,16 +429,20 @@ class Orders extends API_Controller
         $result= $this->productions_model->orderDetails($order_code);
         $this->data['queryup']=$result->row();
         $customer_email=$this->data['queryup']->email;
+        $order_status=$this->data['queryup']->order_status;
+        if($order_status == 301){
+            $orderstatus="Order";
+        }else{
+            $orderstatus = $this->data['queryup']->orderstatus;
+        }
 
         if(!empty($customer_email)){
 
             $body          = $this->load->view('email/invoice_body', $this->data,true);
-            //$to      = 'shafiq@emicrograph.com';
-            // $subject ="Estimate";
             $this->email->set_newline("\r\n");
-            $this->email->from('info@stphillipsbakery.com', 'St Phillips Bakery');
+            $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
             $this->email->to($customer_email);
-            $this->email->subject('St Phillips Bakery :'.$this->data['queryup']->orderstatus);
+            $this->email->subject($this->lang->line('global_email_subject').':'.$orderstatus);
             $this->email->message(nl2br($body));
             $this->email->send();
         }
