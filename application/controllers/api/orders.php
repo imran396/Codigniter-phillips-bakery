@@ -114,6 +114,7 @@ class Orders extends API_Controller
 
             $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'));
         }
+
         $instructional_email_photo = isset($_REQUEST['instructional_email_photo']) ? $_REQUEST['instructional_email_photo']:'';
         if($instructional_email_photo == 1){
 
@@ -124,7 +125,7 @@ class Orders extends API_Controller
         $this->createPDF($orders['order_code']);
 
         $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
-        if($mailtouser =="yes"){
+        if($mailtouser ==1){
             $this->sendEmail($orders['order_code']);
         }
 
@@ -449,6 +450,7 @@ class Orders extends API_Controller
 
 
     }
+
     public function createPDF($order_code){
 
         $this->load->helper(array('dompdf', 'file'));
@@ -464,8 +466,6 @@ class Orders extends API_Controller
             file_put_contents($filePath,$pdf);
             //echo $pdffile_path = $filePath;
         }
-
-
     }
 
    /* public function sendOrderEmail($order_code,$ordertype="Estimate"){

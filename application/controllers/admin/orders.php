@@ -413,6 +413,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         }
 
         $this->saveBarcodeImage($orders['order_code']);
+        $this->createPDF($orders['order_code']);
 
         $mailtouser = isset($_REQUEST['mailtouser']) ? $_REQUEST['mailtouser']:'';
         if($mailtouser == 1){
@@ -509,6 +510,24 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $content = file_get_contents(site_url()."/api/orders/barcode_gen/".$order_code);
         file_put_contents(YOUR_DIRECTORY.$order_code.".png",$content);
     }
+
+    public function createPDF($order_code){
+
+        $this->load->helper(array('dompdf', 'file'));
+        $result= $this->productions_model->orderDetails($order_code);
+        if($result ->num_rows() > 0 ){
+            $this->data['queryup']=$result->row();
+            $pdfname =$this->data['queryup']->order_code;
+
+            $html          =$this->load->view('email/invoice_view', $this->data,true);
+            $invoiceNumber = str_pad($pdfname,8,0,STR_PAD_LEFT);
+            $pdf           = pdf_create($html, $invoiceNumber, false);
+            $filePath      = realpath(APPPATH . "../web/assets/uploads/orders/pdf/"). DIRECTORY_SEPARATOR . $invoiceNumber.".pdf";
+            file_put_contents($filePath,$pdf);
+            //echo $pdffile_path = $filePath;
+        }
+    }
+
 
 
     function search($urlsearch=NULL,$start=0){
