@@ -14,7 +14,7 @@ class Orders extends Crud_Controller
         $this->layout->setLayout('layout_admin');
         $this->load->library('email');
         $this->load->helper(array('uploader','idgenerator'));
-        $this->load->model(array('orders_model','productions_model','gallery_model','locations_model','cakes_model'));
+        $this->load->model(array('orders_model','productions_model','gallery_model','locations_model','cakes_model','revel_order'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
@@ -361,6 +361,30 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         }else{
             $orders=$this->orders_model->order_insert($data);
 
+            if($orders['order_code'] && $orders['order_status'] != '300' ){
+                $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
+                $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
+                $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+
+                $RevelOrderData = array(
+                    'order_code' => $orders['order_code'],
+                    'revel_product_id' =>  $revel_product,
+                    'revel_customer_id' => $revel_customer,
+                    'revel_location_id' => $revel_location,
+                    'discount'=> $orders['discount_price'],
+                    'subtotal'=> $orders['total_price'],
+                );
+
+                $status_code_revel =  $this->revel_order->create($RevelOrderData);
+
+                $orders['revel_order_id']  = $status_code_revel;
+                $orders['order_code'] = $status_code_revel;
+                $orders=$this->orders_model->order_update($orders, $orders['order_id']);
+
+
+            }
+
+
            /* if($orders['order_id']){
                 $RevelOrderData = array(
                     'order_code' => $orders['order_code'],
@@ -434,7 +458,6 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         }else{
 
             if(isset($_REQUEST['employee_id'])){
-
                 $empolyee_code = $this->logs_model->getEmployeeCode($_REQUEST['employee_id']);
                 $log = array(
                     'employee_id' => $empolyee_code,
