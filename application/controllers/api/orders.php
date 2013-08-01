@@ -128,6 +128,7 @@ class Orders extends API_Controller
         }
 
         if($orders['order_code'] && $orders['order_status'] != '300' ){
+
             $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
             $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
             $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
@@ -140,6 +141,8 @@ class Orders extends API_Controller
                 'discount'=> $orders['discount_price'],
                 'subtotal'=> $orders['total_price'],
             );
+
+
 
             $status_code_revel =  $this->revel_order->create($RevelOrderData);
 
