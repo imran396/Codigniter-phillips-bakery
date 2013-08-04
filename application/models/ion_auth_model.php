@@ -627,6 +627,38 @@ class Ion_auth_model extends Crud_Model
 	    return FALSE;
 	}
 
+    public function qr_login($employee_id)
+    {
+
+        $query = $this->db->select($this->identity_column.', users.id, password, group_id')
+            ->from($this->tables['users'])
+            ->join('meta','meta.user_id=users.id')
+            ->where('meta.employee_id', $employee_id)
+            ->where('users.active', 1)
+            ->limit(1)
+            ->get();
+
+        $result = $query->row();
+        if ($query->num_rows() == 1)
+        {
+
+                $this->update_last_login($result->id);
+                $group_row = $this->db->select('name')->where('id', $result->group_id)->get($this->tables['groups'])->row();
+
+                $session_data = array(
+                    $this->identity_column => $result->{$this->identity_column},
+                    'id'                   => $result->id, //kept for backwards compatibility
+                    'user_id'              => $result->id, //everyone likes to overwrite id so we'll use user_id
+                    'group_id'             => $result->group_id,
+                    'group'                => $group_row->name
+                );
+                $this->session->set_userdata($session_data);
+                return TRUE;
+
+        }
+
+        return FALSE;
+    }
 	/**
 	 * get_users
 	 *

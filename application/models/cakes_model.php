@@ -339,7 +339,7 @@ class Cakes_model extends CI_Model
 
         $sql = "SELECT
                 cakes.*,
-                GROUP_CONCAT(cake_gallery.image ORDER BY cake_gallery.feature_image DESC SEPARATOR ',') as images
+                GROUP_CONCAT(cake_gallery.image ORDER BY cake_gallery.ordering ASC SEPARATOR ',') as images
 
               FROM cakes
               LEFT JOIN cake_gallery
@@ -363,7 +363,7 @@ class Cakes_model extends CI_Model
         $imageurlprefix = base_url().'assets';
         $sql = "SELECT
                 C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.tiers,
-              GROUP_CONCAT(G.image ORDER BY G.gallery_id ASC SEPARATOR ',') as gallery_images
+              GROUP_CONCAT(G.image ORDER BY G.ordering ASC SEPARATOR ',') as gallery_images
               FROM cakes As C
               LEFT JOIN cake_gallery AS G
                 ON ( C.cake_id = G.cake_id )

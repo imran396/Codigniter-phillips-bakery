@@ -33,7 +33,7 @@ $lang['global_email_subject'] 		 	    = 'St. Phillips Bakery';
 
 $lang['mailgun_cakeonimage_email'] 		 	    = 'dan@gsi.mailgun.org';
 $lang['mailgun_cakeonimage_name'] 		 	    = 'Dan Branco';
-$lang['mailgun_cakeonimage_subject'] 		 	= 'St. Phillips Bakery - Attach your on cake image';
+$lang['mailgun_cakeonimage_subject'] 		 	= 'St. Phillips Bakery -  Add image on cake';
 
 $lang['mailgun_instructional_email'] 		 	= 'spenser@gsi.mailgun.org';
 $lang['mailgun_instructional_name'] 		 	= 'Spenser';
@@ -214,7 +214,7 @@ $lang['create_users'] 		 	    = 'Create Users';
 $lang['name'] 		 	    = 'Name';
 $lang['username'] 		 	    = 'User Name';
 $lang['password'] 		 	    = 'Password';
-$lang['con_password'] 		 	    = 'Re-Password';
+$lang['con_password'] 		 	    = 'Retype Password';
 $lang['role'] 		 	    = 'Users Role';
 $lang['active'] 		 	    = 'Active';
 $lang['inactive'] 		 	    = 'Inactive';
@@ -241,7 +241,7 @@ $lang['cake_information'] 		 	    = 'Cake Information';
 $lang['customer_information'] 		 	    = 'Customer,Employee & Manager';
 $lang['date_location'] 		 	    = 'Date & Location';
 $lang['delivery_information'] 		 	    = 'Delivery Information';
-$lang['cake_instruction'] 		 	    = 'Custom Cake Instruction';
+$lang['cake_instruction'] 		 	    = 'Custom Cake Instructions';
 $lang['click_for_image'] 		 	    = 'Click for large image';
 
 
@@ -274,11 +274,11 @@ $lang['delivery_zone'] 		 	    = 'Delivery Zone';
 
 
 $lang['matrix_price'] 		 	    = 'Cake Price';
-$lang['discount_price'] 		 	    = 'Discount Price';
+$lang['discount_price'] 		 	    = 'Discount';
 $lang['printed_image_surcharge'] 		 	    = 'Printed Image Surcharge';
 $lang['magic_surcharge'] 		 	    = 'Magic Surcharge';
 $lang['delivery_zone_surcharge'] 		 	    = 'Delivery Zone Surcharge';
-$lang['override_price'] 		 	    = 'Override Price';
+$lang['override_price'] 		 	    = 'Price Override';
 $lang['total_price'] 		 	    = 'Total Price';
 $lang['total'] 		 	    = 'Total';
 

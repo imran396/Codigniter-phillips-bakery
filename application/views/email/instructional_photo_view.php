@@ -2,6 +2,7 @@
 
 Reply to this email and attach the example images you would
 like your baker to reference.
+<?php //echo "Reply to this email and attach the image you would like to have printed on your cake."; ?>
 
 
 ------------------------------------------------------------

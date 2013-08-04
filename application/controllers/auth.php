@@ -24,7 +24,7 @@ class Auth extends Controller {
 
 	{
 
-		if (!$this->ion_auth->logged_in())
+        if (!$this->ion_auth->logged_in())
 		{
 			//redirect them to the login page
 			redirect('login');
@@ -121,12 +121,39 @@ class Auth extends Controller {
     function qrlogin(){
 
         $employee_id = $this->input->post('employee_id');
+        if($this->ion_auth_model->qr_login($employee_id) == TRUE){
+            $newdata = array(
+                   'locationid'  =>1
+                );
+                $this->session->set_userdata($newdata);
+
+                $user_id =   $this->session->userdata('user_id');
+                $empolyee_code = $this->logs_model->getEmployeeCode($user_id);
+                $this->session->set_userdata(array('empolyee_code'=> $empolyee_code));
+
+                $log = array(
+                    'employee_id' => $empolyee_code,
+                    'audit_name' => 'login',
+                    'description' => $this->input->post('username'),
+                );
+                $this->logs_model->insertAuditLog($log);
+
+                redirect($this->config->item('base_url'));
+
+        }else{
+
+            $this->session->set_flashdata('message', "sdfgfgdfgdfgdfgdf");
+            redirect('auth'); //use redirects instead of loading views for compatibility with MY_Controller libraries
+        }
+
     }
 
 	//log the user out
 	function logout()
 	{
-		$this->data['title'] = "Logout";
+
+
+        $this->data['title'] = "Logout";
         $session_data =  $this->session->all_userdata();
         $log = array(
             'employee_id' => $session_data['empolyee_code'],

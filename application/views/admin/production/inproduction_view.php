@@ -190,8 +190,6 @@
                 <div class="timepicker">
                     <input type="text" name="delivery_start_time" rel="#delivery_end_time" id="delivery_start_time" value="" class="hasTimeDropdown" placeholder="Start" />
                     <div class="popup timedropdown">
-
-
                         <div class="ui-datepicker-title">Choose Time</div>
                         <div class="innerLR">
                             <div class="slider-range-timer row-fluid">
@@ -344,7 +342,7 @@
     $(document).ready(function() {
 
         $('.order-sortable').dataTable( {
-            "aaSorting": [[0,'desc']],
+            "aaSorting": [[4,'desc']],
             "aoColumns": [
                 null,
                 null,

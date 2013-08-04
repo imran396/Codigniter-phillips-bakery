@@ -219,7 +219,7 @@
 </script>
 <div id="content">
 <ul class="breadcrumb">
-    <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
+    <li><a href="<?php echo site_url(); ?>" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
     <li class="divider"></li>
     <li><?php echo $this->lang->line('orders');?></li>
 </ul>
@@ -780,7 +780,7 @@
         <td><?php echo $this->lang->line('override_price');?></td>
         <td id="override_price">
             <?php $override_price = (isset($queryup[0]->override_price))? $queryup[0]->override_price:'0.00'; ?>
-            <i>$</i><input type="text" value="<?php echo $override_price; ?>" name="override_price" id="override_price"></td>
+            <span style="display: block; line-height: 30px; float:left">$</span><input type="text" value="<?php echo $override_price; ?>" name="override_price" id="override_price"></td>
     </tr>
 
 </table>
