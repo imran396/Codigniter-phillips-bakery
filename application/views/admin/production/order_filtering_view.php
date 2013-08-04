@@ -65,7 +65,7 @@
     $(document).ready(function() {
 
         $('.order-sorting').dataTable( {
-            "aaSorting": [[0,'desc']],
+            "aaSorting": [[4,'asc']],
             "aoColumns": [
                 null,
                 null,
