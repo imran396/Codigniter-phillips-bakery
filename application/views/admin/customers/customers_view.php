@@ -45,7 +45,7 @@
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('phone_number');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('phone_number');?>" value="<?php echo(isset($queryup[0]->phone_number))? $queryup[0]->phone_number:set_value('phone_number'); ?>"  class="validate[required,custom[phone]] span10" name="phone_number" id="phone_number"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('phone_number');?>" value="<?php echo(isset($queryup[0]->phone_number))? $queryup[0]->phone_number:set_value('phone_number'); ?>"  class="validate[required,custom[phone]] span10 numbersOnly" name="phone_number" id="phone_number"  />
                                     </div>
                                 </div>
                                 <div class="control-group">

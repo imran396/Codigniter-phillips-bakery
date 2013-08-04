@@ -6,7 +6,10 @@
         $('#cake_id').change(function() {
 
             var cake_id =$("#cake_id").val();
-
+            if(cake_id == ""){
+                $('#hide_tiers').show();
+                return false;
+            }
             $.ajax({
                 url:"<?php echo site_url('admin/orders/getFlavour')?>",
                 data:"cake_id="+cake_id,
@@ -14,10 +17,17 @@
                 success: function(val){
                     var n=val.split("@a&");
                     $('#flavourid').html(n[0]);
-                    $('#tiers').html(n[1]);
+                    $('#hide_tiers').hide();
+
                 }
             })
         });
+
+        <?php $cake_id = (isset($queryup[0]->cake_id))? $queryup[0]->cake_id:'';
+        if($cake_id > 0){
+        ?>
+        $('#hide_tiers').hide();
+        <?php } ?>
 
         $('#flavourid').change(function() {
 
@@ -106,25 +116,6 @@
 
         <?php } ?>
 
-
-        $('#cake_email_photo').click(function() {
-
-           if( $(this).is(':checked') ){
-                $("#cakeemailphoto").hide();
-           }else{
-                $("#cakeemailphoto").show();
-           }
-
-        });
-
-        <?php $cake_email_photo = (isset($queryup[0]->cake_email_photo))? $queryup[0]->cake_email_photo:'';
-        if($cake_email_photo == 1){
-        ?>
-        $("#cakeemailphoto").hide();
-        <?php } ?>
-
-
-
         $('#instructional_email_photo').click(function() {
 
             if( $(this).is(':checked') ){
@@ -156,22 +147,41 @@
         $('#custom_cake_surcharge').click(function() {
 
             if( $(this).is(':checked') ){
+
                 var price_matrix_id =$("#servings").val();
+                if(price_matrix_id == 0 ){
+                    alert("Please select servings for printing surcharge");
+                    return false;
+                }
+                $('#hideoncake').show();
+                $("#cakeemailphoto").show();
                 $.ajax({
                     url:"<?php echo site_url('admin/orders/getPrintedImageSurcharge')?>",
                     data:"price_matrix_id="+price_matrix_id,
                     type:"post",
                     success: function(val){
-                      console.log(val);
                       $('#printed_image_surcharge').val(val);
                       $('#printedimagesurcharge').html("$"+val);
                     }
                 })
             }else{
+                $('#hideoncake').hide();
+                $("#cakeemailphoto").hide();
                 $('#printed_image_surcharge').val('');
                 $('#printedimagesurcharge').html('');
             }
         });
+
+        <?php $on_cake_image_needed = (isset($queryup[0]->on_cake_image_needed))? $queryup[0]->on_cake_image_needed:'';
+        if($on_cake_image_needed == 1){
+        ?>
+            $('#hideoncake').show();
+            $("#cakeemailphoto").show();
+        <?php }else{ ?>
+            $('#hideoncake').hide();
+            $("#cakeemailphoto").hide();
+        <?php } ?>
+
         $('#delivery_zone_id').change(function() {
 
                 var zone_id =$("#delivery_zone_id").val();
@@ -312,7 +322,7 @@
                 </select>
             </div>
         </div>
-        <div class="control-group">
+        <div class="control-group" id="hide_tiers">
             <label class="control-label" for="email"><?php echo $this->lang->line('tiers');?></label>
             <div class="controls">
                 <select class="search_dropdown"  id="tiers" style="width: 100%;"  name="tiers">
@@ -342,7 +352,8 @@
             <label class="control-label" for="username"><?php echo $this->lang->line('serving_name');?></label>
             <div class="controls">
                 <select class="search_dropdown1" id="servings" style="width: 100%;"  name="price_matrix_id">
-                <?php if(!empty($servings)){ echo $servings;} ?>
+                    <option value="0" >---<?php echo $this->lang->line('select_one');?>---</option>
+                    <?php if(!empty($servings)){ echo $servings;} ?>
                 </select>
             </div>
         </div>
@@ -359,6 +370,7 @@
             <label class="control-label" ><?php echo $this->lang->line('size_shape');?></label>
             <div class="controls">
                 <select class="search_dropdown1" id="size" style="width: 100%;"  name="size">
+                    <option value="0" >---<?php echo $this->lang->line('select_one');?>---</option>
                     <?php if(!empty($size)){  echo $size; } ?>
                 </select>
             </div>
@@ -633,12 +645,12 @@
 
         <div class="control-group">
         <label>
-        <?php $printed_image_surcharge = (isset($queryup[0]->printed_image_surcharge))? $queryup[0]->printed_image_surcharge:set_value('printed_image_surcharge'); ?>
-        <input type="checkbox" <?php if($printed_image_surcharge > 0){ echo "checked"; } ?> value="1" id="custom_cake_surcharge" name="custom_cake_surcharge"  ><?php echo $this->lang->line('custom_cake_surcharge');?>
+        <?php $on_cake_image_needed = (isset($queryup[0]->on_cake_image_needed))? $queryup[0]->on_cake_image_needed:set_value('on_cake_image_needed'); ?>
+        <input type="checkbox" <?php if($on_cake_image_needed > 0){ echo "checked"; } ?> value="1" id="custom_cake_surcharge" name="on_cake_image_needed"  ><?php echo $this->lang->line('custom_cake_surcharge');?>
         </label>
 
         </div>
-        <div class="control-group">
+        <div class="control-group" id="hideoncake">
             <?php $cake_email_photo = (isset($queryup[0]->cake_email_photo))? $queryup[0]->cake_email_photo:set_value('cake_email_photo'); ?>
             <label><input type="checkbox" value="1" <?php if($cake_email_photo ==1){ echo "checked"; } ?> id="cake_email_photo" name="cake_email_photo"  ><?php echo $this->lang->line('cake_email_photo');?></label>
 

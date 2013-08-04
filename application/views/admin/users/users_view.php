@@ -64,7 +64,7 @@
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="confirm_password"><?php echo $this->lang->line('con_password');?></label>
-                        <div class="controls"><input type="password" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('con_password');?>" value=""  class="validate[required,equals[password]] span10" name="password_confirm" id="password_confirm"  /></div>
+                        <div class="controls"><input type="password" placeholder="<?php echo $this->lang->line('con_password');?>" value=""  class="validate[required,equals[password]] span10" name="password_confirm" id="password_confirm"  /></div>
                     </div>
                <!--     <div class="control-group">
                         <label class="control-label" for="email"><?php /*echo $this->lang->line('email');*/?></label>
