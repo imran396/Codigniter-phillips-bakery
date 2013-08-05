@@ -32,10 +32,11 @@
         $('#flavourid').change(function() {
 
             var flavour_id =$("#flavourid").val();
+            var location_id =$("#location_id").val();
 
             $.ajax({
                 url:"<?php echo site_url('admin/orders/getServings')?>",
-                data:"flavour_id="+flavour_id,
+                data:"flavour_id="+flavour_id+"&location_id="+location_id,
                 type:"post",
                 success: function(val){
                     var n=val.split("@a&");
@@ -256,7 +257,7 @@
         <div class="control-group" >
             <label class="control-label" ><?php echo $this->lang->line('bakery_location');?></label>
             <div class="controls">
-                <select  id="location_id" style="width: 100%;"  name="location_id" class="search_dropdown">
+                <select  id="location_id" style="width: 100%;"  name="location_id" class="validate[required] search_dropdown">
                     <?php
 
                     $location_id = (isset($queryup[0]->location_id))? $queryup[0]->location_id:set_value('location_id');
@@ -279,7 +280,7 @@
         <div class="control-group">
             <label class="control-label" for="lastname"><?php echo $this->lang->line('cake_name');?></label>
             <div class="controls">
-                <select class="validate[required] search_dropdown" id="cake_id" style="width: 100%;"  name="cake_id">
+                <select class="search_dropdown" id="cake_id" style="width: 100%;"  name="cake_id">
                         <?php
                         echo $cake_id = (isset($queryup[0]->cake_id))? $queryup[0]->cake_id:set_value('cake_id');
                         if($cake_id > 0){
@@ -351,7 +352,7 @@
         <div class="control-group">
             <label class="control-label" for="username"><?php echo $this->lang->line('serving_name');?></label>
             <div class="controls">
-                <select class="search_dropdown1" id="servings" style="width: 100%;"  name="price_matrix_id">
+                <select class="search_dropdown" id="servings" style="width: 100%;"  name="price_matrix_id">
                     <option value="0" >---<?php echo $this->lang->line('select_one');?>---</option>
                     <?php if(!empty($servings)){ echo $servings;} ?>
                 </select>
@@ -361,27 +362,22 @@
             <label class="control-label" for="email"><?php echo $this->lang->line('fondant');?></label>
             <div class="controls">
                 <select class="search_dropdown"  id="fondant" style="width: 100%;"  name="fondant">
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    <?php if(!empty($fond)){  echo $fond; } ?>
                 </select>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" ><?php echo $this->lang->line('size_shape');?></label>
             <div class="controls">
-                <select class="search_dropdown1" id="size" style="width: 100%;"  name="size">
+                <select class="search_dropdown" id="size" style="width: 100%;"  name="size">
                     <option value="0" >---<?php echo $this->lang->line('select_one');?>---</option>
                     <?php if(!empty($size)){  echo $size; } ?>
                 </select>
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label" for="email"><?php echo $this->lang->line('price');?></label>
-            <div class="controls">
-                <select disabled="" id="price" style="width: 100%;"  name="matrix_price">
-                    <?php if(!empty($cprice)){  echo $cprice;} ?>
-                </select>
-            </div>
+            <label class="control-label" ><?php echo $this->lang->line('price');?>&nbsp;&nbsp;$<span id="price"><?php if(!empty($cprice)){  echo $cprice;} ?></span></label>
+
         </div>
 
     </div>
@@ -486,7 +482,7 @@
         <div class="control-group">
             <label class="control-label" for="firstname"><?php echo $this->lang->line('delivery_type');?></label>
             <div class="controls">
-                <select  id="delivery_type" style="width: 100%;"  name="delivery_type">
+                <select class="search_dropdown"  id="delivery_type" style="width: 100%;"  name="delivery_type">
                     <?php
                     $delivery_type = (isset($queryup[0]->delivery_type))? $queryup[0]->delivery_type:set_value('delivery_type');
                     ?>

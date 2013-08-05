@@ -45,7 +45,8 @@ class Orders_model extends Crud_Model
             $order_id = $this->update($data,$orderDbID);
         }else{
             $order_id = $this->insert($data);
-            $order_code=(100000+$order_id);
+           // $order_code=(100000+$order_id);
+            $order_code=($order_id);
             $this->db->set(array('order_code'=>$order_code))->where('order_id',$order_id)->update('orders');
 
         }
@@ -199,6 +200,7 @@ class Orders_model extends Crud_Model
     }
 
 
+
     public function delivery_order($order_delivery,$order_id){
 
         $order_delivery['delivery_order_id'] =  $order_id;
@@ -218,6 +220,37 @@ class Orders_model extends Crud_Model
 
         $order_notes['order_id']=$order_id;
         $this->db->set($order_notes)->insert('order_notes');
+    }
+
+
+    public function fileInstructionalDelete($order_id)
+    {
+        $row = $this->db->where('instructional_order_id',$order_id)->get('instructional_photo');
+        if($row->num_rows() > 0 ){
+           foreach($row->result() as $image ):
+            if (file_exists($image->instructional_photo)) {
+                unlink($_SERVER['DOCUMENT_ROOT'].'/'.$image->instructional_photo);
+            }
+            $this->db->where(array('instructional_order_id'=>$order_id,'instructional_photo'=>$image->instructional_photo_id))->delete('instructional_photo');
+           endforeach;
+        }
+    }
+
+    function delete($order_id){
+
+        $count = $this->db->where(array('order_status'=>304,'order_id'=>$order_id))->get('orders')->num_rows();
+        if($count > 0){
+        $this->fileDelete($order_id);
+        $this->fileInstructionalDelete($order_id);
+
+        $this->db->where('order_id',$order_id)->delete('orders');
+        $this->db->where('order_id',$order_id)->delete('order_notes');
+            $this->session->set_flashdata('delete_msg',"Orders has been deleted successfully");
+        }else{
+            $this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
+        }
+
+
     }
 
 
@@ -349,7 +382,8 @@ class Orders_model extends Crud_Model
                 WHERE(`order_id` > 0 AND  `order_code` = '$search')
                 || (`order_id` > 0 AND LOWER(`delivery_date`) >= '$search')
                 || (`order_id` > 0 AND  LOWER(customers.first_name) LIKE '%$search')
-                || ( `order_id` > 0 AND LOWER(customers.last_name) LIKE '%$search')
+                || (`order_id` > 0 AND LOWER(customers.last_name) LIKE '%$search')
+                || (`order_id` > 0 AND LOWER(order_status.description) LIKE '%$search')
                 || (`order_id` > 0 AND customers.phone_number = '$search')";
 
 

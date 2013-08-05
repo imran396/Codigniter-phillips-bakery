@@ -45,20 +45,22 @@ class Revel_Model extends CI_Model
 
         try {
             $response = $client->send();
+            $this->code     = $response->code;
+            $this->response = $response->body;
+            $this->headers  = $response->headers;
+            return $response->raw_body;
+
         } catch (Exception $ex) {
-            echo $ex->getMessage();
-            exit;
+            return $ex->getMessage();
+
         }
 
-        $this->code     = $response->code;
-        $this->response = $response->body;
-        $this->headers  = $response->headers;
 
         if ($debug) {
             //var_dump($response);
         }
 
-        return $response->raw_body;
+
     }
 
     protected function deleteResource($resource, $id, $debug = false)

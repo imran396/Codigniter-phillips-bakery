@@ -30,6 +30,7 @@
                     <tr>
                         <th class="center">No.</th>
                         <th><?php echo $this->lang->line('flavours');?></th>
+                        <th><?php echo $this->lang->line('fondant');?></th>
                         <th style="width: 1%;" class="center"><?php echo $this->lang->line('drag');?></th>
                         <th><?php echo $this->lang->line('action');?></th>
                     </tr>
@@ -42,6 +43,7 @@
                         <tr class="selectable" id="listItem_<?php echo $rows->flavour_id; ?>" >
                             <td class="center"><?php echo $i; ?></td>
                             <td><?php echo $rows->title; ?></td>
+                            <td><?php if($rows->fondant ==1) echo "Yes"; else echo "No"; ?></td>
                             <td class="center js-sortable-handle"><span  class="glyphicons btn-action single move" style="margin-right: 0;"><i></i></span></td>
                             <td>
                                 <a href="/admin/flavours/status/<?php echo $rows->flavour_id; ?>" class="btn-action glyphicons btn <?php if($rows->status ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
@@ -73,7 +75,7 @@
         $('.flavour-sortable').dataTable( {
             "aaSorting": [[1,'asc']],
             "aoColumnDefs": [
-                { "bSortable":false, "aTargets": [2,3 ] }
+                { "bSortable":false, "aTargets": [3,4 ] }
 
             ],
             "iDisplayLength": 50,

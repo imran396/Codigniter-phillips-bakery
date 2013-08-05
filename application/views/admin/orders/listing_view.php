@@ -60,7 +60,7 @@
                             <td class="center"><?php echo $rows->orderstatus; ?></td>
                             <td>
                                 <a href="/admin/orders/edit/<?php echo $rows->order_id; ?>" class="btn-action glyphicons pencil btn-success"><i></i></a>
-                                <?php if($rows->order_status =='cancelled'){ ?><a class="btn-action glyphicons remove_2 btn-danger" href="/admin/orders/remove/<?php echo $rows->order_code; ?>"><i></i></a><?php } ?>
+                                <?php if($rows->order_status ==304){ ?><a onclick="return confirm('Are you sure you want to delete?')" class="btn-action glyphicons remove_2 btn-danger" href="/admin/orders/remove/<?php echo $rows->order_id; ?>"><i></i></a><?php } ?>
 
                             </td>
                            </tr>

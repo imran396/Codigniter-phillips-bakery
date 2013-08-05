@@ -127,7 +127,8 @@ class Orders extends API_Controller
         if($mailtouser ==1){
             $this->sendEmail($orders['order_code']);
         }
-/*
+
+
         if($orders['order_code'] && $orders['order_status'] != '300' ){
 
             $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
@@ -143,17 +144,16 @@ class Orders extends API_Controller
                 'subtotal'=> $orders['total_price'],
             );
 
-
-
             $status_code_revel =  $this->revel_order->create($RevelOrderData);
 
             $orders['revel_order_id']  = $status_code_revel;
-            $orders['order_code'] = $status_code_revel;
-            $orders=$this->orders_model->order_update($orders, $orders['order_id']);
 
+            if($status_code_revel > 0){
+                $orders['order_code'] = $status_code_revel;
+                $orders=$this->orders_model->order_update($orders, $orders['order_id']);
+            }
 
         }
-*/
             $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
 
     }
@@ -253,7 +253,7 @@ class Orders extends API_Controller
             }
         }
 
-        /*$revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
+        $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
 
         if(empty($revel_order_id) && $orders['order_status'] != '300' ){
             $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
@@ -271,11 +271,13 @@ class Orders extends API_Controller
             $status_code_revel =  $this->revel_order->create($RevelOrderData);
 
             $orders['revel_order_id']  = $status_code_revel;
-            $orders['order_code'] = $status_code_revel;
 
-            $orders=$this->orders_model->order_update($orders, $orders['order_id']);
+            if($status_code_revel > 0){
+                $orders['order_code'] = $status_code_revel;
+                $orders=$this->orders_model->order_update($orders, $orders['order_id']);
+            }
 
-        }*/
+        }
             $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
 
     }

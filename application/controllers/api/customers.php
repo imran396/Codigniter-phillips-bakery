@@ -24,7 +24,7 @@ class Customers extends API_Controller
             $data['status']=1;
 
             if(isset($data)){
-                //$data['revel_customer_id']= $this->revel_customer->create($data);
+                $data['revel_customer_id']= $this->revel_customer->create($data);
             }
 
             $customer_id = $this->customers_model->create($data);

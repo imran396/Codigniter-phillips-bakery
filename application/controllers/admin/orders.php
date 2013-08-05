@@ -14,7 +14,7 @@ class Orders extends Crud_Controller
         $this->layout->setLayout('layout_admin');
         $this->load->library('email');
         $this->load->helper(array('uploader','idgenerator'));
-        $this->load->model(array('orders_model','productions_model','gallery_model','locations_model','cakes_model','revel_order'));
+        $this->load->model(array('orders_model','productions_model','gallery_model','locations_model','flavours_model','cakes_model','revel_order'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
@@ -64,11 +64,12 @@ class Orders extends Crud_Controller
     function getServings(){
 
         $flavour_id = $this->input->post('flavour_id');
+        $location_id = $this->input->post('location_id');
         $query="SELECT price_matrix.price_matrix_id, price_matrix.price, servings.title AS servings_title, servings.printing_surcharge, servings.size, flavours. *
 FROM price_matrix
 LEFT JOIN servings ON price_matrix.serving_id = servings.serving_id
 LEFT JOIN flavours ON price_matrix.flavour_id = flavours.flavour_id
-WHERE price_matrix.flavour_id = $flavour_id && price >0";
+WHERE price_matrix.flavour_id = $flavour_id && price >0 && location_id=$location_id";
         $matrix = $this->db->query($query)->result();
 
         $query="SELECT fondant FROM flavours WHERE flavour_id = $flavour_id";
@@ -138,21 +139,11 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
 
 
-
         $size ="";
         foreach($matrix as $pricesize):
 
             $selected = ($price_matrix_id == $pricesize->price_matrix_id ) ? "selected='selected'" : "";
             $size .= "<option ".$selected." value='".$pricesize->price_matrix_id."'>".$pricesize->size."</option>";
-
-        endforeach;
-
-
-        $cprice ="";
-        foreach($matrix as $price):
-
-            $selected = ($price_matrix_id == $price->price_matrix_id ) ? "selected='selected'" : "";
-            $cprice .= "<option ".$selected."  value='".$price->price."'>".$price->price."</option>";
 
         endforeach;
 
@@ -167,7 +158,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         endforeach;
 
 
-        echo $servings."@a&".$size."@a&".$cprice."@a&".$matrix_price;
+        echo $servings."@a&".$size."@a&".$matrix_price."@a&".$matrix_price;
 
     }
 
@@ -239,6 +230,10 @@ LEFT JOIN servings ON price_matrix.serving_id = servings.serving_id
 LEFT JOIN flavours ON price_matrix.flavour_id = flavours.flavour_id
 WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $matrix = $this->db->query($query)->result();
+
+        $query="SELECT fondant FROM flavours WHERE flavour_id = $flavour_id";
+        $fondants = $this->db->query($query)->row();
+
         $servings ="";
         foreach($matrix as $priceserv):
 
@@ -248,6 +243,21 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         endforeach;
 
 
+        $order_fondant=$this->data['queryup'][0]->fondant;
+        $fondant= $fondants->fondant;
+        $fond="";
+        if($fondant == 1){
+            if($order_fondant ==1){
+                $fond .= "<option value='1'>Yes</option>";
+                $fond .= "<option value='0'>No</option>";
+            }else{
+                $fond .= "<option value='0'>No</option>";
+                $fond .= "<option value='1'>Yes</option>";
+            }
+
+        }else{
+            $fond .= "<option value='0'>No</option>";
+        }
 
 
         $size ="";
@@ -258,14 +268,6 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
         endforeach;
 
-
-        $cprice ="";
-        foreach($matrix as $price):
-
-            $selected = ($price_matrix_id == $price->price_matrix_id ) ? "selected='selected'" : "";
-            $cprice .= "<option ".$selected."  value='".$price->price."'>".$price->price."</option>";
-
-        endforeach;
 
         $matrix_price="";
         foreach($matrix as $price):
@@ -279,8 +281,9 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         endforeach;
 
         $this->data['servings']=$servings;
+        $this->data['fond']=$fond;
         $this->data['size']=$size;
-        $this->data['cprice']=$cprice;
+        $this->data['cprice']=$matrix_price;
         $this->data['matrix_price']=$matrix_price;
 
         $this->data['active']=$this->uri->segment(2,0);
@@ -562,7 +565,6 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
             $this->data['active']=$this->uri->segment(2,0);
             $this->layout->view('admin/orders/listing_view', $this->data);
 
-
         }else{
 
             $this->session->set_flashdata('warnings_msg',$this->lang->line('update_msg'));
@@ -589,7 +591,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     public function remove($id)
     {
-        $this->servings_model->delete($id);
+        $this->orders_model->delete($id);
         $this->redirectToHome("listing");
 
     }
