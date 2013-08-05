@@ -154,13 +154,7 @@ class Orders extends API_Controller
 
         }
 */
-
-        if($orders['order_status'] == 300 ){
-
-            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_status' =>  $orders['order_status']));
-        }else{
             $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
-        }
 
     }
 
@@ -282,15 +276,7 @@ class Orders extends API_Controller
             $orders=$this->orders_model->order_update($orders, $orders['order_id']);
 
         }*/
-
-
-        if($orders['order_status'] == 300 ){
-
-            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_status' =>  $orders['order_status']));
-        }else{
             $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
-        }
-
 
     }
 
