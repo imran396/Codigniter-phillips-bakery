@@ -45,8 +45,7 @@ class Orders_model extends Crud_Model
             $order_id = $this->update($data,$orderDbID);
         }else{
             $order_id = $this->insert($data);
-           // $order_code=(100000+$order_id);
-            $order_code=($order_id);
+            $order_code=(100000+$order_id);
             $this->db->set(array('order_code'=>$order_code))->where('order_id',$order_id)->update('orders');
 
         }
