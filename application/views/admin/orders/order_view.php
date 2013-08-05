@@ -116,7 +116,7 @@
 
         <?php } ?>
 
-        $('#instructional_email_photo').click(function() {
+       /* $('#instructional_email_photo').click(function() {
 
             if( $(this).is(':checked') ){
                 $("#instructionalemailphoto").hide();
@@ -124,11 +124,11 @@
                 $("#instructionalemailphoto").show();
             }
         });
-        <?php $instructional_email_photo = (isset($queryup[0]->instructional_email_photo))? $queryup[0]->instructional_email_photo:'';
-        if($instructional_email_photo == 1){
+        <?php //$instructional_email_photo = (isset($queryup[0]->instructional_email_photo))? $queryup[0]->instructional_email_photo:'';
+        //if($instructional_email_photo == 1){
         ?>
         $("#instructionalemailphoto").hide();
-        <?php } ?>
+        <?php //} ?>*/
 
 
         jQuery('#printed_image_surcharge').keyup(function () {
