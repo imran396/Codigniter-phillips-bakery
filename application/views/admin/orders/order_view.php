@@ -63,6 +63,7 @@
                     $('#price').html(n[2]);
                     $('#matrix_price').val(n[3]);
                     $('#matrixprice').html("$"+n[3]);
+                    $('#s2id_size a span').html(n[5]);
                 }
             })
         });
@@ -83,12 +84,13 @@
                     $('#price').html(n[2]);
                     $('#matrix_price').val(n[3]);
                     $('#matrixprice').html("$"+n[3]);
+                    $('#s2id_servings a span').html(n[4]);
                 }
             })
         });
 
         $('#delivery_type').change(function() {
-
+4
             var delivery_type =$("#delivery_type").val();
             if(delivery_type =='delivery'){
                 $("#delivery-info").show();
@@ -282,7 +284,7 @@
             <div class="controls">
                 <select class="search_dropdown" id="cake_id" style="width: 100%;"  name="cake_id">
                         <?php
-                        echo $cake_id = (isset($queryup[0]->cake_id))? $queryup[0]->cake_id:set_value('cake_id');
+                        $cake_id = (isset($queryup[0]->cake_id))? $queryup[0]->cake_id:set_value('cake_id');
                         if($cake_id > 0){
                         $cakefield['cake_id']=$cake_id;
                         ?>

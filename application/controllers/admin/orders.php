@@ -97,7 +97,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0 && location_id=$location
         $fondant= $fondants->fondant;
         $fond="";
         if($fondant == 1){
-            $fond .= "<option value='1'>Yes</option>";
+            $fond .= "<option value='1' selected='selected'>Yes</option>";
             $fond .= "<option value='0'>No</option>";
         }else{
             $fond .= "<option value='0'>No</option>";
@@ -137,6 +137,13 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
         endforeach;
 
+        foreach($matrix as $priceserv):
+
+            if($price_matrix_id == $priceserv->price_matrix_id ){
+            $s2id_servings =$priceserv->servings_title;
+            }
+
+        endforeach;
 
 
         $size ="";
@@ -145,6 +152,13 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
             $selected = ($price_matrix_id == $pricesize->price_matrix_id ) ? "selected='selected'" : "";
             $size .= "<option ".$selected." value='".$pricesize->price_matrix_id."'>".$pricesize->size."</option>";
 
+        endforeach;
+
+        foreach($matrix as $pricesize):
+
+            if($price_matrix_id == $pricesize->price_matrix_id ){
+                $s2id_size =$pricesize->size;
+            }
         endforeach;
 
         foreach($matrix as $price):
@@ -158,7 +172,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         endforeach;
 
 
-        echo $servings."@a&".$size."@a&".$matrix_price."@a&".$matrix_price;
+        echo $servings."@a&".$size."@a&".$matrix_price."@a&".$matrix_price."@a&".$s2id_servings."@a&".$s2id_size;
 
     }
 
@@ -276,8 +290,6 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
                 $matrix_price = $price->price;
             }
-
-
         endforeach;
 
         $this->data['servings']=$servings;
@@ -300,8 +312,28 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     }
 
+    public function save()
+    {
 
-    public function save(){
+        if (!empty($_POST)) {
+            $this->addValidation();
+            if ($this->form_validation->run()) {
+                $this->saveData();
+            }
+        }
+        $this->index();
+
+    }
+    private function addValidation()
+    {
+        $this->form_validation->set_rules('location_id', 'Locatuion name', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('flavour_id', 'Flavour name', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('customer_id', 'Customer name', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('employee_id', 'Employee name', 'required|trim|xss_clean');
+    }
+
+
+    public function saveData(){
 
 
         $data =$this->input->post();
@@ -367,7 +399,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         }else{
             $orders=$this->orders_model->order_insert($data);
 
-            /*if($orders['order_code'] && $orders['order_status'] != '300' ){
+            if($orders['order_code'] && $orders['order_status'] != '300' ){
                 $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
                 $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
                 $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
@@ -384,11 +416,13 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
                 $status_code_revel =  $this->revel_order->create($RevelOrderData);
 
                 $orders['revel_order_id']  = $status_code_revel;
-                $orders['order_code'] = $status_code_revel;
-                $orders=$this->orders_model->order_update($orders, $orders['order_id']);
+                if($status_code_revel > 0){
+                    $orders['order_code'] = $status_code_revel;
+                    $orders=$this->orders_model->order_update($orders, $orders['order_id']);
+                }
 
 
-            }*/
+            }
 
             $this->session->set_flashdata('success_msg','New order has been added successfully');
         }
