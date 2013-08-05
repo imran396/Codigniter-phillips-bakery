@@ -646,22 +646,22 @@
         <div class="control-group">
         <label>
         <?php $on_cake_image_needed = (isset($queryup[0]->on_cake_image_needed))? $queryup[0]->on_cake_image_needed:set_value('on_cake_image_needed'); ?>
-        <input type="checkbox" <?php if($on_cake_image_needed > 0){ echo "checked"; } ?> value="1" id="custom_cake_surcharge" name="on_cake_image_needed"  ><?php echo $this->lang->line('custom_cake_surcharge');?>
+        <input type="checkbox" <?php if($on_cake_image_needed > 0){ echo "checked"; } ?> value="1" id="custom_cake_surcharge" name="on_cake_image_needed"  >&nbsp;<?php echo $this->lang->line('custom_cake_surcharge');?>
         </label>
 
         </div>
         <div class="control-group" id="hideoncake">
             <?php $cake_email_photo = (isset($queryup[0]->cake_email_photo))? $queryup[0]->cake_email_photo:set_value('cake_email_photo'); ?>
-            <label><input type="checkbox" value="1" <?php if($cake_email_photo ==1){ echo "checked"; } ?> id="cake_email_photo" name="cake_email_photo"  ><?php echo $this->lang->line('cake_email_photo');?></label>
+            <label><input type="checkbox" value="1" <?php if($cake_email_photo ==1){ echo "checked"; } ?> id="cake_email_photo" name="cake_email_photo"  >&nbsp;<?php echo $this->lang->line('cake_email_photo');?></label>
 
         </div>
         <div class="control-group">
             <?php $instructional_email_photo = (isset($queryup[0]->instructional_email_photo))? $queryup[0]->instructional_email_photo:set_value('instructional_email_photo'); ?>
-            <label ><input type="checkbox" <?php if($instructional_email_photo ==1){ echo "checked"; } ?> value="1" id="instructional_email_photo" name="instructional_email_photo"  ><?php echo $this->lang->line('instructional_email_photo');?></label>
+            <label ><input type="checkbox" <?php if($instructional_email_photo ==1){ echo "checked"; } ?> value="1" id="instructional_email_photo" name="instructional_email_photo"  >&nbsp;<?php echo $this->lang->line('instructional_email_photo');?></label>
           </div>
         <div class="control-group">
             <?php $vaughan_location = (isset($queryup[0]->vaughan_location))? $queryup[0]->vaughan_location:set_value('vaughan_location'); ?>
-            <label ><input type="checkbox" <?php if($vaughan_location ==1){ echo "checked"; } ?> value="1" id="vaughan_location" name="vaughan_location"  > <?php echo $this->lang->line('is_vaughan_location');?></label>
+            <label ><input type="checkbox" <?php if($vaughan_location ==1){ echo "checked"; } ?> value="1" id="vaughan_location" name="vaughan_location"  >&nbsp;<?php echo $this->lang->line('is_vaughan_location');?></label>
         </div>
         <div class="control-group">
 
@@ -679,7 +679,7 @@
         <div class="control-group">
             <label class="control-label" ><?php echo $this->lang->line('magic_surcharge');?></label>
             <div class="controls">
-                <input type="text" value="<?php echo $magic_surcharge = (isset($queryup[0]->magic_surcharge))? $queryup[0]->magic_surcharge:set_value('magic_surcharge'); ?>" class="numbersOnly" id="cake_magic_surcharge"  name="magic_surcharge" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('surcharge_amount');?>" >
+                <input type="text" value="<?php echo $magic_surcharge = (isset($queryup[0]->magic_surcharge))? $queryup[0]->magic_surcharge:set_value('magic_surcharge'); ?>" class="numbersOnly" id="cake_magic_surcharge"  name="magic_surcharge" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('magic_surcharge');?>" >
             </div>
         </div>
 
