@@ -598,7 +598,7 @@ $(function()
         thisTimer.find( ".sliderhour .slider" ).slider({
             create: JQSliderCreate,
             range: "min",
-            value: 0,
+            value: 00,
             min: 0,
             max: 23,
             slide: function( event, ui ) {
@@ -606,11 +606,16 @@ $(function()
                 if (ui.value > 11) { ui.value -= 12; ampm = "pm"; }
 
                 var minutes = thisTimer.find( ".sliderminute .slider" ).slider( "value" );
+                if(minutes < 10){
+                    minutes = "0"+minutes;
+                }
 
                 thisTimer.find( ".amount" ).val( ui.value + ":" + minutes + ampm );
-            },
+                console.log(minutes);
+               },
             start: function() { if (typeof mainYScroller != 'undefined') mainYScroller.disable(); },
             stop: function() { if (typeof mainYScroller != 'undefined') mainYScroller.enable(); }
+
         });
 
         thisTimer.find( ".sliderminute .slider" ).slider({
@@ -624,14 +629,18 @@ $(function()
                 var hours = thisTimer.find( ".sliderhour .slider" ).slider( "value" );
 
                 if (hours > 11) { hours -= 12; ampm = "pm"; }
+                var minutes = ui.value;
+                if(minutes < 10){
+                    minutes = "0"+minutes;
+                }
 
-                thisTimer.find( ".amount" ).val( hours + ":" + ui.value + ampm );
+                thisTimer.find( ".amount" ).val( hours + ":" + minutes + ampm );
             },
             start: function() { if (typeof mainYScroller != 'undefined') mainYScroller.disable(); },
             stop: function() { if (typeof mainYScroller != 'undefined') mainYScroller.enable(); }
         });
 
-        thisTimer.find( ".amount" ).val( "0:0am" );
+        thisTimer.find( ".amount" ).val( "0:00am" );
     });
 
     /*

@@ -141,9 +141,10 @@
                 <?php
                 $getOrderStatus = $this->productions_model->getOrderStatus();
                 foreach($getOrderStatus as $orderStatus):
+                if($orderStatus->production_status_code !=300){
                 ?>
                 <option value="<?php echo $orderStatus->production_status_code; ?>"><?php echo $orderStatus->description ?></option>
-                <?php endforeach; ?>
+                <?php } endforeach; ?>
             </select>
         </div>
         <div class="row-fluid">

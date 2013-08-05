@@ -45,14 +45,9 @@ class Revel_Model extends CI_Model
 
         try {
             $response = $client->send();
-        } catch (HttpException $ex) {
-            if (isset($ex->innerException)){
-                echo $ex->innerException->getMessage();
-                exit;
-            } else {
-                echo $ex;
-                exit;
-            }
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+            exit;
         }
 
         $this->code     = $response->code;
