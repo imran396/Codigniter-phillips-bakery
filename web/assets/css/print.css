@@ -49,6 +49,7 @@
     display: none;
 }
 
-.print_button{
+.print_button, .buttons , .pagination{
     display: none;
 }
+
