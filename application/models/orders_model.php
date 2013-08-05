@@ -70,6 +70,9 @@ class Orders_model extends Crud_Model
             $order['order_id']= $dbdata->order_id;
             $order['order_code']=  $dbdata->order_code;
             $order['order_status']=  $dbdata->order_status;
+            $order['cake_id']=  $dbdata->cake_id;
+            $order['customer_id']=  $dbdata->customer_id;
+            $order['location_id']=  $dbdata->location_id;
             $order['discount_price']=  $dbdata->discount_price;
             $order['override_price']=  $dbdata->override_price;
             $order['total_price']=  $dbdata->total_price;
