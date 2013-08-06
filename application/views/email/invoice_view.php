@@ -82,7 +82,7 @@
 </div>
 <div class="clr"></div>
 
-<p>ORDER #<?php echo $queryup->order_code; ?> <?php echo $this->orders_model->dateFormat($queryup->order_date); ?></p>
+<p>ORDER #<?php echo $queryup->order_code; ?> <?php echo getOrderDateFormat($queryup->order_date); ?></p>
 <hr />
 <br />
 <ul class="copl_fourth left">

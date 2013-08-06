@@ -8,8 +8,8 @@ $config = array(
     'mailtype' => 'html'
 
 );
-/*
-$config = array(
+
+/*$config = array(
     'protocol' => 'smtp',
     'smtp_host' => 'ssl://smtp.googlemail.com',
     'smtp_port' => 465,

@@ -16,6 +16,7 @@
 
 
 // Account Changes
+$lang['domain_name'] 		 	    = 'stphillipsbakery.com';
 $lang['site_title'] 		 	    = 'St. Phillips Bakery Admin Panel';
 $lang['site_name'] 		 	        = 'St. Phillips';
 $lang['site_login'] 		 	    = 'St. Phillips Bakery';

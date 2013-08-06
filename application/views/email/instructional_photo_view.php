@@ -5,7 +5,7 @@
 
 ------------------------------------------------------------
 ORDER #<?php echo  $rows->order_code.PHP_EOL; ?>
-<?php echo  date("d/m/Y",$rows->order_date).PHP_EOL; ?>
+<?php echo  getOrderDateFormat($rows->order_date).PHP_EOL; ?>
 
 ------------------------------------------------------------
 CUSTOMER DETAILS
@@ -16,5 +16,5 @@ CUSTOMER DETAILS
 <?php echo $rows->email.PHP_EOL; ?>
 ------------------------------------------------------------
 Thank You
-info@stphillipsbakery.com
-stphillipsbakery.com
+<?php echo $this->lang->line('global_email').PHP_EOL; ?>
+<?php echo $this->lang->line('domain_name').PHP_EOL; ?>

@@ -38,6 +38,11 @@ function orderStatusClass($code){
     }
 }
 
+function getOrderDateFormat($date=NULL){
+
+    $udate =date("m/d/Y",$date);
+    return $udate;
+}
 
 function dateFormat($date=NULL){
 
