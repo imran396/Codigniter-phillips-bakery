@@ -104,7 +104,7 @@ class users extends Crud_Controller
         $this->form_validation->set_rules('last_name', 'Last Name', 'xss_clean');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required');
-        $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email');
+       // $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email');
         $this->form_validation->set_rules('group_id', 'Group ', 'required');
         $this->form_validation->set_rules('location_id');
 
