@@ -584,6 +584,13 @@ class Orders_model extends Crud_Model
 
     }
 
+    function getDateFormat($date=NULL){
+
+        $mdate =strtotime($date);
+        $udate =date("m/d/Y",$mdate);
+        return $udate;
+    }
+
     function dateFormat($date=NULL){
 
         $mdate =strtotime($date);
