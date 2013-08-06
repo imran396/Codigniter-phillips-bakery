@@ -1,8 +1,6 @@
-<?php echo $this->lang->line('global_email_subject'); ?> - Attach your reference images
+<?php echo $email_subject.PHP_EOL; ?>
 
-Reply to this email and attach the example images you would
-like your baker to reference.
-<?php //echo "Reply to this email and attach the image you would like to have printed on your cake."; ?>
+<?php echo $this->lang->line('mailgun_instructional_body').PHP_EOL; ?>
 
 
 ------------------------------------------------------------

@@ -290,6 +290,7 @@ class Orders extends API_Controller
         $result= $this->productions_model->orderPrint($order_id);
         $data['rows']=$result->row();
         if(!empty($data ['rows']->email)){
+            $data['email_subject']=$subject;
             $body = $this->load->view('email/instructional_photo_view', $data,true);
             $this->email->set_newline("\r\n");
             $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
@@ -428,8 +429,7 @@ class Orders extends API_Controller
         }else{
                 $orderstatus = $this->data['queryup']->orderstatus;
         }
-        $pdfname =$this->data['queryup']->order_code;
-
+        $pdfname ='stpb-'.$this->data['queryup']->order_code;
         if(!empty($customer_email)){
 
             $body          = $this->load->view('email/invoice_body', $this->data,true);
@@ -438,7 +438,9 @@ class Orders extends API_Controller
             $this->email->to($customer_email);
             $this->email->subject($this->lang->line('global_email_subject').':'.$orderstatus);
             $this->email->message(nl2br($body));
-            $this->email->attach('/var/www/phillips-bakery/web/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
+            if (file_exists($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf')) {
+                $this->email->attach($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
+            }
             $this->email->send();
         }
 

@@ -38,6 +38,8 @@ $lang['mailgun_cakeonimage_subject'] 		 	= 'St. Phillips Bakery -  Add image on 
 $lang['mailgun_instructional_email'] 		 	= 'spenser@gsi.mailgun.org';
 $lang['mailgun_instructional_name'] 		 	= 'Spenser';
 $lang['mailgun_instructional_subject'] 		 	= 'St. Phillips Bakery - Attach your instructional image';
+$lang['mailgun_instructional_body'] 		 	= 'Reply to this email and attach the image you would like to have printed on your cake.';
+
 
 /* ---------- Malling Subject information */
 
