@@ -18,7 +18,6 @@ class Packages_model extends Ci_Model
             LEFT JOIN flavours ON price_matrix.flavour_id = flavours.flavour_id WHERE location_id=$location"
         );
 
-
         $data = $this->db->query($sql)->result_array();
         $flavours = array();
         $output = array();

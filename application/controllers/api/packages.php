@@ -16,7 +16,11 @@ class Packages extends API_Controller
         $location=isset($_REQUEST['location_id']);
         if(!empty($location)){
             $data = $this->packages_model->getAll($location);
-            /*$data = array(
+            $this->sendOutput($data);
+        }
+
+
+        /*$data = array(
                 array(
                     'flavour_id'    => 1,
                     'flavour_title' => "Banana Chocolate",
@@ -54,8 +58,6 @@ class Packages extends API_Controller
                     )
             );
             */
-            $this->sendOutput($data);
-        }
 
     }
 }
