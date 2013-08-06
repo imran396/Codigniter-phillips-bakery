@@ -18,8 +18,6 @@ class Packages extends API_Controller
             $data = $this->packages_model->getAll($location);
             $this->sendOutput($data);
         }
-
-
         /*$data = array(
                 array(
                     'flavour_id'    => 1,
