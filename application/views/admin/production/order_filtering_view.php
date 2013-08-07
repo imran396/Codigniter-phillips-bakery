@@ -38,7 +38,7 @@
     </div>
 </div>
 <div class="buttons">
-    <a href="/admin/productions/badge" class="button button-green"><span class="icon icon-scan"></span>Scan Bar Code</a>
+    <a href="javascript:void(0)" class="button button-green scan_button"><span class="icon icon-scan"></span>Scan Bar Code</a>
 </div>
 <div class="pagination pagination-small pagination-right" style="margin-top: 0; margin-bottom: 12px;">
     <?php //echo $paging[1]; ?>
@@ -47,6 +47,12 @@
 <script type="text/javascript" language="javascript" src="<?php echo base_url() ?>/assets/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
+
+        $('.scan_button').on('click',function(){
+            $("input[name = search]").focus();
+            $("input[name = search]").attr('placeholder','');
+        })
+
         jQuery.fn.dataTableExt.oSort['date-dd-mmm-yyyy-asc'] = function (a, b) {
             "use strict"; //let's avoid tom-foolery in this function
             var ordA = customDateDDMMMYYYYToOrd(a),
