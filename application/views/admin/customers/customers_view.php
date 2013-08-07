@@ -76,7 +76,15 @@
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('province');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('province');?>" value="<?php echo(isset($queryup[0]->province))? $queryup[0]->province:set_value('province'); ?>"   class="span10" name="province" id="province"  />
+                                        <select name="province" id="province">
+                                        <?php
+                                        $data = array("Ontario","Quebec","Nova Scotia", "New Brunswick", "Manitoba","British Columbia","Prince Edward Island","Saskatchewan","Alberta","Newfoundland and Labrador");
+                                        foreach($data as $rows):
+                                        ?>
+                                          <option value="<?php echo $rows; ?>"><?php echo $rows; ?></option>
+
+                                        <?php endforeach; ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="control-group">
