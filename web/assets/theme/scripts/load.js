@@ -603,7 +603,7 @@ $(function()
             max: 23,
             slide: function( event, ui ) {
                 var ampm = "am";
-                if (ui.value > 11) { ui.value -= 12; ampm = "pm"; }
+                if (ui.value > 11) { ui.value -= 12; ampm = "pm";  if(ui.value == 0){ui.value = 12}}
 
                 var minutes = thisTimer.find( ".sliderminute .slider" ).slider( "value" );
                 if(minutes < 10){
@@ -628,7 +628,7 @@ $(function()
                 var ampm = "am";
                 var hours = thisTimer.find( ".sliderhour .slider" ).slider( "value" );
 
-                if (hours > 11) { hours -= 12; ampm = "pm"; }
+                if (hours > 11) { hours -= 12; ampm = "pm";  if(hours == 0){hours = 12}}
                 var minutes = ui.value;
                 if(minutes < 10){
                     minutes = "0"+minutes;

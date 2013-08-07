@@ -52,9 +52,10 @@ class Customers_model extends Crud_Model
     public function  checkUniqueTitle($id){
 
         if(!empty($id)){
-            return $dbcatid = $this->db->select('title')
+             $dbcatid = $this->db->select('phone_number')
                 ->where('customer_id',$id)
-                ->get('customers')->result()[0]->title;
+                ->get('customers')->row();
+         return $dbcatid->phone_number;
 
         }
 
@@ -112,7 +113,7 @@ class Customers_model extends Crud_Model
         $dbtitle = $this->checkUniqueTitle($id);
         if($title != $dbtitle ){
 
-            $sql=sprintf("SELECT COUNT(customer_id) AS countValue FROM customers WHERE (LOWER(title) = LOWER('{$title}'))");
+            $sql="SELECT COUNT(customer_id) AS countValue FROM customers WHERE phone_number = $title";
             $count=$this->db->query($sql)->result();
             if($count[0]->countValue > 0 )
             {

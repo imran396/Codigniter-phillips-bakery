@@ -76,7 +76,16 @@
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('province');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('province');?>" value="<?php echo(isset($queryup[0]->province))? $queryup[0]->province:set_value('province'); ?>"   class="span10" name="province" id="province"  />
+                                        <select name="province" id="province">
+                                        <option value="">---Select one---</option>
+                                        <?php
+                                        $data = array("Ontario","Quebec","Nova Scotia", "New Brunswick", "Manitoba","British Columbia","Prince Edward Island","Saskatchewan","Alberta","Newfoundland and Labrador");
+                                        foreach( $data as $rows ):
+                                        $province = (isset($queryup[0]->province))? $queryup[0]->province:set_value('province');
+                                        ?>
+                                        <option value="<?php echo $rows ?>" <?php if($province ==$rows ){ echo "selected='selected'"; } ?>><?php echo $rows ?></option>
+                                        <?php endforeach; ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -88,7 +97,7 @@
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('country');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('country');?>" value="<?php echo(isset($queryup[0]->country))? $queryup[0]->country:set_value('country'); ?>"   class="span10" name="country" id="country"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('country');?>" value="<?php echo(isset($queryup[0]->country))? $queryup[0]->country:"Canada"; ?>"   class="span10" name="country" id="country"  />
                                     </div>
                                 </div>
                                 <?php if(!empty($customernotes)){ ?>

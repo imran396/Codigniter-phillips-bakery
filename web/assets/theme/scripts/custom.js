@@ -77,15 +77,22 @@ $(function()
 			
 			var ampm = "am";
 			var hours = timepicker.find( ".sliderhour .slider" ).slider( "value" );
+
 			var minutes = timepicker.find( ".sliderminute .slider" ).slider( "value" );
 			
-			if (hours > 11) { hours -= 12; ampm = "pm"; }
+			if (hours > 11) { hours -= 12; ampm = "pm"; if(hours == 0){hours = 12} }
 
             var time_inp = timepicker.find( ".hasTimeDropdown" );
+
+            if(minutes < 10){
+                minutes = "0"+minutes;
+            }
+
             time_inp.val( hours + ":" + minutes + ampm );
 
             if(time_inp.attr('rel')){
                 $(time_inp.attr('rel')).val(time_inp.val());
+
             }
 			return false;
 		});
