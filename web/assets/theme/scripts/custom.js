@@ -70,6 +70,8 @@ $(function()
 		{
 			timepicker.find(".timedropdown").toggle();
 		});
+
+
 		
 		$(timepicker.find(".timedropdown .btn-success")).click(function()
 		{

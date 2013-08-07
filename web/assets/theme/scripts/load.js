@@ -611,7 +611,7 @@ $(function()
                 }
 
                 thisTimer.find( ".amount" ).val( ui.value + ":" + minutes + ampm );
-                console.log(minutes);
+                //console.log(minutes);
                },
             start: function() { if (typeof mainYScroller != 'undefined') mainYScroller.disable(); },
             stop: function() { if (typeof mainYScroller != 'undefined') mainYScroller.enable(); }
