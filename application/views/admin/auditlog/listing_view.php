@@ -32,7 +32,11 @@
     </div>
 
 <!-- End Content -->
+<!-- Check git access -->
 <div class="separator"></div>
+
+
+
 <br/>
 <div class="innerLR hidden-paging" id="filterResult">
         <div class="widget">
