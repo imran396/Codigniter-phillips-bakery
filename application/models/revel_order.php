@@ -74,7 +74,7 @@ class Revel_Order extends Revel_Model
                 "call_number"          => 0,
                 "uuid"                 => $this->generateUUID(),
                 "gratuity"             => 0,
-                "orderhistory"         => [],
+                "orderhistory"         => array(),
                 "created_by"           => "/enterprise/User/1/",
                 "closed"               => 0,
                 "tax_country"          => "",
