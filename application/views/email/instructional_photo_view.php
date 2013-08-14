@@ -1,7 +1,4 @@
-<?php echo $email_subject.PHP_EOL; ?>
-
 <?php echo $body.PHP_EOL; ?>
-
 
 ------------------------------------------------------------
 ORDER #<?php echo  $rows->order_code.PHP_EOL; ?>
