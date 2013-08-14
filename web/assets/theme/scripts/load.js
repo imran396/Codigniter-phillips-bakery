@@ -600,7 +600,7 @@ $(function()
             range: "min",
             value: 8,
             min: 0,
-            max: 24,
+            max: 23,
             slide: function( event, ui ) {
                 var ampm = "am";
                 if (ui.value > 11 && ui.value!=24 ) {
