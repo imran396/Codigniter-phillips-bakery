@@ -1,9 +1,9 @@
 <?php
 
 // Service Information
-$config['revel']['endpoint']   = 'https://teststphillips.revelup.com';
-$config['revel']['api_key']    = 'bf788987a7c644eb8bbc0549074b833a';
-$config['revel']['api_secret'] = '922aeef8a85d461c875afc3512992db0d8c84118854f49bbb4635546992f87fb';
+$config['revel']['endpoint']   = 'https://stphillipstest.revelup.com/';
+$config['revel']['api_key']    = '2b27f5f25c5e4c02890be85c41ff4127';
+$config['revel']['api_secret'] = '76fd4e3891ae455a9503b2a6a9d48b7b08c169a9973e486493edbbcc4d23d683';
 
 // Default Data
 $config['revel']['establishment'] = '/enterprise/Establishment/1/';

@@ -12,6 +12,7 @@ class Packages_model extends Ci_Model
 
     public function getAll($location=0){
 
+
         $sql = ("SELECT price_matrix.price_matrix_id,price_matrix.price,servings.title AS servings_title , servings.printing_surcharge , servings.size,flavours.*
             FROM price_matrix
             LEFT JOIN servings ON price_matrix.serving_id = servings.serving_id
