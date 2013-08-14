@@ -34,12 +34,12 @@ $lang['global_email_subject'] 		 	    = 'St. Phillips Bakery';
 
 $lang['mailgun_cakeonimage_email'] 		 	    = 'dan@gsi.mailgun.org';
 $lang['mailgun_cakeonimage_name'] 		 	    = 'Dan Branco';
-$lang['mailgun_cakeonimage_subject'] 		 	= 'St Phillip\'s - Attach your image';
+$lang['mailgun_cakeonimage_subject'] 		 	= 'St Phillips - Attach your image';
 $lang['mailgun_cakeonimage_body'] 		 	    = 'Reply to this email and attach the image you would like to have printed on your cake.';
 
 $lang['mailgun_instructional_email'] 		 	= 'spenser@gsi.mailgun.org';
 $lang['mailgun_instructional_name'] 		 	= 'Spenser';
-$lang['mailgun_instructional_subject'] 		 	= 'St Phillip\'s - Attach your reference images';
+$lang['mailgun_instructional_subject'] 		 	= 'St Phillips - Attach your reference images';
 $lang['mailgun_instructional_body'] 		 	= 'Reply to this email and attach the example images you would like your baker to reference.';
 
 
