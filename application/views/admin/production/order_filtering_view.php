@@ -4,13 +4,7 @@
             <thead>
             <tr>
                 <th width="70">Order #</th>
-                <?php if($delivery_type =='delivery'){?>
-                    <th width="166">Delivery</th>
-                <?php }elseif($delivery_type =='pickup'){?>
-                    <th width="166">Pickup Location</th>
-                <?php }else{ ?>
-                    <th width="166">Location</th>
-                <?php } ?>
+                <th width="166">Location</th>
                 <th width="170">Cake Name</th>
                 <th width="122">Pickup/Delivery</th>
                 <th width="93">Date</th>
