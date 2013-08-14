@@ -116,7 +116,7 @@ class Categories_model extends Crud_Model
 
     public function getAll()
     {
-        $data = $this->db->select('category_id,title')->order_by('ordering','asc')->get('categories')->result_array();
+        $data = $this->db->select('category_id,title')->where('status',1)->order_by('ordering','asc')->get('categories')->result_array();
 
         foreach($data as $key=>$val){
             $data[$key]['category_id'] = (int) $data[$key]['category_id'];
