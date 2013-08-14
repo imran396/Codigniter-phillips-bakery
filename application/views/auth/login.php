@@ -85,7 +85,7 @@
                 </div>
                       <div style="text-align: center"><button class="btn btn-large btn-primary" type="submit">Login</button></div>
 
-                <p style="margin-top: 20px; margin-left: 110px;" ><a id="qrcode" href="javascript:void(0)">Click for QR login </a></p>
+                <p style="margin-top: 30px; margin-left: 110px;" ><a id="qrcode" href="javascript:void(0)">Click for QR login </a></p>
             </form>
 
             <form id="qr-code" class="form-signin" method="POST" action="auth/qrlogin" >
@@ -97,7 +97,7 @@
                 </div>
 
                 <div style="text-align: center"><button class="btn btn-large btn-primary" id="login_qrcode" type="submit">Login QR Code</button></div>
-                <p style="margin-top: 20px; margin-left: 110px;"><a id="loginid" href="javascript:void(0)">Click for login </a></p>
+                <p style="margin-top: 30px; margin-left: 110px;"><a id="loginid" href="javascript:void(0)">Click for login </a></p>
             </form>
 
 
