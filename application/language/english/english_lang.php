@@ -142,6 +142,7 @@ $lang['surcharge'] 		 	    = 'Surcharge';
 $lang['pos_api'] 		 	    = 'POS api';
 $lang['store_print_ip'] 		 	    = 'Store Print IP';
 $lang['kitchen_print_ip'] 		 	    = 'Kitchen Print IP';
+$lang['vaughan_location_msg'] 		 	    = "Another location has been assigned the 'Vaughan Location'";
 
 /* Cakes */
 
