@@ -599,8 +599,8 @@ $(function()
             create: JQSliderCreate,
             range: "min",
             value: 00,
-            min: 0,
-            max: 23,
+            min: 8,
+            max: 24,
             slide: function( event, ui ) {
                 var ampm = "am";
                 if (ui.value > 11) { ui.value -= 12; ampm = "pm";  if(ui.value == 0){ui.value = 12}}
@@ -640,7 +640,7 @@ $(function()
             stop: function() { if (typeof mainYScroller != 'undefined') mainYScroller.enable(); }
         });
 
-        thisTimer.find( ".amount" ).val( "0:00am" );
+        thisTimer.find( ".amount" ).val( "8:00am" );
     });
 
     /*
