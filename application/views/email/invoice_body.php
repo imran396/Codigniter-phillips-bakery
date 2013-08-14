@@ -1,12 +1,12 @@
-<?php echo $this->lang->line('global_email_subject'); ?> - Cake <?php if( $queryup->order_status ==300 ){ echo ucfirst( $queryup->orderstatus).PHP_EOL; }else{ echo "Invoice".PHP_EOL; } ?>
-------------------------------------------------------------
-<br/>
+<?php echo $this->lang->line('global_email_subject'); ?>  -  Cake <?php if( $queryup->order_status ==300 ){ echo ucfirst( $queryup->orderstatus).PHP_EOL; }else{ echo "Invoice".PHP_EOL; } ?>
+
 <?php
 $locations=$this->locations_model->getLocations($queryup->locationid);
 if(!empty($locations)){
 ?>
 
 <?php echo $locations[0]->title.PHP_EOL; ?>
+------------------------------------------------------------
 <?php echo $locations[0]->address1.PHP_EOL; ?>
 <?php echo $locations[0]->address2.PHP_EOL; ?>
 <?php echo $locations[0]->city; ?> , <?php echo $locations[0]->province; ?> <?php echo $locations[0]->postal_code.PHP_EOL; ?>
