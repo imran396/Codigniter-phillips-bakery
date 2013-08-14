@@ -748,7 +748,6 @@
             <label class="control-label" ><?php echo $this->lang->line('order_status');?></label>
                 <?php $order_status = (isset($queryup[0]->order_status))? $queryup[0]->order_status:set_value('order_status'); ?>
                 <select class="search_dropdown" name="order_status" id="order_status" style="width: 100%">
-                    <option>Status</option>
                     <?php
                     $getOrderStatus = $this->productions_model->getOrderStatus();
                     foreach($getOrderStatus as $orderStatus):

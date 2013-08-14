@@ -23,7 +23,7 @@ class Productions_model extends Crud_Model
 
         $this->db->from('orders');
         $this->db->where(array("orders.kitchen_location_id"=> $location_id,'order_status !='=>300));
-        $this->db->where('delivery_date >=',$curdate);
+        //$this->db->where('delivery_date >=',$curdate);
         //$this->db->where(array('order_status'=>'order'));
         $total_rows = $this->db->count_all_results();
 
@@ -37,7 +37,7 @@ class Productions_model extends Crud_Model
         $this->db->limit($per_page,$limit);
         $this->db->where(array("orders.kitchen_location_id"=> $location_id,'order_status !='=>300));
         //$this->db->order_by("orders.delivery_date", "desc");
-        $this->db->where('delivery_date >=',$curdate);
+        //$this->db->where('delivery_date >=',$curdate);
         $this->db->order_by("orders.delivery_date", "asc");
         $query =$this->db->get()->result();
 
