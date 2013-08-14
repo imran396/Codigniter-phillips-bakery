@@ -1,6 +1,5 @@
-<?php echo $this->lang->line('global_email_subject'); ?> - Cake <?php if( $queryup->order_status ==300 ){ echo ucfirst( $queryup->orderstatus); }else{ echo "Invoice"; } ?>
+<?php echo $this->lang->line('global_email_subject'); ?> - Cake <?php if( $queryup->order_status ==300 ){ echo ucfirst( $queryup->orderstatus); }else{ echo "Invoice"; } PHP_EOL?>
 ------------------------------------------------------------
-<br/>
 <br/>
 <?php
 $locations=$this->locations_model->getLocations($queryup->locationid);
