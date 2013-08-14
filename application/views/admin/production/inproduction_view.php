@@ -12,6 +12,36 @@
     {
 
         var result =$("#filter").serialize();
+        var order_status =$('#order_status').val();
+        if(order_status != "Status"){
+            $('input[name="order_status"]').val(order_status);
+        }
+        var fondant =$('#fondant').val();
+        if(fondant != "Fondant"){
+            $('input[name="fondant"]').val(fondant);
+        }
+        var flavour_id =$('#flavour_id').val();
+        if(flavour_id != "Flavour"){
+            $('input[name="flavour_id"]').val(flavour_id);
+        }
+        var delivery_type =$('#delivery_type').val();
+        if(delivery_type != "Pickup/Delivery"){
+            $('input[name="delivery_type"]').val(delivery_type);
+        }
+        var start_date =$('#datepicker').val();
+
+            $('input[name="start_date1"]').val(start_date);
+
+        var end_date =$('#datepicker2').val();
+
+            $('input[name="end_date1"]').val(end_date);
+
+        var delivery_start_time =$('#delivery_start_time').val();
+            $('input[name="delivery_start_time"]').val(delivery_start_time);
+        var delivery_end_time =$('#delivery_end_time').val();
+            $('input[name="delivery_end_time"]').val(delivery_end_time);
+
+
 
         $.ajax({
             url:"<?php echo site_url('admin/productions/filtering')?>",
@@ -87,6 +117,14 @@
 
         })
 
+        $('#printer-button').click(function(){
+
+
+            document.printer1.submit();
+
+
+        })
+
 
 
 
@@ -125,8 +163,21 @@
                 <input type="button" id="searchButton" name="" value="Search" />
             </form>
         </div>
-        <a href="javascript:void(0)" class="button"  onclick="printpage()" ><span class="icon icon-print"></span> Print Page</a>
+
+        <a href="javascript:void(0)" id="printer-button" class="button"   ><span class="icon icon-print"></span> Print Page</a>
+
     </div>
+    <form action="/admin/productions/inproduction_print" name="printer1" id="printer1" method="post" >
+
+        <input type="hidden" name="order_status">
+        <input type="hidden" name="fondant">
+        <input type="hidden" name="flavour_id">
+        <input type="hidden" name="delivery_type">
+        <input type="hidden" name="start_date">
+        <input type="hidden" name="end_date">
+        <input type="hidden" name="delivery_start_time">
+        <input type="hidden" name="delivery_end_time">
+    </form>
     <div class="separator"></div>
 </div>
 <div id="wrapper">
@@ -273,7 +324,7 @@
                 <thead>
                 <tr>
                     <th width="70">Order #</th>
-                    <th width="166">Customer Name</th>
+                    <th width="166">Location</th>
                     <th width="170">Cake Name</th>
                     <th width="122">Pickup/Delivery</th>
                     <th width="93">Date</th>
@@ -295,7 +346,7 @@
                         <a class="print-none" href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a>
                         <p class="list-code"><?php echo $rows->order_code; ?></p>
                     </td>
-                    <td><?php echo $rows->first_name.' '.$rows->last_name; ?></td>
+                    <td><?php if($rows->delivery_type =='pickup'){ echo $this->productions_model->getLocations($rows->pickup_location_id); }else{ echo $this->productions_model->getLocations($rows->kitchen_location_id); } ?></td>
                     <td><?php if($rows->cake_name){echo  sentence_case($rows->cake_name);}else{ echo 'Custom Cake';} ?></td>
                     <td class="center"><?php echo sentence_case($rows->delivery_type); ?></td>
                     <td class="center"><?php echo $this->productions_model->dateFormate($rows->delivery_date); ?></td>

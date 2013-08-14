@@ -96,7 +96,7 @@
     $(document).ready(function() {
 
         $('.order-sortable').dataTable( {
-            "aaSorting": [[1,'asc']],
+            "aaSorting": [[0,'desc']],
             "aoColumns": [
                 null,
                 {"sTYpe":   "date-dd-mmm-yyyy" },

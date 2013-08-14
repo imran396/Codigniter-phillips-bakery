@@ -4,7 +4,13 @@
             <thead>
             <tr>
                 <th width="70">Order #</th>
-                <th width="166">Customer Name</th>
+                <?php if($delivery_type =='delivery'){?>
+                    <th width="166">Delivery</th>
+                <?php }elseif($delivery_type =='pickup'){?>
+                    <th width="166">Pickup Location</th>
+                <?php }else{ ?>
+                    <th width="166">Location</th>
+                <?php } ?>
                 <th width="170">Cake Name</th>
                 <th width="122">Pickup/Delivery</th>
                 <th width="93">Date</th>
@@ -18,10 +24,10 @@
             <tbody>
             <?php
             foreach($query as $rows):
-                ?>
+            ?>
                 <tr>
                     <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
-                    <td class="center"><?php echo $rows->first_name.' '.$rows->last_name; ?></td>
+                    <td><?php if($rows->delivery_type =='pickup'){ echo $this->productions_model->getLocations($rows->pickup_location_id); }else{ echo $this->productions_model->getLocations($rows->kitchen_location_id); } ?></td>
                     <td><?php echo $rows->cake_name; ?></td>
                     <td class="center"><?php echo sentence_case($rows->delivery_type); ?></td>
                     <td class="center"><?php echo $this->productions_model->dateFormate($rows->delivery_date); ?></td>

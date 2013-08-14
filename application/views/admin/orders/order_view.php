@@ -744,10 +744,19 @@
             </div>
 
         </div>
-        <div class="control-group uniformjs">
-            <label class="control-label">
+        <div class="control-group">
+            <label class="control-label" ><?php echo $this->lang->line('order_status');?></label>
                 <?php $order_status = (isset($queryup[0]->order_status))? $queryup[0]->order_status:set_value('order_status'); ?>
-                <input type="checkbox" <?php if($order_status == 300 ){ echo "checked"; } ?> id="estimate" name="estimate" value="300"><?php echo $this->lang->line('is_estimate');?></label>
+                <select class="search_dropdown" name="order_status" id="order_status" style="width: 100%">
+                    <option>Status</option>
+                    <?php
+                    $getOrderStatus = $this->productions_model->getOrderStatus();
+                    foreach($getOrderStatus as $orderStatus):
+
+                            ?>
+                            <option value="<?php echo $orderStatus->production_status_code; ?>" <?php if($order_status == $orderStatus->production_status_code ){ echo "selected='selected'"; } ?> ><?php echo $orderStatus->description ?></option>
+                        <?php endforeach; ?>
+                </select>
         </div>
 
     </div>

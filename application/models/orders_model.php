@@ -175,6 +175,7 @@ class Orders_model extends Crud_Model
         if (file_exists($dbdata->on_cake_image)) {
             unlink($_SERVER['DOCUMENT_ROOT'] .'/'.$dbdata->on_cake_image);
         }
+        $this->db->set(array('on_cake_image' => ''))->where(array('order_id' => $id))->update('orders');
     }
 
     public function instructionalPhotoDelete($image,$order_id)
@@ -357,7 +358,7 @@ class Orders_model extends Crud_Model
 
         $base_url = site_url('admin/orders/listing/');
 
-        $total_rows = $this->db->where('delivery_date >',$curdate)->count_all_results('orders');
+        $total_rows = $this->db->count_all_results('orders');
         $paging = production_paginate($base_url, $total_rows,$start,$per_page);
         $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name,customers.first_name,customers.last_name,order_status.description AS orderstatus');
         $this->db->from('orders');
@@ -366,8 +367,8 @@ class Orders_model extends Crud_Model
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
         $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
         $this->db->limit($per_page,$limit);
-        $this->db->where('delivery_date >=',$curdate);
-        $this->db->order_by("orders.delivery_date", "asc");
+        //$this->db->where('delivery_date >=',$curdate);
+        $this->db->order_by("orders.order_code", "desc");
         //$this->db->order_by("orders.order_status", "desc");
         $query =$this->db->get()->result();
         return array($query,$paging,$total_rows,$limit);
@@ -382,13 +383,12 @@ class Orders_model extends Crud_Model
                 LEFT JOIN customers ON (customers.customer_id = orders.customer_id)
                 LEFT JOIN order_status ON (order_status.production_status_code = orders.order_status)
                 WHERE(`order_id` > 0 AND  `order_code` = '$search')
-                || (`order_id` > 0 AND LOWER(`delivery_date`) >= '$search')
                 || (`order_id` > 0 AND  LOWER(customers.first_name) LIKE '%$search')
                 || (`order_id` > 0 AND LOWER(customers.last_name) LIKE '%$search')
                 || (`order_id` > 0 AND LOWER(order_status.description) LIKE '%$search')
-                || (`order_id` > 0 AND customers.phone_number = '$search')";
+                || (`order_id` > 0 AND customers.phone_number = '$search') ORDER BY orders.order_code DESC ";
 
-
+        // || (`order_id` > 0 AND LOWER(`delivery_date`) >= '$search')
         $per_page=10;
         $page   = intval($start);
         if($page<=0)  $page  = 1;

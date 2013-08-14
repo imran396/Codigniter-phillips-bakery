@@ -371,21 +371,12 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';
         $pluploadUploader_count=isset($_REQUEST['pluploadUploader_count'])? $_REQUEST['pluploadUploader_count']:'';
 
-
-
-        $estimate=isset($_REQUEST['estimate'])? $_REQUEST['estimate']:'';
-
-        if($estimate ==300){
-            $data['order_status']=300;
-        }else{
-            $data['order_status']=301;;
-        }
-
+        $data['order_status'] = isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'301';
         $data['order_date']=time();
 
         $vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
         if($vaughan_location == 1 ){
-            echo $vaughan_location = $this->orders_model->getVaughanLocation();
+            $vaughan_location = $this->orders_model->getVaughanLocation();
             $data['kitchen_location_id'] = $vaughan_location;
 
         }else{
@@ -451,15 +442,16 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
             $this->orders_model->galleryUpload($data,$orders['order_id']);
 
         }
+
         $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
         if($cake_email_photo == 1 ){
 
-            $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'));
+            $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject',$this->lang->line('mailgun_cakeonimage_body')));
         }
         $instructional_email_photo = isset($_REQUEST['instructional_email_photo']) ? $_REQUEST['instructional_email_photo']:'';
         if($instructional_email_photo == 1){
 
-            $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'));
+            $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject',$this->lang->line('mailgun_instructional_body')));
         }
 
         $this->saveBarcodeImage($orders['order_code']);
@@ -528,12 +520,15 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     }
 
-    private function mailgunSendMessage($orders, $replyTo,$name,$subject=NULL){
+
+    private function mailgunSendMessage($orders, $replyTo,$name,$subject=NULL,$body=NULL){
 
         $order_id = $orders['order_id'];
         $result= $this->productions_model->orderPrint($order_id);
         $data['rows']=$result->row();
         if(!empty($data ['rows']->email)){
+            $data['email_subject']=$subject;
+            $data['body']=$body;
             $body = $this->load->view('email/instructional_photo_view', $data,true);
             $this->email->set_newline("\r\n");
             $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));

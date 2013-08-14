@@ -54,12 +54,20 @@ class Productions extends Crud_Controller
     public function filtering(){
         $start=0;
         $data = $this->input->post();
-        $this->data['query']=$this->productions_model->getFiltering($data);
+        $this->data['delivery_type'] = $data['delivery_type'];
+        $this->data['query'] = $this->productions_model->getFiltering($data);
         $this->load->view('admin/production/order_filtering_view', $this->data);
     }
 
+    public function  inproduction_print(){
 
+        $data = $this->input->post();
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->data['delivery_type'] = $data['delivery_type'];
+        $this->data['query'] = $this->productions_model->getPrinting($data);
+        $this->layout->view('admin/production/inproduction_print_view', $this->data);
 
+    }
 
     public function details($order_code=0)
     {

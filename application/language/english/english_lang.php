@@ -34,12 +34,13 @@ $lang['global_email_subject'] 		 	    = 'St. Phillips Bakery';
 
 $lang['mailgun_cakeonimage_email'] 		 	    = 'dan@gsi.mailgun.org';
 $lang['mailgun_cakeonimage_name'] 		 	    = 'Dan Branco';
-$lang['mailgun_cakeonimage_subject'] 		 	= 'St. Phillips Bakery -  Add image on cake';
+$lang['mailgun_cakeonimage_subject'] 		 	= 'St Phillip\'s - Attach your image';
+$lang['mailgun_cakeonimage_body'] 		 	    = 'Reply to this email and attach the image you would like to have printed on your cake.';
 
 $lang['mailgun_instructional_email'] 		 	= 'spenser@gsi.mailgun.org';
 $lang['mailgun_instructional_name'] 		 	= 'Spenser';
-$lang['mailgun_instructional_subject'] 		 	= 'St. Phillips Bakery - Attach your instructional image';
-$lang['mailgun_instructional_body'] 		 	= 'Reply to this email and attach the image you would like to have printed on your cake.';
+$lang['mailgun_instructional_subject'] 		 	= 'St Phillip\'s - Attach your reference images';
+$lang['mailgun_instructional_body'] 		 	= 'Reply to this email and attach the example images you would like your baker to reference.';
 
 
 /* ---------- Malling Subject information */
@@ -85,7 +86,7 @@ $lang['insert_msg']="Data has been insert successfully";
 $lang['user_update_msg']="User has been updated";
 $lang['update_msg']="Your changes were saved successfully.";
 $lang['remove_second_msg']="The second agent was deleted successfully.";
-$lang['existing_data_msg']="The data related another table";
+$lang['existing_data_msg']="The data is related to another table. Unable to delete.";
 $lang['delete_msg']="Data has been deleted successfully";
 $lang['insert_pic']="Picture has been insert successfully";
 $lang['image_delete_msg']="Image has been deleted successfully";
@@ -274,6 +275,7 @@ $lang['is_vaughan_location'] 		= 'Cake made in Vaughan location';
 $lang['instructional_email_photo'] 	= 'Customer will email instructional photo';
 $lang['cake_email_photo'] 		 	= 'Customer will email photo';
 $lang['delivery_zone'] 		 	    = 'Delivery Zone';
+$lang['order_status'] 		 	    = 'Order Status';
 
 
 $lang['matrix_price'] 		 	    = 'Cake Price';

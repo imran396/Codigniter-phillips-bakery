@@ -13,6 +13,7 @@ class Productions_model extends Crud_Model
     public function getListing($start)
     {
 
+        $curdate =date('m/d/Y');
         $location_id = $this->session->userdata('locationid');
         $per_page=10;
         $page   = intval($start);
@@ -22,6 +23,7 @@ class Productions_model extends Crud_Model
 
         $this->db->from('orders');
         $this->db->where(array("orders.kitchen_location_id"=> $location_id,'order_status !='=>300));
+        $this->db->where('delivery_date >=',$curdate);
         //$this->db->where(array('order_status'=>'order'));
         $total_rows = $this->db->count_all_results();
 
@@ -34,7 +36,9 @@ class Productions_model extends Crud_Model
         $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
         $this->db->limit($per_page,$limit);
         $this->db->where(array("orders.kitchen_location_id"=> $location_id,'order_status !='=>300));
-        $this->db->order_by("orders.delivery_date", "desc");
+        //$this->db->order_by("orders.delivery_date", "desc");
+        $this->db->where('delivery_date >=',$curdate);
+        $this->db->order_by("orders.delivery_date", "asc");
         $query =$this->db->get()->result();
 
         return array($query,$paging,$total_rows,$limit);
@@ -68,7 +72,7 @@ class Productions_model extends Crud_Model
         $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
         $this->db->where(array("orders.kitchen_location_id"=> $location_id,'order_status !='=>300));
         if($order_status){
-            $this->db->like(array("orders.order_status"=> $order_status));
+            $this->db->where(array("orders.order_status"=> $order_status));
         }
         if($fondant){
             $this->db->where(array("orders.fondant"=> $fondant));
@@ -96,6 +100,60 @@ class Productions_model extends Crud_Model
         return $query;
     }
 
+    public function getPrinting($data){
+
+        $location_id = $this->session->userdata('locationid');
+
+        $order_status = (strtolower($data['order_status']) != "status" ) ? strtolower($data['order_status']) :'';
+        $fondant = (strtolower($data['fondant']) != "fondant" ) ? strtolower($data['fondant']) :'';
+        $flavour_id = (strtolower($data['flavour_id']) != "flavour" ) ? strtolower($data['flavour_id']) :'';
+        $delivery_type = (strtolower($data['delivery_type']) != "pickup/delivery" ) ? strtolower($data['delivery_type']) :'';
+        $start_date= $data['start_date'];
+        $end_date= $data['end_date'];
+        $start_time= $data['delivery_start_time'];
+        $end_time= $data['delivery_end_time'];
+
+
+        $data['orders.fondant'] =  $data['fondant'];
+        unset($data['fondant']);
+        $data['orders.flavour_id'] =  $data['flavour_id'];
+        unset($data['flavour_id']);
+
+        $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name, flavours.fondant AS fondant_name, customers.first_name,customers.last_name,order_status.description AS orderstatus');
+        $this->db->from('orders');
+        $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
+        $this->db->join('customers','customers.customer_id = orders.customer_id','left');
+        $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
+        $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
+        $this->db->where(array("orders.kitchen_location_id"=> $location_id,'order_status !='=>300));
+        if($order_status){
+            $this->db->where(array("orders.order_status"=> $order_status));
+        }
+        if($fondant){
+            $this->db->where(array("orders.fondant"=> $fondant));
+        }
+        if($flavour_id){
+            $this->db->where(array("orders.flavour_id"=> $flavour_id));
+        }
+
+        if($delivery_type){
+            $this->db->where(array("orders.delivery_type"=> $delivery_type));
+        }
+
+        if($start_date && $end_date){
+            $this->db->where(array("orders.delivery_date >="=> $start_date));
+            $this->db->where(array("orders.delivery_date <="=> $end_date));
+        }
+        if($start_time && $end_time){
+            $this->db->where(array("orders.delivery_time >="=> $start_time));
+            $this->db->where(array("orders.delivery_time <="=> $end_time));
+        }
+
+        $this->db->order_by("orders.delivery_date", "desc");
+        $query =$this->db->get()->result();
+        //echo $this->db->last_query();
+        return $query;
+    }
 
     public function dateFormate($date){
 
