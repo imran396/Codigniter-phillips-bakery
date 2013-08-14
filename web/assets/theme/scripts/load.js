@@ -598,8 +598,8 @@ $(function()
         thisTimer.find( ".sliderhour .slider" ).slider({
             create: JQSliderCreate,
             range: "min",
-            value: 00,
-            min: 8,
+            value: 8,
+            min: 0,
             max: 24,
             slide: function( event, ui ) {
                 var ampm = "am";
