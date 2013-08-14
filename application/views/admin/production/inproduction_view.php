@@ -167,7 +167,7 @@
         <a href="javascript:void(0)" id="printer-button" class="button"   ><span class="icon icon-print"></span> Print Page</a>
 
     </div>
-    <form action="/admin/productions/inproduction_print" name="printer1" id="printer1" method="post" >
+    <form action="/admin/productions/inproduction_print" name="printer1" id="printer1" method="post" target="_blank" >
 
         <input type="hidden" name="order_status">
         <input type="hidden" name="fondant">

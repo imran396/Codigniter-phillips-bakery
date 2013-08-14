@@ -144,7 +144,19 @@
 
 </script>
 <script>
-window.print()
+//window.print();
+//window.setTimeout("close()",250)
+
+    window.print();
+    CheckWindowState();
+
+function CheckWindowState()    {
+    if(document.readyState=="complete") {
+        window.close();
+    } else {
+        setTimeout("CheckWindowState()", 2000)
+    }
+}
 </script>
 
 

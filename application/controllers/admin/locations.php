@@ -133,9 +133,6 @@ class Locations extends Crud_Controller
 
     function checkVaughanLocation($VaughanLocation){
 
-        echo $VaughanLocation;
-        exit;
-
         $data = $this->input->post();
         return  $this->locations_model->vaughanLocation($data['location_id'],$VaughanLocation);
 
