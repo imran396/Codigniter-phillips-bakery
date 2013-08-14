@@ -1,7 +1,7 @@
 <?php echo $this->lang->line('global_email_subject'); ?> - Cake <?php if( $queryup->order_status ==300 ){ echo ucfirst( $queryup->orderstatus); }else{ echo "Invoice"; } ?>
-
-<?php echo $this->lang->line('global_email_subject'); ?>
---------------------------
+------------------------------------------------------------
+<br/>
+<br/>
 <?php
 $locations=$this->locations_model->getLocations($queryup->locationid);
 if(!empty($locations)){
@@ -59,7 +59,7 @@ echo $this->orders_model->phoneNoFormat($deliveryInfo->phone).PHP_EOL;
 if( $deliveryInfo->email){ echo $deliveryInfo->email.PHP_EOL;  }
 }?>
 
-------------------------------------------------------------
+----------------------------------------------------------------
 CAKE DETAILS
 
 IMAGE ON CAKE: <?php if($queryup->on_cake_image){ echo $this->orders_model->fileName($queryup->on_cake_image).PHP_EOL; } ?>
@@ -81,7 +81,7 @@ SPECIAL INSTRUCTIONS:
 
 <?php echo $queryup->special_instruction.PHP_EOL; ?>
 <?php } ?>
-------------------------------------------------------------
+--------------------------------------------------------------------
 <?php echo $queryup->title ?>                                  <?php echo "$".$queryup->matrix_price.PHP_EOL; ?>
 <?php if($queryup->magic_cake_id){ ?>
 MAGIC CAKE ID: 			<?php echo $queryup->magic_cake_id.PHP_EOL; ?>
