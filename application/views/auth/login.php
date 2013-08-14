@@ -67,7 +67,7 @@
 
             </div>
 
-            <form id="login-id" class="form-signin" method="POST" action="">
+            <form id="login-id" class="form-signin" method="POST" action="" style="display: none">
 
                 <strong><b style="color:red;"><?php echo $message;?></b></strong>
                 <h4 class="form-signin-heading">&nbsp;</h4>
@@ -84,10 +84,11 @@
                     <label class="checkbox"><input type="checkbox" value="1" name="remember">Remember me</label>
                 </div>
                       <div style="text-align: center"><button class="btn btn-large btn-primary" type="submit">Login</button></div>
-<p><a id="qrcode" href="javascript:void(0)">Click for QR login </a></p>
+
+                <p style="margin-top: 20px; margin-left: 110px;" ><a id="qrcode" href="javascript:void(0)">Click for QR login </a></p>
             </form>
 
-            <form id="qr-code" class="form-signin" method="POST" action="auth/qrlogin" style="display: none">
+            <form id="qr-code" class="form-signin" method="POST" action="auth/qrlogin" >
 
                 <strong><b style="color:red;"><?php echo $message; ?></b></strong>
                 <h4 class="form-signin-heading">&nbsp;</h4>
@@ -96,7 +97,7 @@
                 </div>
 
                 <div style="text-align: center"><button class="btn btn-large btn-primary" id="login_qrcode" type="submit">Login QR Code</button></div>
-                <p><a id="loginid" href="javascript:void(0)">Click for login </a></p>
+                <p style="margin-top: 20px; margin-left: 110px;"><a id="loginid" href="javascript:void(0)">Click for login </a></p>
             </form>
 
 
