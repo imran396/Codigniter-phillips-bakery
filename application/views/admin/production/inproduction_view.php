@@ -394,7 +394,7 @@
     $(document).ready(function() {
 
         $('.order-sortable').dataTable( {
-            "aaSorting": [[4,'desc']],
+            "aaSorting": [[4,'asc']],
             "aoColumns": [
                 null,
                 null,
