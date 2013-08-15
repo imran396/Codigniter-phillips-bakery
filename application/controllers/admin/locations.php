@@ -60,38 +60,6 @@ class Locations extends Crud_Controller
         $this->layout->view('admin/locations/locations_view', $this->data);
     }
 
-    public function revel()
-    {
-        $data = $this->revel_location->getAll();
-        var_dump($data);
-    }
-
-    public function sync()
-    {
-        $data = $this->locations_model->findAll();
-
-        foreach ($data as $location) {
-
-            try {
-                $location['revel_location_id'] = $this->revel_location->create($location);
-            } catch (\Exception $e) {
-                $location['revel_location_id'] = null;
-            }
-
-            $this->locations_model->update($location, $location['location_id']);
-
-        }
-    }
-
-    public function clear()
-    {
-        $data = $this->revel_location->getAll();
-
-        foreach ($data as $location) {
-            $this->revel_location->delete($location->id);
-        }
-    }
-
     private function addValidation()
     {
         $this->form_validation->set_rules('title', 'Location Title', 'required|trim|xss_clean|callback_checkTitle');
@@ -171,5 +139,37 @@ class Locations extends Crud_Controller
     private function redirectToHome($redirect = null)
     {
         redirect('admin/locations/' . $redirect);
+    }
+
+    public function revel()
+    {
+        $data = $this->revel_location->getAll();
+        var_dump($data);
+    }
+
+    public function sync()
+    {
+        $data = $this->locations_model->findAll();
+
+        foreach ($data as $location) {
+
+            try {
+                $location['revel_location_id'] = $this->revel_location->create($location);
+            } catch (\Exception $e) {
+                $location['revel_location_id'] = null;
+            }
+
+            $this->locations_model->updateRevelId($location['location_id'], $location['revel_location_id']);
+
+        }
+    }
+
+    public function clear()
+    {
+        $data = $this->revel_location->getAll();
+
+        foreach ($data as $location) {
+            $this->revel_location->delete($location->id);
+        }
     }
 }

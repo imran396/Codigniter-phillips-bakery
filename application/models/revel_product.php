@@ -47,15 +47,15 @@ class Revel_Product extends Revel_Model
             'price'                   => 0.30,
             'barcode'                 => '',
             'crv_value'               => 0.0,
-            'point_value '            => 0.0,
-            'brand '                  => "/enterprise/Brand/1/",
+            'point_value'             => 0.0,
+            'brand'                   => "/enterprise/Brand/1/",
             'dining_options'          => '',
             'point_redeem'            => 0.0,
             'active'                  => true,
             'happy_hour_end_time'     => '',
             'variable_pricing'        => true,
             'allow_price_override'    => true,
-            'sorting'                 => $data['cake_id'],
+            'sorting'                 => time(),
             'tax_amount'              => 0.0,
             'name'                    => isset($data['title']) ? $data['title'] : null,
             'happy_hour_price'        => 0.0,
@@ -71,7 +71,12 @@ class Revel_Product extends Revel_Model
 
         );
 
-        $this->postResource('Product', $productData);
+        $this->postResource('Product', $productData, true);
         return basename($this->headers['location']);
+    }
+
+    public function delete($id)
+    {
+        return $this->deleteResource('Product', $id, true);
     }
 }

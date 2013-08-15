@@ -166,4 +166,9 @@ class Locations_model extends Crud_Model
 
         return $data;
     }
+
+    public function updateRevelId($locationId, $revelLocationId)
+    {
+        $this->db->where(array('location_id' => $locationId))->set(array('revel_location_id' => $revelLocationId))->update('locations');
+    }
 }
