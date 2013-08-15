@@ -481,7 +481,7 @@
 <div class="row-fluid">
     <div class="span6">
         <div class="control-group">
-            <label class="control-label" ><strong><?php echo $this->lang->line('order_created');?></strong>: <?php echo getOrderDateFormat($queryup[0]->order_date); ?></label>
+            <label class="control-label" ><strong><?php echo $this->lang->line('order_created');?></strong>: <?php $order_date = isset($queryup[0]->order_date)?$queryup[0]->order_date:''; if($order_date > 0){ echo getOrderDateFormat($queryup[0]->order_date); } ?></label>
         </div>
         <div class="control-group">
             <label class="control-label" for="firstname"><?php echo $this->lang->line('delivery_type');?></label>
