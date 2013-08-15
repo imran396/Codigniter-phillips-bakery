@@ -62,7 +62,7 @@
 
 <div id="wrapper">
 <div class="col_half left">
-    <h1><?php if( $queryup->order_status ==300 ){ echo $queryup ->orderstatus; }else{ echo "INVOICE"; } ?></h1>
+    <h1><?php if( $queryup->order_status ==300 ){ echo strtoupper($queryup ->orderstatus); }else{ echo "INVOICE"; } ?></h1>
 </div>
 
 <div class="col_half right">
@@ -96,11 +96,13 @@
 <ul class="col_fourth left">
     <li>&nbsp;</li>
 </ul>
-
+<?php
+if($queryup->delivery_type == 'delivery' ){
+?>
 <ul class="col_fourth left">
     <li>DELIVER TO</li>
 </ul>
-
+<?php } ?>
 <div class="clr"></div>
 <br />
 
@@ -236,7 +238,6 @@
     <p class="cen">Thank You</p>
     <p class="cen"><?php
         if(!empty($locations)){ echo $locations[0]->email; } ?></p>
-    <br />
     <p class="cen">stphillipsbakery.com</p>
 
 </div>
@@ -270,13 +271,13 @@
         <?php if($queryup->printed_image_surcharge > 0){ ?>
             <tr><td>PRINTED IMAGE</td><td><?php echo "$".$queryup->printed_image_surcharge; ?></td></tr>
         <?php } ?>
-        <?php if($queryup->delivery_zone_surcharge){ ?>
+        <?php if($queryup->delivery_zone_surcharge > 0){ ?>
             <tr><td>DELIVERY:</td><td><?php echo "$".$queryup->delivery_zone_surcharge; ?></td></tr>
         <?php } ?>
-         <?php if($queryup->magic_surcharge){ ?>
+         <?php if($queryup->magic_surcharge > 0){ ?>
             <tr><td>MAGIC SURCHARGE:</td><td><?php echo "$".$queryup->magic_surcharge; ?></td></tr>
         <?php } ?>
-        <?php if($queryup->discount_price){ ?>
+        <?php if($queryup->discount_price > 0){ ?>
             <tr><td>DISCOUNT:</td><td><?php echo "$".$queryup->discount_price; ?></td></tr>
         <?php } ?>
         <tr><td colspan="2">&nbsp;</td></tr>
