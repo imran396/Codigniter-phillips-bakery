@@ -8,11 +8,35 @@ class Revel_Model extends CI_Model
     protected $response;
     protected $headers;
     protected $code;
+    protected $resource;
 
-    public function __construct()
+    public function __construct($resource = '')
     {
         parent::__construct();
+
         $this->revel = $this->config->item('revel');
+        $this->resource = $resource;
+    }
+
+    public function getAll()
+    {
+        $initial = json_decode($this->getResource($this->resource, 0, 1));
+        $total = $initial->meta->total_count;
+
+        $resources = array();
+
+        for ($i = 0; $i < ceil($total / 20); $i++) {
+
+            $new = $this->getResource($this->resource, $i * 1, 20, 'json', true);
+
+            if ($data = json_decode($new)) {
+                foreach ($data->objects as $object) {
+                    $resources[] = $object;
+                }
+            }
+        }
+
+        return $resources;
     }
 
     protected function getResource($resource, $offset = 0, $limit = 20, $format = 'json', $debug = false)
@@ -28,7 +52,7 @@ class Revel_Model extends CI_Model
         $this->headers  = $response->headers;
 
         if ($debug) {
-            var_dump($response);
+            $this->log($response);
         }
 
         return $response->raw_body;
@@ -40,27 +64,19 @@ class Revel_Model extends CI_Model
 
         $client->addHeaders(array('API-AUTHENTICATION' => $this->revel['api_key'] . ':' . $this->revel['api_secret']));
         $client->sendsAndExpects('json');
-
         $client->body(str_replace('\\/', '/', json_encode($data)));
 
-        try {
-            $response = $client->send();
-            $this->code     = $response->code;
-            $this->response = $response->body;
-            $this->headers  = $response->headers;
-            return $response->raw_body;
+        $response = $client->send();
 
-        } catch (Exception $ex) {
-            return $ex->getMessage();
-
-        }
-
+        $this->code     = $response->code;
+        $this->response = $response->body;
+        $this->headers  = $response->headers;
 
         if ($debug) {
-            //var_dump($response);
+            $this->log($response);
         }
 
-
+        return $response->raw_body;
     }
 
     protected function deleteResource($resource, $id, $debug = false)
@@ -73,6 +89,10 @@ class Revel_Model extends CI_Model
         $this->code     = $response->code;
         $this->response = $response->body;
         $this->headers  = $response->headers;
+
+        if ($debug) {
+            $this->log($response);
+        }
 
         return $response->raw_body;
     }
@@ -100,5 +120,16 @@ class Revel_Model extends CI_Model
             mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
 
         );
+    }
+
+    private function log($var)
+    {
+        if (is_object($var)) {
+            $data = $var->raw_headers . PHP_EOL . PHP_EOL . $var->raw_body;
+        } else {
+            $data = $var;
+        }
+
+        file_put_contents(APPPATH . '../revel_debug.log', '[' . date('Y-m-d H:i:s') . '] ' . $data . PHP_EOL, FILE_APPEND);
     }
 }

@@ -341,4 +341,6 @@ div.dataTables_info {
 }
 .dataTables_filter{ display: none!important;}
 
-
+.control-label {
+    font-weight: bold;
+}
