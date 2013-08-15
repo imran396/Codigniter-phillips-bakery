@@ -4,7 +4,7 @@ class Revel_Customer extends Revel_Model
 {
     public function getAll()
     {
-        return $this->getResource('Customer');
+        return $this->getResource('customer');
     }
 
     public function create($data)
@@ -39,7 +39,7 @@ class Revel_Customer extends Revel_Model
             'updated_by' => '/enterprise/User/19/',
             'created_date' => date("Y-m-dTH:i:s"),
         );
-        $this->postResource('Customer', $customedrata);
+        $this->postResource('customer', $customedrata);
         return basename($this->headers['location']);
     }
 }

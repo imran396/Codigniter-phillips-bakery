@@ -806,15 +806,10 @@ if($this->productions_model->orderNotes($queryup[0]->order_id)){
     <div class="span12">
         <div class="control-group">
             <label class="control-label" ><?php echo $this->lang->line('added_by');?></label>
-               <select  id="notes_employee_id" style="width: 100%;"  name="notes_employee_id">
-                <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
-                <?php
-
-                foreach($employeeresult as $employee):
-
-                        ?>
-                        <option value="<?php echo $employee->id;  ?>" ><?php echo $employee->first_name.' '.$employee->last_name; ?></option>
-                    <?php  endforeach; ?>
+               <select class="search_dropdown"  id="notes_employee_id" style="width: 100%;"  name="notes_employee_id">
+                <?php foreach($employeeresult as $employee): ?>
+                <option value="<?php echo $employee->id;  ?>" ><?php echo $employee->first_name.' '.$employee->last_name; ?></option>
+                <?php  endforeach; ?>
             </select>
         </div>
         <div class="control-group">
