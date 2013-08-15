@@ -258,7 +258,8 @@ $lang['pickup'] 		 	    = 'Pickup';
 $lang['delivery'] 		 	    = 'Delivery';
 $lang['pickup_location'] 		 	    = 'Pickup Location';
 $lang['delivery_time'] 		 	    = 'Pickup/Delivery Time';
-$lang['date'] 		 	    = 'Date';
+$lang['delivery_date'] 		 	    = 'Delivery or pickup';
+$lang['order_created'] 		 	    = 'Order Created';
 $lang['onCakeImage'] 		 	    = 'Image On Cake ';
 $lang['magic_cake_id'] 		 	    = 'Magic Cake ID';
 $lang['magic_surcharge'] 		 	    = 'Magic Cake Surcharge';
@@ -288,6 +289,9 @@ $lang['delivery_zone_surcharge'] 		 	    = 'Delivery Zone Surcharge';
 $lang['override_price'] 		 	    = 'Price Override';
 $lang['total_price'] 		 	    = 'Total Price';
 $lang['total'] 		 	    = 'Total';
+$lang['order_notes'] 		 	    = 'Order Notes';
+$lang['added_by'] 		 	    = 'Added By';
+$lang['notes'] 		 	    = 'Notes';
 
 /* -------- Orders --------------*/
 $lang['Size and Servings'] = 'Size and Servings';

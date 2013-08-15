@@ -34,6 +34,32 @@ class Orders_model extends Crud_Model
                 ->result();
     }
 
+    function getFlavours(){
+
+        $farr=array();
+        $curdate=date('m/d/Y');
+        $sql= "SELECT flavour_id FROM  `blackouts` WHERE  `blackout_date` LIKE  '%$curdate%'";
+        $res = $this->db->query($sql)->result();
+        foreach($res as $rows){
+
+            $farr[]= $rows->flavour_id;
+        }
+        if(empty($farr)){
+            return $res=$this->db
+                ->select('flavour_id,title')
+                ->where('status',1)
+                ->get('flavours')
+                ->result();
+        }else{
+            return $res=$this->db
+                ->select('flavour_id,title')
+                ->where('status',1)
+                ->where_not_in('flavour_id',$farr)
+                ->get('flavours')
+                ->result();
+        }
+    }
+
     /*------------End Admin Panel Oredr */
 
     public function order_insert($data){
@@ -307,6 +333,7 @@ class Orders_model extends Crud_Model
 
     }
 
+
     function getEmployeeName($user_id){
 
         $customer = $this->db
@@ -555,12 +582,19 @@ class Orders_model extends Crud_Model
        return $data;
    }
 
-    public function SaveNotes($data){
+    public function SaveNotes($data)
+    {
         $this->db->set($data)->insert('order_notes');
     }
 
+    public function orderNotesRemove($order_notes_id)
+    {
+        $this->db->where(array('order_notes_id'=>$order_notes_id))->delete('order_notes');
+    }
 
-    public function search($order_id){
+
+    public function search($order_id)
+    {
 
         $this->db->where('order_id',$order_id);
         $data = $this->db->select('order_id,employee_id,create_date,notes')->order_by('order_id','asc')->get('order_notes')->result_array();
@@ -576,7 +610,8 @@ class Orders_model extends Crud_Model
 
     }
 
-    public function getCustomerData($id){
+    public function getCustomerData($id)
+    {
         $this->db->where('customer_id', $id);
         $res = $this->db->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->get('customers');
         $result =  $res->row();
@@ -584,35 +619,40 @@ class Orders_model extends Crud_Model
 
     }
 
-    function getDateFormat($date=NULL){
+    function getDateFormat($date=NULL)
+    {
 
         $mdate =strtotime($date);
         $udate =date("m/d/Y",$mdate);
         return $udate;
     }
 
-    function dateFormat($date=NULL){
+    function dateFormat($date=NULL)
+    {
 
         $mdate =strtotime($date);
         $udate =date("m/d/Y",$mdate);
         return $udate;
     }
 
-    function phoneNoFormat($phone){
+    function phoneNoFormat($phone)
+    {
         return  $to = sprintf("%s-%s-%s",
             substr($phone, 0, 3),
             substr($phone, 3, 3),
             substr($phone, 6, 8));
     }
 
-    function timeFormat($time){
+    function timeFormat($time)
+    {
 
         $date=date('d-m-y');
         $dateTime=strtotime($date.' '.$time);
         return date("H:i",$dateTime);
     }
 
-    function fileName($fileName){
+    function fileName($fileName)
+    {
         $filename=explode("/",$fileName);
         return end($filename);
 

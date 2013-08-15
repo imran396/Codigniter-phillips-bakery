@@ -26,13 +26,16 @@ class Orders extends Crud_Controller
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['catresult'] = $this->cakes_model->getCategories();
         $this->data['cakeresult'] = $this->orders_model->getCakes($category=0);
-        $this->data['flvresult'] = $this->cakes_model->getFlavours();
+        $this->data['flvresult'] = $this->orders_model->getFlavours();
         $this->data['sapresult'] = $this->cakes_model->getShapes();
         $this->data['zoneresult'] = $this->cakes_model->getZones();
         $this->data['locationresult'] = $this->cakes_model->getlocations();
         $this->data['customerresult'] = $this->cakes_model->getCustomers();
         $this->data['employeeresult'] = $this->cakes_model->getEmployees($group_id=2);
         $this->data['managerresult'] = $this->cakes_model->getEmployees($group_id=3);
+
+
+
         $this->layout->view('admin/orders/order_view', $this->data);
 
     }
@@ -462,6 +465,16 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
             $this->sendEmail($orders['order_code']);
         }
 
+        $notes = isset($_REQUEST['notes']) ? $_REQUEST['notes']:'';
+        if(!empty($notes)){
+
+            $notes_data['notes']=isset($_REQUEST['notes']) ? $_REQUEST['notes']:'';
+            $notes_data['employee_id']=isset($_REQUEST['notes_employee_id']) ? $_REQUEST['notes_employee_id']:'';
+            $notes_data['create_date']=time();
+            $notes_data['order_id']=$orders['order_id'];
+            $this->orders_model->SaveNotes($notes_data);
+        }
+
         if($orderID > 0 ){
 
             if(isset($_REQUEST['employee_id'])){
@@ -495,7 +508,8 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     }
 
-    public function sendEmail($order_code){
+    public function sendEmail($order_code)
+    {
 
 
         $result= $this->productions_model->orderDetails($order_code);
@@ -521,8 +535,8 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
     }
 
 
-    private function mailgunSendMessage($orders, $replyTo,$name,$subject=NULL,$body=NULL){
-
+    private function mailgunSendMessage($orders, $replyTo,$name,$subject=NULL,$body=NULL)
+    {
 
         $order_id = $orders['order_id'];
         $result= $this->productions_model->orderPrint($order_id);
@@ -542,7 +556,8 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     }
 
-    public function barcode_gen($order_code) {
+    public function barcode_gen($order_code)
+    {
 
         $this->load->library('Zend');
         $this->zend->load('Zend/Barcode/Barcode');
@@ -552,14 +567,16 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     }
 
-    public function saveBarcodeImage($order_code){
+    public function saveBarcodeImage($order_code)
+    {
 
         define('YOUR_DIRECTORY',realpath(APPPATH . "../web/assets/uploads/orders/barcode/"));
         $content = file_get_contents(site_url()."/api/orders/barcode_gen/".$order_code);
         file_put_contents(YOUR_DIRECTORY.$order_code.".png",$content);
     }
 
-    public function createPDF($order_code){
+    public function createPDF($order_code)
+    {
 
         $this->load->helper(array('dompdf', 'file'));
         $result= $this->productions_model->orderDetails($order_code);
@@ -578,7 +595,8 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
 
 
-    function search($urlsearch=NULL,$start=0){
+    function search($urlsearch=NULL,$start=0)
+    {
 
 
         $getsearch = $this->input->get('search');
@@ -604,7 +622,8 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     }
 
-    public function sorting($order_id=0){
+    public function sorting($order_id=0)
+    {
 
 
         $this->orders_model->sortingList($order_id);
@@ -612,7 +631,8 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     }
 
-    public function instructional_gallery_delete($order_id){
+    public function instructional_gallery_delete($order_id)
+    {
 
         $path = $this->input->post('path');
         $this->orders_model->instructionalGalleryDelete($order_id,$path);
@@ -623,6 +643,18 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
     {
         $this->orders_model->delete($id);
         $this->redirectToHome("listing");
+
+    }
+
+    public function notes_remove()
+    {
+
+        $order_notes_id = $this->input->post('order_notes_id');
+        if($order_notes_id > 0)
+        {
+            $this->orders_model->orderNotesRemove($order_notes_id);
+            echo 'success';
+        }
 
     }
 

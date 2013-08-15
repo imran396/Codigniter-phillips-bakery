@@ -294,7 +294,6 @@
                 cache: false,
                 success: function(val){
                     if(val =='success'){
-                        alert(html);
                         $('#listItem_'+gallery_id).remove();
                     }
 
