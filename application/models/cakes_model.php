@@ -396,4 +396,14 @@ class Cakes_model extends CI_Model
         return $data;
 
     }
+
+    public function findAll()
+    {
+        return $this->db->select('*')->get('cakes')->result_array();
+    }
+
+    public function updateRevelId($cakeId, $revelProductId)
+    {
+        $this->db->where(array('cake_id' => $cakeId))->set(array('revel_product_id' => $revelProductId))->update('cakes');
+    }
 }

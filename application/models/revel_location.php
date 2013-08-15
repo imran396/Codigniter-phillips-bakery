@@ -2,9 +2,9 @@
 
 class Revel_Location extends Revel_Model
 {
-    public function getAll()
+    public function __construct()
     {
-        return $this->getResource('PosStation');
+        parent::__construct('PosStation');
     }
 
     public function create($data)
@@ -20,9 +20,9 @@ class Revel_Location extends Revel_Model
             'ip_address'                      => null,
             'is_bar'                          => false,
             'kitchen_view'                    => false,
-            'mac'                             => 'B8:C7:5D:DA:19:6F',
+            'mac'                             => '',
             'name'                            => $data['title'],
-            'network_key'                     => 'eno',
+            'network_key'                     => '',
             'no_cash_drawer'                  => false,
             'payment_options_array'           => array(1, 2, 3, 4, 5, 6, 7, 8),
             'pos_mode'                        => 'T',
@@ -31,6 +31,10 @@ class Revel_Location extends Revel_Model
 
         $this->postResource('PosStation', $data, true);
         return basename($this->headers['location']);
+    }
 
+    public function delete($id)
+    {
+        return $this->deleteResource('PosStation', $id, true);
     }
 }
