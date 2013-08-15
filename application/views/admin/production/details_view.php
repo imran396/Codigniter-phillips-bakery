@@ -125,6 +125,11 @@
                     <div class="line">
                         <div class="title">Order ID</div><?php echo $queryup->order_code; ?>
                     </div>
+                    <?php if( $queryup->order_date){ ?>
+                        <div class="line">
+                            <div class="title"><?php echo $this->lang->line('order_created');?></div><?php echo getOrderDateFormat($queryup->order_date); ?>
+                        </div>
+                    <?php } ?>
                     <?php if( $queryup->delivery_date){ ?>
                     <div class="line">
                         <div class="title">Pickup / delivery date</div><?php echo $this->productions_model->dateFormate($queryup->delivery_date); ?>

@@ -93,7 +93,7 @@
                 <strong><b style="color:red;"><?php echo $message; ?></b></strong>
                 <h4 class="form-signin-heading">&nbsp;</h4>
                 <div class="uniformjs">
-                    <input type="text" class="input-block-level" placeholder="Enter QR Code" id="employee_id" name="employee_id">
+                    <input type="password" class="input-block-level" placeholder="Enter QR Code" id="employee_id" name="employee_id">
                 </div>
 
                 <div style="text-align: center"><button class="btn btn-large btn-primary" id="login_qrcode" type="submit">Login QR Code</button></div>

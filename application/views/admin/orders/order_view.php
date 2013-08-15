@@ -230,13 +230,6 @@
 
  });
 </script>
-
-<?php
-
-
-
-?>
-
 <div id="content">
 <ul class="breadcrumb">
     <li><a href="<?php echo site_url(); ?>" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
@@ -487,7 +480,9 @@
 <hr class="separator" />
 <div class="row-fluid">
     <div class="span6">
-
+        <div class="control-group">
+            <label class="control-label" ><strong><?php echo $this->lang->line('order_created');?></strong>: <?php echo getOrderDateFormat($queryup[0]->order_date); ?></label>
+        </div>
         <div class="control-group">
             <label class="control-label" for="firstname"><?php echo $this->lang->line('delivery_type');?></label>
             <div class="controls">
@@ -551,7 +546,10 @@
     </div>
     <div class="span6">
         <div class="control-group">
-            <label class="control-label" ><?php echo $this->lang->line('date');?></label>
+            <label class="control-label" >&nbsp;</label>
+        </div>
+        <div class="control-group">
+            <label class="control-label" ><?php echo $this->lang->line('delivery_date');?></label>
             <div class="controls">
                 <input type="text" value="<?php echo (isset($queryup[0]->delivery_date))? $queryup[0]->delivery_date:set_value('delivery_date'); ?>" name="delivery_date" id="datepicker" class="date start">
             </div>

@@ -38,7 +38,7 @@ class Orders_model extends Crud_Model
 
         $farr=array();
         $curdate=date('m/d/Y');
-        echo $sql= "SELECT flavour_id FROM  `blackouts` WHERE  `blackout_date` LIKE  '%$curdate%'";
+        $sql= "SELECT flavour_id FROM  `blackouts` WHERE  `blackout_date` LIKE  '%$curdate%'";
         $res = $this->db->query($sql)->result();
         foreach($res as $rows){
 

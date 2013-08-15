@@ -446,7 +446,7 @@ class Orders extends API_Controller
             $this->email->set_newline("\r\n");
             $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
             $this->email->to($customer_email);
-            $this->email->subject($this->lang->line('global_email_subject').':'.$orderstatus);
+            $this->email->subject($this->lang->line('global_email_subject').' - Cake '.$orderstatus);
             $this->email->message(nl2br($body));
             if (file_exists($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf')) {
                 $this->email->attach($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
@@ -486,7 +486,7 @@ class Orders extends API_Controller
             $this->email->set_newline("\r\n");
             $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
             $this->email->to($customer_email);
-            $this->email->subject($this->lang->line('global_email_subject').':'.$orderstatus);
+            $this->email->subject($this->lang->line('global_email_subject').' - Cake '.$orderstatus);
             $this->email->message(nl2br($body));
             if (file_exists($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf')) {
                 $this->email->attach($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
@@ -541,6 +541,7 @@ class Orders extends API_Controller
         }
 
     }
+
 
 
     public function notes($order_id){

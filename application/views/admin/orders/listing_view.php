@@ -40,6 +40,7 @@
                     <thead>
                     <tr>
                         <th width="70">Order #</th>
+                        <th width="110"><?php echo $this->lang->line('order_created');?></th>
                         <th width="110">Delivery Date</th>
                         <th width="166">Customer Name</th>
                         <th width="160">Order Status</th>
@@ -54,6 +55,7 @@
                         ?>
                         <tr>
                             <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
+                            <td class="center"><?php echo getOrderDateFormat($rows->order_date); ?></td>
                             <td class="center"><?php echo $rows->delivery_date; //$this->productions_model->dateFormate($rows->delivery_date); ?></td>
 
                             <td><?php if($rows->first_name) echo $rows->first_name.' '.$rows->last_name; else echo "---"; ?></td>
@@ -100,12 +102,13 @@
             "aoColumns": [
                 null,
                 {"sTYpe":   "date-dd-mmm-yyyy" },
+                {"sTYpe":   "date-dd-mmm-yyyy" },
                 null,
                 null,
                 null
             ],
             "aoColumnDefs": [
-             { "bSortable":false, "aTargets": [4] }
+             { "bSortable":false, "aTargets": [5] }
 
              ],
             "bPaginate": false,
