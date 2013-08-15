@@ -286,10 +286,11 @@
                                         ?>
                                         <div class="note">
                                             <div class="note-header">
-                                                <table><tr>
+                                                <table>
+                                                    <tr>
                                                         <td class="notes-title notes-title-added">Added by:</td><td class="note-text note-text-name"><?php echo $orderNotes->first_name.' '.$orderNotes->last_name; ?></td>
-                                                        <td class="notes-title notes-title-date">Date added:<span class="note-text" ><?php echo $date; ?></span></td>
-                                                        <td class="notes-title notes-title-time">Time added:<span class="note-text" ><?php echo $time; ?></span></td>
+                                                        <td class="notes-title notes-title-date">Date:<span class="note-text" ><?php echo $date; ?></span></td>
+                                                        <td class="notes-title notes-title-time">Time:<span class="note-text" ><?php echo $time; ?></span></td>
                                                     </tr>
                                                 </table>
                                             </div>

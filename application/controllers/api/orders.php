@@ -157,7 +157,8 @@ class Orders extends API_Controller
 
     }
 
-    public function update(){
+    public function update()
+    {
 
 
         $array_orders_key =  array(

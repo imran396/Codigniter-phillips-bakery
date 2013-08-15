@@ -230,6 +230,13 @@
 
  });
 </script>
+
+<?php
+
+
+
+?>
+
 <div id="content">
 <ul class="breadcrumb">
     <li><a href="<?php echo site_url(); ?>" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
@@ -710,7 +717,7 @@
         <div class="control-group">
             <label class="control-label"><?php echo $this->lang->line('special_instruction');?></label>
             <div class="controls">
-                <textarea rows="" cols="" style="width: 100%" name="special_instruction" id="special_instruction" class="midium-textarea" ><?php echo(isset($queryup[0]->special_instruction))? $queryup[0]->special_instruction:set_value('special_instruction'); ?></textarea>
+                <textarea rows="" cols="" style="width: 98%" name="special_instruction" id="special_instruction" class="midium-textarea" ><?php echo(isset($queryup[0]->special_instruction))? $queryup[0]->special_instruction:set_value('special_instruction'); ?></textarea>
 
             </div>
         </div>
@@ -722,14 +729,14 @@
             ?>
 
             <div class="">
-                <table style="width: 100%" class="table table-bordered table-condensed js-table-sortable" style="height: 40px; margin-bottom: 20px;overflow-x: scroll">
+                <table style="width: 98%" class="table table-bordered table-condensed js-table-sortable" style="height: 40px; margin-bottom: 20px;overflow-x: scroll">
                     <?php foreach($instructionals as $instructional){ ?>
 
                     <tr class="selectable" id="listItem_<?php echo $instructional->instructional_photo_id; ?>" >
                     <td><?php echo $instructional->ordering; ?></td>
                     <td><a href="<?php  echo base_url().$instructional->instructional_photo;?>" class="select-image-group" rel="group-1"><?php  echo $this->orders_model->fileName($instructional->instructional_photo);?><?php //echo $this->lang->line('click_for_image');?></a> </td>
                     <td class="center js-sortable-handle"><span  class="glyphicons btn-action single move" style="margin-right: 0;"><i></i></span></td>
-                    <td><a onclick="return confirm('Are you sure you want to delete?')" data-original-title="<?php echo $this->lang->line('delete'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action glyphicons remove_2 btn-danger" rel="<?php echo $instructional->instructional_photo_id; ?>"  id="<?php echo $instructional->instructional_photo; ?>"><i></i></a></td>
+                    <td><a onclick="return confirm('Are you sure you want to delete?')" data-original-title="<?php echo $this->lang->line('delete'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action glyphicons remove_2 btn-danger instructional-danger" rel="<?php echo $instructional->instructional_photo_id; ?>"  id="<?php echo $instructional->instructional_photo; ?>"><i></i></a></td>
                     </tr>
                     <?php } ?>
                 </table>
@@ -761,6 +768,68 @@
     </div>
 
 </div>
+<hr class="separator" />
+<div class="widget-head">
+    <h4 class="heading glyphicons edit"><i></i><?php echo $this->lang->line('order_notes');?></h4>
+</div>
+<?php
+$uporder_id =isset($queryup[0]->order_id)?$queryup[0]->order_id:'';
+if($uporder_id > 0){
+if($this->productions_model->orderNotes($queryup[0]->order_id)){
+?>
+<table style="width: 100%" class="table table-bordered table-condensed">
+    <?php
+
+    $notes = $this->productions_model->orderNotes($queryup[0]->order_id);
+    foreach( $notes as $orderNotes):
+        $createdate = $orderNotes->create_date;
+        $date = date("D j M",$createdate);
+        $time = date("g:i a",$createdate);
+
+        ?>
+        <tbody id="note_<?php echo $orderNotes->order_notes_id; ?>" >
+        <tr>
+            <td class="notes-title notes-title-added">Added by:<?php echo $orderNotes->first_name.' '.$orderNotes->last_name; ?></td>
+            <td class="notes-title notes-title-date">Date added:<span class="note-text" ><?php echo $date; ?></span></td>
+            <td class="notes-title notes-title-time">Time added:<span class="note-text" ><?php echo $time; ?></span></td>
+            <td>
+            <a onclick="return confirm('Are you sure you want to delete?')" data-original-title="<?php echo $this->lang->line('delete'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action glyphicons remove_2 btn-danger notes-danger" id="<?php echo $orderNotes->order_notes_id; ?>"><i></i></a></td>
+        </tr>
+    <tr>
+        <td colspan="4"> <?php echo $orderNotes->notes; ?></td>
+    </tr>
+        </tbody>
+    <?php endforeach;  ?>
+
+</table>
+<?php } } ?>
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="control-group">
+            <label class="control-label" ><?php echo $this->lang->line('added_by');?></label>
+               <select  id="notes_employee_id" style="width: 100%;"  name="notes_employee_id">
+                <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
+                <?php
+
+                foreach($employeeresult as $employee):
+
+                        ?>
+                        <option value="<?php echo $employee->id;  ?>" ><?php echo $employee->first_name.' '.$employee->last_name; ?></option>
+                    <?php  endforeach; ?>
+            </select>
+        </div>
+        <div class="control-group">
+            <label class="control-label"><?php echo $this->lang->line('notes');?></label>
+            <div class="controls">
+                <textarea rows="" cols="" style="width: 98%" name="notes" id="notes" class="midium-textarea" ></textarea>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="separator" />
 <table style="width: 100%" class="table table-bordered table-condensed">
     <tr>
         <?php $matrix_price = (isset($queryup[0]->matrix_price))? $queryup[0]->matrix_price:'0.00'; ?>
@@ -904,7 +973,7 @@
             }
         });
 
-        $('.btn-danger').click(function(){
+        $('.instructional-danger').click(function(){
 
             var path = $(this).attr('id');
             var rel = $(this).attr('rel');
@@ -915,8 +984,25 @@
                 cache: false,
                 success: function(val){
                     if(val =='success'){
-                        alert(html);
                         $('#listItem_'+rel).remove();
+                    }
+
+                }
+            });
+
+        })
+
+        $('.notes-danger').click(function(){
+
+            var order_notes_id = $(this).attr('id');
+            $.ajax({
+                type: "POST",
+                url:"<?php echo site_url('admin/orders/notes_remove')?>",
+                data:'order_notes_id='+order_notes_id,
+                cache: false,
+                success: function(val){
+                    if(val =='success'){
+                        $('#note_'+order_notes_id).remove();
                     }
 
                 }

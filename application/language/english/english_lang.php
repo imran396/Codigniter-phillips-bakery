@@ -287,6 +287,9 @@ $lang['delivery_zone_surcharge'] 		 	    = 'Delivery Zone Surcharge';
 $lang['override_price'] 		 	    = 'Price Override';
 $lang['total_price'] 		 	    = 'Total Price';
 $lang['total'] 		 	    = 'Total';
+$lang['order_notes'] 		 	    = 'Order Notes';
+$lang['added_by'] 		 	    = 'Added By';
+$lang['notes'] 		 	    = 'Notes';
 
 /* -------- Orders --------------*/
 $lang['Size and Servings'] = 'Size and Servings';

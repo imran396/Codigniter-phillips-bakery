@@ -52,10 +52,10 @@ class Customers_model extends Crud_Model
     public function  checkUniqueTitle($id){
 
         if(!empty($id)){
-            return $dbcatid = $this->db->select('title')
+            return $dbcatid = $this->db->select('phone_number')
                 ->where('customer_id',$id)
                 ->get('customers')->result();
-            $dbcatid->title;
+            $dbcatid->phone_number;
 
         }
 

@@ -69,7 +69,7 @@ class Customers extends Crud_Controller
         $this->form_validation->set_rules('first_name');
         $this->form_validation->set_rules('last_name');
         $this->form_validation->set_rules('email');
-        $this->form_validation->set_rules('phone_number', 'Phone Number Title','required|trim|xss_clean|callback_checkTitle');
+        $this->form_validation->set_rules('phone_number', 'Phone Number','required|trim|xss_clean|callback_checkTitle');
         $this->form_validation->set_rules('customer_id');
         $this->form_validation->set_rules('address1');
         $this->form_validation->set_rules('address2');
