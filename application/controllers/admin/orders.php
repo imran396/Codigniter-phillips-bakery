@@ -665,4 +665,10 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         redirect('admin/orders/'.$redirect);
     }
 
+    public function revel()
+    {
+        $data = $this->revel_order->getAll();
+        var_dump($data);
+    }
+
 }

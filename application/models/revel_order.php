@@ -2,9 +2,9 @@
 
 class Revel_Order extends Revel_Model
 {
-    public function getAll()
+    public function __construct()
     {
-        return $this->getResource('OrderAllInOne');
+        parent::__construct('OrderAllInOne');
     }
 
     public function create($data)
