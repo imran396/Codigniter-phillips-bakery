@@ -119,14 +119,6 @@ class Orders extends API_Controller
             $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'),$this->lang->line('mailgun_instructional_body'));
         }
 
-        $this->saveBarcodeImage($orders['order_code']);
-        $this->createPDF($orders['order_code']);
-
-        $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
-        if($mailtouser ==1){
-            $this->sendEmail($orders['order_code']);
-        }
-
 
         if($orders['order_code'] && $orders['order_status'] != '300' ){
 
@@ -153,7 +145,16 @@ class Orders extends API_Controller
             }
 
         }
-            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
+
+        $this->saveBarcodeImage($orders['order_code']);
+        $this->createPDF($orders['order_code']);
+
+        $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
+        if($mailtouser ==1){
+            $this->sendEmail($orders['order_code']);
+        }
+
+        $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
 
     }
 
@@ -255,8 +256,6 @@ class Orders extends API_Controller
             $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'),$this->lang->line('mailgun_instructional_body'));
         }
 
-        $this->saveBarcodeImage($orders['order_code']);
-        $this->createPDF($orders['order_code']);
 
         $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
         if($mailtouser == 1){
@@ -291,7 +290,11 @@ class Orders extends API_Controller
             }
 
         }
-             $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
+
+            $this->saveBarcodeImage($orders['order_code']);
+            $this->createPDF($orders['order_code']);
+
+            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
 
         }else{
              $this->sendOutput(array('order_id'=> $row->order_id,'order_code'=> $row->order_code,'order_status' => $row->order_status));
