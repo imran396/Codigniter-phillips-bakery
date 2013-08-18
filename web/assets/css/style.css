@@ -1184,7 +1184,7 @@
 	text-align: center;
 	width: 95px;
 	height: 31px;
-	display: none;
+	display: block;
 	bottom: -24px;
 	left: 8px;
 	position: absolute;
