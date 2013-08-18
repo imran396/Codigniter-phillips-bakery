@@ -28,6 +28,8 @@ class Productions extends Crud_Controller
     public function index()
     {
         $this->data['active']=$this->uri->segment(2,0);
+        $this->session->unset_userdata('locationid');
+        $this->data['locationresult'] = $this->productions_model->getAllLocations();
         $this->layout->view('admin/production/production_view', $this->data);
 
     }
@@ -42,6 +44,16 @@ class Productions extends Crud_Controller
         Zend\Barcode\Barcode::factory('code39', 'image', $barcodeOptions, $rendererOptions)->render();
     }
 
+    public function location_production($location_id){
+
+        $newdata = array(
+            'locationid'  =>$location_id
+        );
+        $this->session->set_userdata($newdata);
+
+        redirect('admin/productions/inproduction');
+
+    }
 
     public function inproduction($starts=0)
     {

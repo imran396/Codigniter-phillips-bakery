@@ -61,24 +61,17 @@ class Auth extends Controller {
 		//validate form input
 		$this->form_validation->set_rules('username', 'User Name', 'required|trim');
 		$this->form_validation->set_rules('password', 'Password', 'required');
-		$this->form_validation->set_rules('location_id', 'Location', 'required');
 
        // exit;
 		if ($this->form_validation->run() == true)
 		{ //check to see if the user is logging in
 			//check for "remember me"
 			$remember = (bool) $this->input->post('remember');
-            $location_id = $this->input->post('location_id');
             //exit;
 			if ($this->ion_auth->login($this->input->post('username'), $this->input->post('password'), $remember))
 			{ //if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-                $newdata = array(
-                    'locationid'  =>$location_id
-                );
-                $this->session->set_userdata($newdata);
-
                $user_id =   $this->session->userdata('user_id');
                $empolyee_code = $this->logs_model->getEmployeeCode($user_id);
                $this->session->set_userdata(array('empolyee_code'=> $empolyee_code));
@@ -122,11 +115,6 @@ class Auth extends Controller {
 
         $employee_id = $this->input->post('employee_id');
         if($this->ion_auth_model->qr_login($employee_id) == TRUE){
-            $newdata = array(
-                   'locationid'  =>1
-                );
-                $this->session->set_userdata($newdata);
-
                 $user_id =   $this->session->userdata('user_id');
                 $empolyee_code = $this->logs_model->getEmployeeCode($user_id);
                 $this->session->set_userdata(array('empolyee_code'=> $empolyee_code));

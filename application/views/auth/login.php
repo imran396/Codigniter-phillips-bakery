@@ -75,12 +75,6 @@
                 <div class="uniformjs">
                     <input type="text" class="input-block-level" placeholder="username" name="username">
                     <input type="password" class="input-block-level" placeholder="Password" name="password">
-                    <select name="location_id" style="height: 25px; width: 220px;">
-                        <option value="" >---Select Location---</option>
-                        <?php foreach($query as $rows):?>
-                        <option value="<?php echo $rows->location_id; ?>" ><?php echo $rows->title; ?></option>
-                        <?php endforeach; ?>
-                    </select>
                     <label class="checkbox"><input type="checkbox" value="1" name="remember">Remember me</label>
                 </div>
                       <div style="text-align: center"><button class="btn btn-large btn-primary" type="submit">Login</button></div>

@@ -16,10 +16,27 @@
         <div class="panel-choice">
             <div class="logo"></div>
             <div class="options">
-                <a href="/admin/productions/inproduction" class="btn">Cakes in Production</a>
+
+                <div class="btn-group">
+                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#" >Cakes in Production</a>
+                    <ul class="dropdown-menu pull-right">
+                        <?php foreach($locationresult as $location):
+                        if($location->vaughan_location !=1){ ?>
+                            <li><a href="/admin/productions/location_production/<?php echo $location->location_id;  ?>"><?php echo $location->title; ?></a></li>
+                        <?php } endforeach; ?>
+                            <li class="divider"></li>
+                        <?php foreach($locationresult as $location):
+                        if($location->vaughan_location ==1){ ?>
+                            <li><a href="/admin/productions/location_production/<?php echo $location->location_id;  ?>"><?php echo $location->title; ?></a></li>
+                        <?php } endforeach; ?>
+                    </ul>
+                </div>
                 <a href="/admin/blackouts" class="btn">Manage Blackouts</a>
             </div>
         </div>
     </div><!-- End Wrapper -->
 
 </div>
+<style type="text/css">
+    .dropdown-menu{ min-width: 395px!important}
+</style>

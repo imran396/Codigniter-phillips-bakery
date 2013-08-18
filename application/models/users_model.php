@@ -138,11 +138,12 @@ class Users_model extends Crud_Model
 
 
     public function getAll(){
-        $this->db->select('users.id,meta.employee_id,meta.first_name,meta.last_name,groups.name as role');
+
+        $this->db->select('users.id,meta.employee_id,meta.first_name,meta.last_name,groups.name as role,users.active');
         $this->db->from('users');
         $this->db->join('groups', ' groups.id = users.group_id');
         $this->db->join('meta', 'meta.user_id = users.id');
-        $data = $this->db->get()->result_array();
+        $data = $this->db->where('active',1)->get()->result_array();
         foreach($data as $key => $val){
             $data[$key]['id'] = (int)  $data[$key]['id'];
         }
