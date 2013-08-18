@@ -203,7 +203,7 @@ class Customers_model extends Crud_Model
             $data .="<table class='table table-bordered table-primary' >";
             $data .="<thead><tr><th>Order Code</th><th>Delivery Date & Time</th><th>Delivery Type</th></tr></thead>";
             foreach($result->result() as $rows ):
-            $data .="<tr><td><a href='/admin/productions/details/".$rows->order_code."'>".$rows->order_code."</a></td><td>".$rows->delivery_date."</td><td>".$rows->delivery_type."</td></tr>";
+            $data .="<tr><td><a href='/admin/orders/edit/".$rows->order_id."'>".$rows->order_code."</a></td><td>".$rows->delivery_date."</td><td>".$rows->delivery_type."</td></tr>";
             endforeach;
             $data .="</table>";
             return  $data;

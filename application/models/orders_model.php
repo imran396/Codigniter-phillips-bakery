@@ -14,6 +14,10 @@ class Orders_model extends Crud_Model
 
     /*------------Start Admin Panel Oredr */
 
+    public function getOrderStatus($order_id){
+        return $row = $this->db->select('order_id,order_code,order_status,')->where('order_id',$order_id)->get('orders')->row();
+    }
+
     function getCakes($category_id=0){
 
         $this->db->select('cakes.cake_id,cakes.title,');

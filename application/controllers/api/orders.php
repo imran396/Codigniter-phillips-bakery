@@ -161,6 +161,7 @@ class Orders extends API_Controller
     {
 
 
+
         $array_orders_key =  array(
             'order_id','cake_id','customer_id','employee_id',
             'manager_id','location_id','order_date','delivery_type',
@@ -169,8 +170,6 @@ class Orders extends API_Controller
             'inscription','special_instruction','instructional_email_photo','vaughan_location','order_status','discount_price','total_price',
             'override_price','printed_image_surcharge','on_cake_image_needed'
         );
-
-
 
         $array_delivery_key = array('name','phone','address_1','address_2','postal','city','province','delivery_instruction');
 
@@ -187,6 +186,9 @@ class Orders extends API_Controller
                 $order_delivery[$key] = $val;
             }
         }
+
+        $row = $this->orders_model->getOrderStatus($data['order_id']);
+        if($row->order_status < 303 ){
 
         $vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
         if($vaughan_location == 1 ){
@@ -217,6 +219,21 @@ class Orders extends API_Controller
             $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
         }
 
+        if(isset($_REQUEST['removedOnCakeImage'])){
+
+            $image=$_REQUEST['removedOnCakeImage'];
+            if(!empty($image)){
+                $this->orders_model->fileDelete($orders['order_id']);
+            }
+        }
+
+        if(isset($_REQUEST['removedinstructionalImages'])){
+
+            $image=$_REQUEST['removedinstructionalImages'];
+            if(!empty($image)){
+                $this->orders_model->instructionalPhotoDelete($image,$orders['order_id']);
+            }
+        }
 
         if(isset($_FILES['onCakeImage'])){
             $this->orders_model->doUpload($orders['order_id']);
@@ -245,21 +262,7 @@ class Orders extends API_Controller
             $this->sendEmail($orders['order_code']);
         }
 
-        if(isset($_REQUEST['removedOnCakeImage'])){
 
-            $image=$_REQUEST['removedOnCakeImage'];
-            if(!empty($image)){
-                $this->orders_model->fileDelete($orders['order_id']);
-            }
-        }
-
-        if(isset($_REQUEST['removedinstructionalImages'])){
-
-            $image=$_REQUEST['removedinstructionalImages'];
-            if(!empty($image)){
-                $this->orders_model->instructionalPhotoDelete($image,$orders['order_id']);
-            }
-        }
 
         $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
 
@@ -287,7 +290,14 @@ class Orders extends API_Controller
             }
 
         }
-            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
+             $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
+
+        }else{
+             $this->sendOutput(array('order_id'=> $row->order_id,'order_code'=> $row->order_code,'order_status' => $row->order_status));
+        }
+
+
+
 
     }
 
