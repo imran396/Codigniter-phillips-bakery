@@ -255,10 +255,11 @@ class Orders extends API_Controller
             $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'),$this->lang->line('mailgun_instructional_body'));
         }
 
+        $this->saveBarcodeImage($orders['order_code']);
         $this->createPDF($orders['order_code']);
 
         $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
-        if($mailtouser =="yes"){
+        if($mailtouser == 1){
             $this->sendEmail($orders['order_code']);
         }
 
@@ -295,9 +296,6 @@ class Orders extends API_Controller
         }else{
              $this->sendOutput(array('order_id'=> $row->order_id,'order_code'=> $row->order_code,'order_status' => $row->order_status));
         }
-
-
-
 
     }
 
@@ -436,7 +434,6 @@ class Orders extends API_Controller
 
     public function mail_to_user(){
 
-
         $order_id = $_REQUEST['order_id'];
         $result= $this->productions_model->orderPrint($order_id);
         if($result ->num_rows() > 0){
@@ -450,7 +447,8 @@ class Orders extends API_Controller
                 $orderstatus = $this->data['queryup']->orderstatus;
         }
         $pdfname ='stpb-'.$this->data['queryup']->order_code;
-        if(!empty($customer_email)){
+
+            if(!empty($customer_email)){
 
             $body          = $this->load->view('email/invoice_body', $this->data,true);
             $this->email->set_newline("\r\n");
@@ -462,7 +460,7 @@ class Orders extends API_Controller
                 $this->email->attach($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
             }
             $this->email->send();
-        }
+            }
 
             if(!empty($customer_email)){
                 $this->sendOutput(array('status'=>'success','email_id'=>$customer_email));
