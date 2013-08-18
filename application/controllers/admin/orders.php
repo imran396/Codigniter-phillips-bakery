@@ -435,7 +435,6 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
             $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
         }
-
         if($_FILES['onCakeImage']['name'] !=""){
             $this->orders_model->doUpload($orders['order_id']);
         }
@@ -445,16 +444,18 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
             $this->orders_model->galleryUpload($data,$orders['order_id']);
 
         }
+        if($orders['order_status'] == 301 ){
 
-        $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
-        if($cake_email_photo == 1 ){
+            $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
+            if($cake_email_photo == 1 ){
 
-            $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'),$this->lang->line('mailgun_cakeonimage_body'));
-        }
-        $instructional_email_photo = isset($_REQUEST['instructional_email_photo']) ? $_REQUEST['instructional_email_photo']:'';
-        if($instructional_email_photo == 1){
+                $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'),$this->lang->line('mailgun_cakeonimage_body'));
+            }
+            $instructional_email_photo = isset($_REQUEST['instructional_email_photo']) ? $_REQUEST['instructional_email_photo']:'';
+            if($instructional_email_photo == 1){
 
-            $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'),$this->lang->line('mailgun_instructional_body'));
+                $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'),$this->lang->line('mailgun_instructional_body'));
+            }
         }
 
         $this->saveBarcodeImage($orders['order_code']);
