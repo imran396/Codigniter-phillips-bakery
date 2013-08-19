@@ -101,7 +101,7 @@ class Orders extends API_Controller
 
 
 
-        if($orders['order_code'] && $orders['order_status'] != '300' ){
+        /*if($orders['order_code'] && $orders['order_status'] != '300' ){
 
             $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
             $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
@@ -125,8 +125,7 @@ class Orders extends API_Controller
                 $orders=$this->orders_model->order_update($orders, $orders['order_id']);
             }
 
-        }
-
+        }*/
 
         if(isset($_FILES['onCakeImage'])){
             $this->orders_model->doUpload($orders['order_id']);
@@ -151,7 +150,6 @@ class Orders extends API_Controller
             }
 
         }
-
 
         $this->saveBarcodeImage($orders['order_code']);
         $this->createPDF($orders['order_code']);
@@ -268,7 +266,7 @@ class Orders extends API_Controller
 
         }
 
-        $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
+      /*  $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
 
         if(empty($revel_order_id) && $orders['order_status'] != '300' ){
 
@@ -293,7 +291,7 @@ class Orders extends API_Controller
                 $orders=$this->orders_model->order_update($orders, $orders['order_id']);
             }
 
-        }
+        }*/
 
             if($orders['order_status'] == 301){
 
