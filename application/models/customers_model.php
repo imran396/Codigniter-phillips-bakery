@@ -129,7 +129,7 @@ class Customers_model extends Crud_Model
 
     public function getAll()
     {
-        $data = $this->db->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('customer_id','asc')->get('customers')->result_array();
+        $data = $this->db->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('first_name','asc')->get('customers')->result_array();
         foreach($data as $key => $val){
               $data[$key]['customer_id'] = (int) $data[$key]['customer_id'];
         }

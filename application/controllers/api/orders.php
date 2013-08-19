@@ -427,10 +427,9 @@ class Orders extends API_Controller
 
                 $this->load->view('email/production_thermal_view', $this->data);
 
-
             }else{
 
-                $this->load->view('email/invoice_view', $this->data);
+                $this->load->view('email/production_invoice_view', $this->data);
             }
 
         }else{

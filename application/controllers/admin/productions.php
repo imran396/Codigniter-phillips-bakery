@@ -147,8 +147,8 @@ class Productions extends Crud_Controller
            $this->productions_model->insertAuditLog($data);
        }
 
-        $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
-        redirect('admin/productions/details/'.$order_code);
+        echo $this->productions_model->currentProductionStatus($order_status);
+        //redirect('admin/productions/details/'.$order_code);
 
     }
 

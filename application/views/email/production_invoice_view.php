@@ -1,3 +1,15 @@
+<script>
+    window.print();
+    CheckWindowState();
+
+    function CheckWindowState()    {
+        if(document.readyState=="complete") {
+            window.close();
+        } else {
+            setTimeout("CheckWindowState()", 2000)
+        }
+    }
+</script>
 <style type="text/css">
     *
     {

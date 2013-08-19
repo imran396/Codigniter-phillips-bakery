@@ -391,6 +391,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
             $orders=$this->orders_model->order_update($data,$orderID);
             $this->session->set_flashdata('success_msg','Order has been updated successfully');
         }else{
+
             $orders=$this->orders_model->order_insert($data);
 
             if($orders['order_code'] && $orders['order_status'] != '300' ){
