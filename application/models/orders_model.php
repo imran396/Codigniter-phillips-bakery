@@ -70,6 +70,7 @@ class Orders_model extends Crud_Model
 
         $order_date = $data['order_date'];
         $customer_id = $data['customer_id'];
+        $data['delivery_time']=timeFormatAmPm($data['delivery_time']);
         $orderDbID = $this->checkDuplicateInsert($customer_id , $order_date);
         if($orderDbID > 0){
             $order_id = $this->update($data,$orderDbID);
