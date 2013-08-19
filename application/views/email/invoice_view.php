@@ -62,7 +62,7 @@
 
 <div id="wrapper">
 <div class="col_half left">
-    <h1 style="font-size: 32px"><?php if( $queryup->order_status !=301 ){ echo strtoupper($queryup ->orderstatus); }else{ echo "INVOICE"; } ?></h1>
+    <h1><?php if( $queryup->order_status !=301 ){ echo strtoupper($queryup ->orderstatus); }else{ echo "INVOICE"; } ?></h1>
 </div>
 
 <div class="col_half right">
