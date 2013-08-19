@@ -28,7 +28,7 @@
                 url:"<?php echo site_url('admin/productions/status')?>/"+status,
                 type:"post",
                 success: function(val){
-                  alert('Order changed to:'+val);
+                  alert('Order Changed to: '+val);
                 }
             })
 
