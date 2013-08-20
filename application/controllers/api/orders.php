@@ -531,7 +531,8 @@ class Orders extends API_Controller
             $pdfname =$this->data['queryup']->order_code;
 
             $html          =$this->load->view('email/invoice_view', $this->data,true);
-            $invoiceNumber = str_pad('stpb-'.$pdfname,8,0,STR_PAD_LEFT);
+            //$invoiceNumber = str_pad('stpb-'.$pdfname,8,0,STR_PAD_LEFT);
+            $invoiceNumber = ('stpb-'.$pdfname);
             $pdf           = pdf_create($html, $invoiceNumber, false);
             $filePath      = realpath(APPPATH . "../web/assets/uploads/orders/pdf/"). DIRECTORY_SEPARATOR . $invoiceNumber.".pdf";
             file_put_contents($filePath,$pdf);
