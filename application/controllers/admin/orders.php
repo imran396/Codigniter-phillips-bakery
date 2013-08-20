@@ -520,13 +520,19 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $this->data['queryup']=$result->row();
         $customer_email=$this->data['queryup']->email;
         $pdfname ='stpb-'.$this->data['queryup']->order_code;
+        $order_status=$this->data['queryup']->order_status;
+        if($order_status == 301){
+            $orderstatus="Order";
+        }else{
+            $orderstatus = $this->data['queryup']->orderstatus;
+        }
         if(!empty($customer_email)){
 
             $body = $this->load->view('email/invoice_body', $this->data,true);
             $this->email->set_newline("\r\n");
             $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
             $this->email->to($customer_email);
-            $this->email->subject($this->lang->line('global_email').':'.$this->data['queryup']->orderstatus);
+            $this->email->subject($this->lang->line('global_email').':'.$orderstatus);
             $this->email->message(nl2br($body));
             if (file_exists($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf')) {
                 $this->email->attach($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
