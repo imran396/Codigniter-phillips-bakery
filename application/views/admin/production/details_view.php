@@ -107,7 +107,7 @@
     <?php
     $on_cake_image_needed = $queryup->on_cake_image_needed;
     if($on_cake_image_needed == 1 && empty($queryup->on_cake_image) && empty($instructionals) ){
-    echo "<h2 style='text-align: center; font-size: 11pt; line-height: 115px' >Waiting for customer images</h2>";
+    echo "<h2 style='text-align: center; font-size: 18px; line-height: 115px' >Waiting for customer images</h2>";
     }else{
     ?>
     <ul>
