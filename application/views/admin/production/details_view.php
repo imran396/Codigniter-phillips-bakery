@@ -104,17 +104,28 @@
     <div class="separator"></div>
 </div><!-- end of panel -->
 <div class="slider-img">
+    <?php
+    $on_cake_image_needed = $queryup->on_cake_image_needed;
+    if($on_cake_image_needed == 1 && empty($queryup->on_cake_image) && empty($instructionals) ){
+    echo "<h2 style='text-align: center; font-size: 11pt; line-height: 115px' >Waiting for customer images</h2>";
+    }else{
+    ?>
     <ul>
         <?php
+
+
         $cake_id=$queryup->cake_id;
-        if(empty($queryup->on_cake_image)){
+
+        if(empty($queryup->on_cake_image) ){
         $galleries = $this->gallery_model->getGallery($cake_id);
         if(!empty($galleries)){
             foreach($galleries as $gallery):
                 ?>
                 <li><a href=""><span class="plus"></span><!--<span class="desc">Image On Cake</span>--><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
             <?php endforeach; } } ?>
-        <?php if($queryup->on_cake_image){ ?>
+        <?php
+
+        if($queryup->on_cake_image){ ?>
         <li><a href=""><span class="plus"></span><span class="desc">Image On Cake</span><img src="<?php echo base_url().$queryup->on_cake_image; ?>" alt="" /></a></li>
         <?php } ?>
         <?php
@@ -124,7 +135,10 @@
             ?>
             <li><a href=""><span class="plus"></span><img src="<?php echo base_url().$instructional->instructional_photo; ?>" alt="" /></a></li>
         <?php } } ?>
+
+
     </ul>
+    <?php } ?>
 </div><!-- End Slider -->
 <div class="double">
     <div class="col">
