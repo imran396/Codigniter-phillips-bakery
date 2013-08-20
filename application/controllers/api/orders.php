@@ -271,6 +271,9 @@ class Orders extends API_Controller
 
         }
 
+            $result= $this->productions_model->orderPrint($orders['order_id']);
+            $rows = $result->row();
+
             if(isset($_FILES['onCakeImage'])){
                 $this->orders_model->doUpload($orders['order_id']);
             }
@@ -280,30 +283,31 @@ class Orders extends API_Controller
                 $this->orders_model->instructionalImagesUpload($orders['order_id']);
             }
 
-            if($orders['order_status'] == '301' && $orders['on_cake_image_needed'] ==1){
+            if($rows -> order_status == '301' ){
 
-                $cake_email_photo = isset($orders['cake_email_photo']) ? $orders['cake_email_photo']:0;
+                $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
                 if($cake_email_photo == 1 ){
 
-                    $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'),$this->lang->line('mailgun_cakeonimage_body'));
+                    $this->mailgunSendMessage($rows,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'),$this->lang->line('mailgun_cakeonimage_body'));
                 }
-                $instructional_email_photo = isset($orders['instructional_email_photo']) ? $orders['instructional_email_photo']:0;
+                $instructional_email_photo = isset($_REQUEST['instructional_email_photo']) ? $_REQUEST['instructional_email_photo']:'';
                 if($instructional_email_photo == 1){
 
-                    $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'),$this->lang->line('mailgun_instructional_body'));
+                    $this->mailgunSendMessage($rows,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'),$this->lang->line('mailgun_instructional_body'));
                 }
 
             }
 
-            $this->saveBarcodeImage($orders['order_code']);
-            $this->createPDF($orders['order_code']);
+            $this->saveBarcodeImage($rows->order_code);
+            $this->createPDF($rows->order_code);
 
             $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
-            if($mailtouser == 1){
-                $this->sendEmail($orders['order_code']);
+            if($mailtouser ==1){
+                $this->sendEmail($rows->order_code);
             }
 
-            $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
+
+            $this->sendOutput(array('order_id'=> $rows->order_id,'order_code'=> $rows->order_code,'order_status' => $rows->order_status));
 
         }else{
              $this->sendOutput(array('order_id'=> $row->order_id,'order_code'=> $row->order_code,'order_status' => $row->order_status));
