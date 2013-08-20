@@ -100,8 +100,7 @@ class Orders extends API_Controller
         }
 
 
-
-        /*if($orders['order_code'] && $orders['order_status'] != '300' ){
+        if($orders['order_code'] && $orders['order_status'] != '300' ){
 
             $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
             $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
@@ -125,7 +124,10 @@ class Orders extends API_Controller
                 $orders=$this->orders_model->order_update($orders, $orders['order_id']);
             }
 
-        }*/
+        }
+
+        $result= $this->productions_model->orderPrint($orders['order_id']);
+        $rows = $result->row();
 
         if(isset($_FILES['onCakeImage'])){
             $this->orders_model->doUpload($orders['order_id']);
@@ -136,30 +138,30 @@ class Orders extends API_Controller
             $this->orders_model->instructionalImagesUpload($orders['order_id']);
         }
 
-        if($orders['order_status'] == '301' ){
+        if($rows -> order_status == '301' ){
 
             $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
             if($cake_email_photo == 1 ){
 
-                $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'),$this->lang->line('mailgun_cakeonimage_body'));
+                $this->mailgunSendMessage($rows,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'),$this->lang->line('mailgun_cakeonimage_body'));
             }
             $instructional_email_photo = isset($_REQUEST['instructional_email_photo']) ? $_REQUEST['instructional_email_photo']:'';
             if($instructional_email_photo == 1){
 
-                $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'),$this->lang->line('mailgun_instructional_body'));
+                $this->mailgunSendMessage($rows,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'),$this->lang->line('mailgun_instructional_body'));
             }
 
         }
 
-        $this->saveBarcodeImage($orders['order_code']);
-        $this->createPDF($orders['order_code']);
+        $this->saveBarcodeImage($rows->order_code);
+        $this->createPDF($rows->order_code);
 
         $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
         if($mailtouser ==1){
-            $this->sendEmail($orders['order_code']);
+            $this->sendEmail($rows->order_code);
         }
 
-        $this->sendOutput(array('order_id'=> $orders['order_id'],'order_code'=> $orders['order_code'],'order_status' =>  $orders['order_status']));
+        $this->sendOutput(array('order_id'=> $rows -> order_id ,'order_code'=> $rows->order_code,'order_status' =>  $rows -> order_status));
 
     }
 
@@ -242,7 +244,7 @@ class Orders extends API_Controller
         }
 
 
-      /*  $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
+        $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
 
         if(empty($revel_order_id) && $orders['order_status'] != '300' ){
 
@@ -267,7 +269,7 @@ class Orders extends API_Controller
                 $orders=$this->orders_model->order_update($orders, $orders['order_id']);
             }
 
-        }*/
+        }
 
             if(isset($_FILES['onCakeImage'])){
                 $this->orders_model->doUpload($orders['order_id']);
@@ -312,9 +314,7 @@ class Orders extends API_Controller
 
     private function mailgunSendMessage($orders, $replyTo,$name,$subject=NULL,$body=NULL){
 
-        $order_id = $orders['order_id'];
-        $result= $this->productions_model->orderPrint($order_id);
-        $data['rows']=$result->row();
+        $data['rows']=$orders;
         if(!empty($data ['rows']->email)){
             $data['email_subject']=$subject;
             $data['body']=$body;

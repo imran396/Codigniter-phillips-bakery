@@ -1454,8 +1454,8 @@
 
 .popup-gallery .current-img img {
 
-	width: auto;
-	height: auto;
+	max-width: 634px!important;
+    max-height: 429px!important;
 }
 
 .popup-gallery .gallery-slider {
