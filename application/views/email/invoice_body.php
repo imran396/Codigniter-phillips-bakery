@@ -16,7 +16,7 @@ if(!empty($locations)){
 <?php } ?>
 
 
-ORDER ESTIMATE #<?php echo $queryup->order_code; ?> <?php echo getOrderDateFormat($queryup->order_date).PHP_EOL; ?>
+ORDER <?php if( $queryup->order_status !=301 ){ echo strtoupper( $queryup->orderstatus);}else{ echo "INVOICE"; } ?> #<?php echo $queryup->order_code; ?> <?php echo getOrderDateFormat($queryup->order_date).PHP_EOL; ?>
 ------------------------------------------------------------
 CUSTOMER DETAILS
 
