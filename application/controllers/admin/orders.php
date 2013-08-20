@@ -390,36 +390,38 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         if($orderID > 0 ){
             $orders=$this->orders_model->order_update($data,$orderID);
             $this->session->set_flashdata('success_msg','Order has been updated successfully');
+
         }else{
 
             $orders=$this->orders_model->order_insert($data);
+            $this->session->set_flashdata('success_msg','New order has been added successfully');
+        }
 
-            if($orders['order_code'] && $orders['order_status'] != '300' ){
-                $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
-                $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
-                $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+        $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
+        if(empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] != '300' ){
 
-                $RevelOrderData = array(
-                    'order_code' => $orders['order_code'],
-                    'revel_product_id' =>  $revel_product,
-                    'revel_customer_id' => $revel_customer,
-                    'revel_location_id' => $revel_location,
-                    'discount'=> $orders['discount_price'],
-                    'subtotal'=> $orders['total_price'],
-                );
+            $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
+            $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
+            $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
 
-                $status_code_revel =  $this->revel_order->create($RevelOrderData);
+            $RevelOrderData = array(
+                'order_code' => $orders['order_code'],
+                'revel_product_id' =>  $revel_product,
+                'revel_customer_id' => $revel_customer,
+                'revel_location_id' => $revel_location,
+                'discount'=> $orders['discount_price'],
+                'subtotal'=> $orders['total_price'],
+            );
 
-                $orders['revel_order_id']  = $status_code_revel;
-                if($status_code_revel > 0){
-                    $orders['order_code'] = $status_code_revel;
-                    $orders=$this->orders_model->order_update($orders, $orders['order_id']);
-                }
+            $status_code_revel =  $this->revel_order->create($RevelOrderData);
 
-
+            $orders['revel_order_id']  = $status_code_revel;
+            if($status_code_revel > 0){
+                $orders['order_code'] = $status_code_revel;
+                $orders=$this->orders_model->order_update($orders, $orders['order_id']);
             }
 
-            $this->session->set_flashdata('success_msg','New order has been added successfully');
+
         }
 
         $order_delivery['name']=isset($_REQUEST['name']) ? $_REQUEST['name']:'';
