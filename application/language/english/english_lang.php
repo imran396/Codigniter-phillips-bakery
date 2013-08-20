@@ -292,6 +292,7 @@ $lang['total'] 		 	    = 'Total';
 $lang['order_notes'] 		 	    = 'Order Notes';
 $lang['added_by'] 		 	    = 'Added By';
 $lang['notes'] 		 	    = 'Notes';
+$lang['mailtouser'] 		 	    = 'Mail to user';
 
 /* -------- Orders --------------*/
 $lang['Size and Servings'] = 'Size and Servings';
