@@ -309,7 +309,7 @@ class Orders extends API_Controller
             }
 
 
-            $this->sendOutput(array('revel'=> $revel_product));
+            $this->sendOutput($rows);
             //$this->sendOutput(array('order_id'=> $rows->order_id,'order_code'=> $rows->order_code,'order_status' => $rows->order_status));
 
         }else{
