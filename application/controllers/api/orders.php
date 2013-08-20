@@ -99,8 +99,8 @@ class Orders extends API_Controller
 
         }
 
-
-        if($orders['order_code'] && $orders['order_status'] != '300' ){
+        $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
+        if(empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] != '300' ){
 
             $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
             $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
@@ -112,7 +112,7 @@ class Orders extends API_Controller
                 'revel_customer_id' => $revel_customer,
                 'revel_location_id' => $revel_location,
                 'discount'=> $orders['discount_price'],
-                'subtotal'=> $orders['total_price'],
+                'subtotal'=> $orders['total_price']
             );
 
             $status_code_revel =  $this->revel_order->create($RevelOrderData);
@@ -258,7 +258,7 @@ class Orders extends API_Controller
                 'revel_customer_id' => $revel_customer,
                 'revel_location_id' => $revel_location,
                 'discount'=> $orders['discount_price'],
-                'subtotal'=> $orders['total_price'],
+                'subtotal'=> $orders['total_price']
             );
             $status_code_revel =  $this->revel_order->create($RevelOrderData);
 
@@ -309,7 +309,7 @@ class Orders extends API_Controller
             }
 
 
-            $this->sendOutput($rows,array('revel'=> $revel_product.$revel_customer.$revel_location));
+            $this->sendOutput(array('revel'=> $revel_product));
             //$this->sendOutput(array('order_id'=> $rows->order_id,'order_code'=> $rows->order_code,'order_status' => $rows->order_status));
 
         }else{
