@@ -445,7 +445,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
             $this->orders_model->galleryUpload($data,$orders['order_id']);
 
         }
-        if($orders['order_status'] == 301 ){
+        if($orders['order_status'] == 301 &&  $data['on_cake_image_needed'] ==1 ){
 
             $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
             if($cake_email_photo == 1 ){
