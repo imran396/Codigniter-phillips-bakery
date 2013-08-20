@@ -2,8 +2,8 @@
 $config = array(
     'protocol' => 'smtp',
     'smtp_host' => 'smtp.mailgun.org',
-    'smtp_user' => 'postmaster@stphillipsbakery.mailgun.com',
-    'smtp_pass' => '1f80w4bcrvs3',
+    'smtp_user' => 'postmaster@stphillipsbakery.mailgun.org',
+    'smtp_pass' => '8hohwr5lf-22',
     'charset'   => 'iso-8859-1',
     'mailtype' => 'html'
 

@@ -32,13 +32,13 @@ $lang['drag'] 		 	    = 'Drag';
 $lang['global_email'] 		 	    = 'info@stphillipsbakery.com';
 $lang['global_email_subject'] 		 	    = 'St. Phillips Bakery';
 
-$lang['mailgun_cakeonimage_email'] 		 	    = 'reply@stphillipsbakery.mailgun.com';
-$lang['mailgun_cakeonimage_name'] 		 	    = 'St.phillipsbakery';
+$lang['mailgun_cakeonimage_email'] 		 	    = 'oncakeimage@stphillipsbakery.mailgun.org';
+$lang['mailgun_cakeonimage_name'] 		 	    = 'On cake image';
 $lang['mailgun_cakeonimage_subject'] 		 	= 'St Phillips - Attach your image';
 $lang['mailgun_cakeonimage_body'] 		 	    = 'Reply to this email and attach the image you would like to have printed on your cake.';
 
-$lang['mailgun_instructional_email'] 		 	= 'reply@stphillips.mailgun.com';
-$lang['mailgun_instructional_name'] 		 	= 'St.phillipsbakery';
+$lang['mailgun_instructional_email'] 		 	= 'referenceimage@stphillipsbakery.mailgun.org';
+$lang['mailgun_instructional_name'] 		 	= 'Reference images';
 $lang['mailgun_instructional_subject'] 		 	= 'St Phillips - Attach your reference images';
 $lang['mailgun_instructional_body'] 		 	= 'Reply to this email and attach the example images you would like your baker to reference.';
 
