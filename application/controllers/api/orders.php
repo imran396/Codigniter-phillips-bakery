@@ -298,6 +298,8 @@ class Orders extends API_Controller
 
             }
 
+
+
             $this->saveBarcodeImage($rows->order_code);
             $this->createPDF($rows->order_code);
 
@@ -307,7 +309,8 @@ class Orders extends API_Controller
             }
 
 
-            $this->sendOutput(array('order_id'=> $rows->order_id,'order_code'=> $rows->order_code,'order_status' => $rows->order_status));
+            $this->sendOutput($rows);
+            //$this->sendOutput(array('order_id'=> $rows->order_id,'order_code'=> $rows->order_code,'order_status' => $rows->order_status));
 
         }else{
              $this->sendOutput(array('order_id'=> $row->order_id,'order_code'=> $row->order_code,'order_status' => $row->order_status));
