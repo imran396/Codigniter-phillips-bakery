@@ -140,12 +140,12 @@ class Orders extends API_Controller
 
         if($rows -> order_status == '301' ){
 
-            $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
+            $cake_email_photo = isset($rows->cake_email_photo) ? $rows->cake_email_photo:'';
             if($cake_email_photo == 1 ){
 
                 $this->mailgunSendMessage($rows,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'),$this->lang->line('mailgun_cakeonimage_body'));
             }
-            $instructional_email_photo = isset($_REQUEST['instructional_email_photo']) ? $_REQUEST['instructional_email_photo']:'';
+            $instructional_email_photo = isset($rows->instructional_email_photo) ? $rows->instructional_email_photo :'';
             if($instructional_email_photo == 1){
 
                 $this->mailgunSendMessage($rows,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'),$this->lang->line('mailgun_instructional_body'));
