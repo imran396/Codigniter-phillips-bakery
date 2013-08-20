@@ -584,10 +584,11 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $result= $this->productions_model->orderDetails($order_code);
         if($result ->num_rows() > 0 ){
             $this->data['queryup']=$result->row();
-            $pdfname ='stpb-'.$this->data['queryup']->order_code;
+            $pdfname =$this->data['queryup']->order_code;
 
             $html          =$this->load->view('email/invoice_view', $this->data,true);
-            $invoiceNumber = str_pad($pdfname,8,0,STR_PAD_LEFT);
+            //$invoiceNumber = str_pad($pdfname,8,0,STR_PAD_LEFT);
+            $invoiceNumber = ('stpb-'.$pdfname);
             $pdf           = pdf_create($html, $invoiceNumber, false);
             $filePath      = realpath(APPPATH . "../web/assets/uploads/orders/pdf/"). DIRECTORY_SEPARATOR . $invoiceNumber.".pdf";
             file_put_contents($filePath,$pdf);
