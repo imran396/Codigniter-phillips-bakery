@@ -161,22 +161,22 @@
                     <?php } ?>
                     <?php if( $queryup->delivery_date){ ?>
                     <div class="line">
-                        <div class="title">Pickup / delivery date</div><?php echo $this->productions_model->dateFormate($queryup->delivery_date); ?>
+                        <div class="title">Pickup / Delivery Date</div><?php echo $this->productions_model->dateFormate($queryup->delivery_date); ?>
                     </div>
                     <?php } ?>
                     <?php if($queryup->delivery_type){ ?>
                         <div class="line">
-                            <div class="title">Delivery type</div><?php echo sentence_case($queryup->delivery_type); ?>
+                            <div class="title">Order Type</div>Pickup Location
                         </div>
                     <?php } ?>
                     <?php if( $queryup->delivery_zone_id > 0){ ?>
                     <div class="line">
-                        <div class="title">Delivery zone</div><?php echo $this->productions_model->getZones($queryup->delivery_zone_id); ?>
+                        <div class="title">Delivery Zone</div><?php echo $this->productions_model->getZones($queryup->delivery_zone_id); ?>
                     </div>
                     <?php } ?>
                     <?php if( $queryup->delivery_time){ ?>
                     <div class="line">
-                        <div class="title">Pickup time</div><?php echo $queryup->delivery_time; ?>
+                        <div class="title">Pickup Time</div><?php echo $queryup->delivery_time; ?>
                     </div>
                     <?php } ?>
                     <?php if( $queryup->flavour_name){ ?>
@@ -186,7 +186,7 @@
                     <?php } ?>
                     <?php if( $queryup->shape || $queryup->serving_size ){ ?>
                     <div class="line">
-                        <div class="title">Size and shape</div><?php  echo $queryup->serving_size; ?> <?php if( $queryup->shape){ ?> and  <?php echo $queryup->shape; } ?>
+                        <div class="title">Size and Shape</div><?php  echo $queryup->serving_size; ?> <?php if( $queryup->shape){ ?> and  <?php echo $queryup->shape; } ?>
                     </div>
                     <?php } ?>
                     <?php if( $queryup->serving_title){ ?>
@@ -206,12 +206,12 @@
                     <?php } ?>
                     <?php if( $queryup->matrix_price > 0){ ?>
                         <div class="line">
-                            <div class="title">Cake price</div><?php echo $queryup->matrix_price; ?>
+                            <div class="title">Cake Price</div><?php echo $queryup->matrix_price; ?>
                         </div>
                     <?php } ?>
                     <?php if( $queryup->magic_surcharge > 0){ ?>
                     <div class="line">
-                        <div class="title">Magic cake surcharge</div><?php echo $queryup->magic_surcharge; ?>
+                        <div class="title">Magic Cake Surcharge</div><?php echo $queryup->magic_surcharge; ?>
                     </div>
                     <?php } ?>
 
@@ -237,7 +237,7 @@
                     <?php } ?>
                     <?php if( $queryup->special_instruction){ ?>
                     <div class="line last">
-                        <div class="title">Special instructions</div>
+                        <div class="title">Special Instructions</div>
                         <?php echo $queryup->special_instruction; ?>
                     </div>
                     <?php } ?>
@@ -382,7 +382,7 @@
                                     <?php } ?>
                                     <?php if( $deliveryInfo->delivery_instruction){ ?>
                                     <div class="line last">
-                                        <div class="title">Special instructions</div>
+                                        <div class="title">Special Instructions</div>
                                         <?php echo $deliveryInfo->delivery_instruction; ?>
                                     </div>
                                     <?php } ?>

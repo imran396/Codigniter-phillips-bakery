@@ -242,14 +242,19 @@ class Cakes_model extends CI_Model
         return $this->db->select('customer_id,first_name,last_name')->where('status', 1)->order_by('first_name','asc')->get('customers')->result();
 
     }
-    public function getEmployees($group_id)
+    public function getEmployees($group_id=0)
     {
 
-        return $this->db
-            ->select('users.id,users.group_id,users.username,users.email,meta.first_name,meta.last_name,meta.location_id, users.active')
-            ->join('meta','users.id =meta.user_id')
-            ->join('groups','users.group_id =groups.id')
-            ->where(array('users.group_id'=>$group_id,'active'=>1))->order_by('first_name','asc')->get('users')->result();
+
+        $this->db
+            ->select('users.id,users.group_id,users.username,users.email,meta.first_name,meta.last_name,meta.location_id, users.active');
+            $this->db->join('meta','users.id =meta.user_id');
+            $this->db->join('groups','users.group_id =groups.id');
+            if($group_id > 0){
+                return $this->db->where(array('users.group_id'=>$group_id,'active'=>1))->order_by('first_name','asc')->get('users')->result();
+            }else{
+                return $this->db->where(array('active'=>1))->order_by('first_name','asc')->get('users')->result();
+            }
 
 
     }

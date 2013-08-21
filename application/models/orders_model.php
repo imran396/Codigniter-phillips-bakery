@@ -421,6 +421,7 @@ class Orders_model extends Crud_Model
                 LEFT JOIN customers ON (customers.customer_id = orders.customer_id)
                 LEFT JOIN order_status ON (order_status.production_status_code = orders.order_status)
                 WHERE(`order_id` > 0 AND  `order_code` = '$search')
+                || (`order_id` > 0 AND  `order_id` = '$search')
                 || (`order_id` > 0 AND  LOWER(customers.first_name) LIKE '%$search')
                 || (`order_id` > 0 AND LOWER(customers.last_name) LIKE '%$search')
                 || (`order_id` > 0 AND LOWER(order_status.description) LIKE '%$search')

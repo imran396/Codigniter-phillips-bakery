@@ -52,7 +52,8 @@ function dateFormat($date=NULL){
 }
 
 function dateFormatStr($date=NULL){
-    $udate =date("d/m/Y h:m:s",$date);
+    //$udate =date("m/d/Y h:m:s",$date);
+    $udate =date("m/d/Y h:i A",$date);
     return $udate;
 }
 
