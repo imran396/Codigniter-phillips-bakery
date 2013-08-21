@@ -1,3 +1,15 @@
+<script>
+    window.print();
+    CheckWindowState();
+
+    function CheckWindowState()    {
+        if(document.readyState=="complete") {
+            window.close();
+        } else {
+            setTimeout("CheckWindowState()", 2000)
+        }
+    }
+</script>
 <style type="text/css">
     *
     {
@@ -62,7 +74,7 @@
 
 <div id="wrapper">
 <div class="col_half left">
-    <h1 style="font-size: 32px; line-height: 40px"><?php if( $queryup->order_status !=301 ){ echo strtoupper($queryup ->orderstatus); }else{ echo "INVOICE"; } ?></h1>
+    <h1 style="font-size: 32px"><?php if( $queryup->order_status !=301 ){ echo strtoupper($queryup ->orderstatus); }else{ echo "INVOICE"; } ?></h1>
 </div>
 
 <div class="col_half right">

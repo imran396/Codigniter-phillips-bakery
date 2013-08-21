@@ -248,6 +248,13 @@ class Productions_model extends Crud_Model
 
     }
 
+    public function getAllLocations()
+    {
+
+        return $this->db->select('*')->where('status', 1)->order_by('title','asc')->get('locations')->result();
+
+    }
+
     public function getzones($zone_id)
     {
 

@@ -14,6 +14,10 @@ class Orders_model extends Crud_Model
 
     /*------------Start Admin Panel Oredr */
 
+    public function getOrderStatus($order_id){
+        return $row = $this->db->select('order_id,order_code,order_status,')->where('order_id',$order_id)->get('orders')->row();
+    }
+
     function getCakes($category_id=0){
 
         $this->db->select('cakes.cake_id,cakes.title,');
@@ -66,6 +70,7 @@ class Orders_model extends Crud_Model
 
         $order_date = $data['order_date'];
         $customer_id = $data['customer_id'];
+        $data['delivery_time']=timeFormatAmPm($data['delivery_time']);
         $orderDbID = $this->checkDuplicateInsert($customer_id , $order_date);
         if($orderDbID > 0){
             $order_id = $this->update($data,$orderDbID);
@@ -85,6 +90,9 @@ class Orders_model extends Crud_Model
         $order['cake_id']=  $dbdata->cake_id;
         $order['customer_id']=  $dbdata->customer_id;
         $order['location_id']=  $dbdata->location_id;
+        $order['on_cake_image_needed']=  $dbdata->on_cake_image_needed;
+        $order['cake_email_photo']=  $dbdata->cake_email_photo;
+        $order['instructional_email_photo']=  $dbdata->instructional_email_photo;
         $order['order_date']=  $dbdata->order_date;
         return $order;
     }
@@ -99,6 +107,9 @@ class Orders_model extends Crud_Model
             $order['cake_id']=  $dbdata->cake_id;
             $order['customer_id']=  $dbdata->customer_id;
             $order['location_id']=  $dbdata->location_id;
+            $order['on_cake_image_needed']=  $dbdata->on_cake_image_needed;
+            $order['cake_email_photo']=  $dbdata->cake_email_photo;
+            $order['instructional_email_photo']=  $dbdata->instructional_email_photo;
             $order['discount_price']=  $dbdata->discount_price;
             $order['override_price']=  $dbdata->override_price;
             $order['total_price']=  $dbdata->total_price;

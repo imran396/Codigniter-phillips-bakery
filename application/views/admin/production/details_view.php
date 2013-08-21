@@ -21,6 +21,21 @@
             })
         });
 
+        $('#order_status').change(function() {
+
+            var status=$("#order_status").val();
+            $.ajax({
+                url:"<?php echo site_url('admin/productions/status')?>/"+status,
+                type:"post",
+                success: function(val){
+                  alert('Order Changed to: '+val);
+                }
+            })
+
+
+        });
+
+
 
     });
 </script>
@@ -53,7 +68,7 @@
     <div class="pull-right">
         <div class="row-fluid row-widest">
             <form action="" method="get" onsubmit="location">
-            <select class="selectpicker span12" name="order_status" id="order_status" onchange="window.location=this.value">
+            <select class="selectpicker span12" name="order_status" id="order_status" >
                 <?php if($this->productions_model->currentProductionStatus($queryup->order_status)){?>
                 <option class="label"><?php echo $this->productions_model->currentProductionStatus($queryup->order_status) ?></option>
                 <?php }else{ ?>
@@ -64,7 +79,7 @@
                     foreach($getOrderStatus as $production_status):
                         if($queryup->order_status != $production_status->production_status_code){
                         ?>
-                        <option value="<?php echo site_url('admin/productions/status/'.$queryup->order_code.'/'.$production_status->production_status_code)?>"><?php echo $production_status->description ?></option>
+                        <option value="<?php echo $queryup->order_code.'/'.$production_status->production_status_code; ?>"><?php echo $production_status->description ?></option>
                     <?php } endforeach; ?>
                 </select>
 
@@ -89,17 +104,28 @@
     <div class="separator"></div>
 </div><!-- end of panel -->
 <div class="slider-img">
+    <?php
+    $on_cake_image_needed = $queryup->on_cake_image_needed;
+    if($on_cake_image_needed == 1 && empty($queryup->on_cake_image) && empty($instructionals) ){
+    echo "<h2 style='text-align: center; font-size: 18px; line-height: 115px' >Waiting for customer images</h2>";
+    }else{
+    ?>
     <ul>
         <?php
+
+
         $cake_id=$queryup->cake_id;
-        if(empty($queryup->on_cake_image)){
+
+        if(empty($queryup->on_cake_image) ){
         $galleries = $this->gallery_model->getGallery($cake_id);
         if(!empty($galleries)){
             foreach($galleries as $gallery):
                 ?>
                 <li><a href=""><span class="plus"></span><!--<span class="desc">Image On Cake</span>--><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
             <?php endforeach; } } ?>
-        <?php if($queryup->on_cake_image){ ?>
+        <?php
+
+        if($queryup->on_cake_image){ ?>
         <li><a href=""><span class="plus"></span><span class="desc">Image On Cake</span><img src="<?php echo base_url().$queryup->on_cake_image; ?>" alt="" /></a></li>
         <?php } ?>
         <?php
@@ -109,7 +135,10 @@
             ?>
             <li><a href=""><span class="plus"></span><img src="<?php echo base_url().$instructional->instructional_photo; ?>" alt="" /></a></li>
         <?php } } ?>
+
+
     </ul>
+    <?php } ?>
 </div><!-- End Slider -->
 <div class="double">
     <div class="col">
@@ -389,7 +418,7 @@
                         <li><a href="<?php echo base_url().$gallery->image; ?>"><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
                 <?php endforeach; } } ?>
                 <?php if($queryup->on_cake_image){ ?>
-                    <li><a href="<?php echo base_url().$instructional->instructional_photo; ?>"><img src="<?php echo base_url().$queryup->on_cake_image; ?>" alt="" /></a></li>
+                    <li><a href="<?php echo base_url().$queryup->on_cake_image; ?>"><img src="<?php echo base_url().$queryup->on_cake_image; ?>" alt="" /></a></li>
                 <?php } ?>
                 <?php
                 $instructionals = $this->productions_model->photoGallery($queryup->order_id);

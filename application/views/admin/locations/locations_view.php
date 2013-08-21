@@ -37,19 +37,20 @@
                                 </div>
 
                                 <div class="control-group">
+                                    <label class="control-label"><?php echo $this->lang->line('vaughan_location');?></label>
                                     <?php $vaughan_location = (isset($queryup[0]->vaughan_location))? $queryup[0]->vaughan_location:set_value('vaughan_location'); ?>
-                                    <label class="control-label"><?php echo $this->lang->line('vaughan_location');?>&nbsp;&nbsp;<input type="checkbox" name="vaughan_location" id="vaughan_location" value="1" <?php if($vaughan_location ==1){?> checked="checked" <?php } ?>></label>
+                                    <div class="controls"><input type="checkbox" name="vaughan_location" id="vaughan_location" value="1" <?php if($vaughan_location ==1){?> checked="checked" <?php } ?>></div>
                                  </div>
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('address1');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address1');?>" value="<?php echo(isset($queryup[0]->address1))? $queryup[0]->address1:set_value('address1'); ?>"   class="span12" name="address1" id="address1"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address1');?>" value="<?php echo(isset($queryup[0]->address1))? $queryup[0]->address1:set_value('address1'); ?>"   class="span10" name="address1" id="address1"  />
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('address2');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address2');?>" value="<?php echo(isset($queryup[0]->address2))? $queryup[0]->address2:set_value('address2'); ?>"  class="span12" name="address2" id="address2"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address2');?>" value="<?php echo(isset($queryup[0]->address2))? $queryup[0]->address2:set_value('address2'); ?>"  class="span10" name="address2" id="address2"  />
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -88,22 +89,24 @@
                                         <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('phone');?>" value="<?php echo(isset($queryup[0]->phone))? $queryup[0]->phone:set_value('phone'); ?>"   class="span10" name="phone" id="phone"  />
                                     </div>
                                 </div>
-                  <!--              <div class="control-group">
-                                    <label class="control-label"><?php /*echo $this->lang->line('pos_api');*/?></label>
+                                <div class="control-group">
+                                    <label class="control-label"><?php echo $this->lang->line('pos_api'); ?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php /*echo $this->lang->line('enter').' '.$this->lang->line('pos_api');*/?>" value="<?php /*echo(isset($queryup[0]->pos_api))? $queryup[0]->pos_api:set_value('pos_api'); */?>"   class="span12" name="pos_api" id="pos_api"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('pos_api'); ?>" value="<?php echo(isset($queryup[0]->pos_api))? $queryup[0]->pos_api:set_value('pos_api'); ?>"   class="span10" name="pos_api" id="pos_api"  />
                                     </div>
-                                </div>-->
+                                </div>
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('store_print_ip');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('store_print_ip');?>" value="<?php echo(isset($queryup[0]->store_print_ip))? $queryup[0]->store_print_ip:set_value('store_print_ip'); ?>"   class="span12" name="store_print_ip" id="store_print_ip"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('store_print_ip');?>" value="<?php echo(isset($queryup[0]->store_print_ip))? $queryup[0]->store_print_ip:set_value('store_print_ip'); ?>"   class="span10" name="store_print_ip" id="store_print_ip"  /><br />
+                                        <?php echo $this->lang->line('print_ip_example'); ?>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('kitchen_print_ip');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('kitchen_print_ip');?>" value="<?php echo(isset($queryup[0]->kitchen_print_ip))? $queryup[0]->kitchen_print_ip:set_value('kitchen_print_ip'); ?>"   class="span12" name="kitchen_print_ip" id="kitchen_print_ip"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('kitchen_print_ip');?>" value="<?php echo(isset($queryup[0]->kitchen_print_ip))? $queryup[0]->kitchen_print_ip:set_value('kitchen_print_ip'); ?>"   class="span10" name="kitchen_print_ip" id="kitchen_print_ip"  /><br />
+                                        <?php echo $this->lang->line('print_ip_example'); ?>
                                     </div>
                                 </div>
                                 <div class="control-group uniformjs">

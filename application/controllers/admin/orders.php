@@ -390,35 +390,38 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         if($orderID > 0 ){
             $orders=$this->orders_model->order_update($data,$orderID);
             $this->session->set_flashdata('success_msg','Order has been updated successfully');
+
         }else{
+
             $orders=$this->orders_model->order_insert($data);
+            $this->session->set_flashdata('success_msg','New order has been added successfully');
+        }
 
-            if($orders['order_code'] && $orders['order_status'] != '300' ){
-                $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
-                $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
-                $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+        $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
+        if(empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] != '300' ){
 
-                $RevelOrderData = array(
-                    'order_code' => $orders['order_code'],
-                    'revel_product_id' =>  $revel_product,
-                    'revel_customer_id' => $revel_customer,
-                    'revel_location_id' => $revel_location,
-                    'discount'=> $orders['discount_price'],
-                    'subtotal'=> $orders['total_price'],
-                );
+            $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
+            $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
+            $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
 
-                $status_code_revel =  $this->revel_order->create($RevelOrderData);
+            $RevelOrderData = array(
+                'order_code' => $orders['order_code'],
+                'revel_product_id' =>  $revel_product,
+                'revel_customer_id' => $revel_customer,
+                'revel_location_id' => $revel_location,
+                'discount'=> $orders['discount_price'],
+                'subtotal'=> $orders['total_price'],
+            );
 
-                $orders['revel_order_id']  = $status_code_revel;
-                if($status_code_revel > 0){
-                    $orders['order_code'] = $status_code_revel;
-                    $orders=$this->orders_model->order_update($orders, $orders['order_id']);
-                }
+            $status_code_revel =  $this->revel_order->create($RevelOrderData);
 
-
+            $orders['revel_order_id']  = $status_code_revel;
+            if($status_code_revel > 0){
+                $orders['order_code'] = $status_code_revel;
+                $orders=$this->orders_model->order_update($orders, $orders['order_id']);
             }
 
-            $this->session->set_flashdata('success_msg','New order has been added successfully');
+
         }
 
         $order_delivery['name']=isset($_REQUEST['name']) ? $_REQUEST['name']:'';
@@ -435,7 +438,6 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
             $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
         }
-
         if($_FILES['onCakeImage']['name'] !=""){
             $this->orders_model->doUpload($orders['order_id']);
         }
@@ -445,16 +447,18 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
             $this->orders_model->galleryUpload($data,$orders['order_id']);
 
         }
+        if($orders['order_status'] == 301 &&  $data['on_cake_image_needed'] ==1 ){
 
-        $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
-        if($cake_email_photo == 1 ){
+            $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
+            if($cake_email_photo == 1 ){
 
-            $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'),$this->lang->line('mailgun_cakeonimage_body'));
-        }
-        $instructional_email_photo = isset($_REQUEST['instructional_email_photo']) ? $_REQUEST['instructional_email_photo']:'';
-        if($instructional_email_photo == 1){
+                $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'),$this->lang->line('mailgun_cakeonimage_body'));
+            }
+            $instructional_email_photo = isset($_REQUEST['instructional_email_photo']) ? $_REQUEST['instructional_email_photo']:'';
+            if($instructional_email_photo == 1){
 
-            $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'),$this->lang->line('mailgun_instructional_body'));
+                $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'),$this->lang->line('mailgun_instructional_body'));
+            }
         }
 
         $this->saveBarcodeImage($orders['order_code']);
@@ -516,13 +520,19 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $this->data['queryup']=$result->row();
         $customer_email=$this->data['queryup']->email;
         $pdfname ='stpb-'.$this->data['queryup']->order_code;
+        $order_status=$this->data['queryup']->order_status;
+        if($order_status == 301){
+            $orderstatus="Order";
+        }else{
+            $orderstatus = $this->data['queryup']->orderstatus;
+        }
         if(!empty($customer_email)){
 
             $body = $this->load->view('email/invoice_body', $this->data,true);
             $this->email->set_newline("\r\n");
             $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
             $this->email->to($customer_email);
-            $this->email->subject($this->lang->line('global_email').':'.$this->data['queryup']->orderstatus);
+            $this->email->subject($this->lang->line('global_email').':'.$orderstatus);
             $this->email->message(nl2br($body));
             if (file_exists($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf')) {
                 $this->email->attach($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
@@ -582,10 +592,11 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $result= $this->productions_model->orderDetails($order_code);
         if($result ->num_rows() > 0 ){
             $this->data['queryup']=$result->row();
-            $pdfname ='stpb-'.$this->data['queryup']->order_code;
+            $pdfname =$this->data['queryup']->order_code;
 
             $html          =$this->load->view('email/invoice_view', $this->data,true);
-            $invoiceNumber = str_pad($pdfname,8,0,STR_PAD_LEFT);
+            //$invoiceNumber = str_pad($pdfname,8,0,STR_PAD_LEFT);
+            $invoiceNumber = ('stpb-'.$pdfname);
             $pdf           = pdf_create($html, $invoiceNumber, false);
             $filePath      = realpath(APPPATH . "../web/assets/uploads/orders/pdf/"). DIRECTORY_SEPARATOR . $invoiceNumber.".pdf";
             file_put_contents($filePath,$pdf);
@@ -663,6 +674,12 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
     private function redirectToHome($redirect = NULL)
     {
         redirect('admin/orders/'.$redirect);
+    }
+
+    public function revel()
+    {
+        $data = $this->revel_order->getAll();
+        var_dump($data);
     }
 
 }

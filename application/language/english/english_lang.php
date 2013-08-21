@@ -32,13 +32,13 @@ $lang['drag'] 		 	    = 'Drag';
 $lang['global_email'] 		 	    = 'info@stphillipsbakery.com';
 $lang['global_email_subject'] 		 	    = 'St. Phillips Bakery';
 
-$lang['mailgun_cakeonimage_email'] 		 	    = 'dan@gsi.mailgun.org';
-$lang['mailgun_cakeonimage_name'] 		 	    = 'Dan Branco';
+$lang['mailgun_cakeonimage_email'] 		 	    = 'oncakeimage@stphillipsbakery.mailgun.org';
+$lang['mailgun_cakeonimage_name'] 		 	    = 'On cake image';
 $lang['mailgun_cakeonimage_subject'] 		 	= 'St Phillips - Attach your image';
 $lang['mailgun_cakeonimage_body'] 		 	    = 'Reply to this email and attach the image you would like to have printed on your cake.';
 
-$lang['mailgun_instructional_email'] 		 	= 'spenser@gsi.mailgun.org';
-$lang['mailgun_instructional_name'] 		 	= 'Spenser';
+$lang['mailgun_instructional_email'] 		 	= 'referenceimage@stphillipsbakery.mailgun.org';
+$lang['mailgun_instructional_name'] 		 	= 'Reference images';
 $lang['mailgun_instructional_subject'] 		 	= 'St Phillips - Attach your reference images';
 $lang['mailgun_instructional_body'] 		 	= 'Reply to this email and attach the example images you would like your baker to reference.';
 
@@ -129,20 +129,21 @@ $lang['unpublish'] 		 	    = 'Un-publish';
 
 /* Locations */
 
-$lang['create_location'] 		 	    = 'Create Location';
-$lang['vaughan_location'] 		 	    = 'Vaughan';
-$lang['location_name'] 		 	    = 'Location Name';
-$lang['address1'] 		 	    = 'Address 1';
-$lang['address2'] 		 	    = 'Address 2';
-$lang['city'] 		 	    = 'City';
-$lang['province'] 		 	    = 'Province';
-$lang['postal_code'] 		 	    = 'Postal Code';
-$lang['country'] 		 	    = 'Country';
-$lang['surcharge'] 		 	    = 'Surcharge';
-$lang['pos_api'] 		 	    = 'POS api';
-$lang['store_print_ip'] 		 	    = 'Store Print IP';
-$lang['kitchen_print_ip'] 		 	    = 'Kitchen Print IP';
-$lang['vaughan_location_msg'] 		 	    = "Another location has been assigned the 'Vaughan Location'";
+$lang['create_location']      = 'Create Location';
+$lang['vaughan_location']     = 'Vaughan';
+$lang['location_name']        = 'Location Name';
+$lang['address1']             = 'Address 1';
+$lang['address2']             = 'Address 2';
+$lang['city']                 = 'City';
+$lang['province']             = 'Province';
+$lang['postal_code']          = 'Postal Code';
+$lang['country']              = 'Country';
+$lang['surcharge']            = 'Surcharge';
+$lang['pos_api']              = 'POS IP';
+$lang['store_print_ip']       = 'Store Printer IP and Model';
+$lang['kitchen_print_ip']     = 'Kitchen Printer IP and Model';
+$lang['print_ip_example']     = 'Example: 192.168.1.250|TM-T70';
+$lang['vaughan_location_msg'] = "Another location has been assigned as the Vaughan Location";
 
 /* Cakes */
 
@@ -291,6 +292,7 @@ $lang['total'] 		 	    = 'Total';
 $lang['order_notes'] 		 	    = 'Order Notes';
 $lang['added_by'] 		 	    = 'Added By';
 $lang['notes'] 		 	    = 'Notes';
+$lang['mailtouser'] 		 	    = 'Mail to user';
 
 /* -------- Orders --------------*/
 $lang['Size and Servings'] = 'Size and Servings';

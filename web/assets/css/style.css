@@ -1184,7 +1184,7 @@
 	text-align: center;
 	width: 95px;
 	height: 31px;
-	display: none;
+	display: block;
 	bottom: -24px;
 	left: 8px;
 	position: absolute;
@@ -1445,15 +1445,17 @@
 .popup-gallery .current-img {
 	margin-bottom: 10px;
 	text-align: center;
+    border: #fafcfd 9px solid;
+    box-shadow: #696a6a 0 0 5px;
+    -moz-box-shadow: #696a6a 0 0 5px;
+    -webkit-box-shadow: #696a6a 0 0 5px;
+    background: #fff;
 }
 
 .popup-gallery .current-img img {
-	border: #fafcfd 9px solid;
-	box-shadow: #696a6a 0 0 5px;
-	-moz-box-shadow: #696a6a 0 0 5px;
-	-webkit-box-shadow: #696a6a 0 0 5px;
-	width: 634px;
-	height: 419px;
+
+	max-width: 634px!important;
+    max-height: 429px!important;
 }
 
 .popup-gallery .gallery-slider {

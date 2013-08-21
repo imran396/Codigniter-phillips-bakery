@@ -24,7 +24,8 @@ class Customers extends Crud_Controller
 
     }
 
-    public function listing($start=0){
+    public function listing($start=0)
+    {
 
         $this->data['paging'] = $this->customers_model->getListing($start);
         $this->data['active']=$this->uri->segment(2,0);
@@ -86,7 +87,7 @@ class Customers extends Crud_Controller
     {
 
         $data = $this->input->post();
-        if (empty($data['customer_id'])) {
+        if (empty($data['customer_id'])){
 
             if(isset($data)){
                 $data['revel_customer_id']= $this->revel_customer->create($data);

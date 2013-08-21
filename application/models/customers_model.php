@@ -52,10 +52,10 @@ class Customers_model extends Crud_Model
     public function  checkUniqueTitle($id){
 
         if(!empty($id)){
-            return $dbcatid = $this->db->select('phone_number')
+             $dbcatid = $this->db->select('phone_number')
                 ->where('customer_id',$id)
-                ->get('customers')->result();
-            $dbcatid->phone_number;
+                ->get('customers')->row();
+            return $dbcatid->phone_number;
 
         }
 
@@ -111,6 +111,7 @@ class Customers_model extends Crud_Model
 
 
         $dbtitle = $this->checkUniqueTitle($id);
+
         if($title != $dbtitle ){
 
             $sql="SELECT COUNT(customer_id) AS countValue FROM customers WHERE phone_number = $title ";
@@ -128,7 +129,7 @@ class Customers_model extends Crud_Model
 
     public function getAll()
     {
-        $data = $this->db->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('customer_id','asc')->get('customers')->result_array();
+        $data = $this->db->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('first_name','asc')->get('customers')->result_array();
         foreach($data as $key => $val){
               $data[$key]['customer_id'] = (int) $data[$key]['customer_id'];
         }
@@ -202,7 +203,7 @@ class Customers_model extends Crud_Model
             $data .="<table class='table table-bordered table-primary' >";
             $data .="<thead><tr><th>Order Code</th><th>Delivery Date & Time</th><th>Delivery Type</th></tr></thead>";
             foreach($result->result() as $rows ):
-            $data .="<tr><td><a href='/admin/productions/details/".$rows->order_code."'>".$rows->order_code."</a></td><td>".$rows->delivery_date."</td><td>".$rows->delivery_type."</td></tr>";
+            $data .="<tr><td><a href='/admin/orders/edit/".$rows->order_id."'>".$rows->order_code."</a></td><td>".$rows->delivery_date."</td><td>".$rows->delivery_type."</td></tr>";
             endforeach;
             $data .="</table>";
             return  $data;
