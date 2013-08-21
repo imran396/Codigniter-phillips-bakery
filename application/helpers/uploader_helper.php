@@ -5,9 +5,11 @@ function resize_image($source, $output, $width = 100, $height = 100){
 
     $handle = new Upload($source);
 
+
+    list($img_width, $img_height) = getimagesize($source);
     // then we check if the file has been uploaded properly
     // in its *temporary* location in the server (often, it is /tmp)
-    if ($handle->uploaded) {
+    if($handle->uploaded && $img_width > $width && $img_height >  $height ){
 
         // yes, the file is on the server
         // below are some example settings which can be used if the uploaded file is an image.
@@ -23,7 +25,15 @@ function resize_image($source, $output, $width = 100, $height = 100){
 
         return $handle->file_dst_name;
 
-            if ($handle->processed) {
+    }elseif($handle->uploaded){
+
+        $handle->Process($output);
+        return $handle->file_dst_name;
+
+    }
+
+
+           /* if ($handle->processed) {
                 // everything was fine !
                 echo '<p class="result">';
                 echo '  <b>File uploaded with success</b><br />';
@@ -38,9 +48,9 @@ function resize_image($source, $output, $width = 100, $height = 100){
                 echo '  <b>File not uploaded to the wanted location</b><br />';
                 echo '  Error: ' . $handle->error . '';
                 echo '</p>';
-            }
+            }*/
 
-    }
+
 }
 
 function crop_image($source, $output,$width = 100, $height = 100){
