@@ -14,7 +14,18 @@ class Productions_model extends Crud_Model
     {
 
         $curdate =date('m/d/Y');
+        $vaughan_location = $this->orders_model->getVaughanLocation();
         $location_id = $this->session->userdata('locationid');
+        if($location_id > 0 ){
+            $location_id = $this->session->userdata('locationid');
+        }else{
+            $newdata = array(
+                'locationid'  =>$vaughan_location
+            );
+            $this->session->set_userdata($newdata);
+            $location_id = $this->session->userdata('locationid');
+        }
+
         $per_page=10;
         $page   = intval($start);
         if( $page<=0 )  $page  = 1;
