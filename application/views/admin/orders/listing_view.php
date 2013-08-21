@@ -40,11 +40,11 @@
                     <thead>
                     <tr>
                         <th width="70">Order #</th>
-                        <th width="110"><?php echo $this->lang->line('order_created');?></th>
-                        <th width="110">Delivery Date</th>
-                        <th width="166">Customer Name</th>
+                        <th width="140"><?php echo $this->lang->line('order_created');?></th>
+                        <th width="140">Delivery Date</th>
+                        <th>Customer Name</th>
                         <th width="160">Order Status</th>
-                        <th>Action</th>
+                        <th width="60">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -55,8 +55,8 @@
                         ?>
                         <tr>
                             <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
-                            <td class="center"><?php echo getOrderDateFormat($rows->order_date); ?></td>
-                            <td class="center"><?php echo $rows->delivery_date; //$this->productions_model->dateFormate($rows->delivery_date); ?></td>
+                            <td ><?php echo dateFormatStr($rows->order_date); ?></td>
+                            <td ><?php echo $rows->delivery_date.' '.$rows->delivery_time; //$this->productions_model->dateFormate($rows->delivery_date); ?></td>
 
                             <td><?php if($rows->first_name) echo $rows->first_name.' '.$rows->last_name; else echo "---"; ?></td>
                             <td class="center"><?php echo $rows->orderstatus; ?></td>

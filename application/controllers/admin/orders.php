@@ -13,7 +13,7 @@ class Orders extends Crud_Controller
         $loader->register();
         $this->layout->setLayout('layout_admin');
         $this->load->library('email');
-        $this->load->helper(array('uploader','idgenerator'));
+        $this->load->helper(array('uploader','idgenerator','util'));
         $this->load->model(array('orders_model','productions_model','gallery_model','locations_model','flavours_model','cakes_model','revel_order'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
@@ -31,7 +31,7 @@ class Orders extends Crud_Controller
         $this->data['zoneresult'] = $this->cakes_model->getZones();
         $this->data['locationresult'] = $this->cakes_model->getlocations();
         $this->data['customerresult'] = $this->cakes_model->getCustomers();
-        $this->data['employeeresult'] = $this->cakes_model->getEmployees($group_id=2);
+        $this->data['employeeresult'] = $this->cakes_model->getEmployees($group_id=0);
         $this->data['managerresult'] = $this->cakes_model->getEmployees($group_id=3);
 
 
@@ -309,7 +309,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $this->data['zoneresult'] = $this->cakes_model->getZones();
         $this->data['locationresult'] = $this->cakes_model->getlocations();
         $this->data['customerresult'] = $this->cakes_model->getCustomers();
-        $this->data['employeeresult'] = $this->cakes_model->getEmployees($group_id=2);
+        $this->data['employeeresult'] = $this->cakes_model->getEmployees($group_id=0);
         $this->data['managerresult'] = $this->cakes_model->getEmployees($group_id=3);
         $this->layout->view('admin/orders/order_view', $this->data);
 
