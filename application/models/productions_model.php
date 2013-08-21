@@ -273,7 +273,7 @@ class Productions_model extends Crud_Model
     public function getOrderStatus()
     {
 
-        return $this->db->select('*')->where(array('status'=>1))->get('order_status')->result();
+        return $this->db->select('*')->where(array('status'=>1))->order_by('production_status_code','asc')->get('order_status')->result();
 
     }
 
