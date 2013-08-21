@@ -243,7 +243,7 @@ $(document).ready(function(){
 
 <div class="heading-buttons">
     <h3 class="glyphicons sort"><i></i><?php
-        echo $this->lang->line('orders');?></h3>
+        echo $this->lang->line('orders');?><?php $order_code = isset($queryup[0]->order_code)?$queryup[0]->order_code:''; if($order_code > 0){ echo "- #".$order_code; } ?></h3>
     <div class="clearfix"></div>
 </div>
 <br/>
