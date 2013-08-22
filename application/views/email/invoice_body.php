@@ -119,6 +119,6 @@ TOTAL:                                         <?php if($queryup->override_price
 ------------------------------------------------------------
 
 Thank You
-//if(!empty($locations)){ echo $locations[0]->email.PHP_EOL; } ?>
-reply@
+<?php //if(!empty($locations)){ echo $locations[0]->email.PHP_EOL; } ?>
+reply@stphillipsbakery.com
 stphillipsbakery.com
