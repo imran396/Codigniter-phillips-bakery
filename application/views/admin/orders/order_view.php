@@ -3,6 +3,67 @@
 /* when document is ready */
 $(document).ready(function(){
 
+    $('#vaughan_location').click(function(){
+
+        if($("#vaughan_location").is(':checked')){
+
+            var location_id =0;
+            var flavour_id =$("#flavourid").val();
+            $.ajax({
+                url:"<?php echo site_url('admin/orders/getCheckBlackout')?>",
+                data:"location_id="+location_id+"&flavour_id="+flavour_id,
+                type:"post",
+                success: function(val){
+                    if(val !='success'){
+                        alert(val);
+                        $('#vaughan_location').prop('checked', false);
+                    }
+                }
+            })
+
+        }else{
+
+            var location_id =$("#location_id").val();
+            var flavour_id =$("#flavourid").val();
+            $.ajax({
+                url:"<?php echo site_url('admin/orders/getCheckBlackout')?>",
+                data:"location_id="+location_id+"&flavour_id="+flavour_id,
+                type:"post",
+                success: function(val){
+                    if(val !='success'){
+                        alert(val);
+                        $('#vaughan_location').prop('checked', true);
+                    }
+                }
+            })
+        }
+
+    })
+
+    $('#datepicker').click(function(){
+
+        var delivery_date = $("#datepicker").val();
+        if($("#vaughan_location").is(':checked')){
+            var location_id = 0;
+        }else{
+            var location_id = $("#location_id").val();
+        }
+        var location_id = $("#location_id").val();
+        var flavour_id = $("#flavourid").val();
+        $.ajax({
+            url:"<?php echo site_url('admin/orders/getCheckBlackout')?>",
+            data:"location_id="+location_id+"&flavour_id="+flavour_id+'&delivery_date='+delivery_date,
+            type:"post",
+            success: function(val){
+                if(val !='success'){
+                    alert(val);
+                    $('#delivery_date').val('');
+                }
+            }
+        })
+
+    })
+
     $('#cake_id').change(function() {
 
         var cake_id =$("#cake_id").val();
@@ -90,7 +151,7 @@ $(document).ready(function(){
     });
 
     $('#delivery_type').change(function() {
-        4
+
         var delivery_type =$("#delivery_type").val();
         if(delivery_type =='delivery'){
             $("#delivery-info").show();

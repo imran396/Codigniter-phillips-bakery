@@ -26,7 +26,7 @@ class Orders extends Crud_Controller
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['catresult'] = $this->cakes_model->getCategories();
         $this->data['cakeresult'] = $this->orders_model->getCakes($category=0);
-        $this->data['flvresult'] = $this->orders_model->getFlavours();
+        $this->data['flvresult'] = $this->orders_model->getFlavours($location_id=0);
         $this->data['sapresult'] = $this->cakes_model->getShapes();
         $this->data['zoneresult'] = $this->cakes_model->getZones();
         $this->data['locationresult'] = $this->cakes_model->getlocations();
@@ -40,9 +40,44 @@ class Orders extends Crud_Controller
 
     }
 
+    function getCheckBlackout(){
+
+        $delivery_date = $this->input->post('delivery_date');
+
+        $location_id = $this->input->post('location_id');
+        $flavour_id = $this->input->post('flavour_id');
+        $location_name = $this->productions_model->getLocations($location_id);
+        $flavourfield['flavour_id']=$flavour_id;
+        $flavour_name = $this->orders_model->getGlobalName('flavours',$flavourfield);
+        $blackout=$this->orders_model->checkBlackOut($location_id,$delivery_date);
+
+        if(!empty($blackout)){
+
+            if (in_array($flavour_id, $blackout)) {
+                $locationid = $this->orders_model->getVaughanLocation();
+                if($location_id == 0){
+                    $location_name = "Cake made in Vaughan".$this->productions_model->getLocations($locationid);
+                }
+
+
+              echo "Blacked Out ".$flavour_name." is not available for this date in this ". $location_name." location ";
+            }else{
+              echo "success";
+            }
+        }else{
+            echo "success";
+        }
+
+    }
+
     function getFlavour(){
 
         $cake_id = $this->input->post('cake_id');
+        $location_id = $this->input->post('location_id');
+        $blackout=$this->checkBlackOut($location_id);
+
+        if(empty($blackout)){}
+
         $row = $this->db->select('flavour_id,tiers')->where(array('cake_id' => $cake_id))->get('cakes')->row();
         $flavour_id = unserialize($row->flavour_id);
         $data ="";

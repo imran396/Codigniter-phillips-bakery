@@ -38,17 +38,35 @@ class Orders_model extends Crud_Model
                 ->result();
     }
 
-    function getFlavours(){
+    public function checkBlackOut($location_id=0,$delivery_date=NULL){
+
+        if($location_id > 0){
+            $locationid=$location_id;
+        }else{
+            $locationid = $this->orders_model->getVaughanLocation();
+        }
 
         $farr=array();
-        $curdate=date('m/d/Y');
-        $sql= "SELECT flavour_id FROM  `blackouts` WHERE  `blackout_date` LIKE  '%$curdate%'";
+        if($delivery_date){
+            $curdate = $delivery_date;
+        }else{
+            $curdate = date('m/d/Y');
+        }
+
+        $sql= "SELECT flavour_id FROM  `blackouts` WHERE  `location_id` = $locationid AND  `blackout_date` LIKE  '%$curdate%'";
         $res = $this->db->query($sql)->result();
         foreach($res as $rows){
 
             $farr[]= $rows->flavour_id;
         }
-        if(empty($farr)){
+
+        return $farr;
+    }
+
+    public function getFlavours($location_id){
+
+        $blackout=$this->checkBlackOut($location_id);
+        if(empty($blackout)){
             return $res=$this->db
                 ->select('flavour_id,title')
                 ->where('status',1)
@@ -58,7 +76,7 @@ class Orders_model extends Crud_Model
             return $res=$this->db
                 ->select('flavour_id,title')
                 ->where('status',1)
-                ->where_not_in('flavour_id',$farr)
+                ->where_not_in('flavour_id',$blackout)
                 ->get('flavours')
                 ->result();
         }

@@ -71,7 +71,8 @@ if(!empty($instructionals)){
 
         echo $this->orders_model->fileName($instructional->instructional_photo) ." , ".PHP_EOL;
 
-    } } ?>
+    } }
+?>
 <?php if($queryup->inscription){ ?>
 INSCRIPTION:
 
