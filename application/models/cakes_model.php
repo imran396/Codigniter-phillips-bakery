@@ -45,6 +45,7 @@ class Cakes_model extends CI_Model
         $insert['meta_tag'] = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
         $insert['revel_product_id'] = ($data['revel_product_id'] !="") ? $data['revel_product_id'] :'';
         $insert['flavour_id'] =($flavour_id !="") ? serialize($flavour_id):'';
+        $insert['status'] = ($data['status'] !="") ? $data['status'] :'';
        // $insert['tiers'] =($tiers !="") ? serialize($tiers):'';
 
 

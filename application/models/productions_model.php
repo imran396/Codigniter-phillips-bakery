@@ -297,6 +297,7 @@ class Productions_model extends Crud_Model
             ->join('flavours','flavours.flavour_id = orders.flavour_id')
             ->where(array('status'=>1))
             ->group_by('flavour_id')
+            ->order_by('title','asc')
             ->get()
             ->result();
 
