@@ -166,7 +166,16 @@
                     <?php } ?>
                     <?php if($queryup->delivery_type){ ?>
                         <div class="line">
-                            <div class="title">Order Type</div>Pickup Location
+                            <?php if($queryup->delivery_type =='pickup'){ ?>
+                                <div class="title">Order Type</div>Pickup Location
+                            <?php }else{ ?>
+                                <div class="title">Order Type</div>Delivery
+                            <?php } ?>
+                        </div>
+                    <?php } ?>
+                    <?php if($queryup->delivery_type =='pickup' ){ ?>
+                        <div class="line">
+                            <div class="title">Pickup Location</div><?php echo $this->productions_model->getLocations($queryup ->pickup_location_id); ?>
                         </div>
                     <?php } ?>
                     <?php if( $queryup->delivery_zone_id > 0){ ?>

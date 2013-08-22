@@ -663,8 +663,8 @@ $(document).ready(function(){
             <label ><input type="checkbox" <?php if($instructional_email_photo ==1){ echo "checked"; } ?> value="1" id="instructional_email_photo" name="instructional_email_photo"  >&nbsp;<?php echo $this->lang->line('instructional_email_photo');?></label>
         </div>
         <div class="control-group">
-            <?php $vaughan_location = (isset($queryup[0]->vaughan_location))? $queryup[0]->vaughan_location:set_value('vaughan_location'); ?>
-            <label ><input type="checkbox" <?php if($vaughan_location ==1){ echo "checked"; } ?> value="1" id="vaughan_location" name="vaughan_location"  >&nbsp;<?php echo $this->lang->line('is_vaughan_location');?></label>
+            <?php $vaughan_location = (isset($queryup[0]->vaughan_location))? $queryup[0]->vaughan_location:1; ?>
+            <label ><input type="checkbox" <?php if($vaughan_location ==1 ){ echo "checked"; } ?> value="1" id="vaughan_location" name="vaughan_location"  >&nbsp;<?php echo $this->lang->line('is_vaughan_location');?></label>
         </div>
         <div class="control-group">
             <label ><input type="checkbox"  value="1" id="mailtouser" name="mailtouser"  >&nbsp;<?php echo $this->lang->line('mailtouser');?></label>

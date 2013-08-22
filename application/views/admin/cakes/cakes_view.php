@@ -163,7 +163,7 @@
                                     <div class="control-group uniformjs">
                                         <label class="control-label"><?php echo $this->lang->line('status');?></label>
                                         <div class="separator"></div>
-                                        <?php echo $status = (isset($queryup[0]->status))? $queryup[0]->status:1; ?>
+                                        <?php $status = (isset($queryup[0]->status))? $queryup[0]->status:1; ?>
                                         <label class="radio">
                                             <input type="radio" class="radio" name="status" value="1" <?php if($status == 1){?> checked="checked" <?php } ?> />
                                             <?php echo $this->lang->line('publish');?>
