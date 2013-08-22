@@ -374,10 +374,11 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';
         $pluploadUploader_count=isset($_REQUEST['pluploadUploader_count'])? $_REQUEST['pluploadUploader_count']:'';
 
-        $data['order_status'] = isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'301';
+        $data['order_status'] = isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'300';
         $data['order_date']=time();
 
         $vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
+
         if($vaughan_location == 1 ){
             $vaughan_location = $this->orders_model->getVaughanLocation();
             $data['kitchen_location_id'] = $vaughan_location;
