@@ -3,10 +3,9 @@ include(APPPATH."/helpers/class.upload.php");
 
 function resize_image($source, $output, $width = 100, $height = 100){
 
+    list($img_width, $img_height) = getimagesize($source['tmp_name']);
     $handle = new Upload($source);
 
-
-    list($img_width, $img_height) = getimagesize($source);
     // then we check if the file has been uploaded properly
     // in its *temporary* location in the server (often, it is /tmp)
     if($handle->uploaded && $img_width > $width && $img_height >  $height ){
