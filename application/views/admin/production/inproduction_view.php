@@ -424,4 +424,8 @@
         color: #fff;
         line-height: 49px;
     }
+
+    .dropdown-menu ul{
+        max-height: 320px!important;
+    }
 </style>
