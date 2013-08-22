@@ -79,13 +79,13 @@ class Blackouts_model extends Crud_Model
     public function getFlavours()
     {
 
-        return $this->db->select('*')->where(array('status'=>1))->order_by('ordering','asc')->get('flavours')->result();
+        return $this->db->select('*')->where(array('status'=>1))->order_by('title','asc')->get('flavours')->result();
 
     }
     public function getLocations()
     {
 
-        return $this->db->select('*')->where(array('status'=>1))->order_by('ordering','asc')->get('locations')->result();
+        return $this->db->select('*')->where(array('status'=>1))->order_by('title','asc')->get('locations')->result();
 
     }
 
