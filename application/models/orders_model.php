@@ -197,7 +197,7 @@ class Orders_model extends Crud_Model
         $attachment = "attachment-1";
         $attachment = $_FILES["$attachment"];
         $filePath = "assets/uploads/cakes/";
-        $file_name=resize_image($attachment,$filePath,200,140);
+        $file_name=resize_image($attachment,$filePath,730,480);
         $on_cake_image  = "assets/uploads/cakes/".$file_name;
         $this->fileDelete($id);
         $this->db->set(array('on_cake_image' => $on_cake_image))->where(array('order_id' => $id))->update('orders');
