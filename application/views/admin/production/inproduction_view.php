@@ -426,6 +426,6 @@
     }
 
     .dropdown-menu ul{
-        max-height: 320px!important;
+        max-height: 305px!important;
     }
 </style>
