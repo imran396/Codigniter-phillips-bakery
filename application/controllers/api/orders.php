@@ -198,13 +198,13 @@ class Orders extends API_Controller
         $row = $this->orders_model->getOrderStatus($data['order_id']);
         if($row->order_status < 303 ){
 
-        $vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
+        /*$vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
         if($vaughan_location == 1 ){
             $vaughan_location = $this->orders_model->getVaughanLocation();
             $data['kitchen_location_id'] = $vaughan_location;
         }else{
             $data['kitchen_location_id'] = isset($_REQUEST['location_id'])? $_REQUEST['location_id']:'';
-        }
+        }*/
 
         $orders=$this->orders_model->order_update($data, $data['order_id']);
 
