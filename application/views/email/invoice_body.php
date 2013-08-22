@@ -61,8 +61,10 @@ if( $deliveryInfo->email){ echo $deliveryInfo->email.PHP_EOL;  }
 ----------------------------------------------------------------
 CAKE DETAILS
 
-IMAGE ON CAKE: <?php if($queryup->on_cake_image){ echo $this->orders_model->fileName($queryup->on_cake_image).PHP_EOL; } ?>
-REFERENCE PHOTO: <?php
+IMAGE ON CAKE: Customer will email <?php if($queryup->on_cake_image){ echo $this->orders_model->fileName($queryup->on_cake_image).PHP_EOL; } ?>
+--------------------------------------------------------------------
+REFERENCE PHOTO: Customer will email <?php
+echo PHP_EOL;
 $instructionals = $this->productions_model->photoGallery($queryup->order_id);
 if(!empty($instructionals)){
     foreach($instructionals as $instructional){
