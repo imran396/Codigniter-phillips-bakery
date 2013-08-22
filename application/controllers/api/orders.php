@@ -69,6 +69,9 @@ class Orders extends API_Controller
             $data['kitchen_location_id'] = isset($_REQUEST['location_id'])? $_REQUEST['location_id']:'';
         }
 
+       print_r($data);
+        exit;
+
         $order_delivery['name']=isset($_REQUEST['name']) ? $_REQUEST['name']:'';
         $order_delivery['phone']=isset($_REQUEST['phone']) ? $_REQUEST['phone']:'';
         $order_delivery['address_1']=isset($_REQUEST['address_1'])? $_REQUEST['address_1']:'';
