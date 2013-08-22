@@ -195,9 +195,10 @@ $lastdate = end($blackoutdate);
                         <table id="example" class="table table-striped table-bordered blackout-sortable">
                             <thead>
                             <tr>
-                                <th width="145">Flavor</th>
-                                <th width="132">Blackout Dates</th>
-                                <th width="319"> </th>
+                                <th>Location</th>
+                                <th>Flavor</th>
+                                <th width="100">Blackout Dates</th>
+                                <th width="170"> </th>
                             </tr>
                             </thead>
                             <tbody style="height: 250px">
@@ -206,6 +207,7 @@ $lastdate = end($blackoutdate);
                                 $blackout_date=explode(',',$rows->blackout_date);
                             ?>
                             <tr>
+                                <td><strong><?php echo $this->productions_model->getLocations($rows->location_id); ?></strong></td>
                                 <td><strong><?php echo $rows->title; ?></strong></td>
                                 <td><a class="remove_a" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo $rows->blackout_date; ?>" ><?php echo end($blackout_date); // $this->blackouts_model->dateFormate(end($blackout_date)); ?></a></td>
                                 <td align="right" style="text-align: right; padding-right: 15px">
@@ -251,10 +253,10 @@ $lastdate = end($blackoutdate);
 
         $('#example').dataTable( {
 
-            "aaSorting": [[1,'desc']],
+            "aaSorting": [[2,'desc']],
 
             "aoColumnDefs": [
-                { "bSortable":false, "aTargets": [2] }
+                { "bSortable":false, "aTargets": [3] }
 
             ],
             //"iDisplayLength": 500,

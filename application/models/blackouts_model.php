@@ -102,7 +102,7 @@ class Blackouts_model extends Crud_Model
         $total_rows = $this->db->count_all_results('blackouts');
         $paging = production_paginate($base_url, $total_rows,$start,$per_page);
               $query = $this->db
-            ->select('flavours.title,blackouts.blackout_id,blackouts.flavour_id,blackouts.blackout_date')
+            ->select('flavours.title,blackouts.location_id,blackouts.blackout_id,blackouts.flavour_id,blackouts.blackout_date')
             ->from('blackouts')
             ->join('flavours','flavours.flavour_id=blackouts.flavour_id','inner')
             ->order_by('blackout_date','desc')
