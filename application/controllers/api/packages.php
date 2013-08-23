@@ -54,8 +54,8 @@ class Packages extends API_Controller
                             array('serving_id' => 8, 'title' => '60-80', 'size' => 'Full slab', 'price' => 120.00),
                         )
                     )
-            );
-            */
+            );*/
+
 
     }
 }
