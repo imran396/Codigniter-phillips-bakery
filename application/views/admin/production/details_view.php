@@ -93,7 +93,7 @@
                 <ul>
                     <li>
                         <span>Total</span>
-                        <span class="count">$<?php if($queryup->override_price !='0.00') echo $queryup->override_price; else echo $queryup->total_price; ?></span>
+                        <span class="count">$<?php if($queryup->override_price > 0 ) echo $queryup->override_price; else echo $queryup->total_price; ?></span>
                     </li>
                 </ul>
             </div>
@@ -166,7 +166,16 @@
                     <?php } ?>
                     <?php if($queryup->delivery_type){ ?>
                         <div class="line">
-                            <div class="title">Order Type</div>Pickup Location
+                            <?php if($queryup->delivery_type =='pickup'){ ?>
+                                <div class="title">Order Type</div>Pickup Location
+                            <?php }else{ ?>
+                                <div class="title">Order Type</div>Delivery
+                            <?php } ?>
+                        </div>
+                    <?php } ?>
+                    <?php if($queryup->delivery_type =='pickup' ){ ?>
+                        <div class="line">
+                            <div class="title">Pickup Location</div><?php echo $this->productions_model->getLocations($queryup ->pickup_location_id); ?>
                         </div>
                     <?php } ?>
                     <?php if( $queryup->delivery_zone_id > 0){ ?>

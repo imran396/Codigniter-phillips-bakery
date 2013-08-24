@@ -154,7 +154,7 @@
 <div class="container-fluid fixed container-new">
 <div class="navbar main">
     <div class="icon-wrapper"><a href="/admin/productions" class="icon-home"></a></div>
-    <span class="tlogo">Cakes in Production</span>
+    <span class="tlogo">Cakes in Production: <?php echo $this->productions_model->getLocations($this->session->userdata('locationid')); ?></span>
     <div class="pull-right">
         <div class="search-form">
             <div class="error-msg"><?php echo $this->session->flashdata('nofound_msg')?></div>
@@ -346,7 +346,7 @@
                         <a class="print-none" href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a>
                         <p class="list-code"><?php echo $rows->order_code; ?></p>
                     </td>
-                    <td><?php if($rows->delivery_type =='pickup'){ echo $this->productions_model->getLocations($rows->pickup_location_id); }else{ echo $this->productions_model->getLocations($rows->kitchen_location_id); } ?></td>
+                    <td><?php if($rows->delivery_type =='pickup'){ echo $this->productions_model->getLocations($rows->pickup_location_id); }else{ echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---"; } ?></td>
                     <td><?php if($rows->cake_name){echo  sentence_case($rows->cake_name);}else{ echo 'Custom Cake';} ?></td>
                     <td class="center"><?php echo sentence_case($rows->delivery_type); ?></td>
                     <td class="center"><?php echo $this->productions_model->dateFormate($rows->delivery_date); ?></td>
@@ -416,3 +416,16 @@
     } );
 
 </script>
+<style type="text/css">
+    .container-new .tlogo {
+        font-family: Helvetica, Arial, sans-serif;
+        font-weight: bold;
+        font-size: 16px;
+        color: #fff;
+        line-height: 49px;
+    }
+
+    .dropdown-menu ul{
+        max-height: 169px!important;
+    }
+</style>

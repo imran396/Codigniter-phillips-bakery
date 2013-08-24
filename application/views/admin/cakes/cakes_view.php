@@ -165,11 +165,11 @@
                                         <div class="separator"></div>
                                         <?php $status = (isset($queryup[0]->status))? $queryup[0]->status:1; ?>
                                         <label class="radio">
-                                            <input type="radio" class="radio" name="status" value="1" <?php if($status ==1){?> checked="checked" <?php } ?> />
+                                            <input type="radio" class="radio" name="status" value="1" <?php if($status == 1){?> checked="checked" <?php } ?> />
                                             <?php echo $this->lang->line('publish');?>
                                         </label><br/>
                                         <label class="radio">
-                                            <input type="radio" class="radio" name="status" value="0" <?php if($status !=1 ){?> checked="checked" <?php } ?>  />
+                                            <input type="radio" class="radio" name="status" value="0" <?php if($status != 1 ){?> checked="checked" <?php } ?>  />
                                             <?php echo $this->lang->line('unpublish');?>
                                         </label><br/>
 

@@ -79,13 +79,13 @@ class Blackouts_model extends Crud_Model
     public function getFlavours()
     {
 
-        return $this->db->select('*')->where(array('status'=>1))->order_by('ordering','asc')->get('flavours')->result();
+        return $this->db->select('*')->where(array('status'=>1))->order_by('title','asc')->get('flavours')->result();
 
     }
     public function getLocations()
     {
 
-        return $this->db->select('*')->where(array('status'=>1))->order_by('ordering','asc')->get('locations')->result();
+        return $this->db->select('*')->where(array('status'=>1))->order_by('title','asc')->get('locations')->result();
 
     }
 
@@ -102,7 +102,7 @@ class Blackouts_model extends Crud_Model
         $total_rows = $this->db->count_all_results('blackouts');
         $paging = production_paginate($base_url, $total_rows,$start,$per_page);
               $query = $this->db
-            ->select('flavours.title,blackouts.blackout_id,blackouts.flavour_id,blackouts.blackout_date')
+            ->select('flavours.title,blackouts.location_id,blackouts.blackout_id,blackouts.flavour_id,blackouts.blackout_date')
             ->from('blackouts')
             ->join('flavours','flavours.flavour_id=blackouts.flavour_id','inner')
             ->order_by('blackout_date','desc')

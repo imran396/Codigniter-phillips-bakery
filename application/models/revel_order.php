@@ -131,8 +131,7 @@ class Revel_Order extends Revel_Model
         } elseif ( $table == 'locations' ) {
             $rid = 'revel_location_id';
             $condition = array('location_id'=> $id);
-        }
-        elseif ( $table == 'orders' ) {
+        } elseif ( $table == 'orders' ) {
             $rid = 'revel_order_id';
             $condition = array('order_id'=> $id);
         }

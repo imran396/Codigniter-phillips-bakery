@@ -570,7 +570,7 @@
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	padding: 0;
-	width: 183px;
+	width: auto;
 	top: 27px;
 	height: auto;
 }

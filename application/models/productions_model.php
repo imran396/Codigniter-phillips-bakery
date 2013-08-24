@@ -14,7 +14,18 @@ class Productions_model extends Crud_Model
     {
 
         $curdate =date('m/d/Y');
+        $vaughan_location = $this->orders_model->getVaughanLocation();
         $location_id = $this->session->userdata('locationid');
+        if($location_id > 0 ){
+            $location_id = $this->session->userdata('locationid');
+        }else{
+            $newdata = array(
+                'locationid'  =>$vaughan_location
+            );
+            $this->session->set_userdata($newdata);
+            $location_id = $this->session->userdata('locationid');
+        }
+
         $per_page=10;
         $page   = intval($start);
         if( $page<=0 )  $page  = 1;
@@ -273,7 +284,7 @@ class Productions_model extends Crud_Model
     public function getOrderStatus()
     {
 
-        return $this->db->select('*')->where(array('status'=>1))->get('order_status')->result();
+        return $this->db->select('*')->where(array('status'=>1))->order_by('production_status_code','asc')->get('order_status')->result();
 
     }
 
@@ -286,6 +297,7 @@ class Productions_model extends Crud_Model
             ->join('flavours','flavours.flavour_id = orders.flavour_id')
             ->where(array('status'=>1))
             ->group_by('flavour_id')
+            ->order_by('title','asc')
             ->get()
             ->result();
 
