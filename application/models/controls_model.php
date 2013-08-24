@@ -45,9 +45,10 @@ class Controls_model extends Crud_Model
     public function  checkUniquecontroller_name($id){
 
         if(!empty($id)){
-            return $dbcatid = $this->db->select('controller_name')
+            $dbcatid = $this->db->select('controller_name')
                 ->where('control_id',$id)
-                ->get('user_control')->result()[0]->controller_name;
+                ->get('user_control')->row();
+            return $dbcatid->controller_name;
 
         }
 

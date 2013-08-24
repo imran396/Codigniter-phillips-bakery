@@ -24,8 +24,13 @@ class Locations_model extends Crud_Model
     public function save($data, $id)
     {
         $vaughan_location = (!empty($data['vaughan_location'])) ? $data['vaughan_location'] : '';
+        $row = $this->getLocations($id);
+        $row[0]->vaughan_location;
+        echo $count =($this->checkVaughan()+$vaughan_location+$row[0]->vaughan_location);
+        if ( $count == 2 && $row[0]->vaughan_location == 1) {
+            $data['vaughan_location'] = 0;
 
-        if ($this->checkVaughan() > 0 && $vaughan_location == 1) {
+        }elseif ($count == 2  ){
             $data['vaughan_location'] = 0;
             $this->session->set_flashdata('warning_msg', $this->lang->line('vaughan_location_msg'));
         }
