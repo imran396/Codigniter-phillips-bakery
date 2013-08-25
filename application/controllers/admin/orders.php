@@ -451,7 +451,8 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
             $order_data = array(
                 'delivery_instruction' => $data['delivery_instruction'],
                 'inscription' => $data['inscription'],
-                'special_instruction' => $data['special_instruction']
+                'special_instruction' => $data['special_instruction'],
+                'order_status' => $data['order_status']
             );
             $orders=$this->orders_model->order_update($order_data,$orderID);
             $this->session->set_flashdata('success_msg','Order has been updated successfully');
@@ -512,6 +513,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
             $this->orders_model->galleryUpload($data,$orders['order_id']);
 
         }
+
         if($orders['order_status'] == 301 &&  $data['on_cake_image_needed'] ==1 ){
 
             $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
