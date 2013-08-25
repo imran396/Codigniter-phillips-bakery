@@ -46,7 +46,7 @@
         <div class="control-group" id="hide_tiers">
             <label class="control-label" for="email"><?php echo $this->lang->line('tiers');?></label>
             <div class="controls">
-                <?php echo $queryup->orderTiers; ?>
+                <?php  if($queryup->orderTiers) echo $queryup->orderTiers; ?>
             </div>
         </div>
 
@@ -133,20 +133,22 @@
                 <?php echo $queryup->delivery_type; ?>
             </div>
         </div>
+        <?php if($queryup->pickup_location_id > 0 && $queryup->delivery_type=='pickup' ){?>
         <div class="control-group" id="locationid" >
             <label class="control-label" ><?php echo $this->lang->line('pickup_location');?></label>
             <div class="controls">
                 <?php echo $this->productions_model->getLocations($queryup ->pickup_location_id); ?>
             </div>
         </div>
-
+        <?php } ?>
+<?php if($queryup->delivery_zone_id > 0 && $queryup->delivery_type=='delivery' ){?>
         <div class="control-group" id="deliveryzoneid">
             <label class="control-label" for="lastname"><?php echo $this->lang->line('delivery_zone');?></label>
             <div class="controls">
                 <?php echo $this->productions_model->getZones($queryup->delivery_zone_id); ?>
             </div>
         </div>
-
+<?php } ?>
     </div>
     <div class="span6">
         <div class="control-group">
@@ -212,7 +214,7 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id)
             <div class="control-group">
                 <label class="control-label"><?php echo $this->lang->line('delivery_instruction');?></label>
                 <div class="controls">
-                    <textarea rows="" style="width: 320px; height: 95px" class="midium-textarea" cols="" name="delivery_instruction" id="delivery_instruction"> <?php echo (isset($queryup[0]->delivery_instruction))? $queryup[0]->delivery_instruction:set_value('delivery_instruction'); ?></textarea>
+                    <textarea rows="" style="width: 320px; height: 95px" class="midium-textarea" cols="" name="delivery_instruction" id="delivery_instruction"> <?php echo (isset($queryup->delivery_instruction))? $queryup->delivery_instruction:set_value('delivery_instruction'); ?></textarea>
                 </div>
             </div>
 
@@ -246,7 +248,7 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id)
             <div class="control-group">
                 <label class="control-label"><?php echo $this->lang->line('postal_code');?></label>
                 <div class="controls">
-                    <?php echo $deliveryInfo->postal_code; ?>
+                    <?php echo $deliveryInfo->postal; ?>
                 </div>
             </div>
 
@@ -322,8 +324,6 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id)
                             </span>
 
                         <?php } ?>
-
-
                     </div>
                     <?php if($on_cake_image){ ?> <a href="<?php  echo base_url().$queryup->on_cake_image;?>" target="_blank" >Click here</a> <?php } ?>
                 </div>
@@ -341,7 +341,6 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id)
             <label class="control-label"><?php echo $this->lang->line('special_instruction');?></label>
             <div class="controls">
                 <textarea rows="" cols="" style="width: 98%" name="special_instruction" id="special_instruction" class="midium-textarea" ><?php echo(isset($queryup->special_instruction))? $queryup->special_instruction:set_value('special_instruction'); ?></textarea>
-
             </div>
         </div>
 
@@ -398,7 +397,8 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id)
 <?php
 $uporder_id =isset($queryup->order_id) ? $queryup->order_id:'';
 if($uporder_id > 0){
-    if($this->productions_model->orderNotes($queryup->order_id)){
+    $order_notes = $this->productions_model->orderNotes($queryup->order_id);
+    if(!empty($order_notes)){
         ?>
         <table style="width: 100%" class="table table-bordered table-condensed">
             <?php
@@ -480,13 +480,17 @@ if($uporder_id > 0){
         <input type="hidden"  name="total_price" id="total_price" value="<?php echo $total_price;?>">
         <td><?php echo $this->lang->line('total_price');?></td><td>$<span id="totalprice"><?php echo $total_price;?></span></td>
     </tr>
+    <?php $override_price = (isset($queryup->override_price))? $queryup->override_price:'';
+    if($override_price > 0){
+    ?>
     <tr>
 
         <td><?php echo $this->lang->line('override_price');?></td>
         <td id="override_price">
-            <?php $override_price = (isset($queryup->override_price))? $queryup->override_price:'0.00'; ?>
-            <span style="display: block; line-height: 30px; float:left">$</span><?php echo $override_price; ?></td>
+
+            $<?php echo $override_price; ?></td>
     </tr>
+    <?php } ?>
 
 </table>
 </div>
@@ -496,6 +500,7 @@ if($uporder_id > 0){
 <hr class="separator"/>
 <div class="form-actions">
 
+    <input type="hidden" id="order_id" name="order_id" value="<?php echo (isset($queryup->order_id))? $queryup->order_id:0; ?>">
     <button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><?php echo $this->lang->line('save_changes');?></button>
     <button type="reset" class="btn btn-icon btn-default glyphicons circle_remove"><i></i><?php echo $this->lang->line('cancel');?></button>
 </div>

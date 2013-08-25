@@ -369,17 +369,22 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
     {
 
         if (!empty($_POST)) {
-            $this->addValidation();
-            if ($this->form_validation->run()) {
+            if($this->input->post('order_id') > 0){
                 $this->saveData();
+            }else{
+                $this->addValidation();
+                if ($this->form_validation->run()) {
+                    $this->saveData();
+                }
             }
+
         }
         $this->index();
 
     }
     private function addValidation()
     {
-        $this->form_validation->set_rules('location_id', 'Locatuion name', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('location_id', 'Location name', 'required|trim|xss_clean');
         $this->form_validation->set_rules('flavour_id', 'Flavour name', 'required|trim|xss_clean');
         $this->form_validation->set_rules('price_matrix_id', 'Servings name', 'required|trim|xss_clean');
         $this->form_validation->set_rules('customer_id', 'Customer name', 'required|trim|xss_clean');
