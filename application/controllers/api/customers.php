@@ -24,7 +24,12 @@ class Customers extends API_Controller
             $data['status']=1;
 
             if(isset($data)){
-                $data['revel_customer_id']= $this->revel_customer->create($data);
+                try{
+                    $data['revel_customer_id']= $this->revel_customer->create($data);
+                }catch (\Exception $e){
+                    $data['revel_customer_id'] = null;
+                }
+
             }
 
             $customer_id = $this->customers_model->create($data);
@@ -58,6 +63,15 @@ class Customers extends API_Controller
 
             $data = $this->input->post();
             $this->customers_model->save($data, $data['customer_id']);
+            $customerUpdatedData = $this->customers_model->getcustomers($data['customer_id']);
+            $data['revel_customer_id'] = $customerUpdatedData[0]->revel_customer_id;
+            try{
+                $this->revel_customer->update($data);
+            }catch (\Exception $e){
+
+            }
+
+
             if($data['customer_id']) {
 
                 if(isset($_REQUEST['employee_id'])){

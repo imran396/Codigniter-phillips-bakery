@@ -99,6 +99,16 @@ class Locations extends Crud_Controller
         } else {
 
             $this->locations_model->save($data, $data['location_id']);
+            $location_data = $this->locations_model->getLocations($data['location_id']);
+            $data['revel_location_id']= $location_data[0]->revel_location_id;
+
+            try {
+                $this->revel_location->update($data);
+            } catch (\Exception $e) {
+
+            }
+
+
             $this->session->set_flashdata('success_msg', "Location has been updated successfully");
         }
 

@@ -114,10 +114,14 @@ class Orders extends API_Controller
                 'discount'=> $orders['discount_price'],
                 'subtotal'=> $orders['total_price']
             );
+           try{
+               $status_code_revel =  $this->revel_order->create($RevelOrderData);
 
-            $status_code_revel =  $this->revel_order->create($RevelOrderData);
+               $orders['revel_order_id']  = $status_code_revel;
+           } catch (\Exception $e){
+               $orders['revel_order_id'] = null;
+           }
 
-            $orders['revel_order_id']  = $status_code_revel;
 
             if($status_code_revel > 0){
                 $orders['order_code'] = $status_code_revel;
@@ -246,7 +250,9 @@ class Orders extends API_Controller
 
         $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
 
+
         if(empty($revel_order_id) && $orders['order_status'] != '300' ){
+
 
             $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
             $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
@@ -260,15 +266,41 @@ class Orders extends API_Controller
                 'discount'=> $orders['discount_price'],
                 'subtotal'=> $orders['total_price']
             );
-            $status_code_revel =  $this->revel_order->create($RevelOrderData);
 
-            $orders['revel_order_id']  = $status_code_revel;
+           try{
+               $status_code_revel =  $this->revel_order->create($RevelOrderData);
+               $orders['revel_order_id']  = $status_code_revel;
+           } catch (\Exception $e){
+               $orders['revel_order_id'] = null;
+           }
+
 
             if($status_code_revel > 0){
                 $orders['order_code'] = $status_code_revel;
                 $orders=$this->orders_model->order_update($orders, $orders['order_id']);
             }
 
+         }else{
+            if($revel_order_id){
+                $revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
+                $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
+                $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+                $RevelOrderData = array(
+                    'order_code' => $orders['order_code'],
+                    'revel_order_id' => $revel_order_id,
+                    'revel_product_id' =>  $revel_product,
+                    'revel_customer_id' => $revel_customer,
+                    'revel_location_id' => $revel_location,
+                    'discount'=> $orders['discount_price'],
+                    'subtotal'=> $orders['total_price']
+                );
+                try{
+                    $this->revel_order->update($RevelOrderData);
+                } catch (\Exception $e){
+
+                }
+
+            }
         }
 
             $result= $this->productions_model->orderPrint($orders['order_id']);

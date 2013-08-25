@@ -117,7 +117,6 @@ class Orders_model extends Crud_Model
     }
 
     public function order_update($data,$order_id){
-
             $order_id = $this->update($data,$order_id);
             $dbdata =$this->getOrder($order_id);
             $order['order_id']= $dbdata->order_id;
