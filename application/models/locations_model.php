@@ -35,7 +35,7 @@ class Locations_model extends Crud_Model
 
     private function checkVaughan()
     {
-        return $this->db->select('vaughan_location')->where('vaughan_location', 1)->get('locations')->num_rows();
+        return $this->db->select('vaughan_location')->where('vaughan_location',1)->get('locations')->num_rows();
     }
 
     public function deleteDataExisting($data = 0)
