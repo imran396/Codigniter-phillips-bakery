@@ -59,7 +59,7 @@
                 <input type="button" id="searchButton" name="" value="Search" />
             </form>
         </div>
-        <a href="<?php echo site_url('api/orders/productionInvoice/')?>?print=laser&order_id=<?php echo $queryup->order_id ?>" class="button" target="_blank"  ><span class="icon icon-print"></span> Print Page</a>
+        <a href="<?php echo site_url('api/orders/productionInvoice/')?>?print=thermal&order_id=<?php echo $queryup->order_id ?>" class="button" target="_blank"  ><span class="icon icon-print"></span> Print Page</a>
     </div>
     <div class="separator"></div>
 </div>
