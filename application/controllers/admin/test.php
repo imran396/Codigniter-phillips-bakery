@@ -120,7 +120,7 @@ class Test extends Crud_Controller
         ));
     }
 
-    // **************************** CUSTOMERS ****************************
+    // **************************** Orders ****************************
 
     public function createOrders()
     {
@@ -132,6 +132,10 @@ class Test extends Crud_Controller
         );
 
         $this->revel_order->create($data);
+    }
+    public function orders()
+    {
+        var_dump($this->revel_order->getAll());
     }
 
 }

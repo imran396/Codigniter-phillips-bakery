@@ -79,6 +79,28 @@ class Revel_Model extends CI_Model
         return $response->raw_body;
     }
 
+    protected function putResource($resource, $data, $debug = false)
+    {
+        $client = \Httpful\Request::put($this->revel['endpoint'] . '/resources/' . $resource . '/'.$data['revel_id'].'/');
+        $client->addHeaders(array('API-AUTHENTICATION' => $this->revel['api_key'] . ':' . $this->revel['api_secret']));
+        $client->sendsAndExpects('json');
+        $client->body(str_replace('\\/', '/', json_encode($data)));
+
+        $response = $client->send();
+
+        $this->code     = $response->code;
+        $this->response = $response->body;
+        $this->headers  = $response->headers;
+
+
+        if ($debug) {
+            $this->log($response);
+        }
+
+        return $response->raw_body;
+    }
+
+
     protected function deleteResource($resource, $id, $debug = false)
     {
         $client = \Httpful\Request::delete($this->revel['endpoint'] . '/resources/' . $resource . '/' . $id . '/');

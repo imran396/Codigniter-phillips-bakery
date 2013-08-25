@@ -51,8 +51,6 @@ class Cakes extends Crud_Controller
                 }else{
                     $this->redirectToHome('listing');
                 }
-
-
             }
         }
         $this->index();
@@ -86,19 +84,30 @@ class Cakes extends Crud_Controller
 
     }
 
-
     private function saveData()
     {
-
         $data = $this->input->post();
         if (empty($data['cake_id'])) {
             if(isset($data['title'])){
-                $data['revel_product_id'] = $this->revel_product->create($data);
+                try{
+                    $data['revel_product_id'] = $this->revel_product->create($data);
+                } catch(\Exception $e){
+                    $data['revel_product_id'] = null;
+                }
+
                 $this->cakes_model->create($data);
             }
             $this->session->set_flashdata('success_msg','New cake has been added successfully');
         } else {
             $this->cakes_model->save($data, $data['cake_id']);
+            $cake_date = $this->cakes_model->getCakes($data['cake_id']);
+            $data['revel_cake_id']= $cake_date[0]->revel_product_id;
+            try{
+                $this->revel_product->update($data);
+            }catch (\Exception $e){
+
+            }
+
 
             $this->session->set_flashdata('success_msg','Cake has been updated successfully');
         }
