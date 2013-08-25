@@ -9,9 +9,9 @@ if(!empty($locations)){
 ------------------------------------------------------------
 <?php echo $locations[0]->address1.PHP_EOL; ?>
 <?php echo $locations[0]->address2.PHP_EOL; ?>
-<?php echo $locations[0]->city; ?> , <?php echo $locations[0]->province; ?> <?php echo $locations[0]->postal_code.PHP_EOL; ?>
-<?php echo $locations[0]->country.PHP_EOL; ?>
-<?php echo $locations[0]->email.PHP_EOL; ?>
+<?php echo $locations[0]->city; ?>  <?php if($locations[0]->province){ echo ",".$locations[0]->province; } ?> <?php echo $locations[0]->postal_code.PHP_EOL; ?>
+<?php if($locations[0]->country){ echo $locations[0]->country.PHP_EOL;} ?>
+<?php if($locations[0]->country){  echo $locations[0]->email.PHP_EOL;} ?>
 <?php echo $this->orders_model->phoneNoFormat($locations[0]->phone).PHP_EOL; ?>
 <?php } ?>
 
@@ -21,9 +21,9 @@ ORDER <?php if( $queryup->order_status !=301 ){ echo strtoupper( $queryup->order
 CUSTOMER DETAILS
 
 <?php echo $queryup->first_name.' '. $queryup->last_name.PHP_EOL; ?>
-<?php echo $queryup->address_1.PHP_EOL; ?>
-<?php echo $queryup->address_2.PHP_EOL; ?>
-<?php echo $queryup->city; ?>, <?php echo $queryup->province; ?> <?php echo $queryup->postal_code.PHP_EOL; ?>
+<?php if($queryup->address_2){ echo $queryup->address_1.PHP_EOL; } ?>
+<?php if($queryup->address_2){ echo $queryup->address_2.PHP_EOL; } ?>
+<?php echo $queryup->city; ?> <?php if($queryup->province){ echo ",".$queryup->province; } ?> <?php echo $queryup->postal_code.PHP_EOL; ?>
 <?php echo $this->orders_model->phoneNoFormat($queryup->phone_number).PHP_EOL; ?>
 <?php echo $queryup->email.PHP_EOL; ?>
 ------------------------------------------------------------
@@ -73,16 +73,21 @@ if(!empty($instructionals)){
 
     } }
 ?>
+
+
 <?php if($queryup->inscription){ ?>
 INSCRIPTION:
+
 <?php echo '>'.$queryup->inscription.PHP_EOL; ?>
 <?php } ?>
+
 <?php if($queryup->special_instruction){ ?>
 SPECIAL INSTRUCTIONS:
 
 <?php echo $queryup->special_instruction.PHP_EOL; ?>
 <?php } ?>
-<?php echo $queryup->title ?>                                  <?php echo "$".$queryup->matrix_price.PHP_EOL; ?>
+
+<?php if($queryup->cake_id > 0){ echo $queryup->title; }else{ echo "Custom cake".PHP_EOL; } ?>         <?php if($queryup->cake_id > 0){ echo "$".$queryup->matrix_price.PHP_EOL; } ?>
 <?php if($queryup->magic_cake_id){ ?>
 MAGIC CAKE ID: 			<?php echo $queryup->magic_cake_id.PHP_EOL; ?>
 <?php } ?>

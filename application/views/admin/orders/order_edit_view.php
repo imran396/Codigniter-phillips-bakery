@@ -173,7 +173,8 @@
 </div>
 <hr class="separator" />
 <?php
-if($this->productions_model->deliveryInfo($queryup->order_id)){
+echo $queryup->delivery_zone_id;
+if($this->productions_model->deliveryInfo($queryup->order_id) && $queryup->delivery_zone_id > 0 ){
 $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id)
 ?>
 <div id="delivery-info">
@@ -500,6 +501,7 @@ if($uporder_id > 0){
 <hr class="separator"/>
 <div class="form-actions">
 
+    <input type="hidden" id="on_cake_image_needed" name="on_cake_image_needed" value="<?php $on_cake_image_needed = (isset($queryup->on_cake_image_needed))? $queryup->on_cake_image_needed:set_value('on_cake_image_needed'); ?>">
     <input type="hidden" id="order_id" name="order_id" value="<?php echo (isset($queryup->order_id))? $queryup->order_id:0; ?>">
     <button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok"><i></i><?php echo $this->lang->line('save_changes');?></button>
     <button type="reset" class="btn btn-icon btn-default glyphicons circle_remove"><i></i><?php echo $this->lang->line('cancel');?></button>

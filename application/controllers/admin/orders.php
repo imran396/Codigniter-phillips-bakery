@@ -447,7 +447,13 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         }
 
         if($orderID > 0 ){
-            $orders=$this->orders_model->order_update($data,$orderID);
+
+            $order_data = array(
+                'delivery_instruction' => $data['delivery_instruction'],
+                'inscription' => $data['inscription'],
+                'special_instruction' => $data['special_instruction']
+            );
+            $orders=$this->orders_model->order_update($order_data,$orderID);
             $this->session->set_flashdata('success_msg','Order has been updated successfully');
 
         }else{
@@ -525,6 +531,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
         $mailtouser = isset($_REQUEST['mailtouser']) ? $_REQUEST['mailtouser']:'';
         if($mailtouser == 1){
+
             $this->sendEmail($orders['order_code']);
         }
 
