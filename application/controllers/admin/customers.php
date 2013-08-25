@@ -93,8 +93,6 @@ class Customers extends Crud_Controller
 
                 try{
                     $data['revel_customer_id']= $this->revel_customer->create($data);
-                    $data['revel_customer_id'];
-
                 }catch (\Exception $e){
 
                     $data['revel_customer_id'] = null;

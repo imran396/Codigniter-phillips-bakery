@@ -13,6 +13,10 @@
 <div class="heading-buttons">
     <h3 class="glyphicons sort"><i></i><?php
         echo $this->lang->line('orders');?><?php  echo "- #".$queryup->order_code;  ?></h3>
+    <span style="float: right; display: block; margin-right:20px ">
+    <a href="<?php echo site_url('admin/orders/sendCustomerEmail/'. $queryup->order_code)?>"  class="btn btn-icon btn-primary glyphicons envelope"><i></i>Email</a>
+    <a target="_blank" href="<?php echo site_url('api/orders/productionInvoice/')?>?print=thermal&order_id=<?php echo $queryup->order_id ?>"  class="btn btn-icon btn-primary glyphicons print"><i></i>Print</a>
+</span>
     <div class="clearfix"></div>
 </div>
 <br/>
