@@ -43,7 +43,6 @@ class Orders extends Crud_Controller
     function getCheckBlackout(){
 
         $delivery_date = $this->input->post('delivery_date');
-
         $location_id = $this->input->post('location_id');
         $flavour_id = $this->input->post('flavour_id');
         $location_name = $this->productions_model->getLocations($location_id);
@@ -74,27 +73,32 @@ class Orders extends Crud_Controller
 
         $cake_id = $this->input->post('cake_id');
         $location_id = $this->input->post('location_id');
-        $blackout=$this->checkBlackOut($location_id);
-
-        if(empty($blackout)){}
+        $blackout=$this->orders_model->checkBlackOut($location_id);
 
         $row = $this->db->select('flavour_id,tiers')->where(array('cake_id' => $cake_id))->get('cakes')->row();
         $flavour_id = unserialize($row->flavour_id);
+
+        if(empty($blackout)){
+            $flavour = unserialize($row->flavour_id);
+        }else{
+            $flavour = array_diff($flavour_id , $blackout);
+        }
+
         $data ="";
         $data .= "<option value=''>---".$this->lang->line('select_one')."---</option>";
-        foreach($flavour_id as $flavourid):
+        foreach($flavour as $flavourid):
             $res = $this->cakes_model->getFlavourName($flavourid);
             $data .= "<option value='".$res->flavour_id."'>".$res->title."</option>";
 
         endforeach;
 
         $tiers ="";
-        $tier = unserialize($row->tiers);
+       /* $tier = unserialize($row->tiers);
         $tiers .= "<option value=''>---".$this->lang->line('select_one')."---</option>";
         foreach($tier as $tie):
             $tiers .= "<option value='".$tie."'>".$tie."</option>";
 
-        endforeach;
+        endforeach;*/
 
         echo $data."@a&".$tiers;
     }
@@ -107,13 +111,11 @@ class Orders extends Crud_Controller
 FROM price_matrix
 LEFT JOIN servings ON price_matrix.serving_id = servings.serving_id
 LEFT JOIN flavours ON price_matrix.flavour_id = flavours.flavour_id
-WHERE price_matrix.flavour_id = $flavour_id && price >0 && location_id=$location_id";
+WHERE price_matrix.flavour_id = $flavour_id && price > 0 && location_id=$location_id ";
         $matrix = $this->db->query($query)->result();
 
-        $query="SELECT fondant FROM flavours WHERE flavour_id = $flavour_id";
+        $query="SELECT fondant FROM flavours WHERE flavour_id = $flavour_id ";
         $fondants = $this->db->query($query)->row();
-
-
 
         $servings ="";
         $servings .= "<option value=''>---".$this->lang->line('select_one')."---</option>";
@@ -265,7 +267,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     }
 
-    public function edit($order_id){
+    public function edit_data($order_id){
 
         $this->data['queryup'] = $this->orders_model->getAdminOrder($order_id);
 
@@ -346,7 +348,20 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $this->data['customerresult'] = $this->cakes_model->getCustomers();
         $this->data['employeeresult'] = $this->cakes_model->getEmployees($group_id=0);
         $this->data['managerresult'] = $this->cakes_model->getEmployees($group_id=3);
-        $this->layout->view('admin/orders/order_view', $this->data);
+
+
+
+        $result = $this->productions_model->orderPrint($order_id);
+        $data['queryup']=$result->row();
+        $this->layout->view('admin/orders/order_edit_view', $this->data);
+
+    }
+    public function edit($order_id){
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->data['employeeresult'] = $this->cakes_model->getEmployees($group_id=0);
+        $result = $this->productions_model->orderPrint($order_id);
+        $this->data['queryup']=$result->row();
+        $this->layout->view('admin/orders/order_edit_view', $this->data);
 
     }
 
@@ -366,8 +381,11 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
     {
         $this->form_validation->set_rules('location_id', 'Locatuion name', 'required|trim|xss_clean');
         $this->form_validation->set_rules('flavour_id', 'Flavour name', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('price_matrix_id', 'Servings name', 'required|trim|xss_clean');
         $this->form_validation->set_rules('customer_id', 'Customer name', 'required|trim|xss_clean');
         $this->form_validation->set_rules('employee_id', 'Employee name', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('delivery_date', 'Delivery date', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('delivery_time', 'Delivery time', 'required|trim|xss_clean');
     }
 
 

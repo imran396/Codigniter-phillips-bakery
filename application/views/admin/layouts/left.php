@@ -9,7 +9,7 @@ $array = array('roles','controls','access_controls');
         </div>-->
         <ul>
             <li class="heading"><span><?php echo $this->lang->line('menu_level');?></span></li>
-            <li class="glyphicons home <?php echo (!empty($active) && $active == 'dashboard') ? 'active' : ''; ?>"><a href="/admin/orders/listing"><i></i><span><?php echo $this->lang->line('orders'); ?></span></a></li>
+            <li class="glyphicons home <?php echo (!empty($active) || $active == 'dashboard' || $active == 'orders' ) ? 'active' : ''; ?>"><a href="/admin/orders/listing"><i></i><span><?php echo $this->lang->line('orders'); ?></span></a></li>
 
             <li class="glyphicons cogwheels <?php echo (!empty($active) && ($active == 'productions' || $active == 'inproduction' ) ) ? 'active' : ''; ?>"><a href="/admin/productions"><i></i><span><?php echo $this->lang->line('production'); ?></span></a></li>
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'categories') ? 'active' : ''; ?>"><a href="/admin/categories/listing"><i></i><span><?php echo $this->lang->line('categories'); ?></span></a></li>

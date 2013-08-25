@@ -19,7 +19,7 @@
                     <?php
                     foreach($groupresult as $group):
                         ?>
-                        <option value="<?php echo site_url('admin/access_controls/access/'.$group->id)?>" <?php if($group_id == $group->id ){ echo "selected='selected'"; } ?> ><?php echo $group->name; ?></option>
+                        <option value="<?php echo site_url('admin/access_controls/access/'.$group->id)?>" <?php if($group_id == $group->id ){ echo "selected='selected'"; } ?> ><?php echo $group->description; ?></option>
                     <?php endforeach; ?>
 
                 </select>

@@ -25,6 +25,7 @@ class Orders_model extends Crud_Model
         if($category_id > 0){
             $this->db->where('category_id',$category_id);
         }
+        $this->db->order_by('title','asc');
         $res = $this->db->get();
         return $res->result();
     }

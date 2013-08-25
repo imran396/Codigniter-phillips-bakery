@@ -40,40 +40,24 @@ $(document).ready(function(){
 
     })
 
-    $('#datepicker').click(function(){
 
-        var delivery_date = $("#datepicker").val();
-        if($("#vaughan_location").is(':checked')){
-            var location_id = 0;
-        }else{
-            var location_id = $("#location_id").val();
-        }
-        var location_id = $("#location_id").val();
-        var flavour_id = $("#flavourid").val();
-        $.ajax({
-            url:"<?php echo site_url('admin/orders/getCheckBlackout')?>",
-            data:"location_id="+location_id+"&flavour_id="+flavour_id+'&delivery_date='+delivery_date,
-            type:"post",
-            success: function(val){
-                if(val !='success'){
-                    alert(val);
-                    $('#delivery_date').val('');
-                }
-            }
-        })
-
-    })
 
     $('#cake_id').change(function() {
 
         var cake_id =$("#cake_id").val();
+        var delivery_date = $("#datepicker").val();
         if(cake_id == ""){
             $('#hide_tiers').show();
             return false;
         }
+        if ($('#vaughan_location').is(':checked') == true) {
+            var location_id = 0;
+        }else{
+            var location_id = $("#location_id").val();
+        }
         $.ajax({
             url:"<?php echo site_url('admin/orders/getFlavour')?>",
-            data:"cake_id="+cake_id,
+            data:"cake_id="+cake_id+"&location_id="+location_id+"&delivery_date="+delivery_date,
             type:"post",
             success: function(val){
                 var n=val.split("@a&");
@@ -94,7 +78,12 @@ $(document).ready(function(){
 
         var flavour_id =$("#flavourid").val();
         var location_id =$("#location_id").val();
-
+        if(!location_id > 0 ){
+            $('#flavourid').val('');
+            alert ('Must be select location');
+            $('#s2id_flavourid a span').html('---Select one---');
+            return false;
+        }
         $.ajax({
             url:"<?php echo site_url('admin/orders/getServings')?>",
             data:"flavour_id="+flavour_id+"&location_id="+location_id,
@@ -287,7 +276,46 @@ $(document).ready(function(){
     });
 
 
-    $('#delivery_time').timepicker();
+    $('#delivery_time').timepicker({
+        onSelect: function() {
+            $(this).change();
+        }
+    });
+
+    $("#datepicker").datepicker({
+        onSelect: function() {
+            checkPickupBlackout();
+        }
+    });
+
+    function checkPickupBlackout(){
+
+        var delivery_date = $("#datepicker").val();
+        if(delivery_date){
+            var flavour_id = $("#flavourid").val();
+            if ($('#vaughan_location').is(':checked') == true) {
+                var location_id = 0;
+            }else{
+                var location_id = $("#location_id").val();
+            }
+
+            $.ajax({
+                url:"<?php echo site_url('admin/orders/getCheckBlackout')?>",
+                data:"location_id="+location_id+"&flavour_id="+flavour_id+'&delivery_date='+delivery_date,
+                type:"post",
+                success: function(val){
+                    if(val !='success'){
+                        alert(val);
+                        $('#datepicker').val('');
+                    }
+                }
+            })
+        }
+
+    }
+
+
+
 
 });
 </script>

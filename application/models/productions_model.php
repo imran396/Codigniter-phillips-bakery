@@ -256,7 +256,18 @@ class Productions_model extends Crud_Model
 
         }
 
+    }
 
+    public function getEmployee($user_id)
+    {
+        $res=$this->db->select('first_name,last_name,employee_id')->where(array('user_id'=>$user_id))->get('meta');
+        if($res ->num_rows() > 0 ){
+            $row = $res->row();
+            return $row->first_name.' '.$row->last_name.'('.$row->employee_id.')';
+        } else{
+            return false;
+
+        }
     }
 
     public function getAllLocations()
