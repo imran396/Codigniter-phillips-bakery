@@ -90,15 +90,27 @@ class Customers extends Crud_Controller
         if (empty($data['customer_id'])){
 
             if(isset($data)){
-                $data['revel_customer_id']= $this->revel_customer->create($data);
+                try{
+                    $data['revel_customer_id']= $this->revel_customer->create($data);
+                }catch (\Exception $e){
+                    $data['revel_customer_id'] = null;
+                }
+
                 $this->customers_model->create($data);
+            }
+          $this->session->set_flashdata('success_msg',"New customer has been added successfully");
+        } else {
+            $customerUpdatedData = $this->customers_model->getcustomers($data['customer_id']);
+            $data['revel_customer_id'] = $customerUpdatedData[0]->revel_customer_id;
+
+            try{
+                $this->revel_customer->update($data);
+            } catch (\Exception $e){
+
             }
 
 
-            $this->session->set_flashdata('success_msg',"New customer has been added successfully");
-        } else {
             $this->customers_model->save($data, $data['customer_id']);
-
             $this->session->set_flashdata('success_msg',"Customer has been updated successfully");
         }
 
