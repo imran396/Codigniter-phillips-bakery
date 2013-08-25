@@ -1,15 +1,4 @@
-<script>
-    window.print();
-    CheckWindowState();
 
-    function CheckWindowState()    {
-        if(document.readyState=="complete") {
-            window.close();
-        } else {
-            setTimeout("CheckWindowState()", 2000)
-        }
-    }
-</script>
 <style type="text/css">
     *
     {
@@ -30,7 +19,6 @@
     #wrapper
     {
         width:350px;
-        margin:0 auto;
     }
     hr
     {
@@ -302,11 +290,8 @@ if(!empty($locations)){
 <br />
 <p class="cen">Thank You</p>
 <?php if(!empty($locations)){ ?><p class="cen"><?php echo $locations[0]->email; ?></p><?php } ?>
-<br />
 <p class="cen">stphillipsbakery.com</p>
-<br />
-
-<p class="cen">
+    <p class="cen">
     <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
 </p>
 <br/>

@@ -173,7 +173,6 @@
 </div>
 <hr class="separator" />
 <?php
-echo $queryup->delivery_zone_id;
 if($this->productions_model->deliveryInfo($queryup->order_id) && $queryup->delivery_zone_id > 0 ){
 $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id)
 ?>
