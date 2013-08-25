@@ -504,7 +504,7 @@ if($uporder_id > 0){
 <hr class="separator"/>
 <div class="form-actions">
 
-    <input type="hidden" id="on_cake_image_needed" name="on_cake_image_needed" value="<?php $on_cake_image_needed = (isset($queryup->on_cake_image_needed))? $queryup->on_cake_image_needed:set_value('on_cake_image_needed'); ?>">
+    <input type="hidden" id="on_cake_image_needed" name="on_cake_image_needed" value="<?php echo $on_cake_image_needed = (isset($queryup->on_cake_image_needed))? $queryup->on_cake_image_needed:set_value('on_cake_image_needed'); ?>">
     <input type="hidden" id="order_id" name="order_id" value="<?php echo (isset($queryup->order_id))? $queryup->order_id:0; ?>">
     <input type="hidden" id="cake_email_photo" name="cake_email_photo" value="<?php echo (isset($queryup->cake_email_photo))? $queryup->cake_email_photo:0; ?>">
     <input type="hidden" id="instructional_email_photo" name="instructional_email_photo" value="<?php echo (isset($queryup->instructional_email_photo))? $queryup->instructional_email_photo:0; ?>">

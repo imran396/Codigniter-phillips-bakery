@@ -449,7 +449,6 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         if($orderID > 0 ){
 
             $order_data = array(
-                'delivery_instruction' => $data['delivery_instruction'],
                 'inscription' => $data['inscription'],
                 'special_instruction' => $data['special_instruction'],
                 'order_status' => $data['order_status']
@@ -518,17 +517,17 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
         }
 
-        if($orders['order_status'] == 301 &&  $data['on_cake_image_needed'] ==1 ){
+        if($orders['order_status'] == 301 &&  $data['on_cake_image_needed'] == 1 ){
 
             $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
             if($cake_email_photo == 1 ){
 
-                $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'),$this->lang->line('mailgun_cakeonimage_body'));
+               $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'),$this->lang->line('mailgun_cakeonimage_body'));
             }
             $instructional_email_photo = isset($_REQUEST['instructional_email_photo']) ? $_REQUEST['instructional_email_photo']:'';
             if($instructional_email_photo == 1){
 
-                $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'),$this->lang->line('mailgun_instructional_body'));
+               $this->mailgunSendMessage($orders,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'),$this->lang->line('mailgun_instructional_body'));
             }
         }
 
