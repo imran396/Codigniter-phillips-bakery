@@ -417,6 +417,10 @@
 
 </script>
 <style type="text/css">
+    #filterResult {
+
+        min-height: 670px!important;
+    }
     .container-new .tlogo {
         font-family: Helvetica, Arial, sans-serif;
         font-weight: bold;

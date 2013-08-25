@@ -167,7 +167,7 @@
                     <?php if($queryup->delivery_type){ ?>
                         <div class="line">
                             <?php if($queryup->delivery_type =='pickup'){ ?>
-                                <div class="title">Order Type</div>Pickup Location
+                                <div class="title">Order Type</div>Pickup
                             <?php }else{ ?>
                                 <div class="title">Order Type</div>Delivery
                             <?php } ?>

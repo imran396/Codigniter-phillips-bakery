@@ -21,7 +21,7 @@
             ?>
                 <tr>
                     <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
-                    <td><?php if($rows->delivery_type =='pickup'){ echo $this->productions_model->getLocations($rows->pickup_location_id); }else{ echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---s"; } ?></td>
+                    <td><?php if($rows->delivery_type =='pickup'){ echo $this->productions_model->getLocations($rows->pickup_location_id); }else{ echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---"; } ?></td>
                     <td><?php echo $rows->cake_name; ?></td>
                     <td class="center"><?php echo sentence_case($rows->delivery_type); ?></td>
                     <td class="center"><?php echo $this->productions_model->dateFormate($rows->delivery_date); ?></td>
@@ -71,6 +71,15 @@
     $(document).ready(function() {
 
         $('.order-sorting').dataTable( {
+            "bPaginate": true,
+            "iDisplayLength":10,
+            "sPaginationType": "full_numbers",
+            "oLanguage": {
+                "oPaginate": {
+                    "sNext": ">",
+                    "sPrevious": "<"
+                }
+            },
             "aaSorting": [[4,'asc']],
             "aoColumns": [
                 null,
@@ -84,13 +93,124 @@
                 null,
                 null
             ]
-            /*"aoColumnDefs": [
-             { "bSortable":false, "aTargets": [2,3] }
 
-             ]*/
         } );
+
+
 
     } );
 
 </script>
+
+<style type="text/css">
+    .container-new div.dataTables_info, .container-new div.dataTables_filter, .container-new div.dataTables_length, .container-new div.dataTables_paginate, .container-new .dataTables_wrapper .row-fluid:first-child, .container-new .dataTables_wrapper .row-fluid {
+        display: block!important;
+    }
+    .container-new div.dataTables_length ,.container-new div.dataTables_info, .container-new div.dataTables_filter {
+        display: none!important;
+    }
+
+
+    #DataTables_Table_0_paginate{
+        background: none !important;
+        font-family: Helvetica, Ariel, sans-serif;
+        font-weight: bold;
+    }
+    .paging_full_numbers label{ display: none!important;}
+    .paging_full_numbers a.first ,.paging_full_numbers a.last { display: none!important}
+    .paging_full_numbers .previous , .paging_full_numbers .next{
+        margin: 0 0 0 5px;
+        color: #717171;
+        text-shadow: #fff 0 1px 1px;
+        box-shadow: #b6b6b7 0 2px 1px;
+        -mox-box-shadow: #b6b6b7 0 2px 1px;
+        -webkit-box-shadow: #b6b6b7 0 2px 1px;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        padding: 0;
+        text-align: center;
+        color: #717171;
+        line-height: 22px;
+        width: 22px;
+        height: 22px;
+        display: inline-block;
+        background: #fff;
+        float: left;
+
+    }
+
+    .paging_full_numberse .previous:hover , .paging_full_numbers .next:hover{
+
+        background: none;
+        background-color: #72a139;
+        box-shadow: #f0f0f1 0 2px 0, #5c812e 0 0 2px inset;
+        -moz-box-shadow: #f0f0f1 0 2px 0, #5c812e 0 0 2px inset;
+        -webkit-box-shadow: #f0f0f1 0 2px 0, #5c812e 0 0 2px inset;
+        text-shadow: #679234 0 1px 0;
+        border-color: #72a139;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .paging_full_numbers span{
+        float: left;
+    }
+    .paging_full_numbers span a {
+        margin: 0 0 0 5px;
+        color: #717171;
+        text-shadow: #fff 0 1px 1px;
+        box-shadow: #b6b6b7 0 2px 1px;
+        -mox-box-shadow: #b6b6b7 0 2px 1px;
+        -webkit-box-shadow: #b6b6b7 0 2px 1px;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        padding: 0;
+        text-align: center;
+        color: #717171;
+        line-height: 22px;
+        width: 22px;
+        height: 22px;
+        float: none;
+        display: inline-block;
+        background: #fff;
+    }
+
+
+    .buttons {
+        position: absolute;
+        margin-top: 5px;
+        right: 9px;
+    }
+
+    .paging_full_numbers span a:hover{
+
+        background: none;
+        background-color: #72a139;
+        box-shadow: #f0f0f1 0 2px 0, #5c812e 0 0 2px inset;
+        -moz-box-shadow: #f0f0f1 0 2px 0, #5c812e 0 0 2px inset;
+        -webkit-box-shadow: #f0f0f1 0 2px 0, #5c812e 0 0 2px inset;
+        text-shadow: #679234 0 1px 0;
+        border-color: #72a139;
+        color: #fff;
+        cursor: pointer;
+    }
+    .paging_full_numbers span a.paginate_active{
+    background: none;
+    background-color: #72a139;
+    box-shadow: #f0f0f1 0 2px 0, #5c812e 0 0 2px inset;
+    -moz-box-shadow: #f0f0f1 0 2px 0, #5c812e 0 0 2px inset;
+    -webkit-box-shadow: #f0f0f1 0 2px 0, #5c812e 0 0 2px inset;
+    text-shadow: #679234 0 1px 0;
+    border-color: #72a139;
+    color: #fff;
+    }
+    .paging_full_numbers{
+        position: relative;
+        top: 60px;
+        display: block;
+    }
+
+</style>
 
