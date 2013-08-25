@@ -75,7 +75,6 @@ if(!empty($instructionals)){
 ?>
 <?php if($queryup->inscription){ ?>
 INSCRIPTION:
-
 <?php echo '>'.$queryup->inscription.PHP_EOL; ?>
 <?php } ?>
 <?php if($queryup->special_instruction){ ?>
@@ -83,7 +82,6 @@ SPECIAL INSTRUCTIONS:
 
 <?php echo $queryup->special_instruction.PHP_EOL; ?>
 <?php } ?>
---------------------------------------------------------------------
 <?php echo $queryup->title ?>                                  <?php echo "$".$queryup->matrix_price.PHP_EOL; ?>
 <?php if($queryup->magic_cake_id){ ?>
 MAGIC CAKE ID: 			<?php echo $queryup->magic_cake_id.PHP_EOL; ?>
