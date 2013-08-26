@@ -29,7 +29,7 @@
                     <td><?php if($rows->fondant >0){echo "Yes"; }else{ echo "No"; }; ?></td>
                     <td><?php echo $rows->flavour_name; ?></td>
                     <td><?php echo $rows->magic_cake_id; ?></td>
-                    <td class="<?php if($rows->order_status ==303){ echo 'red'; }else{ echo 'green'; } ?>"><?php echo $this->productions_model->currentProductionStatus($rows->order_status);?></td>
+                    <td class="<?php if($rows->order_status ==304){ echo 'red'; }else{ echo 'green'; } ?>"><?php echo $this->productions_model->currentProductionStatus($rows->order_status);?></td>
                 </tr>
                 <?php endforeach; ?>
 
