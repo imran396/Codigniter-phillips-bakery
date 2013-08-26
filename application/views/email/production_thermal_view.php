@@ -26,6 +26,7 @@
     .cen
     {
         text-align:center;
+        display: block;
     }
     #wrapper
     {
@@ -56,7 +57,7 @@
     }
 </style>
 <div id="wrapper">
-<h1><?php if( $queryup->order_status !=301 ){ echo strtoupper($queryup ->orderstatus); }else{ echo "ORDER"; } ?></h1>
+<h1 class="cen"><?php if( $queryup->order_status !=301 ){ echo strtoupper($queryup ->orderstatus); }else{ echo "ORDER"; } ?></h1>
 <br />
 
 <p class="cen"><?php echo $this->lang->line('global_email_subject'); ?></p>
@@ -302,7 +303,8 @@ if(!empty($locations)){
 <p class="cen">Thank You</p>
 <?php if(!empty($locations)){ ?><p class="cen"><?php echo $locations[0]->email; ?></p><?php } ?>
 <p class="cen">stphillipsbakery.com</p>
-    <p class="cen">
+</br>
+<p class="cen">
     <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
 </p>
 <br/>
