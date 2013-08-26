@@ -429,7 +429,13 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
         $data =$this->input->post();
         $orderID = $this->input->post('order_id');
-        $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
+        $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:0;
+        if($data['cake_id'] >0){
+            $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
+        }else{
+            $data['cake_id']=15;
+        }
+
         $data['customer_id']=isset($_REQUEST['customer_id'])? $_REQUEST['customer_id']:'';
         $data['employee_id']=isset($_REQUEST['employee_id'])? $_REQUEST['employee_id']:'';
         $data['manager_id']=isset($_REQUEST['manager_id'])? $_REQUEST['manager_id']:'';
