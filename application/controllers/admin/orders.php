@@ -55,11 +55,15 @@ class Orders extends Crud_Controller
             if (in_array($flavour_id, $blackout)) {
                 $locationid = $this->orders_model->getVaughanLocation();
                 if($location_id == 0){
+
                     $location_name = "Cake made in Vaughan".$this->productions_model->getLocations($locationid);
                 }
-
-
-              echo "Blacked Out ".$flavour_name." is not available for this date in this ". $location_name." location ";
+                if($delivery_date){
+                    $blackout_date = dateFormat($delivery_date);
+                }else{
+                    $blackout_date = date('d/m/Y');
+                }
+                echo $flavour_name." is blackout out on ". $blackout_date;
             }else{
               echo "success";
             }
