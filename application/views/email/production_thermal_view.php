@@ -1,6 +1,6 @@
 <script>
-    //window.print();
-    //CheckWindowState();
+    window.print();
+    CheckWindowState();
 
     function CheckWindowState()    {
         if(document.readyState=="complete") {
