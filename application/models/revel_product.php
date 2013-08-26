@@ -78,7 +78,7 @@ class Revel_Product extends Revel_Model
     public function update($data)
     {
         $productData = array(
-            'revel_id'                      => isset($data['revel_cake_id']) ? $data['revel_cake_id'] : null,
+
             'is_cold'                 => false,
             'sold_by_weight'          => false,
             'combo_product_1'         => null,
@@ -140,7 +140,7 @@ class Revel_Product extends Revel_Model
 
         );
 
-        $this->putResource('Product', $productData, true);
+        $this->putResource('Product', $productData, $data['revel_cake_id'],true);
         return basename($this->headers['location']);
     }
 

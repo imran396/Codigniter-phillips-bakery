@@ -294,10 +294,13 @@ class Orders extends API_Controller
                     'discount'=> $orders['discount_price'],
                     'subtotal'=> $orders['total_price']
                 );
+                var_dump($this->revel_order->update($RevelOrderData));
                 try{
                     $this->revel_order->update($RevelOrderData);
                 } catch (\Exception $e){
+                    echo $e->getMessage();
 
+                   die;
                 }
 
             }

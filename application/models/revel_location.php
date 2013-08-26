@@ -35,8 +35,7 @@ class Revel_Location extends Revel_Model
 
     public function update($data)
     {
-        $data = array(
-            'revel_id'                        => isset($data['revel_location_id']) ? $data['revel_location_id'] : null,
+        $Locationdata = array(
             'active'                          => true,
             'card_options_array'              => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9),
             'devices'                         => array(),
@@ -56,7 +55,7 @@ class Revel_Location extends Revel_Model
 
         );
 
-        $this->putResource('PosStation', $data, true);
+        $this->putResource('PosStation', $Locationdata, $data['revel_location_id'],true);
         return basename($this->headers['location']);
     }
 
