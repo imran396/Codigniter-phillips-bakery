@@ -30,7 +30,7 @@
     }
     #wrapper
     {
-        width:300px;
+        width:275px;
     }
     hr
     {
