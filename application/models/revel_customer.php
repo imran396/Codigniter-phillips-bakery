@@ -45,6 +45,7 @@ class Revel_Customer extends Revel_Model
             'created_date'     => date("Y-m-dTH:i:s"),
         );
 
+
         $this->postResource('Customer', $customerData, true);
         return basename($this->headers['location']);
     }
@@ -52,7 +53,7 @@ class Revel_Customer extends Revel_Model
     public function update($data)
     {
         $customerData = array(
-            'revel_id'      => isset($data['revel_customer_id']) ? $data['revel_customer_id'] : null,
+
             'cc_exp'           => null,
             'cc_number'        => null,
             'is_visitor'       => false,
@@ -74,12 +75,12 @@ class Revel_Customer extends Revel_Model
                     "street_2" => isset($data['address_2']) ? $data['address_2'] : null,
                 )
             ),
-            'state'            => isset($data['province']) ? $data['province'] : null,
+            'state'            =>   null,
             'zipcode'          => isset($data['postal_code']) ? $data['postal_code'] : null,
             'country'          => isset($data['country']) ? $data['country'] : null,
         );
 
-        $this->putResource('Customer', $customerData, true);
+        $this->putResource('Customer', $customerData,$data['revel_customer_id'],true);
         return basename($this->headers['location']);
     }
 }
