@@ -60,7 +60,7 @@
 <h1 class="cen"><?php if( $queryup->order_status !=301 ){ echo strtoupper($queryup ->orderstatus); }else{ echo "ORDER"; } ?></h1>
 <br />
 
-<p class="cen"><?php echo $this->lang->line('global_email_subject'); ?></p>
+<p class="cen" style="text-align:left"><?php echo $this->lang->line('global_email_subject'); ?></p>
 <hr />
 <?php
 $locations=$this->locations_model->getLocations($queryup->locationid);
