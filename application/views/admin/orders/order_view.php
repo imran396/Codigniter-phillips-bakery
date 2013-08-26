@@ -78,6 +78,7 @@ $(document).ready(function(){
 
         var flavour_id =$("#flavourid").val();
         var location_id =$("#location_id").val();
+        var delivery_date = $("#datepicker").val();
         if(!location_id > 0 ){
             $('#flavourid').val('');
             alert ('Must be select location');
@@ -86,10 +87,14 @@ $(document).ready(function(){
         }
         $.ajax({
             url:"<?php echo site_url('admin/orders/getServings')?>",
-            data:"flavour_id="+flavour_id+"&location_id="+location_id,
+            data:"flavour_id="+flavour_id+"&location_id="+location_id+"&delivery_date="+delivery_date,
             type:"post",
             success: function(val){
                 var n=val.split("@a&");
+                if(n[0] =='error'){
+                    alert(n[1]);
+                    $('#s2id_flavourid a span').html('---Select one---');
+                }
                 $('#servings').html(n[0]);
                 $('#size').html(n[1]);
                 $('#fondant').html(n[2]);

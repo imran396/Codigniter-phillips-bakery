@@ -63,7 +63,7 @@ class Orders extends Crud_Controller
                 }else{
                     $blackout_date = date('d/m/Y');
                 }
-                echo $flavour_name." is blackout out on ". $blackout_date;
+                echo $flavour_name." is blackout out on ".$blackout_date;
             }else{
               echo "success";
             }
@@ -154,9 +154,35 @@ WHERE price_matrix.flavour_id = $flavour_id && price > 0 && location_id=$locatio
 
         endforeach;*/
 
+        $delivery_date = $this->input->post('delivery_date');
+        $location_id = $this->input->post('location_id');
+        $flavour_id = $this->input->post('flavour_id');
 
-        echo $servings."@a&".$size."@a&".$fond;
+        $flavourfield['flavour_id']=$flavour_id;
+        $flavour_name = $this->orders_model->getGlobalName('flavours',$flavourfield);
+        $blackout=$this->orders_model->checkBlackOut($location_id,$delivery_date);
 
+        if(!empty($blackout)){
+
+            if (in_array($flavour_id, $blackout)) {
+                if($delivery_date){
+                    $blackout_date = dateFormat($delivery_date);
+                }else{
+                    $blackout_date = date('d/m/Y');
+                }
+                $blackoutmsg = $flavour_name." is blackout out on ".$blackout_date;
+            }else{
+                $blackoutmsg = "success";
+            }
+        }else{
+            $blackoutmsg =  "success";
+        }
+
+        if($blackoutmsg == 'success'){
+            echo $servings."@a&".$size."@a&".$fond;
+        }else{
+            echo 'error'."@a&".$blackoutmsg;
+        }
 
     }
 
