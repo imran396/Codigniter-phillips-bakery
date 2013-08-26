@@ -27,13 +27,11 @@ class Customers extends API_Controller
                 try{
                     $data['revel_customer_id']= $this->revel_customer->create($data);
                 }catch (\Exception $e){
-                    $data['revel_customer_id'] = null;
+                    $data['revel_customer_id'] = 0;
                 }
-
             }
 
             $customer_id = $this->customers_model->create($data);
-
             $data = array(
                 array(
                     'customer_id' => $customer_id
@@ -56,7 +54,6 @@ class Customers extends API_Controller
             }
 
            $this->sendOutput($data);
-
     }
 
     public function update(){
