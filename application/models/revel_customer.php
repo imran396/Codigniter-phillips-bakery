@@ -30,6 +30,12 @@ class Revel_Customer extends Revel_Model
             'email'            => isset($data['email']) ? $data['email'] : null,
             'city'             => isset($data['city']) ? $data['city'] : null,
             'address'          => isset($data['address_1']) ? $data['address_1'] : null,
+            'addresses'        => array(
+                array(
+                    "street_1" => isset($data['address_1']) ? $data['address_1'] : null,
+                    "street_2" => isset($data['address_2']) ? $data['address_2'] : null,
+                )
+            ),
             'state'            => null,
             'zipcode'          => isset($data['postal_code']) ? $data['postal_code'] : null,
             'country'          => isset($data['country']) ? $data['country'] : null,
