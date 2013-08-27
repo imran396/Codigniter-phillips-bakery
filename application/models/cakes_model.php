@@ -198,15 +198,16 @@ class Cakes_model extends CI_Model
 
         $limit      = ($page - 1) * $per_page;
         $base_url   = site_url('admin/cakes/listing');
-        $total_rows = $this->db->count_all_results('cakes');
+        $total_rows = $this->db->where('cake_id !=',15)->count_all_results('cakes');
         $paging     = paginate($base_url, $total_rows, $start, $per_page);
 
         $this->db->select('cakes.* , categories.title AS categories_name , flavours.title AS flavours_name');
         $this->db->from('cakes');
         $this->db->join('categories', 'categories.category_id = cakes.category_id', 'left');
         $this->db->join('flavours', 'flavours.flavour_id = cakes.flavour_id', 'left');
+        $this->db->where('cake_id !=',15);
         $this->db->limit($per_page, $limit);
-        $this->db->order_by("cakes.ordering", "asc");
+        $this->db->order_by("cakes.title", "asc");
 
         $query = $this->db->get();
 
