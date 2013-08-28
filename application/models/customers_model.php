@@ -14,6 +14,7 @@ class Customers_model extends Crud_Model
 
     public function create($data)
     {
+        $data['insert_date']=time();
         $id = $this->insert($data);
         if(!empty($data['notes'])){
             $this->db->set(array('customer_id'=>$id,'notes'=>$data['notes'],'create_date'=>time()))->insert('customer_notes');
@@ -23,7 +24,7 @@ class Customers_model extends Crud_Model
 
     public function save($data, $id)
     {
-
+        $data['update_date']=time();
         $this->update($data, $id);
         if(!empty($data['notes'])){
         $this->db->set(array('customer_id'=>$id,'notes'=>$data['notes'],'create_date'=>time()))->insert('customer_notes');
@@ -37,15 +38,14 @@ class Customers_model extends Crud_Model
 
     public function delete($id)
     {
-
-
-        if(!$this->deleteDataExisting($id) > 0){
-            $this->remove($id);
+        //if(!$this->deleteDataExisting($id) > 0){
+            //$this->remove($id);
+            $this->db->set(array('is_deleted'=>1,'update_date'=>time()))->where('customer_id',$id)->update('customers');
             $this->session->set_flashdata('delete_msg',"Customer has been deleted successfully");
-        }else{
+        //}else{
 
-            $this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
-        }
+            //$this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
+        //}
 
     }
 
@@ -82,6 +82,7 @@ class Customers_model extends Crud_Model
         $paging = paginate($base_url, $total_rows,$start,$per_page);
         $this->db->select('customers.*');
         $this->db->from('customers');
+        $this->db->where('is_deleted !=',1);
         $this->db->limit($per_page,$limit);
         $this->db->order_by("customers.first_name", "asc");
         $query =$this->db->get();
@@ -129,7 +130,7 @@ class Customers_model extends Crud_Model
 
     public function getAll()
     {
-        $data = $this->db->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('first_name','asc')->get('customers')->result_array();
+        $data = $this->db->where('is_deleted !=',1)->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('first_name','asc')->get('customers')->result_array();
         foreach($data as $key => $val){
               $data[$key]['customer_id'] = (int) $data[$key]['customer_id'];
         }
@@ -174,9 +175,9 @@ class Customers_model extends Crud_Model
         $search=strtolower($search);
         $query="SELECT customer_id,first_name,last_name,phone_number,status
                 FROM `customers`
-                WHERE(`customer_id` > 0 AND  LOWER(`first_name`) LIKE '%$search%')
-                || ( `customer_id` > 0 AND LOWER(`last_name`) = '%$search%')
-                || (`customer_id` > 0 AND `phone_number` = '$search')";
+                WHERE(is_deleted !=1 AND  LOWER(`first_name`) LIKE '%$search%')
+                || (is_deleted !=1 AND LOWER(`last_name`) = '%$search%')
+                || (is_deleted !=1 AND `phone_number` = '$search')";
 
         $per_page=10;
         $page   = intval($start);
@@ -195,10 +196,8 @@ class Customers_model extends Crud_Model
 
     function orderList($customer_id,$order_status){
 
-        $result = $this->db->where(array('customer_id'=>$customer_id,'order_status'=>$order_status))->order_by('delivery_date','desc')->get('orders');
-
+        $result = $this->db->where(array('customer_id'=>$customer_id,'order_status'=>$order_status,'is_deleted !='=>1))->order_by('delivery_date','desc')->get('orders');
         if($result->num_rows() > 0){
-
             $data="";
             $data .="<table class='table table-bordered table-primary' >";
             $data .="<thead><tr><th>Order Code</th><th>Delivery Date & Time</th><th>Delivery Type</th></tr></thead>";

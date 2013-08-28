@@ -89,11 +89,14 @@ class Orders_model extends Crud_Model
 
         $order_date = $data['order_date'];
         $customer_id = $data['customer_id'];
+
         $data['delivery_time']=timeFormatAmPm($data['delivery_time']);
         $orderDbID = $this->checkDuplicateInsert($customer_id , $order_date);
         if($orderDbID > 0){
+            $data['update_date']=time();
             $order_id = $this->update($data,$orderDbID);
         }else{
+            $data['insert_date']=time();
             $order_id = $this->insert($data);
             $order_code=(100000+$order_id);
             $this->db->set(array('order_code'=>$order_code))->where('order_id',$order_id)->update('orders');
@@ -117,7 +120,9 @@ class Orders_model extends Crud_Model
     }
 
     public function order_update($data,$order_id){
-            $order_id = $this->update($data,$order_id);
+
+        $data['update_date']=time();
+        $order_id = $this->update($data,$order_id);
             $dbdata =$this->getOrder($order_id);
             $order['order_id']= $dbdata->order_id;
             $order['order_code']=  $dbdata->order_code;
@@ -296,13 +301,13 @@ class Orders_model extends Crud_Model
 
     function delete($order_id){
 
-        $count = $this->db->where(array('order_status'=>304,'order_id'=>$order_id))->get('orders')->num_rows();
+        $count = $this->db->where(array('order_status'=>305,'order_id'=>$order_id))->get('orders')->num_rows();
         if($count > 0){
-        $this->fileDelete($order_id);
-        $this->fileInstructionalDelete($order_id);
+        //$this->fileDelete($order_id);
+        //$this->fileInstructionalDelete($order_id);
 
-        $this->db->where('order_id',$order_id)->delete('orders');
-        $this->db->where('order_id',$order_id)->delete('order_notes');
+        $this->db->set(array('is_deleted'=>1,'update_date'=>time()))->where('order_id',$order_id)->update('orders');
+        //$this->db->where('order_id',$order_id)->delete('order_notes');
             $this->session->set_flashdata('delete_msg',"Orders has been deleted successfully");
         }else{
             $this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
@@ -414,7 +419,7 @@ class Orders_model extends Crud_Model
 
         $base_url = site_url('admin/orders/listing/');
 
-        $total_rows = $this->db->count_all_results('orders');
+        $total_rows = $this->db->where('orders.is_deleted !=',1)->count_all_results('orders');
         $paging = production_paginate($base_url, $total_rows,$start,$per_page);
         $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name,customers.first_name,customers.last_name,order_status.description AS orderstatus');
         $this->db->from('orders');
@@ -423,6 +428,7 @@ class Orders_model extends Crud_Model
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
         $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
         $this->db->limit($per_page,$limit);
+        $this->db->where('orders.is_deleted !=',1);
         //$this->db->where('delivery_date >=',$curdate);
         $this->db->order_by("orders.order_code", "desc");
         //$this->db->order_by("orders.order_status", "desc");
@@ -438,12 +444,12 @@ class Orders_model extends Crud_Model
                 FROM `orders`
                 LEFT JOIN customers ON (customers.customer_id = orders.customer_id)
                 LEFT JOIN order_status ON (order_status.production_status_code = orders.order_status)
-                WHERE(`order_id` > 0 AND  `order_code` = '$search')
-                || (`order_id` > 0 AND  `order_id` = '$search')
-                || (`order_id` > 0 AND  LOWER(customers.first_name) LIKE '%$search')
-                || (`order_id` > 0 AND LOWER(customers.last_name) LIKE '%$search')
-                || (`order_id` > 0 AND LOWER(order_status.description) LIKE '%$search')
-                || (`order_id` > 0 AND customers.phone_number = '$search') ORDER BY orders.order_code DESC ";
+                WHERE(orders.is_deleted != 1 AND  `order_code` = '$search')
+                || (orders.is_deleted != 1 AND  `order_id` = '$search')
+                || (orders.is_deleted != 1 AND  LOWER(customers.first_name) LIKE '%$search')
+                || (orders.is_deleted != 1 AND LOWER(customers.last_name) LIKE '%$search')
+                || (orders.is_deleted != 1 AND LOWER(order_status.description) LIKE '%$search')
+                || (orders.is_deleted != 1 AND customers.phone_number = '$search') ORDER BY orders.order_code DESC ";
 
         // || (`order_id` > 0 AND LOWER(`delivery_date`) >= '$search')
         $per_page=10;
@@ -473,9 +479,8 @@ class Orders_model extends Crud_Model
               FROM orders As O
               LEFT JOIN instructional_photo AS I
                 ON ( I.instructional_order_id = O.order_id )
-
               LEFT JOIN order_delivery AS OD
-                ON ( OD.delivery_order_id = O.order_id )
+                ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1
 
               GROUP BY O.order_id";
 
