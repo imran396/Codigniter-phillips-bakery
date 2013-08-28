@@ -356,7 +356,7 @@ class Cakes_model extends CI_Model
 
     }
 
-    public function getAll_(){
+    public function getAll(){
         $imageurlprefix = base_url().'assets';
         $sql = "SELECT
                 C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.tiers,
