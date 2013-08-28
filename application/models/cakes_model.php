@@ -459,10 +459,10 @@ GROUP BY C.title";
         }
 
         $deleted = $this->db->where(array('is_deleted'=> 1,'update_date >'=> $lastdate))->select('cake_id')->order_by('cake_id','asc')->get('cakes')->result();
-
         foreach($deleted as  $val){
             $delete[] =  (int)$val->cake_id;
         }
+        $delete = isset($delete)?$delete:'';
         return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>$delete);
 
     }
