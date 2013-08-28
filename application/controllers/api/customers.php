@@ -13,7 +13,13 @@ class Customers extends API_Controller
 
     public function index()
     {
-        $data = $this->customers_model->getAll();
+
+        $lastdate=$this->input->get('lastupdate');
+        if(empty($lastdate)){
+            $data = $this->customers_model->getAll();
+        }else{
+            $data = $this->customers_model->getLastUpdateAll($lastdate);
+        }
         $this->sendOutput($data);
     }
 

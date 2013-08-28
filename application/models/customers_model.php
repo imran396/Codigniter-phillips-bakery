@@ -160,6 +160,26 @@ class Customers_model extends Crud_Model
         }
     }
 
+    function getLastUpdateAll($lastdate){
+
+        $data = $this->db->where(array('is_deleted !='=>1,'insert_date >'=> $lastdate))->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('first_name','asc')->get('customers')->result_array();
+        foreach($data as $key => $val){
+            $inserted[$key]['customer_id'] = (int) $data[$key]['customer_id'];
+        }
+
+        $data = $this->db->where(array('is_deleted !='=>1,'update_date >'=> $lastdate))->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('first_name','asc')->get('customers')->result_array();
+        foreach($data as $key => $val){
+            $updated[$key]['customer_id'] = (int) $data[$key]['customer_id'];
+        }
+
+        $data = $this->db->where(array('is_deleted !='=>1,'insert_date >'=> $lastdate))->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('first_name','asc')->get('customers')->result_array();
+        foreach($data as $key => $val){
+            $deleted[$key]['customer_id'] = (int) $data[$key]['customer_id'];
+        }
+        return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>$deleted);
+
+    }
+
     private function getSearchField($data){
         foreach ($data as $key => $value) {
             if (array_search($key, $this->fields) === false) {
