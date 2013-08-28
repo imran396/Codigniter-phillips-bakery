@@ -174,11 +174,12 @@ class Customers_model extends Crud_Model
             $updated[$key]['customer_id'] = (int) $updated[$key]['customer_id'];
         }
 
-        $deleted = $this->db->where(array('is_deleted'=> 1,'update_date >'=> $lastdate))->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('first_name','asc')->get('customers')->result_array();
-        foreach($deleted as $key => $val){
-            $deleted[$key]['customer_id'] = (int) $deleted[$key]['customer_id'];
+        $deleted = $this->db->where(array('is_deleted'=> 1,'update_date >'=> $lastdate))->select('customer_id')->order_by('first_name','asc')->get('customers')->result();
+
+        foreach($deleted as  $val){
+            $delete[] =  (int)$val->customer_id;
         }
-        return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>$deleted);
+        return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>$delete);
 
     }
 
