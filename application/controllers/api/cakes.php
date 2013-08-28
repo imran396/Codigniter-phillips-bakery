@@ -12,12 +12,12 @@ class Cakes extends API_Controller
 
     public function index()
     {
-        $lastdate=$this->input->get('lastupdate');
-        if(empty($lastdate)){
+        //$lastdate=$this->input->get('lastupdate');
+        //if(empty($lastdate)){
             $data = $this->cakes_model->getAll();
-        }else{
-            $data = $this->cakes_model->getLastUpdateAll($lastdate);
-        }
+        //}else{
+            //$data = $this->cakes_model->getLastUpdateAll($lastdate);
+        //}
         $this->sendOutput($data);
     }
 }
