@@ -462,8 +462,8 @@ GROUP BY C.title";
         foreach($deleted as  $val){
             $delete[] =  (int)$val->cake_id;
         }
-        $delete = isset($delete)?$delete:'';
-        return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>[]);
+        $delete = isset($delete) ? $delete:[];
+        return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>$delete);
 
     }
 
