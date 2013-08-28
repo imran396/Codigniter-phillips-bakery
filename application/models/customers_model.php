@@ -78,7 +78,7 @@ class Customers_model extends Crud_Model
         if($page<=0)  $page  = 1;
         $limit=($page-1)*$per_page;
         $base_url = site_url('admin/customers/listing');
-        $total_rows = $this->db->count_all_results('customers');
+        $total_rows = $this->db->where('is_deleted !=',1)->count_all_results('customers');
         $paging = paginate($base_url, $total_rows,$start,$per_page);
         $this->db->select('customers.*');
         $this->db->from('customers');
