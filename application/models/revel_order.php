@@ -179,7 +179,7 @@ class Revel_Order extends Revel_Model
         "web_order"=> false
    );
 
-      return $this->putResource('Order', $revelData, $data['revel_order_id'], true);
+      $this->putResource('Order', $revelData, $data['revel_order_id'], true);
 
 
     }

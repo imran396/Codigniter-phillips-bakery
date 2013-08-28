@@ -394,6 +394,80 @@ class Cakes_model extends CI_Model
 
     }
 
+    function getLastUpdateAll($selectdate){
+
+
+        $imageurlprefix = base_url().'assets';
+        $lastdate=strtotime($selectdate);
+         $sql = "SELECT
+C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.tiers,
+GROUP_CONCAT(G.image ORDER BY G.ordering ASC SEPARATOR ',') as gallery_images
+FROM cakes As C
+LEFT JOIN cake_gallery AS G
+ON ( C.cake_id = G.cake_id )
+WHERE C.status =1 && is_deleted != 1 && insert_date > $lastdate
+GROUP BY C.title";
+
+        $inserted = $this->db->query($sql)->result_array();
+
+        foreach($inserted as $key=>$row){
+            $inserted[$key]['cake_id'] = (int) $inserted[$key]['cake_id'];
+            $inserted[$key]['category_id'] = (int) $inserted[$key]['category_id'];
+            $inserted[$key]['flavour_id'] =  !empty($row['flavour_id']) ? unserialize($row['flavour_id']):array();
+            $inserted[$key]['image'] = !empty($inserted[$key]['image']) ? base_url().$inserted[$key]['image'] : "";
+            $inserted[$key]['tiers'] = array('1');
+            $inserted[$key]['gallery_images'] = explode(',', $row['gallery_images']);
+            $inserted[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$inserted[$key]['gallery_images']);
+
+            if(!empty($result[$key]['gallery_images'])){
+                $inserted[$key]['gallery_images'] = explode(',', $row['gallery_images']);
+                $inserted[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$inserted[$key]['gallery_images']);
+            }else{
+                $result[$key]['gallery_images'] = array();
+            }
+
+        }
+
+        $update = "SELECT
+C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.tiers,
+GROUP_CONCAT(G.image ORDER BY G.ordering ASC SEPARATOR ',') as gallery_images
+FROM cakes As C
+LEFT JOIN cake_gallery AS G
+ON ( C.cake_id = G.cake_id )
+WHERE C.status =1 && is_deleted != 1 && update_date > $lastdate
+GROUP BY C.title";
+
+        $updated = $this->db->query($update)->result_array();
+
+        foreach($updated as $key=>$row){
+            $updated[$key]['cake_id'] = (int) $updated[$key]['cake_id'];
+            $updated[$key]['category_id'] = (int) $updated[$key]['category_id'];
+            $updated[$key]['flavour_id'] =  !empty($row['flavour_id']) ? unserialize($row['flavour_id']):array();
+            $updated[$key]['image'] = !empty($updated[$key]['image']) ? base_url().$updated[$key]['image'] : "";
+            $updated[$key]['tiers'] = array('1');
+
+            $updated[$key]['gallery_images'] = explode(',', $row['gallery_images']);
+            $updated[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$updated[$key]['gallery_images']);
+
+            if(!empty($result[$key]['gallery_images'])){
+                $updated[$key]['gallery_images'] = explode(',', $row['gallery_images']);
+                $updated[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$updated[$key]['gallery_images']);
+            }else{
+                $result[$key]['gallery_images'] = array();
+            }
+
+        }
+
+        $deleted = $this->db->where(array('is_deleted'=> 1,'update_date >'=> $lastdate))->select('cake_id')->order_by('cake_id','asc')->get('cakes')->result();
+
+        foreach($deleted as  $val){
+            $delete[] =  (int)$val->cake_id;
+        }
+        return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>$delete);
+
+    }
+
+
     public function findAll()
     {
         return $this->db->select('*')->get('cakes')->result_array();
