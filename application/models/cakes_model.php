@@ -463,7 +463,7 @@ GROUP BY C.title";
             $delete[] =  (int)$val->cake_id;
         }
         $delete = isset($delete)?$delete:'';
-        return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>$delete);
+        return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>[]);
 
     }
 
