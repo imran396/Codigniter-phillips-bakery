@@ -588,7 +588,7 @@ class Orders_model extends Crud_Model
         if($update){
             $updated = $this->db->query($update)->result_array();
 
-            foreach($inserted  as $key => $val){
+            foreach($updated  as $key => $val){
 
                 $updated[$key]['order_id'] = (int) $updated[$key]['order_id'];
                 $updated[$key]['order_code'] = (int) $updated[$key]['order_code'];
@@ -606,7 +606,7 @@ class Orders_model extends Crud_Model
                 $updated[$key]['on_cake_image'] = $val['on_cake_image'];
                 $updated[$key]['on_cake_image'] = str_replace('assets',$imageurlprefix,$updated[$key]['on_cake_image']);
                 if(!empty($updated[$key]['instructional_photo'])){
-                    //$updated[$key]['instructional_photo'] = explode(',', $val['instructional_photo']);
+                    $updated[$key]['instructional_photo'] = explode(',', $val['instructional_photo']);
                     $updated[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$updated[$key]['instructional_photo']);
                 }else{
                     $updated[$key]['instructional_photo'] = array();
