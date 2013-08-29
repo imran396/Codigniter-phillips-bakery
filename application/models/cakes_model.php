@@ -415,13 +415,13 @@ GROUP_CONCAT(G.image ORDER BY G.ordering ASC SEPARATOR ',') as gallery_images
 FROM cakes As C
 LEFT JOIN cake_gallery AS G
 ON ( C.cake_id = G.cake_id )
-WHERE C.status =1 && is_deleted != 1 && update_date > $lastdate
+WHERE C.status =1 && is_deleted != 1  && insert_date < $lastdate && update_date > $lastdate
 GROUP BY C.title";
 
         $updated = $this->db->query($update)->result_array();
 
         foreach($updated as $key=>$row){
-            $updated[$key]['cake_id'] = (int) $updated[$key]['cake_id'];
+            $updated[$key]['cake_id'] =  (int) $updated[$key]['cake_id'];
             $updated[$key]['category_id'] = (int) $updated[$key]['category_id'];
             $updated[$key]['flavour_id'] =  !empty($row['flavour_id']) ? unserialize($row['flavour_id']):array();
             $updated[$key]['image'] = !empty($updated[$key]['image']) ? base_url().$updated[$key]['image'] : "";
@@ -439,7 +439,7 @@ GROUP BY C.title";
 
         }
 
-        $deleted = $this->db->where(array('is_deleted'=> 1,'update_date >'=> $lastdate))->select('cake_id')->order_by('cake_id','asc')->get('cakes')->result();
+        $deleted = $this->db->where(array('is_deleted'=> 1,'insert_date <'=> $lastdate ,'update_date >'=> $lastdate))->select('cake_id')->order_by('cake_id','asc')->get('cakes')->result();
         foreach($deleted as  $val){
             $delete[] =  (int)$val->cake_id;
         }

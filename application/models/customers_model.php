@@ -169,12 +169,12 @@ class Customers_model extends Crud_Model
             $inserted[$key]['customer_id'] = (int) $inserted[$key]['customer_id'];
         }
 
-        $updated = $this->db->where(array('is_deleted !=' =>1,'update_date >'=> $lastdate))->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('first_name','asc')->get('customers')->result_array();
+        $updated = $this->db->where(array('is_deleted !=' =>1,'insert_date < '=> $lastdate ,'update_date >'=> $lastdate))->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('first_name','asc')->get('customers')->result_array();
         foreach($updated as $key => $val){
             $updated[$key]['customer_id'] = (int) $updated[$key]['customer_id'];
         }
 
-        $deleted = $this->db->where(array('is_deleted'=> 1,'update_date >'=> $lastdate))->select('customer_id')->order_by('first_name','asc')->get('customers')->result();
+        $deleted = $this->db->where(array('is_deleted'=> 1,'insert_date < '=> $lastdate , 'update_date >'=> $lastdate))->select('customer_id')->order_by('first_name','asc')->get('customers')->result();
 
         foreach($deleted as  $val){
             $delete[] =  (int)$val->customer_id;

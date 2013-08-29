@@ -581,7 +581,7 @@ class Orders_model extends Crud_Model
               LEFT JOIN instructional_photo AS I
                 ON ( I.instructional_order_id = O.order_id )
               LEFT JOIN order_delivery AS OD
-                ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1 && O.update_date > $lastdate
+                ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1 && O.insert_date < $lastdate && O.update_date > $lastdate
               GROUP BY O.order_id";
 
 
@@ -616,7 +616,7 @@ class Orders_model extends Crud_Model
         }
 
 
-        $deleted = $this->db->where(array('is_deleted'=> 1,'update_date >'=> $lastdate))->select('order_id')->order_by('order_id','asc')->get('orders')->result();
+        $deleted = $this->db->where(array('is_deleted'=> 1,'insert_date <'=> $lastdate ,'update_date >'=> $lastdate))->select('order_id')->order_by('order_id','asc')->get('orders')->result();
         foreach($deleted as  $val){
             $delete[] =  (int)$val->order_id;
         }
@@ -646,10 +646,6 @@ class Orders_model extends Crud_Model
 
             $where .=" AND `customer_id` =". $customer_id;
         }
-
-
-
-
 
         $res = "SELECT
               O.*,
