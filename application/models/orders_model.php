@@ -522,6 +522,109 @@ class Orders_model extends Crud_Model
 
     }
 
+    function getLastUpdateAll($selectdate){
+
+        $lastdate=strtotime($selectdate);
+
+        $imageurlprefix = base_url().'assets';
+
+        $insert = "SELECT
+              O.*,
+              OD.*,
+              GROUP_CONCAT(I.instructional_photo ORDER BY I.instructional_photo_id 	 ASC SEPARATOR ',') as instructional_photo
+              FROM orders As O
+              LEFT JOIN instructional_photo AS I
+                ON ( I.instructional_order_id = O.order_id )
+              LEFT JOIN order_delivery AS OD
+                ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1 && O.insert_date > $lastdate
+              GROUP BY O.order_id";
+
+
+        if($insert){
+            $inserted = $this->db->query($insert)->result_array();
+
+            foreach($inserted  as $key => $val){
+
+                $inserted[$key]['order_id'] = (int) $result[$key]['order_id'];
+                $inserted[$key]['order_code'] = (int) $result[$key]['order_code'];
+                $inserted[$key]['cake_id'] = (int) $result[$key]['cake_id'];
+                $inserted[$key]['customer_id'] = (int) $result[$key]['customer_id'];
+                $inserted[$key]['employee_id'] = (int) $result[$key]['employee_id'];
+                $inserted[$key]['manager_id'] = (int) $result[$key]['manager_id'];
+                $inserted[$key]['location_id'] = (int) $result[$key]['location_id'];
+                $inserted[$key]['pickup_location_id'] = (int) $result[$key]['pickup_location_id'];
+                $inserted[$key]['delivery_zone_id'] = (int) $result[$key]['delivery_zone_id'];
+                $inserted[$key]['flavour_id'] = (int) $result[$key]['flavour_id'];
+                $inserted[$key]['price_matrix_id'] = (int) $result[$key]['price_matrix_id'];
+                $inserted[$key]['delivery_order_id'] = (int) $result[$key]['delivery_order_id'];
+                $inserted[$key]['order_date'] = (int) $result[$key]['order_date'];
+                $inserted[$key]['on_cake_image'] = $val['on_cake_image'];
+                $inserted[$key]['on_cake_image'] = str_replace('assets',$imageurlprefix,$result[$key]['on_cake_image']);
+                if(!empty($inserted[$key]['instructional_photo'])){
+                    $inserted[$key]['instructional_photo'] = explode(',', $val['instructional_photo']);
+                    $inserted[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$result[$key]['instructional_photo']);
+                }else{
+                    $inserted[$key]['instructional_photo'] = array();
+                }
+
+            }
+
+
+        }
+
+
+        $update = "SELECT
+              O.*,
+              OD.*,
+              GROUP_CONCAT(I.instructional_photo ORDER BY I.instructional_photo_id 	 ASC SEPARATOR ',') as instructional_photo
+              FROM orders As O
+              LEFT JOIN instructional_photo AS I
+                ON ( I.instructional_order_id = O.order_id )
+              LEFT JOIN order_delivery AS OD
+                ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1 && O.update_date > $lastdate
+              GROUP BY O.order_id";
+
+
+        if($update){
+            $updated = $this->db->query($update)->result_array();
+
+            foreach($inserted  as $key => $val){
+
+                $updated[$key]['order_id'] = (int) $result[$key]['order_id'];
+                $updated[$key]['order_code'] = (int) $result[$key]['order_code'];
+                $updated[$key]['cake_id'] = (int) $result[$key]['cake_id'];
+                $updated[$key]['customer_id'] = (int) $result[$key]['customer_id'];
+                $updated[$key]['employee_id'] = (int) $result[$key]['employee_id'];
+                $updated[$key]['manager_id'] = (int) $result[$key]['manager_id'];
+                $updated[$key]['location_id'] = (int) $result[$key]['location_id'];
+                $updated[$key]['pickup_location_id'] = (int) $result[$key]['pickup_location_id'];
+                $updated[$key]['delivery_zone_id'] = (int) $result[$key]['delivery_zone_id'];
+                $updated[$key]['flavour_id'] = (int) $result[$key]['flavour_id'];
+                $updated[$key]['price_matrix_id'] = (int) $result[$key]['price_matrix_id'];
+                $updated[$key]['delivery_order_id'] = (int) $result[$key]['delivery_order_id'];
+                $updated[$key]['order_date'] = (int) $result[$key]['order_date'];
+                $updated[$key]['on_cake_image'] = $val['on_cake_image'];
+                $updated[$key]['on_cake_image'] = str_replace('assets',$imageurlprefix,$result[$key]['on_cake_image']);
+                if(!empty($updated[$key]['instructional_photo'])){
+                    $updated[$key]['instructional_photo'] = explode(',', $val['instructional_photo']);
+                    $updated[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$result[$key]['instructional_photo']);
+                }else{
+                    $updated[$key]['instructional_photo'] = array();
+                }
+
+            }
+        }
+
+
+        $deleted = $this->db->where(array('is_deleted'=> 1,'update_date >'=> $lastdate))->select('order_id')->order_by('order_id','asc')->get('orders')->result();
+        foreach($deleted as  $val){
+            $delete[] =  (int)$val->order_id;
+        }
+        $delete = isset($delete) ? $delete:array();
+
+        return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>$delete);
+    }
+
     public function doSearch($data){
 
         $imageurlprefix = base_url().'assets';

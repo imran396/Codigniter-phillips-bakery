@@ -20,7 +20,13 @@ class Orders extends API_Controller
 
     public function index()
     {
-        $data = $this->orders_model->getAll();
+        $lastdate=$this->input->get('lastupdate');
+
+        if(empty($lastdate)){
+            $data = $this->orders_model->getAll();
+        }else{
+            $data = $this->orders_model->getLastUpdateAll($lastdate);
+        }
         $this->sendOutput($data);
     }
 

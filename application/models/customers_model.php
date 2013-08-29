@@ -179,6 +179,7 @@ class Customers_model extends Crud_Model
         foreach($deleted as  $val){
             $delete[] =  (int)$val->customer_id;
         }
+        $delete = isset($delete) ? $delete:array();
         return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>$delete);
 
     }
