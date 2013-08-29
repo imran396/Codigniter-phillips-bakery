@@ -153,23 +153,13 @@ $lastdate = end($blackoutdate);
                     </div>
                     <div class="label">Select <?php echo $this->lang->line('flavour'); ?></div>
                     <div class="row-fluid row-widest">
-                        <select class="selectpicker span12" name="flavour_id" id="flavour_id">
+                        <select multiple="multiple" class="" name="flavour_id[]" id="flavour_id">
                             <?php
-                            $flavour_id = (isset($queryup->flavour_id))? $queryup->flavour_id:set_value('flavour_id');
-
-                            if($flavour_id > 0){
-                                $flavourfield['flavour_id']=$flavour_id;
-                                ?>
-                                <option value="<?php echo $flavour_id; ?>" ><?php echo $this->orders_model->getGlobalName('flavours',$flavourfield); ?></option>
-                            <?php }else{ ?>
-                                <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
-                            <?php
-                            }
+                           echo $flavourid =isset($queryup->flavour_id) ? $queryup->flavour_id : set_value('flavour_id');
                             foreach($flavours as $flavour):
-                                if($flavour_id != $flavour->flavour_id){
-                                    ?>
-                                    <option value="<?php echo $flavour->flavour_id;  ?>" ><?php echo $flavour->title; ?></option>
-                                <?php } endforeach; ?>
+                            ?>
+                               <option value="<?php echo $flavour->flavour_id;  ?>" <?php if( $flavour->flavour_id == $flavourid ){  echo "selected='selected'"; } ?> ><?php echo $flavour->title; ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
 
