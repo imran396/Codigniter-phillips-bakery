@@ -586,7 +586,7 @@ class Orders_model extends Crud_Model
 
 
         if($update){
-            $updated = $this->db->query($update)->inserted_array();
+            $updated = $this->db->query($update)->result_array();
 
             foreach($inserted  as $key => $val){
 
