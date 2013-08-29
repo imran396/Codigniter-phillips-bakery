@@ -545,24 +545,24 @@ class Orders_model extends Crud_Model
 
             foreach($inserted  as $key => $val){
 
-                $inserted[$key]['order_id'] = (int) $result[$key]['order_id'];
-                $inserted[$key]['order_code'] = (int) $result[$key]['order_code'];
-                $inserted[$key]['cake_id'] = (int) $result[$key]['cake_id'];
-                $inserted[$key]['customer_id'] = (int) $result[$key]['customer_id'];
-                $inserted[$key]['employee_id'] = (int) $result[$key]['employee_id'];
-                $inserted[$key]['manager_id'] = (int) $result[$key]['manager_id'];
-                $inserted[$key]['location_id'] = (int) $result[$key]['location_id'];
-                $inserted[$key]['pickup_location_id'] = (int) $result[$key]['pickup_location_id'];
-                $inserted[$key]['delivery_zone_id'] = (int) $result[$key]['delivery_zone_id'];
-                $inserted[$key]['flavour_id'] = (int) $result[$key]['flavour_id'];
-                $inserted[$key]['price_matrix_id'] = (int) $result[$key]['price_matrix_id'];
-                $inserted[$key]['delivery_order_id'] = (int) $result[$key]['delivery_order_id'];
-                $inserted[$key]['order_date'] = (int) $result[$key]['order_date'];
+                $inserted[$key]['order_id'] = (int) $inserted[$key]['order_id'];
+                $inserted[$key]['order_code'] = (int) $inserted[$key]['order_code'];
+                $inserted[$key]['cake_id'] = (int) $inserted[$key]['cake_id'];
+                $inserted[$key]['customer_id'] = (int) $inserted[$key]['customer_id'];
+                $inserted[$key]['employee_id'] = (int) $inserted[$key]['employee_id'];
+                $inserted[$key]['manager_id'] = (int) $inserted[$key]['manager_id'];
+                $inserted[$key]['location_id'] = (int) $inserted[$key]['location_id'];
+                $inserted[$key]['pickup_location_id'] = (int) $inserted[$key]['pickup_location_id'];
+                $inserted[$key]['delivery_zone_id'] = (int) $inserted[$key]['delivery_zone_id'];
+                $inserted[$key]['flavour_id'] = (int) $inserted[$key]['flavour_id'];
+                $inserted[$key]['price_matrix_id'] = (int) $inserted[$key]['price_matrix_id'];
+                $inserted[$key]['delivery_order_id'] = (int) $inserted[$key]['delivery_order_id'];
+                $inserted[$key]['order_date'] = (int) $inserted[$key]['order_date'];
                 $inserted[$key]['on_cake_image'] = $val['on_cake_image'];
-                $inserted[$key]['on_cake_image'] = str_replace('assets',$imageurlprefix,$result[$key]['on_cake_image']);
+                $inserted[$key]['on_cake_image'] = str_replace('assets',$imageurlprefix,$inserted[$key]['on_cake_image']);
                 if(!empty($inserted[$key]['instructional_photo'])){
                     $inserted[$key]['instructional_photo'] = explode(',', $val['instructional_photo']);
-                    $inserted[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$result[$key]['instructional_photo']);
+                    $inserted[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$inserted[$key]['instructional_photo']);
                 }else{
                     $inserted[$key]['instructional_photo'] = array();
                 }
@@ -586,28 +586,28 @@ class Orders_model extends Crud_Model
 
 
         if($update){
-            $updated = $this->db->query($update)->result_array();
+            $updated = $this->db->query($update)->inserted_array();
 
             foreach($inserted  as $key => $val){
 
-                $updated[$key]['order_id'] = (int) $result[$key]['order_id'];
-                $updated[$key]['order_code'] = (int) $result[$key]['order_code'];
-                $updated[$key]['cake_id'] = (int) $result[$key]['cake_id'];
-                $updated[$key]['customer_id'] = (int) $result[$key]['customer_id'];
-                $updated[$key]['employee_id'] = (int) $result[$key]['employee_id'];
-                $updated[$key]['manager_id'] = (int) $result[$key]['manager_id'];
-                $updated[$key]['location_id'] = (int) $result[$key]['location_id'];
-                $updated[$key]['pickup_location_id'] = (int) $result[$key]['pickup_location_id'];
-                $updated[$key]['delivery_zone_id'] = (int) $result[$key]['delivery_zone_id'];
-                $updated[$key]['flavour_id'] = (int) $result[$key]['flavour_id'];
-                $updated[$key]['price_matrix_id'] = (int) $result[$key]['price_matrix_id'];
-                $updated[$key]['delivery_order_id'] = (int) $result[$key]['delivery_order_id'];
-                $updated[$key]['order_date'] = (int) $result[$key]['order_date'];
+                $updated[$key]['order_id'] = (int) $updated[$key]['order_id'];
+                $updated[$key]['order_code'] = (int) $updated[$key]['order_code'];
+                $updated[$key]['cake_id'] = (int) $updated[$key]['cake_id'];
+                $updated[$key]['customer_id'] = (int) $updated[$key]['customer_id'];
+                $updated[$key]['employee_id'] = (int) $updated[$key]['employee_id'];
+                $updated[$key]['manager_id'] = (int) $updated[$key]['manager_id'];
+                $updated[$key]['location_id'] = (int) $updated[$key]['location_id'];
+                $updated[$key]['pickup_location_id'] = (int) $updated[$key]['pickup_location_id'];
+                $updated[$key]['delivery_zone_id'] = (int) $updated[$key]['delivery_zone_id'];
+                $updated[$key]['flavour_id'] = (int) $updated[$key]['flavour_id'];
+                $updated[$key]['price_matrix_id'] = (int) $updated[$key]['price_matrix_id'];
+                $updated[$key]['delivery_order_id'] = (int) $updated[$key]['delivery_order_id'];
+                $updated[$key]['order_date'] = (int) $updated[$key]['order_date'];
                 $updated[$key]['on_cake_image'] = $val['on_cake_image'];
-                $updated[$key]['on_cake_image'] = str_replace('assets',$imageurlprefix,$result[$key]['on_cake_image']);
+                $updated[$key]['on_cake_image'] = str_replace('assets',$imageurlprefix,$updated[$key]['on_cake_image']);
                 if(!empty($updated[$key]['instructional_photo'])){
                     $updated[$key]['instructional_photo'] = explode(',', $val['instructional_photo']);
-                    $updated[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$result[$key]['instructional_photo']);
+                    $updated[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$updated[$key]['instructional_photo']);
                 }else{
                     $updated[$key]['instructional_photo'] = array();
                 }
