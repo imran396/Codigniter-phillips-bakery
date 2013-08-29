@@ -14,7 +14,7 @@ class Cakes extends API_Controller
     {
         $lastdate=$this->input->get('lastupdate');
         if(empty($lastdate)){
-            $data = $this->cakes_model->getAll();
+            $data = $this->cakes_model->getAll_();
         }else{
             $data = $this->cakes_model->getLastUpdateAll($lastdate);
         }
