@@ -35,16 +35,20 @@ class Cakes_model extends CI_Model
     private function insert($data)
     {
         $flavour_id = (!empty($data['flavour_id'])) ? $data['flavour_id'] :'';
+        $tiers = (!empty($data['tiers'])) ? $data['tiers'] :'';
 
         $insert['title'] = ($data['title'] !="") ? $data['title'] :'';
         $insert['description'] = ($data['description'] !="") ? $data['description'] :'';
         $insert['category_id'] = ($data['category_id'] !="") ? $data['category_id'] :'';
         $insert['flavour_id'] = ($data['flavour_id'] !="") ? $data['flavour_id'] :'';
+        $insert['tiers'] = ($data['tiers'] !="") ? $data['tiers'] :'';
         $insert['meta_tag'] = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
         $insert['revel_product_id'] = ($data['revel_product_id'] !="") ? $data['revel_product_id'] :'';
         $insert['flavour_id'] =($flavour_id !="") ? serialize($flavour_id):'';
         $insert['status'] = ($data['status'] !="") ? $data['status'] :'';
-        $insert['insert_date']=time();
+       // $insert['tiers'] =($tiers !="") ? serialize($tiers):'';
+
+
         $this->db->set($insert)->insert('cakes');
         return $this->db->insert_id();
     }
@@ -63,13 +67,19 @@ class Cakes_model extends CI_Model
     {
 
         $flavour_id = (!empty($data['flavour_id'])) ? $data['flavour_id'] :'';
+        //$tiers = (!empty($data['tiers'])) ? $data['tiers'] :'';
+
         $insert['title'] = ($data['title'] !="") ? $data['title'] :'';
         $insert['description'] = ($data['description'] !="") ? $data['description'] :'';
         $insert['category_id'] = ($data['category_id'] !="") ? $data['category_id'] :'';
         $insert['flavour_id'] =($flavour_id !="") ? serialize($flavour_id):'';
+        // $insert['tiers'] = ($data['tiers'] !="") ? $data['tiers'] :'';
         $insert['meta_tag'] = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
         $insert['status'] = ($data['status'] !="") ? $data['status'] :'';
-        $insert['update_date']=time();
+
+
+        //$insert['tiers'] =($tiers !="") ? serialize($tiers):'';
+
         $this->db->set($insert)->where(array('cake_id' => $id))->update('cakes');
     }
     public function doUpload($id)
@@ -161,14 +171,15 @@ class Cakes_model extends CI_Model
 
     public function delete($id)
     {
-        //if (!$this->deleteDataExisting($id) > 0) {
+        if (!$this->deleteDataExisting($id) > 0) {
 
-            //$this->fileDelete($id);
-            $this->db->set(array('is_deleted'=>1,'update_date'=>time()))->where('cake_id',$id)->update('cakes');
+            $this->fileDelete($id);
+            $this->db->where(array('cake_id'=> $id))->delete('cakes');
+
             $this->session->set_flashdata('delete_msg', "Cake has been deleted successfully");
-        //} else {
-            //$this->session->set_flashdata('warning_msg', $this->lang->line('existing_data_msg'));
-        //}
+        } else {
+            $this->session->set_flashdata('warning_msg', $this->lang->line('existing_data_msg'));
+        }
     }
 
     public function deleteDataExisting($data = 0)
@@ -187,17 +198,15 @@ class Cakes_model extends CI_Model
 
         $limit      = ($page - 1) * $per_page;
         $base_url   = site_url('admin/cakes/listing');
-        $total_rows = $this->db->where('cake_id !=',15)->count_all_results('cakes');
+        $total_rows = $this->db->count_all_results('cakes');
         $paging     = paginate($base_url, $total_rows, $start, $per_page);
 
         $this->db->select('cakes.* , categories.title AS categories_name , flavours.title AS flavours_name');
         $this->db->from('cakes');
         $this->db->join('categories', 'categories.category_id = cakes.category_id', 'left');
         $this->db->join('flavours', 'flavours.flavour_id = cakes.flavour_id', 'left');
-        $this->db->where('cake_id !=',15);
         $this->db->limit($per_page, $limit);
-        $this->db->where('is_deleted !=',1);
-        $this->db->order_by("cakes.title", "asc");
+        $this->db->order_by("cakes.ordering", "asc");
 
         $query = $this->db->get();
 
@@ -274,8 +283,8 @@ class Cakes_model extends CI_Model
                 FROM `cakes`
                 LEFT JOIN categories ON (categories.category_id = cakes.category_id)
                 LEFT JOIN flavours ON (flavours.flavour_id = cakes.flavour_id)
-                WHERE (is_deleted != 1 AND  LOWER(cakes.title) LIKE '%$search%')
-                || (is_deleted != 1 AND LOWER(meta_tag) LIKE '%$search%')";
+                WHERE (`cake_id` > 0 AND  LOWER(cakes.title) LIKE '%$search%')
+                || ( `cake_id` > 0 AND LOWER(meta_tag) LIKE '%$search%')";
 
         $per_page=1;
         $page   = intval($start);
@@ -332,16 +341,19 @@ class Cakes_model extends CI_Model
 
     public function getAll()
     {
-        return $this->db->select('*')->where(array('status'=>1,'is_deleted !=' => 1))->order_by('ordering','asc')->get('cakes')->result_array();
+        return $this->db->select('*')->where('status', 1)->order_by('ordering','asc')->get('cakes')->result_array();
     }
 
     public function getApiCakes(){
 
-        $sql = "SELECT cakes.*,
+        $sql = "SELECT
+                cakes.*,
                 GROUP_CONCAT(cake_gallery.image ORDER BY cake_gallery.ordering ASC SEPARATOR ',') as images
-                FROM cakes
-                LEFT JOIN cake_gallery ON ( cakes.cake_id = cake_gallery.cake_id ) WHERE is_deleted != 1
-                GROUP BY cakes.cake_id";
+
+              FROM cakes
+              LEFT JOIN cake_gallery
+                ON ( cakes.cake_id = cake_gallery.cake_id )
+              GROUP BY cakes.cake_id";
 
         $data = $this->db->query($sql)->result_array();
 
@@ -364,8 +376,8 @@ class Cakes_model extends CI_Model
               FROM cakes As C
               LEFT JOIN cake_gallery AS G
                 ON ( C.cake_id = G.cake_id )
-              WHERE C.status =1 && is_deleted != 1
-              GROUP BY C.title";
+              WHERE C.status =1
+              GROUP BY C.cake_id";
 
         $data = $this->db->query($sql)->result_array();
 
@@ -393,80 +405,6 @@ class Cakes_model extends CI_Model
         return $data;
 
     }
-
-    function getLastUpdateAll($selectdate){
-
-
-        $imageurlprefix = base_url().'assets';
-        $lastdate=strtotime($selectdate);
-         $sql = "SELECT
-C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.tiers,
-GROUP_CONCAT(G.image ORDER BY G.ordering ASC SEPARATOR ',') as gallery_images
-FROM cakes As C
-LEFT JOIN cake_gallery AS G
-ON ( C.cake_id = G.cake_id )
-WHERE C.status =1 && is_deleted != 1 && insert_date > $lastdate
-GROUP BY C.title";
-
-        $inserted = $this->db->query($sql)->result_array();
-
-        foreach($inserted as $key=>$row){
-            $inserted[$key]['cake_id'] = (int) $inserted[$key]['cake_id'];
-            $inserted[$key]['category_id'] = (int) $inserted[$key]['category_id'];
-            $inserted[$key]['flavour_id'] =  !empty($row['flavour_id']) ? unserialize($row['flavour_id']):array();
-            $inserted[$key]['image'] = !empty($inserted[$key]['image']) ? base_url().$inserted[$key]['image'] : "";
-            $inserted[$key]['tiers'] = array('1');
-            $inserted[$key]['gallery_images'] = explode(',', $row['gallery_images']);
-            $inserted[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$inserted[$key]['gallery_images']);
-
-            if(!empty($result[$key]['gallery_images'])){
-                $inserted[$key]['gallery_images'] = explode(',', $row['gallery_images']);
-                $inserted[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$inserted[$key]['gallery_images']);
-            }else{
-                $result[$key]['gallery_images'] = array();
-            }
-
-        }
-
-        $update = "SELECT
-C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.tiers,
-GROUP_CONCAT(G.image ORDER BY G.ordering ASC SEPARATOR ',') as gallery_images
-FROM cakes As C
-LEFT JOIN cake_gallery AS G
-ON ( C.cake_id = G.cake_id )
-WHERE C.status =1 && is_deleted != 1 && update_date > $lastdate
-GROUP BY C.title";
-
-        $updated = $this->db->query($update)->result_array();
-
-        foreach($updated as $key=>$row){
-            $updated[$key]['cake_id'] = (int) $updated[$key]['cake_id'];
-            $updated[$key]['category_id'] = (int) $updated[$key]['category_id'];
-            $updated[$key]['flavour_id'] =  !empty($row['flavour_id']) ? unserialize($row['flavour_id']):array();
-            $updated[$key]['image'] = !empty($updated[$key]['image']) ? base_url().$updated[$key]['image'] : "";
-            $updated[$key]['tiers'] = array('1');
-
-            $updated[$key]['gallery_images'] = explode(',', $row['gallery_images']);
-            $updated[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$updated[$key]['gallery_images']);
-
-            if(!empty($result[$key]['gallery_images'])){
-                $updated[$key]['gallery_images'] = explode(',', $row['gallery_images']);
-                $updated[$key]['gallery_images'] = str_replace('assets',$imageurlprefix,$updated[$key]['gallery_images']);
-            }else{
-                $result[$key]['gallery_images'] = array();
-            }
-
-        }
-
-        $deleted = $this->db->where(array('is_deleted'=> 1,'update_date >'=> $lastdate))->select('cake_id')->order_by('cake_id','asc')->get('cakes')->result();
-        foreach($deleted as  $val){
-            $delete[] =  (int)$val->cake_id;
-        }
-        $delete = isset($delete) ? $delete:array();
-        return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>$delete);
-
-    }
-
 
     public function findAll()
     {
