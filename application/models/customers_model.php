@@ -14,10 +14,21 @@ class Customers_model extends Crud_Model
 
     public function create($data)
     {
-        $data['insert_date']=time();
-        $id = $this->insert($data);
-        if(!empty($data['notes'])){
-            $this->db->set(array('customer_id'=>$id,'notes'=>$data['notes'],'create_date'=>time()))->insert('customer_notes');
+
+        $count=$this->db->select('customer_id')->where('phone_number',$data['phone_number'])->get('customers');
+        if($count-> num_rows() > 0){
+            $row = $count->row();
+            $id = $row ->customer_id;
+            $this->save($data, $id);
+
+        }else{
+
+            $data['insert_date']=time();
+            $id = $this->insert($data);
+
+            if(!empty($data['notes'])){
+                $this->db->set(array('customer_id'=>$id,'notes'=>$data['notes'],'create_date'=>time()))->insert('customer_notes');
+            }
         }
         return $id;
     }
