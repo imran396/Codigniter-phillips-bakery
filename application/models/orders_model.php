@@ -606,7 +606,7 @@ class Orders_model extends Crud_Model
                 $updated[$key]['on_cake_image'] = $val['on_cake_image'];
                 $updated[$key]['on_cake_image'] = str_replace('assets',$imageurlprefix,$updated[$key]['on_cake_image']);
                 if(!empty($updated[$key]['instructional_photo'])){
-                    $updated[$key]['instructional_photo'] = explode(',', $val['instructional_photo']);
+                    //$updated[$key]['instructional_photo'] = explode(',', $val['instructional_photo']);
                     $updated[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$updated[$key]['instructional_photo']);
                 }else{
                     $updated[$key]['instructional_photo'] = array();
