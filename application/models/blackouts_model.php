@@ -80,7 +80,7 @@ class Blackouts_model extends Crud_Model
             }
         }
         $final_date=implode(',',$final);
-        $this->db->set(array('location_id'=>$data['location_id'] ,'blackout_date'=>$final_date))->where('blackout_id',$blackout_id)->update('blackouts');
+        $this->db->set(array('blackout_date'=>$final_date))->where('blackout_id',$blackout_id)->update('blackouts');
 
 
     }
