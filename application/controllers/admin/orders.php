@@ -489,12 +489,14 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
                 'special_instruction' => $data['special_instruction'],
                 'order_status' => $data['order_status']
             );
-            $orders=$this->orders_model->order_update($order_data,$orderID);
-            $this->session->set_flashdata('success_msg','Order has been updated successfully');
+                $orders=$this->orders_model->order_update($order_data,$orderID);
+                $this->session->set_flashdata('success_msg','Order has been updated successfully');
 
         }else{
+            if($data['delivery_type'] == 'delivery'){
+                $orders=$this->orders_model->order_insert($data);
+            }
 
-            $orders=$this->orders_model->order_insert($data);
             $this->session->set_flashdata('success_msg','New order has been added successfully');
         }
 

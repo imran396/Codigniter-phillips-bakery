@@ -12,13 +12,13 @@ class Blackouts_model extends Crud_Model
 
     }
 
-    public function insert()
+    public function insert($data)
     {
 
         $curdate=date('m/d/Y');
 
-        $location_id=$this->input->post('location_id');
-        $flavour=$this->input->post('flavour_id');
+        $location_id=$data['location_id'];
+        $flavour=$data['flavour_id'];
 
         foreach($flavour as $flavour_id):
 
@@ -63,12 +63,34 @@ class Blackouts_model extends Crud_Model
         endforeach;
     }
 
+    public function update($data,$blackout_id){
+
+        $curdate=date('m/d/Y');
+        $blackout_date  = explode(',',$dbBlack[0]->blackout_date) ;
+        $beginning      = explode(',',$this->input->post('blackout_date'));
+        $merge          = array_merge((array)$beginning, (array)$blackout_date);
+        $unique         = array_unique($merge);
+        $final          = array();
+
+        foreach($unique as $date){
+
+            if($date >= $curdate){
+
+                $final[]=$date;
+            }
+        }
+        $final_date=implode(',',$final);
+        $this->db->set(array('location_id'=>$data['location_id'] ,'blackout_date'=>$final_date))->where('blackout_id',$blackout_id)->update('blackouts');
+
+
+    }
+
 
     public function delete($id)
     {
 
-            $this->remove($id);
-            $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
+        $this->remove($id);
+        $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
 
     }
 
@@ -97,7 +119,7 @@ class Blackouts_model extends Crud_Model
     public function getListing($start)
     {
 
-        $per_page=10;
+        $per_page=20;
         $page   = intval($start);
         if( $page<=0 )  $page  = 1;
         $limit= ( $page-1 ) * $per_page;

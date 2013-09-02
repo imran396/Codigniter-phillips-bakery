@@ -85,13 +85,7 @@ $lastdate = end($blackoutdate);
                         alert('Error. You cannot select a date in the past. Please try again.');
                         return false;
                     }else{
-                        var inp = $('<input>')
-                            .attr('type','hidden')
-                            .val($('#flavour_id').val())
-                            .attr('name', 'flavour_ids')
-                            .appendTo($('#from'));
-
-                        $('#from')[0].submit();
+                        $('#from').submit();
                     }
 
 
@@ -129,7 +123,7 @@ $lastdate = end($blackoutdate);
     <div id="wrapper">
         <div class="double">
             <div class="col left-bar">
-                <form name="blackout_from" id="from" action="/admin/blackouts/save" method="post">
+                <form name="from" id="from" action="/admin/blackouts/save" method="post">
                 <h3>Create a New Blackout  </h3>
 
                     <div class="box box-narrow">
@@ -158,14 +152,24 @@ $lastdate = end($blackoutdate);
                         </select>
                     </div>
                     <div class="label">Select <?php echo $this->lang->line('flavour'); ?></div>
-                      <div class="row-fluid row-widest">
-                        <select class="" name="flavour_id[]" id="flavour_id" multiple="multiple">
+                    <div class="row-fluid row-widest">
+                        <select multiple="multiple" class="selectpicker span12" name="flavour_id" id="flavour_id">
                             <?php
-                           echo $flavourid =isset($queryup->flavour_id) ? $queryup->flavour_id : set_value('flavour_id');
+                            $flavour_id = (isset($queryup->flavour_id))? $queryup->flavour_id:set_value('flavour_id');
+
+                            if($flavour_id > 0){
+                                $flavourfield['flavour_id']=$flavour_id;
+                                ?>
+                                <option value="<?php echo $flavour_id; ?>" ><?php echo $this->orders_model->getGlobalName('flavours',$flavourfield); ?></option>
+                            <?php }else{ ?>
+                                <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
+                            <?php
+                            }
                             foreach($flavours as $flavour):
-                            ?>
-                               <option value="<?php echo $flavour->flavour_id;  ?>" <?php if( $flavour->flavour_id == $flavourid ){  echo "selected='selected'"; } ?> ><?php echo $flavour->title; ?></option>
-                            <?php endforeach; ?>
+                                if($flavour_id != $flavour->flavour_id){
+                                    ?>
+                                    <option value="<?php echo $flavour->flavour_id;  ?>" ><?php echo $flavour->title; ?></option>
+                                <?php } endforeach; ?>
                         </select>
                     </div>
 
@@ -178,7 +182,7 @@ $lastdate = end($blackoutdate);
                         <input type="hidden" id="altField" name="blackout_date">
                     </div>
                     <div class="buttons">
-                        <input type="hidden" name="blackout_id" value="<?php echo isset($queryup->blackout_id) ? $queryup->blackout_id :''; ?>">
+                        <input type="hidden" name="blackouts_id" value="<?php echo isset($queryup->blackouts_id) ? $queryup->blackouts_id :''; ?>">
                         <input type="button" value="Add to blackouts"  class="btn btn-dark">
                     </div>
                 </div><!-- End Box -->
@@ -228,8 +232,6 @@ $lastdate = end($blackoutdate);
     </div><!-- End Wrapper -->
 </div>
 <script type="text/javascript" language="javascript" src="<?php echo base_url() ?>/assets/media/js/jquery.dataTables.js"></script>
-<script type="text/javascript" language="javascript" src="<?php echo base_url() ?>/assets/js/multiselect.js"></script>
-
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         jQuery.fn.dataTableExt.oSort['date-dd-mmm-yyyy-asc'] = function (a, b) {
@@ -262,124 +264,12 @@ $lastdate = end($blackoutdate);
         } );
 
     } );
-    /*
-     *
-     * MultiSelect jQuery plugin
-     *
-     * The external resources are:
-     * jQuery 1.x + Jquery UI
-     *
-     * multiselect-min.js
-     *     the plugin to get the multiselection
-     */
-
-    // Populates select tags with option tags
-
-    var populateSelects = function(nOptions){
-        if(typeof nOptions != "number")
-            nOptions = 25;
-
-        var options_HTML = "";
-
-        for(var i = 0; i < nOptions; i++)
-            options_HTML += "<OPTION value = 'i am the option " + i + "' >i am the option " + i + "</OPTION>";
-
-        $("#test_target_no_optgroup").append(options_HTML);
-
-        $("#test_target_with_optgroup_fc0").append(options_HTML);
-        $("#test_target_with_optgroup_fc1").append(options_HTML);
-        $("#test_target_with_optgroup_fc2").append(options_HTML);
-        $("#test_target_with_optgroup_fc3").append(options_HTML);
-    };
-
-    // Applies multiselection on select tags
-
-    var test_Multiselection = function(){
-        $("#test_target_no_optgroup").MultiSelect({
-            size: 20,
-            css_class_selected: "test-selection"
-        });
-    };
-
-    // Applies feature to select / deselect all options inside optgroup, by one click
-
-    var test_categoriesSelection = function(){
-        $("#flavour_id").MultiSelect({
-            size: 30,
-            css_class_selected: "test-selection"
-        });
-    }
-
-    // Main
-
-    $(document).ready(function(){
-
-        populateSelects();
-
-        test_Multiselection();
-
-        test_categoriesSelection();
-
-        $("#getV").click(function(){
-            alert( $("#test_target_no_optgroup").val() );
-        });
-
-        $(".btn-dark").click(function(){
-          //  alert( $("#flavour_id").val() );
-        });
-    });
 
 </script>
 <style type="text/css">
-
-    .tooltip-inner {
-        background: #272a2c;
-        color: #bab9b9;
-        width: 100%!important;
-    }
     .remove_a {
         color: #201D1D !important;
         text-decoration: none !important;
         text-transform: capitalize;
     }
-
-    .descri {
-        margin-left: 25px;
-        color: dimgray;
-    }
-
-    .descri_footer {
-        color: #72A139;
-        font-size: 13px;
-        margin-top: 100px;
-    }
-
-    .test-selection {
-        background-color: Highlight;
-        color: HighlightText;
-    }
-
-    .category {
-        cursor: pointer;
-    }
-
-    .wrap_categories {
-        margin-left: 25px;
-        margin-top: 10px;
-        border: 1px solid #d6d6d6;
-    }
-
-    .wrap_categories div:hover {
-        background-color: blueviolet;
-    }
-
-    .main_categories {
-        display: inline-block;
-        width: auto;
-    }
-
-    div.category:hover {
-        color: blue;
-    }
-
 </style>

@@ -57,7 +57,7 @@ class Blackouts extends Crud_Controller
         $data= $this->input->post();
         if (!empty($data)) {
 
-                $this->saveData();
+               $this->saveData();
 
         }
         $this->redirectToHome();
@@ -97,14 +97,17 @@ class Blackouts extends Crud_Controller
     {
 
         $data = $this->input->post();
+        $flavour_ids      = explode(',',$this->input->post('flavour_ids'));
+        unset($data['flavour_ids']);
+        $data['flavour_id']=$flavour_ids;
         if (empty($data['blackout_id'])) {
 
-            $this->blackouts_model->insert();
+            $this->blackouts_model->insert($data);
             $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
 
         } else {
             
-            $this->blackouts_model->update($data, $data['serving_id']);
+            $this->blackouts_model->update($data, $data['blackout_id']);
             $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         }
 
