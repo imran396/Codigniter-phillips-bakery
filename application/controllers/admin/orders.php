@@ -450,7 +450,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $data['delivery_time']=($deliverytime !="") ? timeFormatAmPm($deliverytime):'';
 
         $data['flavour_id']=isset($_REQUEST['flavour_id'])? $_REQUEST['flavour_id']:'';
-        $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:'No';
+        $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:0;
         $data['price_matrix_id']=isset($_REQUEST['price_matrix_id'])? $_REQUEST['price_matrix_id']:'';
         $data['tiers']=isset($_REQUEST['tiers'])? $_REQUEST['tiers']:'';
         $data['matrix_price']=isset($_REQUEST['matrix_price'])? $_REQUEST['matrix_price']:'';
@@ -493,10 +493,8 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
                 $this->session->set_flashdata('success_msg','Order has been updated successfully');
 
         }else{
-            if($data['delivery_type'] == 'delivery'){
-                $orders=$this->orders_model->order_insert($data);
-            }
 
+            $orders=$this->orders_model->order_insert($data);
             $this->session->set_flashdata('success_msg','New order has been added successfully');
         }
 

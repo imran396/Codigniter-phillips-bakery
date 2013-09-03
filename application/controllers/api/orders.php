@@ -30,6 +30,13 @@ class Orders extends API_Controller
         $this->sendOutput($data);
     }
 
+    public function vaughan_order(){
+
+        $lastdate=$this->input->get('lastupdate');
+        $data = $this->orders_model->getLastUpdateAll($lastdate);
+
+    }
+
     public function insert()
     {
         //echo returnGenerateID();
@@ -53,7 +60,7 @@ class Orders extends API_Controller
         $data['delivery_date']=isset($_REQUEST['delivery_date'])? $_REQUEST['delivery_date']:'';
         $data['delivery_time']=isset($_REQUEST['delivery_time'])? $_REQUEST['delivery_time']:'';
         $data['flavour_id']=isset($_REQUEST['flavour_id'])? $_REQUEST['flavour_id']:'';
-        $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:'No';
+        $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:0;
         $data['price_matrix_id']=isset($_REQUEST['price_matrix_id'])? $_REQUEST['price_matrix_id']:'';
         $data['tiers']=isset($_REQUEST['tiers'])? $_REQUEST['tiers']:'';
         $data['matrix_price']=isset($_REQUEST['matrix_price'])? $_REQUEST['matrix_price']:'';
