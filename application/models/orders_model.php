@@ -625,6 +625,61 @@ class Orders_model extends Crud_Model
         return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>$delete);
     }
 
+    public function getVaughanOrder($selectdate){
+
+        $lastdate=strtotime($selectdate);
+        $vaughan_location = $this->orders_model->getVaughanLocation();
+        $imageurlprefix = base_url().'assets';
+
+        $insert = "SELECT
+              O.*,
+              OD.*,
+              GROUP_CONCAT(I.instructional_photo ORDER BY I.instructional_photo_id 	 ASC SEPARATOR ',') as instructional_photo
+              FROM orders As O
+              LEFT JOIN instructional_photo AS I
+                ON ( I.instructional_order_id = O.order_id )
+              LEFT JOIN order_delivery AS OD
+                ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1 && kitchen_location_id = $vaughan_location && O.insert_date > $lastdate
+              GROUP BY O.order_id";
+
+
+        if($insert){
+            $inserted = $this->db->query($insert)->result_array();
+
+            foreach($inserted  as $key => $val){
+
+                $inserted[$key]['order_id'] = (int) $inserted[$key]['order_id'];
+                $inserted[$key]['order_code'] = (int) $inserted[$key]['order_code'];
+                $inserted[$key]['cake_id'] = (int) $inserted[$key]['cake_id'];
+                $inserted[$key]['customer_id'] = (int) $inserted[$key]['customer_id'];
+                $inserted[$key]['employee_id'] = (int) $inserted[$key]['employee_id'];
+                $inserted[$key]['manager_id'] = (int) $inserted[$key]['manager_id'];
+                $inserted[$key]['location_id'] = (int) $inserted[$key]['location_id'];
+                $inserted[$key]['pickup_location_id'] = (int) $inserted[$key]['pickup_location_id'];
+                $inserted[$key]['delivery_zone_id'] = (int) $inserted[$key]['delivery_zone_id'];
+                $inserted[$key]['flavour_id'] = (int) $inserted[$key]['flavour_id'];
+                $inserted[$key]['price_matrix_id'] = (int) $inserted[$key]['price_matrix_id'];
+                $inserted[$key]['delivery_order_id'] = (int) $inserted[$key]['delivery_order_id'];
+                $inserted[$key]['order_date'] = (int) $inserted[$key]['order_date'];
+                $inserted[$key]['on_cake_image'] = $val['on_cake_image'];
+                $inserted[$key]['on_cake_image'] = str_replace('assets',$imageurlprefix,$inserted[$key]['on_cake_image']);
+                if(!empty($inserted[$key]['instructional_photo'])){
+                    $inserted[$key]['instructional_photo'] = explode(',', $val['instructional_photo']);
+                    $inserted[$key]['instructional_photo'] = str_replace('assets',$imageurlprefix,$inserted[$key]['instructional_photo']);
+                }else{
+                    $inserted[$key]['instructional_photo'] = array();
+                }
+
+            }
+
+
+        }
+
+        return $inserted;
+
+
+    }
+
     public function doSearch($data){
 
         $imageurlprefix = base_url().'assets';

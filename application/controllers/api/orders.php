@@ -30,10 +30,11 @@ class Orders extends API_Controller
         $this->sendOutput($data);
     }
 
-    public function vaughan_order(){
+    public function vaughanOrder(){
 
         $lastdate=$this->input->get('lastupdate');
-        $data = $this->orders_model->getLastUpdateAll($lastdate);
+        $data = $this->orders_model->getVaughanOrder($lastdate);
+        $this->sendOutput($data);
 
     }
 
