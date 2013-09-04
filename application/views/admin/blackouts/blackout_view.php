@@ -135,6 +135,14 @@ $lastdate = end($blackoutdate);
                     <div class="box box-narrow">
                     <div class="label">Select <?php echo $this->lang->line('location'); ?></div>
                     <div class="row-fluid row-widest">
+                        <?php
+
+                        $location_id = (isset($queryup->location_id))? $queryup->location_id:set_value('location_id');
+                        if($location_id > 0){
+                            $locationfield['location_id']=$location_id;
+                            echo $this->orders_model->getGlobalName('locations',$locationfield);
+                        }else{
+                        ?>
                         <select class="selectpicker span12" name="location_id" id="location_id">
                         <?php
 
@@ -156,17 +164,27 @@ $lastdate = end($blackoutdate);
 
 
                         </select>
+                        <?php } ?>
                     </div>
                     <div class="label">Select <?php echo $this->lang->line('flavour'); ?></div>
                       <div class="row-fluid row-widest">
-                        <select class="" name="flavour_id[]" id="flavour_id" multiple="multiple">
+                          <?php
+
+                          $flavour_id = (isset($queryup->flavour_id))? $queryup->flavour_id:set_value('flavour_id');
+                          if($flavour_id > 0){
+                              $flavourfield['flavour_id']=$flavour_id;
+                              echo $this->orders_model->getGlobalName('flavours',$flavourfield);
+                          }else{
+                          ?>
+                            <select class="" name="flavour_id[]" id="flavour_id" multiple="multiple">
                             <?php
-                           echo $flavourid =isset($queryup->flavour_id) ? $queryup->flavour_id : set_value('flavour_id');
+                            echo $flavourid =isset($queryup->flavour_id) ? $queryup->flavour_id : set_value('flavour_id');
                             foreach($flavours as $flavour):
                             ?>
                                <option value="<?php echo $flavour->flavour_id;  ?>" <?php if( $flavour->flavour_id == $flavourid ){  echo "selected='selected'"; } ?> ><?php echo $flavour->title; ?></option>
                             <?php endforeach; ?>
-                        </select>
+                            </select>
+                          <?php } ?>
                     </div>
 
                     <div class="label">Select Date / Multiple Date</div>
