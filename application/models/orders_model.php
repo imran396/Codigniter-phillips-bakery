@@ -441,7 +441,7 @@ class Orders_model extends Crud_Model
     function searching($search,$start){
 
         $search=strtolower($search);
-        $query="SELECT orders.*,customers.first_name,customers.last_name,order_status.description AS orderstatus
+        echo $query="SELECT orders.*,customers.first_name,customers.last_name,order_status.description AS orderstatus
                 FROM `orders`
                 LEFT JOIN customers ON (customers.customer_id = orders.customer_id)
                 LEFT JOIN order_status ON (order_status.production_status_code = orders.order_status)
@@ -449,7 +449,7 @@ class Orders_model extends Crud_Model
                 || (orders.is_deleted != 1 AND  `order_id` = '$search')
                 || (orders.is_deleted != 1 AND  LOWER(customers.first_name) LIKE '%$search')
                 || (orders.is_deleted != 1 AND LOWER(customers.last_name) LIKE '%$search')
-                || (orders.is_deleted != 1 AND LOWER(order_status.description) LIKE '%$search')
+                || (orders.is_deleted != 1 AND LOWER(order_status.description) = '$search')
                 || (orders.is_deleted != 1 AND customers.phone_number = '$search') ORDER BY orders.order_code DESC ";
 
         // || (`order_id` > 0 AND LOWER(`delivery_date`) >= '$search')
@@ -638,7 +638,7 @@ class Orders_model extends Crud_Model
                 ON ( I.instructional_order_id = O.order_id )
               LEFT JOIN order_delivery AS OD
                 ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1 && kitchen_location_id = $vaughan_location && O.update_date > $lastdate
-              GROUP BY O.order_id ORDER BY orders.update_date ASC ";
+              GROUP BY O.order_id ORDER BY O.update_date ASC ";
 
 
         if($insert){
