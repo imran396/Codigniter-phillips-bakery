@@ -441,7 +441,7 @@ class Orders_model extends Crud_Model
     function searching($search,$start){
 
         $search=strtolower($search);
-        echo $query="SELECT orders.*,customers.first_name,customers.last_name,order_status.description AS orderstatus
+        $query="SELECT orders.*,customers.first_name,customers.last_name,order_status.description AS orderstatus
                 FROM `orders`
                 LEFT JOIN customers ON (customers.customer_id = orders.customer_id)
                 LEFT JOIN order_status ON (order_status.production_status_code = orders.order_status)
