@@ -629,7 +629,7 @@ class Orders_model extends Crud_Model
         $vaughan_location = $this->orders_model->getVaughanLocation();
         $imageurlprefix = base_url().'assets';
 
-        echo $insert = "SELECT
+        $insert = "SELECT
               O.*,
               OD.*,
               GROUP_CONCAT(I.instructional_photo ORDER BY I.instructional_photo_id 	 ASC SEPARATOR ',') as instructional_photo
