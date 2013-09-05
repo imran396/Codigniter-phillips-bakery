@@ -522,9 +522,8 @@ class Orders_model extends Crud_Model
 
     }
 
-    function getLastUpdateAll($selectdate){
+    function getLastUpdateAll($lastdate){
 
-        $lastdate=strtotime($selectdate);
 
         $imageurlprefix = base_url().'assets';
 
@@ -625,9 +624,8 @@ class Orders_model extends Crud_Model
         return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>$delete);
     }
 
-    public function getVaughanOrder($selectdate){
+    public function getVaughanOrder($lastdate){
 
-        $lastdate=strtotime($selectdate);
         $vaughan_location = $this->orders_model->getVaughanLocation();
         $imageurlprefix = base_url().'assets';
 

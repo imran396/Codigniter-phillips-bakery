@@ -375,11 +375,11 @@ class Cakes_model extends CI_Model
 
     }
 
-    function getLastUpdateAll($selectdate){
+    function getLastUpdateAll($lastdate){
 
 
         $imageurlprefix = base_url().'assets';
-        $lastdate=strtotime($selectdate);
+
         $sql = "SELECT
 C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.tiers,
 GROUP_CONCAT(G.image ORDER BY G.ordering ASC SEPARATOR ',') as gallery_images
