@@ -629,7 +629,7 @@ class Orders_model extends Crud_Model
         $vaughan_location = $this->orders_model->getVaughanLocation();
         $imageurlprefix = base_url().'assets';
 
-        $insert = "SELECT
+        echo $insert = "SELECT
               O.*,
               OD.*,
               GROUP_CONCAT(I.instructional_photo ORDER BY I.instructional_photo_id 	 ASC SEPARATOR ',') as instructional_photo
@@ -638,7 +638,7 @@ class Orders_model extends Crud_Model
                 ON ( I.instructional_order_id = O.order_id )
               LEFT JOIN order_delivery AS OD
                 ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1 && kitchen_location_id = $vaughan_location && O.update_date > $lastdate
-              GROUP BY O.order_id ORDER BY O.update_date ASC ";
+              GROUP BY O.order_id ORDER BY O.update_date ASC LIMIT 0,10 ";
 
 
         if($insert){
