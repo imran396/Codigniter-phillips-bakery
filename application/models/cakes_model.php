@@ -45,6 +45,7 @@ class Cakes_model extends CI_Model
         $insert['flavour_id'] =($flavour_id !="") ? serialize($flavour_id):'';
         $insert['status'] = ($data['status'] !="") ? $data['status'] :'';
         $insert['insert_date']=time();
+        $insert['update_date']=time();
         $this->db->set($insert)->insert('cakes');
         return $this->db->insert_id();
     }

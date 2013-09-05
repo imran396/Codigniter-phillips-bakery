@@ -23,7 +23,8 @@ class Customers_model extends Crud_Model
 
         }else{
 
-            $data['insert_date']=time();
+            $data['insert_date']=isset($data['insert_date']) ? $data['insert_date']:time();
+            $data['update_date']=isset($data['insert_date']) ? $data['insert_date']:time();
             $id = $this->insert($data);
 
             if(!empty($data['notes'])){

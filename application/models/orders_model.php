@@ -97,6 +97,7 @@ class Orders_model extends Crud_Model
             $order_id = $this->update($data,$orderDbID);
         }else{
             $data['insert_date']=isset($data['order_date']) ? $data['order_date']:time();
+            $data['update_date']=isset($data['order_date']) ? $data['order_date']:time();
             $order_id = $this->insert($data);
             $order_code=(100000+$order_id);
             $this->db->set(array('order_code'=>$order_code))->where('order_id',$order_id)->update('orders');
@@ -481,7 +482,6 @@ class Orders_model extends Crud_Model
                 ON ( I.instructional_order_id = O.order_id )
               LEFT JOIN order_delivery AS OD
                 ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1
-
               GROUP BY O.order_id";
 
 
@@ -637,8 +637,8 @@ class Orders_model extends Crud_Model
               LEFT JOIN instructional_photo AS I
                 ON ( I.instructional_order_id = O.order_id )
               LEFT JOIN order_delivery AS OD
-                ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1 && kitchen_location_id = $vaughan_location && O.insert_date > $lastdate
-              GROUP BY O.order_id";
+                ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1 && kitchen_location_id = $vaughan_location && O.update_date > $lastdate
+              GROUP BY O.order_id ORDER BY orders.update_date ASC ";
 
 
         if($insert){
