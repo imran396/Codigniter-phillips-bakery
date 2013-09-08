@@ -777,7 +777,9 @@ class Orders_model extends Crud_Model
             $data[$key]['notes'] =  $data[$key]['notes'];
         }
 
-        return $data;
+        $delete = array();
+        $updated = array();
+        return array('inserted'=>$data,'updated'=>$updated,'deleted'=>$delete);
     }
 
     public function getOrderNotes($order_id){
