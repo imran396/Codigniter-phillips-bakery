@@ -757,8 +757,31 @@ class Orders_model extends Crud_Model
 
     }
 
-   public function getAllNotes($order_id){
-       $data = $this->db->select('order_id,employee_id,create_date,notes')->where('order_id',$order_id)->order_by('order_id','asc')->get('order_notes')->result_array();
+   public function getOtrderAllNotes(){
+        $data = $this->db->select('order_id,employee_id,create_date,notes')->where(array('is_delete !='=>1))->order_by('order_id','asc')->get('order_notes')->result_array();
+        foreach($data as $key=>$val){
+            $data[$key]['order_id'] = (int) $data[$key]['order_id'];
+            $data[$key]['employee_id'] = (int) $data[$key]['employee_id'];
+            $data[$key]['create_date'] = (string) $data[$key]['create_date'];
+            $data[$key]['notes'] =  $data[$key]['notes'];
+        }
+
+        return $data;
+    }
+    public function getLastUpdateAllNotes($lastdate){
+        $data = $this->db->select('order_id,employee_id,create_date,notes')->where(array('is_delete !='=>1,'create_date >'=>$lastdate))->order_by('create_date','desc')->get('order_notes')->result_array();
+        foreach($data as $key=>$val){
+            $data[$key]['order_id'] = (int) $data[$key]['order_id'];
+            $data[$key]['employee_id'] = (int) $data[$key]['employee_id'];
+            $data[$key]['create_date'] = (string) $data[$key]['create_date'];
+            $data[$key]['notes'] =  $data[$key]['notes'];
+        }
+
+        return $data;
+    }
+
+    public function getOrderNotes($order_id){
+       $data = $this->db->select('order_id,employee_id,create_date,notes')->where(array('is_delete !='=>1,'order_id'=>$order_id))->order_by('order_id','asc')->get('order_notes')->result_array();
        foreach($data as $key=>$val){
            $data[$key]['order_id'] = (int) $data[$key]['order_id'];
            $data[$key]['employee_id'] = (int) $data[$key]['employee_id'];
@@ -769,6 +792,20 @@ class Orders_model extends Crud_Model
        return $data;
    }
 
+    public function search($order_id)
+    {
+
+        $data = $this->db->select('order_id,employee_id,create_date,notes')->where(array('is_delete !='=>1,'order_id'=>$order_id))->order_by('order_id','asc')->get('order_notes')->result_array();
+        foreach($data as $key=>$val){
+            $data[$key]['order_id'] = (int) $data[$key]['order_id'];
+            $data[$key]['employee_id'] = (int) $data[$key]['employee_id'];
+            $data[$key]['create_date'] = (string) $data[$key]['create_date'];
+            $data[$key]['notes'] =  $data[$key]['notes'];
+        }
+
+        return $data;
+
+    }
     public function SaveNotes($data)
     {
         $this->db->set($data)->insert('order_notes');
@@ -780,23 +817,7 @@ class Orders_model extends Crud_Model
     }
 
 
-    public function search($order_id)
-    {
-
-        $this->db->where('order_id',$order_id);
-        $data = $this->db->select('order_id,employee_id,create_date,notes')->order_by('order_id','asc')->get('order_notes')->result_array();
-
-        foreach($data as $key=>$val){
-            $data[$key]['order_id'] = (int) $data[$key]['order_id'];
-            $data[$key]['employee_id'] = (int) $data[$key]['employee_id'];
-            $data[$key]['create_date'] = (string) $data[$key]['create_date'];
-            $data[$key]['notes'] =  $data[$key]['notes'];
-        }
-
-        return $data;
-
-    }
-
+    
     public function getCustomerData($id)
     {
         $this->db->where('customer_id', $id);
