@@ -64,6 +64,7 @@
                         <td><?php echo $rows->categories_name; ?></td>
                         <td><?php if($rows->flavour_id){ echo $this->cakes_model->getSerializeFlavour($rows->cake_id); } ?></td>
                         <td>
+
                             <a data-original-title="<?php echo $this->lang->line('status'); ?>" data-placement="top" data-toggle="tooltip" href="/admin/cakes/status/<?php echo $rows->cake_id; ?>" class="btn-action glyphicons btn <?php if($rows->status ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
                             <a data-original-title="<?php echo $this->lang->line('edit'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action glyphicons pencil btn-success" href="/admin/cakes/edit/<?php echo $rows->cake_id; ?>"><i></i></a>
                             <a data-original-title="<?php echo $this->lang->line('delete'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action glyphicons remove_2 btn-danger" href="/admin/cakes/remove/<?php echo $rows->cake_id; ?>"><i></i></a>
