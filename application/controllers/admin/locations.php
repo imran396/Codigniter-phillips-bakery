@@ -6,8 +6,12 @@ class Locations extends Crud_Controller
     {
         parent::__construct();
 
+        $this->load->config('app');
+
         $this->layout->setLayout('layout_admin');
         $this->load->model('locations_model');
+
+        $this->load->model('revel_model');
         $this->load->model('revel_location');
 
         $log_status = $this->ion_auth->logged_in();
@@ -17,7 +21,11 @@ class Locations extends Crud_Controller
 
     public function index()
     {
-        $this->data['active'] = $this->uri->segment(2, 0);
+
+        header("Content-type=> application/json");
+        $revel_location = ($this->revel_location->getAll());
+        $this->data['revel_location'] =$revel_location;
+        $this->data['active'] = $this->uri->segment(2,0);
         $this->layout->view('admin/locations/locations_view', $this->data);
     }
 
@@ -54,6 +62,9 @@ class Locations extends Crud_Controller
 
     public function edit($id)
     {
+        header("Content-type=> application/json");
+        $revel_location = ($this->revel_location->getAll());
+        $this->data['revel_location'] =$revel_location;
         $this->data['queryup'] = $this->locations_model->getLocations($id);
         $this->data['active']  = $this->uri->segment(2, 0);
 
@@ -62,6 +73,7 @@ class Locations extends Crud_Controller
 
     private function addValidation()
     {
+        $this->form_validation->set_rules('revel_location_id', 'POS Location', 'required|trim|xss_clean|callback_checkposlocation');
         $this->form_validation->set_rules('title', 'Location Title', 'required|trim|xss_clean|callback_checkTitle');
         $this->form_validation->set_rules('email', 'Email Address', 'valid_email');
         $this->form_validation->set_rules('location_id');
@@ -83,7 +95,7 @@ class Locations extends Crud_Controller
 
         if (empty($data['location_id'])) {
 
-            if (isset($data['title'])) {
+            /*if (isset($data['title'])) {
 
                 try {
                     $data['revel_location_id'] = $this->revel_location->create($data);
@@ -91,7 +103,7 @@ class Locations extends Crud_Controller
                     $data['revel_location_id'] = null;
                 }
 
-            }
+            }*/
 
             $this->locations_model->create($data);
             $this->session->set_flashdata('success_msg', "New location has been added successfully");
@@ -99,16 +111,14 @@ class Locations extends Crud_Controller
         } else {
 
             $this->locations_model->save($data, $data['location_id']);
-            $location_data = $this->locations_model->getLocations($data['location_id']);
+            /*$location_data = $this->locations_model->getLocations($data['location_id']);
             $data['revel_location_id']= $location_data[0]->revel_location_id;
 
             try {
                 $this->revel_location->update($data);
             } catch (\Exception $e) {
 
-            }
-
-
+            }*/
             $this->session->set_flashdata('success_msg', "Location has been updated successfully");
         }
 
@@ -138,6 +148,12 @@ class Locations extends Crud_Controller
     {
         $data = $this->input->post();
         return $this->locations_model->checkLocations($data['location_id'], $title);
+    }
+    public function checkposlocation($revel_location_id)
+    {
+
+        $data = $this->input->post();
+        return $this->locations_model->checkPosLocation($data['location_id'], $revel_location_id);
     }
 
     function checkVaughanLocation($VaughanLocation)

@@ -30,9 +30,22 @@
                         <div class="row-fluid">
                             <div class="span6">
                                 <div class="control-group">
+                                    <label class="control-label"><?php echo $this->lang->line('pos_api'); ?></label>
+                                    <div class="controls">
+                                        <select  class="validate[required1] span10" id="revel_location_id" name="revel_location_id">
+                                            <option value="">---<?php echo $this->lang->line('select_one'); ?>---</option>
+                                            <?php
+                                             $revel_location_id = (isset($queryup[0]->revel_location_id))? $queryup[0]->revel_location_id:set_value('revel_location_id');
+                                            foreach($revel_location as $rows): ?>
+                                                <option value="<?php echo $rows->id ?>" <?php if($revel_location_id ==  $rows->id ){ echo "selected='selected'"; } ?></option><?php echo $rows->name; ?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('location_name');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('location_name');?>" value="<?php echo(isset($queryup[0]->title))? $queryup[0]->title:set_value('title'); ?>"  class="validate[required] span10" name="title" id="title"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('location_name');?>" value="<?php echo(isset($queryup[0]->title))? $queryup[0]->title:set_value('title'); ?>"  class="validate[required1] span10" name="title" id="title"  />
                                     </div>
                                 </div>
 
@@ -89,12 +102,7 @@
                                         <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('phone');?>" value="<?php echo(isset($queryup[0]->phone))? $queryup[0]->phone:set_value('phone'); ?>"   class="span10" name="phone" id="phone"  />
                                     </div>
                                 </div>
-                     <!--           <div class="control-group">
-                                    <label class="control-label"><?php /*echo $this->lang->line('pos_api'); */?></label>
-                                    <div class="controls">
-                                        <input type="text" placeholder="<?php /*echo $this->lang->line('enter').' '.$this->lang->line('pos_api'); */?>" value="<?php /*echo(isset($queryup[0]->pos_api))? $queryup[0]->pos_api:set_value('pos_api'); */?>"   class="span10" name="pos_api" id="pos_api"  />
-                                    </div>
-                                </div>-->
+
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('store_print_ip');?></label>
                                     <div class="controls">

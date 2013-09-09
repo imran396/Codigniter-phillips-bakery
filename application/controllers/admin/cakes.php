@@ -9,7 +9,7 @@ class Cakes extends Crud_Controller
 
        // $this->load->library('image_lib');
         $this->load->helper('uploader');
-        //$this->output->enable_profiler(TRUE);
+        $this->load->config('app');
         $this->layout->setLayout('layout_admin');
         $this->load->model(array('cakes_model','gallery_model','revel_product'));
         $log_status = $this->ion_auth->logged_in();
@@ -20,6 +20,10 @@ class Cakes extends Crud_Controller
 
     public function index()
     {
+
+        header("Content-type=> application/json");
+        $revel_location = ($this->revel_product->getAll());
+        $this->data['revel_location'] =$revel_location;
 
         $this->data['catresult'] = $this->cakes_model->getCategories();
         $this->data['flvresult'] = $this->cakes_model->getFlavours();

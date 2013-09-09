@@ -113,6 +113,14 @@ class Locations_model extends Crud_Model
         }
     }
 
+    private function checkUniquePosLocation($id)
+    {
+        if (!empty($id)) {
+            $row = $this->db->select('revel_location_id')->where('location_id', $id)->get('locations')->row();
+            return $row->revel_location_id;
+        }
+    }
+
     private function checkUniqueVaughan($id)
     {
         if (!empty($id)) {
@@ -131,6 +139,23 @@ class Locations_model extends Crud_Model
 
             if ($count > 0) {
                 $this->form_validation->set_message('checkTitle', $title . ' %s ' . $this->lang->line('duplicate_msg'));
+                return false;
+            } else {
+                return true;
+            }
+
+        }
+    }
+
+    public function checkPosLocation($id, $revel_location_id)
+    {
+        $existingTitle = $this->checkUniquePosLocation($id);
+        if ($revel_location_id != $existingTitle) {
+
+           echo $count = $this->db->select('location_id')->where(array('revel_location_id' => $revel_location_id))->get('locations')->num_rows();
+
+            if ($count > 0) {
+                $this->form_validation->set_message('checkposlocation',' %s ' . $this->lang->line('duplicate_msg'));
                 return false;
             } else {
                 return true;
