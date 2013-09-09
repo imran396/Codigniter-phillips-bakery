@@ -32,7 +32,7 @@
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('pos_api'); ?></label>
                                     <div class="controls">
-                                        <select  class="validate[required1] span10" id="revel_location_id" name="revel_location_id">
+                                        <select  class="validate[required] span10" id="revel_location_id" name="revel_location_id">
                                             <option value="">---<?php echo $this->lang->line('select_one'); ?>---</option>
                                             <?php
                                              $revel_location_id = (isset($queryup[0]->revel_location_id))? $queryup[0]->revel_location_id:set_value('revel_location_id');
@@ -45,7 +45,7 @@
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('location_name');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('location_name');?>" value="<?php echo(isset($queryup[0]->title))? $queryup[0]->title:set_value('title'); ?>"  class="validate[required1] span10" name="title" id="title"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('location_name');?>" value="<?php echo(isset($queryup[0]->title))? $queryup[0]->title:set_value('title'); ?>"  class="validate[required] span10" name="title" id="title"  />
                                     </div>
                                 </div>
 

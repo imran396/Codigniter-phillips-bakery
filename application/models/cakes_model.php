@@ -323,11 +323,36 @@ class Cakes_model extends CI_Model
 
     }
 
+    public function checkRevelCake($id, $revel_product_id)
+    {
+        $dbtitle = $this->checkUniqueRevelProduct($id);
+
+        if ($revel_product_id != $dbtitle) {
+
+            $count=$this->db->select('cake_id')->where(array( 'revel_product_id' => $revel_product_id ))->get('cakes')->num_rows();
+            if ($count > 0) {
+                $this->form_validation->set_message('checkrevelcake',' %s ' . $this->lang->line('duplicate_msg'));
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+    }
+
     public function checkUniqueTitle($id)
     {
         if (!empty($id)) {
             $dbtitle = $this->db->select('title')->where('cake_id', $id)->get('cakes')->result();
             return $dbtitle[0]->title;
+        }
+    }
+
+    public function checkUniqueRevelProduct($id)
+    {
+        if (!empty($id)) {
+            $dbtitle = $this->db->select('revel_product_id')->where('cake_id', $id)->get('cakes')->result();
+            return $dbtitle[0]->revel_product_id;
         }
     }
 

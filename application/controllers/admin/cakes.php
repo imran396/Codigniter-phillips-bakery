@@ -22,8 +22,8 @@ class Cakes extends Crud_Controller
     {
 
         header("Content-type=> application/json");
-        $revel_location = ($this->revel_product->getAll());
-        $this->data['revel_location'] =$revel_location;
+        $revel_product = ($this->revel_product->getAll());
+        $this->data['revel_product'] =$revel_product;
 
         $this->data['catresult'] = $this->cakes_model->getCategories();
         $this->data['flvresult'] = $this->cakes_model->getFlavours();
@@ -78,6 +78,7 @@ class Cakes extends Crud_Controller
     private function addValidation()
     {
         $this->form_validation->set_rules('title', 'Cake','required|trim|xss_clean|callback_checkTitle');
+        $this->form_validation->set_rules('revel_product_id', 'Revel Cake', 'required|trim|xss_clean|callback_checkrevelcake');
         $this->form_validation->set_rules('cake_id');
         $this->form_validation->set_rules('cake_id');
         $this->form_validation->set_rules('category_id');
@@ -93,26 +94,24 @@ class Cakes extends Crud_Controller
         $data = $this->input->post();
         if (empty($data['cake_id'])) {
             if(isset($data['title'])){
-                try{
+                /*try{
                     $data['revel_product_id'] = $this->revel_product->create($data);
                 } catch(\Exception $e){
                     $data['revel_product_id'] = null;
-                }
+                }*/
 
                 $this->cakes_model->create($data);
             }
             $this->session->set_flashdata('success_msg','New cake has been added successfully');
         } else {
             $this->cakes_model->save($data, $data['cake_id']);
-            $cake_date = $this->cakes_model->getCakes($data['cake_id']);
-            $data['revel_cake_id']= $cake_date[0]->revel_product_id;
+           /* $cake_date = $this->cakes_model->getCakes($data['cake_id']);
+            $data['revel_product_id']= $cake_date[0]->revel_product_id;
             try{
                 $this->revel_product->update($data);
             }catch (\Exception $e){
 
-            }
-
-
+            }*/
             $this->session->set_flashdata('success_msg','Cake has been updated successfully');
         }
 
@@ -180,11 +179,14 @@ class Cakes extends Crud_Controller
 
     public function checkTitle($title){
 
-
         $data = $this->input->post();
         return  $this->cakes_model->checkcakes($data['cake_id'],$title);
+    }
 
+    public function checkrevelcake($revel_product_id){
 
+        $data = $this->input->post();
+        return $this->cakes_model->checkRevelCake($data['cake_id'], $revel_product_id);
     }
 
 

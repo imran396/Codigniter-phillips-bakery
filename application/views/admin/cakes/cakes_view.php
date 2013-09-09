@@ -36,6 +36,19 @@
                                         </div>
                                     </div>
                                     <div class="control-group">
+                                        <label class="control-label"><?php echo $this->lang->line('revel_cake'); ?></label>
+                                        <div class="controls">
+                                            <select  class="validate[required] span10" id="revel_product_id" name="revel_product_id">
+                                                <option value="">---<?php echo $this->lang->line('select_one'); ?>---</option>
+                                                <?php
+                                                $revel_product_id = (isset($queryup[0]->revel_product_id))? $queryup[0]->revel_product_id:set_value('revel_product_id');
+                                                foreach($revel_product as $rows): ?>
+                                                    <option value="<?php echo $rows->id ?>" <?php if($revel_product_id ==  $rows->id ){ echo "selected='selected'"; } ?></option><?php echo $rows->name; ?></option>
+                                            <?php endforeach;?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
                                         <label class="control-label"><?php echo $this->lang->line('description');?></label>
                                         <div class="controls">
                                             <textarea rows="" cols="" name="description" id="description" class="midium-textarea" ><?php echo(isset($queryup[0]->description))? $queryup[0]->description:set_value('description'); ?></textarea>
