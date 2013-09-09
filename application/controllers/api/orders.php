@@ -49,7 +49,7 @@ class Orders extends API_Controller
         if($data['cake_id'] > 0 ){
             $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
         }else{
-            $data['cake_id']=15;
+            $data['cake_id']=1;
         }
         $data['customer_id']=isset($_REQUEST['customer_id'])? $_REQUEST['customer_id']:'';
         $data['employee_id']=isset($_REQUEST['employee_id'])? $_REQUEST['employee_id']:'';

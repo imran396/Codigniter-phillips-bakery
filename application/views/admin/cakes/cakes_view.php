@@ -42,9 +42,11 @@
                                                 <option value="">---<?php echo $this->lang->line('select_one'); ?>---</option>
                                                 <?php
                                                 $revel_product_id = (isset($queryup[0]->revel_product_id))? $queryup[0]->revel_product_id:set_value('revel_product_id');
-                                                foreach($revel_product as $rows): ?>
+                                                foreach($revel_product as $rows):
+                                                    if($rows->id !=1){
+                                                    ?>
                                                     <option value="<?php echo $rows->id ?>" <?php if($revel_product_id ==  $rows->id ){ echo "selected='selected'"; } ?></option><?php echo $rows->name; ?></option>
-                                            <?php endforeach;?>
+                                            <?php } endforeach;?>
                                             </select>
                                         </div>
                                     </div>
