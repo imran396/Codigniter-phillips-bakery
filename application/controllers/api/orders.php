@@ -42,7 +42,8 @@ class Orders extends API_Controller
     {
         //echo returnGenerateID();
 
-        //$data['order_code']=returnGenerateID();
+        $file = "assets/uploads/errorlog.txt";
+        file_put_contents($file, json_encode($_REQUEST).PHP_EOL. json_encode($_SERVER).PHP_EOL, FILE_APPEND | LOCK_EX);
         $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:0;
         if($data['cake_id'] > 0 ){
             $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
@@ -98,7 +99,6 @@ class Orders extends API_Controller
         $order_delivery['delivery_instruction']=isset($_REQUEST['delivery_instruction'])? $_REQUEST['delivery_instruction']:'';
 
         $orders=$this->orders_model->order_insert($data);
-
         if(strtolower($data['delivery_type']) == 'delivery') {
 
             $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
