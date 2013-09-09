@@ -645,5 +645,17 @@ class Orders extends API_Controller
         }
 
     }
+    public function delete(){
+
+        $data = $this->orders_model->getOrderDelete();
+        $days= strtotime('-30 days');
+        $this->db->where(array('order_status'=>300,'order_date <=' =>$days ))->set(array('order_status'=>305,'is_delete'=>1,'update_date'=>time()))->update('orders');
+
+    }
+    public function sold(){
+
+    }
 
 }
+//0 0 * * * php /var/www/phillips-bakery/web/index.php api/orders delete
+//0 0 * * * php /var/www/phillips-bakery/web/index.php api/orders sold

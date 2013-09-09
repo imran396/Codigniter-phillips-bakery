@@ -66,6 +66,9 @@ class Cakes extends Crud_Controller
     {
 
 
+        header("Content-type=> application/json");
+        $revel_product = ($this->revel_product->getAll());
+        $this->data['revel_product'] =$revel_product;
         $this->data['queryup'] = $this->cakes_model->getcakes($id);
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['catresult'] = $this->cakes_model->getCategories();

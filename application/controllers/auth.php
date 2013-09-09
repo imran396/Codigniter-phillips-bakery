@@ -24,6 +24,8 @@ class Auth extends Controller {
 
 	{
 
+
+
         if (!$this->ion_auth->logged_in())
 		{
 			//redirect them to the login page

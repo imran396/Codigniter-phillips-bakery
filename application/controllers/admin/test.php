@@ -28,8 +28,22 @@ class Test extends Crud_Controller
     public function locations()
     {
         header("Content-type=> application/json");
-        var_dump($this->revel_location->getAll());
+        $revel_product = ($this->revel_product->getAll());
+
+        var_dump($revel_product);
+        exit;
+        $revel_location = ($this->revel_location->getAll());
+
+        $revel_location_arr=array();
+        foreach($revel_location as $rows):
+           echo  $rows->id.'<br/>';
+        endforeach;
+        var_dump($revel_location);
     }
+
+
+
+
 
     public function createLocation()
     {
