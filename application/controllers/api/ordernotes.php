@@ -10,13 +10,27 @@ class Ordernotes extends API_Controller
         $this->load->model('orders_model');
     }
 
+    public function index(){
 
-    public function notes($order_id){
-        $data = $this->orders_model->getAllNotes($order_id);
+        $lastdate=$this->input->get('lastupdate');
+        if(empty($lastdate)){
+            $data = $this->orders_model->getOtrderAllNotes();
+        }else{
+            $data = $this->orders_model->getLastUpdateAllNotes($lastdate);
+        }
         $this->sendOutput($data);
 
     }
 
+
+    public function notes($order_id){
+
+        $data = $this->orders_model->getOrderNotes($order_id);
+        $this->sendOutput($data);
+
+    }
+
+    
     public function insert(){
         if(!empty($_POST)){
             $this->orders_model->SaveNotes($_POST);
