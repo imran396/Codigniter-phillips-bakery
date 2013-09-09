@@ -16,7 +16,7 @@ class Revel_Order extends Revel_Model
                 "weight"                 => 0,
                 "cost"                   => 0,
                 "special_request"        => "",
-                "initial_price"          => 0,
+                "initial_price"          => $data['subtotal'],
                 "on_hold"                => 0,
                 "discount_reason"        => "",
                 "uuid"                   => $this->generateUUID(),
