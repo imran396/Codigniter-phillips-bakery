@@ -28,17 +28,13 @@
                 url:"<?php echo site_url('admin/productions/status')?>/"+status,
                 type:"post",
                 success: function(val){
-                  alert('Order Changed to: '+val);
+                    alert('Order Changed to: '+val);
                 }
             })
 
 
         });
-
-
-
     });
-
 </script>
 <script>
     function printpage()
@@ -47,7 +43,6 @@
     }
 </script>
 
-<img src="http://www.vicsjavascripts.org.uk/StdImages/One.gif" width="75" height="56" border="0" onmouseover="zxcZoom(this,'http://www.vicsjavascripts.org.uk/StdImages/WinterPalace.jpg',1000,1000,1,'C');" onmouseout="zxcZoom(this);" style="position: absolute; z-index: 1; width: 75px; height: 56px; left: 527px; top: 591px; cursor: pointer;">
 <div class="container-fluid fixed container-new">
 <div class="navbar main">
     <div class="icon-wrapper"><a href="/admin/productions" class="icon-home"></a></div>
@@ -70,19 +65,19 @@
     <div class="pull-right">
         <div class="row-fluid row-widest">
             <form action="" method="get" onsubmit="location">
-            <select class="selectpicker span12" name="order_status" id="order_status" >
-                <?php if($this->productions_model->currentProductionStatus($queryup->order_status)){?>
-                <option class="label"><?php echo $this->productions_model->currentProductionStatus($queryup->order_status) ?></option>
-                <?php }else{ ?>
-                <option class="label">Status</option>
-                <?php } ?>
+                <select class="selectpicker span12" name="order_status" id="order_status" >
+                    <?php if($this->productions_model->currentProductionStatus($queryup->order_status)){?>
+                        <option class="label"><?php echo $this->productions_model->currentProductionStatus($queryup->order_status) ?></option>
+                    <?php }else{ ?>
+                        <option class="label">Status</option>
+                    <?php } ?>
                     <?php
                     $getOrderStatus = $this->productions_model->getOrderStatus();
                     foreach($getOrderStatus as $production_status):
                         if($queryup->order_status != $production_status->production_status_code){
-                        ?>
-                        <option value="<?php echo $queryup->order_code.'/'.$production_status->production_status_code; ?>"><?php echo $production_status->description ?></option>
-                    <?php } endforeach; ?>
+                            ?>
+                            <option value="<?php echo $queryup->order_code.'/'.$production_status->production_status_code; ?>"><?php echo $production_status->description ?></option>
+                        <?php } endforeach; ?>
                 </select>
 
             </form>
@@ -109,180 +104,180 @@
     <?php
     $on_cake_image_needed = $queryup->on_cake_image_needed;
     if($on_cake_image_needed == 1 && empty($queryup->on_cake_image) && empty($instructionals) ){
-    echo "<h2 style='text-align: center; font-size: 18px; line-height: 115px' >Waiting for customer images</h2>";
+        echo "<h2 style='text-align: center; font-size: 18px; line-height: 115px' >Waiting for customer images</h2>";
     }else{
-    ?>
-    <ul>
-        <?php
+        ?>
+        <ul>
+            <?php
 
 
-        $cake_id=$queryup->cake_id;
+            $cake_id=$queryup->cake_id;
 
-        if(empty($queryup->on_cake_image) ){
-        $galleries = $this->gallery_model->getGallery($cake_id);
-        if(!empty($galleries)){
-            foreach($galleries as $gallery):
-                ?>
-                <li><a href=""><span class="plus"></span><!--<span class="desc">Image On Cake</span>--><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
-            <?php endforeach; } } ?>
-        <?php
+            if(empty($queryup->on_cake_image) ){
+                $galleries = $this->gallery_model->getGallery($cake_id);
+                if(!empty($galleries)){
+                    foreach($galleries as $gallery):
+                        ?>
+                        <li><a href=""><span class="plus"></span><!--<span class="desc">Image On Cake</span>--><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
+                    <?php endforeach; } } ?>
+            <?php
 
-        if($queryup->on_cake_image){ ?>
-        <li><a href=""><span class="plus"></span><span class="desc">Image On Cake</span><img src="<?php echo base_url().$queryup->on_cake_image; ?>" alt="" /></a></li>
-        <?php } ?>
-        <?php
-        $instructionals = $this->productions_model->photoGallery($queryup->order_id);
-        if(!empty($instructionals)){
-        foreach($instructionals as $instructional){
-            ?>
-            <li><a href=""><span class="plus"></span><img src="<?php echo base_url().$instructional->instructional_photo; ?>" alt="" /></a></li>
-        <?php } } ?>
+            if($queryup->on_cake_image){ ?>
+                <li><a href=""><span class="plus"></span><span class="desc">Image On Cake</span><img src="<?php echo base_url().$queryup->on_cake_image; ?>" alt="" /></a></li>
+            <?php } ?>
+            <?php
+            $instructionals = $this->productions_model->photoGallery($queryup->order_id);
+            if(!empty($instructionals)){
+                foreach($instructionals as $instructional){
+                    ?>
+                    <li><a href=""><span class="plus"></span><img src="<?php echo base_url().$instructional->instructional_photo; ?>" alt="" /></a></li>
+                <?php } } ?>
 
 
-    </ul>
+        </ul>
     <?php } ?>
 </div><!-- End Slider -->
 <div class="double">
-    <div class="col">
-        <div class="box">
-            <div class="scrolled">
-                <div class="info">
-                    <?php
-                    if($this->productions_model->getLocations($queryup->locationid)){ ?>
+<div class="col">
+    <div class="box">
+        <div class="scrolled">
+            <div class="info">
+                <?php
+                if($this->productions_model->getLocations($queryup->locationid)){ ?>
                     <div class="line">
                         <div class="title">Bakery location</div><?php echo $this->productions_model->getLocations($queryup ->locationid); ?>
                     </div>
-                    <?php } ?>
+                <?php } ?>
+                <div class="line">
+                    <div class="title">Order ID</div><?php echo $queryup->order_code; ?>
+                </div>
+                <?php if( $queryup->order_date){ ?>
                     <div class="line">
-                        <div class="title">Order ID</div><?php echo $queryup->order_code; ?>
+                        <div class="title"><?php echo $this->lang->line('order_created');?></div><?php echo getOrderDateFormat($queryup->order_date); ?>
                     </div>
-                    <?php if( $queryup->order_date){ ?>
-                        <div class="line">
-                            <div class="title"><?php echo $this->lang->line('order_created');?></div><?php echo getOrderDateFormat($queryup->order_date); ?>
-                        </div>
-                    <?php } ?>
-                    <?php if( $queryup->delivery_date){ ?>
+                <?php } ?>
+                <?php if( $queryup->delivery_date){ ?>
                     <div class="line">
                         <div class="title">Pickup / Delivery Date</div><?php echo $this->productions_model->dateFormate($queryup->delivery_date); ?>
                     </div>
-                    <?php } ?>
-                    <?php if($queryup->delivery_type){ ?>
-                        <div class="line">
-                            <?php if($queryup->delivery_type =='pickup'){ ?>
-                                <div class="title">Order Type</div>Pickup
-                            <?php }else{ ?>
-                                <div class="title">Order Type</div>Delivery
-                            <?php } ?>
-                        </div>
-                    <?php } ?>
-                    <?php if($queryup->delivery_type =='pickup' ){ ?>
-                        <div class="line">
-                            <div class="title">Pickup Location</div><?php echo $this->productions_model->getLocations($queryup ->pickup_location_id); ?>
-                        </div>
-                    <?php } ?>
-                    <?php if( $queryup->delivery_zone_id > 0){ ?>
+                <?php } ?>
+                <?php if($queryup->delivery_type){ ?>
+                    <div class="line">
+                        <?php if($queryup->delivery_type =='pickup'){ ?>
+                            <div class="title">Order Type</div>Pickup
+                        <?php }else{ ?>
+                            <div class="title">Order Type</div>Delivery
+                        <?php } ?>
+                    </div>
+                <?php } ?>
+                <?php if($queryup->delivery_type =='pickup' ){ ?>
+                    <div class="line">
+                        <div class="title">Pickup Location</div><?php echo $this->productions_model->getLocations($queryup ->pickup_location_id); ?>
+                    </div>
+                <?php } ?>
+                <?php if( $queryup->delivery_zone_id > 0){ ?>
                     <div class="line">
                         <div class="title">Delivery Zone</div><?php echo $this->productions_model->getZones($queryup->delivery_zone_id); ?>
                     </div>
-                    <?php } ?>
-                    <?php if( $queryup->delivery_time){ ?>
+                <?php } ?>
+                <?php if( $queryup->delivery_time){ ?>
                     <div class="line">
                         <div class="title">Pickup Time</div><?php echo $queryup->delivery_time; ?>
                     </div>
-                    <?php } ?>
-                    <?php if( $queryup->flavour_name){ ?>
+                <?php } ?>
+                <?php if( $queryup->flavour_name){ ?>
                     <div class="line">
                         <div class="title">Flavor</div><?php echo $queryup->flavour_name; ?>
                     </div>
-                    <?php } ?>
-                    <?php if( $queryup->shape || $queryup->serving_size ){ ?>
+                <?php } ?>
+                <?php if( $queryup->shape || $queryup->serving_size ){ ?>
                     <div class="line">
                         <div class="title">Size and Shape</div><?php  echo $queryup->serving_size; ?> <?php if( $queryup->shape){ ?> and  <?php echo $queryup->shape; } ?>
                     </div>
-                    <?php } ?>
-                    <?php if( $queryup->serving_title){ ?>
+                <?php } ?>
+                <?php if( $queryup->serving_title){ ?>
                     <div class="line">
                         <div class="title">Serving</div><?php echo $queryup->serving_title; ?>
                     </div>
-                    <?php } ?>
-                    <?php if( $queryup->orderTiers){ ?>
+                <?php } ?>
+                <?php if( $queryup->orderTiers){ ?>
                     <div class="line">
                         <div class="title">Tiers</div><?php echo $queryup->orderTiers; ?>
                     </div>
-                    <?php } ?>
-                    <?php if( $queryup->magic_cake_id){ ?>
+                <?php } ?>
+                <?php if( $queryup->magic_cake_id){ ?>
                     <div class="line">
                         <div class="title">Magic cake id</div><?php echo $queryup->magic_cake_id; ?>
                     </div>
-                    <?php } ?>
-                    <?php if( $queryup->matrix_price > 0){ ?>
-                        <div class="line">
-                            <div class="title">Cake Price</div><?php echo $queryup->matrix_price; ?>
-                        </div>
-                    <?php } ?>
-                    <?php if( $queryup->magic_surcharge > 0){ ?>
+                <?php } ?>
+                <?php if( $queryup->matrix_price > 0){ ?>
+                    <div class="line">
+                        <div class="title">Cake Price</div><?php echo $queryup->matrix_price; ?>
+                    </div>
+                <?php } ?>
+                <?php if( $queryup->magic_surcharge > 0){ ?>
                     <div class="line">
                         <div class="title">Magic Cake Surcharge</div><?php echo $queryup->magic_surcharge; ?>
                     </div>
-                    <?php } ?>
+                <?php } ?>
 
-                    <?php if( $queryup->printed_image_surcharge > 0){ ?>
-                        <div class="line">
-                            <div class="title">Printed Image Surcharge</div><?php echo $queryup->printed_image_surcharge; ?>
-                        </div>
-                    <?php } ?>
-                    <?php if( $queryup->delivery_zone_surcharge > 0){ ?>
-                        <div class="line">
-                            <div class="title">Delivery Zone Surcharge</div><?php echo $queryup->delivery_zone_surcharge; ?>
-                        </div>
-                    <?php } ?>
-                    <?php if( $queryup->discount_price > 0){ ?>
-                        <div class="line">
-                            <div class="title">Discount Price</div><?php echo $queryup->discount_price; ?>
-                        </div>
-                    <?php } ?>
-                    <?php if( $queryup->inscription){ ?>
+                <?php if( $queryup->printed_image_surcharge > 0){ ?>
+                    <div class="line">
+                        <div class="title">Printed Image Surcharge</div><?php echo $queryup->printed_image_surcharge; ?>
+                    </div>
+                <?php } ?>
+                <?php if( $queryup->delivery_zone_surcharge > 0){ ?>
+                    <div class="line">
+                        <div class="title">Delivery Zone Surcharge</div><?php echo $queryup->delivery_zone_surcharge; ?>
+                    </div>
+                <?php } ?>
+                <?php if( $queryup->discount_price > 0){ ?>
+                    <div class="line">
+                        <div class="title">Discount Price</div><?php echo $queryup->discount_price; ?>
+                    </div>
+                <?php } ?>
+                <?php if( $queryup->inscription){ ?>
                     <div class="line">
                         <div class="title">Inscription</div><?php echo $queryup->inscription; ?>
                     </div>
-                    <?php } ?>
-                    <?php if( $queryup->special_instruction){ ?>
+                <?php } ?>
+                <?php if( $queryup->special_instruction){ ?>
                     <div class="line last">
                         <div class="title">Special Instructions</div>
                         <?php echo $queryup->special_instruction; ?>
                     </div>
-                    <?php } ?>
-                </div>
+                <?php } ?>
             </div>
-        </div><!-- End Box -->
-    </div>
-    <div class="col">
-        <div class="box tabber">
-            <div class="widget widget-2 widget-tabs">
-                <div class="widget-head">
-                    <ul>
-                        <li class="active" ><a href="#customer-information-tab" data-toggle="tab">Customer Information</a></li>
-                        <?php if($this->productions_model->deliveryInfo($queryup->order_id)){ ?>
+        </div>
+    </div><!-- End Box -->
+</div>
+<div class="col">
+    <div class="box tabber">
+        <div class="widget widget-2 widget-tabs">
+            <div class="widget-head">
+                <ul>
+                    <li class="active" ><a href="#customer-information-tab" data-toggle="tab">Customer Information</a></li>
+                    <?php if($this->productions_model->deliveryInfo($queryup->order_id)){ ?>
                         <li><a href="#delivery-information-tab" data-toggle="tab">Delivery Information</a></li>
-                        <?php } ?>
-                    </ul>
-                </div>
-                <div class="widget-body">
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="customer-information-tab">
-                            <div class="scrolled">
-                                <div class="info">
-                                    <?php if( $queryup->first_name){ ?>
+                    <?php } ?>
+                </ul>
+            </div>
+            <div class="widget-body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="customer-information-tab">
+                        <div class="scrolled">
+                            <div class="info">
+                                <?php if( $queryup->first_name){ ?>
                                     <div class="line">
                                         <div class="title">First Name</div> <?php echo $queryup->first_name; ?>
                                     </div>
-                                    <?php } ?>
-                                    <?php if( $queryup->last_name){ ?>
+                                <?php } ?>
+                                <?php if( $queryup->last_name){ ?>
                                     <div class="line">
                                         <div class="title">Last Name</div><?php echo $queryup->last_name; ?>
                                     </div>
-                                    <?php } ?>
-                                    <?php if( $queryup->phone_number){ ?>
+                                <?php } ?>
+                                <?php if( $queryup->phone_number){ ?>
                                     <div class="line">
                                         <div class="title">Phone</div>
                                         <?php $from = $queryup->phone_number;
@@ -291,30 +286,30 @@
                                             substr($from, 3, 3),
                                             substr($from, 6, 8));?>
                                     </div>
-                                    <?php } ?>
-                                    <?php if( $queryup->email){ ?>
+                                <?php } ?>
+                                <?php if( $queryup->email){ ?>
                                     <div class="line">
                                         <div class="title">Email</div><?php echo $queryup->email; ?>
                                     </div>
-                                    <?php } ?>
-                                    <?php if( $queryup->address_1){ ?>
+                                <?php } ?>
+                                <?php if( $queryup->address_1){ ?>
                                     <div class="line">
                                         <div class="title">Address</div><?php echo $queryup->address_1; ?>
                                     </div>
-                                    <?php } ?>
-                                    <?php if( $queryup->address_2){ ?>
-                                        <div class="line">
-                                            <div class="title">Address 2</div><?php echo $queryup->address_2; ?>
-                                        </div>
-                                    <?php } ?>
-                                    <?php if( $queryup->postal_code){ ?>
+                                <?php } ?>
+                                <?php if( $queryup->address_2){ ?>
+                                    <div class="line">
+                                        <div class="title">Address 2</div><?php echo $queryup->address_2; ?>
+                                    </div>
+                                <?php } ?>
+                                <?php if( $queryup->postal_code){ ?>
                                     <div class="line">
                                         <div class="title">Postal Code</div><?php echo $queryup->postal_code; ?>
                                     </div>
-                                    <?php } ?>
-                                    <?php
+                                <?php } ?>
+                                <?php
 
-                                    if($this->productions_model->orderNotes($queryup->order_id)){
+                                if($this->productions_model->orderNotes($queryup->order_id)){
                                     ?>
 
                                     <div class="line last">
@@ -328,27 +323,27 @@
                                             $date = date("D j M",$createdate);
                                             $time = date("g:i a",$createdate);
 
-                                        ?>
-                                        <div class="note">
-                                            <div class="note-header">
-                                                <table>
-                                                    <tr>
-                                                        <td class="notes-title notes-title-added">Added by:</td><td class="note-text note-text-name"><?php echo $orderNotes->first_name.' '.$orderNotes->last_name; ?></td>
-                                                        <td class="notes-title notes-title-date">Date:<span class="note-text" ><?php echo $date; ?></span></td>
-                                                        <td class="notes-title notes-title-time">Time:<span class="note-text" ><?php echo $time; ?></span></td>
-                                                    </tr>
-                                                </table>
+                                            ?>
+                                            <div class="note">
+                                                <div class="note-header">
+                                                    <table>
+                                                        <tr>
+                                                            <td class="notes-title notes-title-added">Added by:</td><td class="note-text note-text-name"><?php echo $orderNotes->first_name.' '.$orderNotes->last_name; ?></td>
+                                                            <td class="notes-title notes-title-date">Date:<span class="note-text" ><?php echo $date; ?></span></td>
+                                                            <td class="notes-title notes-title-time">Time:<span class="note-text" ><?php echo $time; ?></span></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <?php echo $orderNotes->notes; ?>
                                             </div>
-                                            <?php echo $orderNotes->notes; ?>
-                                        </div>
                                         <?php endforeach;  ?>
                                     </div>
-                                    <?php } ?>
-                                </div>
+                                <?php } ?>
                             </div>
                         </div>
-                        <?php
-                        if($this->productions_model->deliveryInfo($queryup->order_id)){
+                    </div>
+                    <?php
+                    if($this->productions_model->deliveryInfo($queryup->order_id)){
                         $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id)
                         ?>
                         <div class="tab-pane" id="delivery-information-tab">
@@ -356,59 +351,59 @@
                             <div class="scrolled">
                                 <div class="info">
                                     <?php if( $deliveryInfo->name){ ?>
-                                    <div class="line">
-                                        <div class="title">Location or Contact Name</div><?php echo $deliveryInfo->name; ?>
-                                    </div>
+                                        <div class="line">
+                                            <div class="title">Location or Contact Name</div><?php echo $deliveryInfo->name; ?>
+                                        </div>
                                     <?php } ?>
                                     <?php if( $deliveryInfo->phone){ ?>
-                                    <div class="line">
-                                        <div class="title">Phone</div><?php
-                                        $from = $deliveryInfo->phone;
-                                        echo $to = sprintf("%s-%s-%s",
-                                            substr($from, 0, 3),
-                                            substr($from, 3, 3),
-                                            substr($from, 6, 8));
-                                       ?>
-                                    </div>
+                                        <div class="line">
+                                            <div class="title">Phone</div><?php
+                                            $from = $deliveryInfo->phone;
+                                            echo $to = sprintf("%s-%s-%s",
+                                                substr($from, 0, 3),
+                                                substr($from, 3, 3),
+                                                substr($from, 6, 8));
+                                            ?>
+                                        </div>
                                     <?php } ?>
                                     <?php if( $deliveryInfo->address_1){ ?>
-                                    <div class="line">
-                                        <div class="title">Address</div><?php echo $deliveryInfo->address_1; ?>
-                                    </div>
+                                        <div class="line">
+                                            <div class="title">Address</div><?php echo $deliveryInfo->address_1; ?>
+                                        </div>
                                     <?php } ?>
                                     <?php if( $deliveryInfo->address_2){ ?>
-                                    <div class="line">
-                                        <div class="title">Address 2</div><?php echo $deliveryInfo->address_2; ?>
-                                    </div>
+                                        <div class="line">
+                                            <div class="title">Address 2</div><?php echo $deliveryInfo->address_2; ?>
+                                        </div>
                                     <?php } ?>
                                     <?php if( $deliveryInfo->city){ ?>
-                                    <div class="line">
-                                        <div class="title">City</div><?php echo $deliveryInfo->city; ?>
-                                    </div>
+                                        <div class="line">
+                                            <div class="title">City</div><?php echo $deliveryInfo->city; ?>
+                                        </div>
                                     <?php } ?>
                                     <?php if( $deliveryInfo->province){ ?>
-                                    <div class="line">
-                                        <div class="title">Province</div><?php echo $deliveryInfo->province; ?>
-                                    </div>
+                                        <div class="line">
+                                            <div class="title">Province</div><?php echo $deliveryInfo->province; ?>
+                                        </div>
                                     <?php } ?>
                                     <?php if( $deliveryInfo->delivery_instruction){ ?>
-                                    <div class="line last">
-                                        <div class="title">Special Instructions</div>
-                                        <?php echo $deliveryInfo->delivery_instruction; ?>
-                                    </div>
+                                        <div class="line last">
+                                            <div class="title">Special Instructions</div>
+                                            <?php echo $deliveryInfo->delivery_instruction; ?>
+                                        </div>
                                     <?php } ?>
 
                                 </div>
                             </div>
 
                         </div>
-                        <?php  } ?>
-                    </div>
+                    <?php  } ?>
                 </div>
             </div>
-        </div><!-- End Box -->
-    </div>
-    <div class="separator"></div>
+        </div>
+    </div><!-- End Box -->
+</div>
+<div class="separator"></div>
 </div>
 </div><!-- End Wrapper -->
 </div>
@@ -421,25 +416,25 @@
                 <?php
                 $cake_id=$queryup->cake_id;
                 if(empty($queryup->on_cake_image)){
-                $galleries = $this->gallery_model->getGallery($cake_id);
-                if(!empty($galleries)){
-                    foreach($galleries as $gallery):
-                        ?>
+                    $galleries = $this->gallery_model->getGallery($cake_id);
+                    if(!empty($galleries)){
+                        foreach($galleries as $gallery):
+                            ?>
 
-                        <li><a href="<?php echo base_url().$gallery->image; ?>"><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
-                <?php endforeach; } } ?>
+                            <li><a href="<?php echo base_url().$gallery->image; ?>"><img src="<?php echo base_url().$gallery->image; ?>" alt="" /></a></li>
+                        <?php endforeach; } } ?>
                 <?php if($queryup->on_cake_image){ ?>
                     <li><a href="<?php echo base_url().$queryup->on_cake_image; ?>"><img src="<?php echo base_url().$queryup->on_cake_image; ?>" alt="" /></a></li>
                 <?php } ?>
                 <?php
                 $instructionals = $this->productions_model->photoGallery($queryup->order_id);
                 if(!empty($instructionals)){
-                foreach($instructionals as $instructional){
-                    ?>
-                    <li><a href="<?php echo base_url().$instructional->instructional_photo; ?>"><img src="<?php echo base_url().$instructional->instructional_photo; ?>" alt="" /></a></li>
-                <?php } } ?>
+                    foreach($instructionals as $instructional){
+                        ?>
+                        <li><a href="<?php echo base_url().$instructional->instructional_photo; ?>"><img src="<?php echo base_url().$instructional->instructional_photo; ?>" alt="" /></a></li>
+                    <?php } } ?>
 
-                </ul>
+            </ul>
         </div>
     </div>
 </div>
