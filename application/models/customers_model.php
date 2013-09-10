@@ -156,8 +156,7 @@ class Customers_model extends Crud_Model
             $this->db->where('customer_id', $customer_id);
             unset($data['customer_id']);
         }
-
-        $this->db->where('customer_id >',0);
+        $this->db->where('is_deleted !=',1);
         $this->db->like($data);
         $res = $this->db->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->get('customers');
         if($res){

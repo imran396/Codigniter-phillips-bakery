@@ -197,7 +197,7 @@ class Cakes_model extends CI_Model
         $this->db->from('cakes');
         $this->db->join('categories', 'categories.category_id = cakes.category_id', 'left');
         $this->db->join('flavours', 'flavours.flavour_id = cakes.flavour_id', 'left');
-        $this->db->where('cake_id !=',15);
+        $this->db->where('cake_id !=',1);
         $this->db->limit($per_page, $limit);
         $this->db->where('is_deleted !=',1);
         $this->db->order_by("cakes.title", "asc");

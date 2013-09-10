@@ -65,7 +65,6 @@ class Cakes extends Crud_Controller
     public function edit($id)
     {
 
-
         header("Content-type=> application/json");
         $revel_product = ($this->revel_product->getAll());
         $this->data['revel_product'] =$revel_product;
@@ -81,8 +80,7 @@ class Cakes extends Crud_Controller
     private function addValidation()
     {
         $this->form_validation->set_rules('title', 'Cake','required|trim|xss_clean|callback_checkTitle');
-        $this->form_validation->set_rules('revel_product_id', 'Revel Cake', 'required|trim|xss_clean|callback_checkrevelcake');
-        $this->form_validation->set_rules('cake_id');
+        $this->form_validation->set_rules('revel_product_id', 'Revel Cake', 'required|trim|xss_clean');
         $this->form_validation->set_rules('cake_id');
         $this->form_validation->set_rules('category_id');
         $this->form_validation->set_rules('description');

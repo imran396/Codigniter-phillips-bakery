@@ -225,7 +225,7 @@ class Productions_model extends Crud_Model
         $result =$this->db
             ->select('order_notes.*,meta.first_name,meta.last_name')
             ->join('meta',' meta.id =  order_notes.employee_id','left')
-            ->where(array('order_notes.order_id'=>$order_id))
+            ->where(array('is_deleted !='=>1,'order_notes.order_id'=>$order_id))
             ->order_by('create_date','desc')
             ->get('order_notes');
         if($result->num_rows() > 0){
