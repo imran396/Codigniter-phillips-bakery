@@ -236,7 +236,7 @@ class Cakes_model extends CI_Model
     public function getCustomers()
     {
 
-        return $this->db->select('customer_id,first_name,last_name')->where('status', 1)->order_by('first_name','asc')->get('customers')->result();
+        return $this->db->select('customer_id,first_name,last_name')->where(array('status'=> 1,'is_deleted !='=>1))->order_by('first_name','asc')->get('customers')->result();
 
     }
     public function getEmployees($group_id=0)
