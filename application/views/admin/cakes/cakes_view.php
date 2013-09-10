@@ -35,21 +35,21 @@
                                             <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('cake_title');?>" value="<?php echo(isset($queryup[0]->title))? $queryup[0]->title:set_value('title'); ?>"  class="validate[required] span12 " name="title" id="title"  />
                                         </div>
                                     </div>
-                                    <div class="control-group">
-                                        <label class="control-label"><?php echo $this->lang->line('revel_cake'); ?></label>
+      <!--                              <div class="control-group">
+                                        <label class="control-label"><?php /*echo $this->lang->line('revel_cake'); */?></label>
                                         <div class="controls">
                                             <select  class="validate[required] span10" id="revel_product_id" name="revel_product_id">
-                                                <option value="">---<?php echo $this->lang->line('select_one'); ?>---</option>
+                                                <option value="">---<?php /*echo $this->lang->line('select_one'); */?>---</option>
                                                 <?php
-                                                $revel_product_id = (isset($queryup[0]->revel_product_id))? $queryup[0]->revel_product_id:set_value('revel_product_id');
+/*                                                $revel_product_id = (isset($queryup[0]->revel_product_id))? $queryup[0]->revel_product_id:set_value('revel_product_id');
                                                 foreach($revel_product as $rows):
                                                     if($rows->id !=1){
-                                                    ?>
-                                                    <option value="<?php echo $rows->id ?>" <?php if($revel_product_id ==  $rows->id ){ echo "selected='selected'"; } ?></option><?php echo $rows->name; ?></option>
-                                            <?php } endforeach;?>
+                                                    */?>
+                                                    <option value="<?php /*echo $rows->id */?>" <?php /*if($revel_product_id ==  $rows->id ){ echo "selected='selected'"; } */?></option><?php /*echo $rows->name; */?></option>
+                                            <?php /*} endforeach;*/?>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="control-group">
                                         <label class="control-label"><?php echo $this->lang->line('description');?></label>
                                         <div class="controls">

@@ -7,8 +7,9 @@ class Revel_Order extends Revel_Model
         parent::__construct('OrderAllInOne');
     }
 
-    public function create($data, $custom = false)
+    public function create($data, $catalog = false)
     {
+
         $revelData = array(
             "items"     => array(array(
                 "updated_date"           => date("c"),
@@ -31,7 +32,7 @@ class Revel_Order extends Revel_Model
                 "split_with_seat"        => 0,
                 "discount_taxed"         => null,
                 "exchanged"              => 0,
-                "product"                => ($custom) ? $this->revel['customCake'] : $this->revel['catalogCake'],
+                "product"                => ($catalog) ?  $this->revel['catalogCake']:$this->revel['customCake'],
                 "combo_used"             => null,
                 "updated_by"             => $this->revel['user'],
                 "product_name_override"  => null,

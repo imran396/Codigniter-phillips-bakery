@@ -66,7 +66,7 @@ class Cakes_model extends CI_Model
 
         $flavour_id = (!empty($data['flavour_id'])) ? $data['flavour_id'] :'';
         $insert['title'] = ($data['title'] !="") ? $data['title'] :'';
-        $insert['revel_product_id'] = ($data['revel_product_id'] !="") ? $data['revel_product_id'] :'';
+        //$insert['revel_product_id'] = ($data['revel_product_id'] !="") ? $data['revel_product_id'] :'';
         $insert['description'] = ($data['description'] !="") ? $data['description'] :'';
         $insert['category_id'] = ($data['category_id'] !="") ? $data['category_id'] :'';
         $insert['flavour_id'] =($flavour_id !="") ? serialize($flavour_id):'';
@@ -190,14 +190,13 @@ class Cakes_model extends CI_Model
 
         $limit      = ($page - 1) * $per_page;
         $base_url   = site_url('admin/cakes/listing');
-        $total_rows = $this->db->where('cake_id !=',15)->count_all_results('cakes');
+        $total_rows = $this->db->where('is_deleted !=',1)->count_all_results('cakes');
         $paging     = paginate($base_url, $total_rows, $start, $per_page);
 
         $this->db->select('cakes.* , categories.title AS categories_name , flavours.title AS flavours_name');
         $this->db->from('cakes');
         $this->db->join('categories', 'categories.category_id = cakes.category_id', 'left');
         $this->db->join('flavours', 'flavours.flavour_id = cakes.flavour_id', 'left');
-        $this->db->where('cake_id !=',1);
         $this->db->limit($per_page, $limit);
         $this->db->where('is_deleted !=',1);
         $this->db->order_by("cakes.title", "asc");
@@ -325,22 +324,6 @@ class Cakes_model extends CI_Model
 
     }
 
-    public function checkRevelCake($id, $revel_product_id)
-    {
-        $dbtitle = $this->checkUniqueRevelProduct($id);
-
-        if ($revel_product_id != $dbtitle) {
-
-            $count=$this->db->select('cake_id')->where(array( 'revel_product_id' => $revel_product_id ))->get('cakes')->num_rows();
-            if ($count > 0) {
-                $this->form_validation->set_message('checkrevelcake',' %s ' . $this->lang->line('duplicate_msg'));
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-    }
 
     public function checkUniqueTitle($id)
     {
@@ -350,13 +333,6 @@ class Cakes_model extends CI_Model
         }
     }
 
-    public function checkUniqueRevelProduct($id)
-    {
-        if (!empty($id)) {
-            $dbtitle = $this->db->select('revel_product_id')->where('cake_id', $id)->get('cakes')->result();
-            return $dbtitle[0]->revel_product_id;
-        }
-    }
 
     public function getAll()
     {
