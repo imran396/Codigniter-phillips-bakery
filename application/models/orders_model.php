@@ -319,7 +319,7 @@ class Orders_model extends Crud_Model
     }
 
     function cronOrderDelete(){
-        $days= strtotime('-1 days');
+        $days= strtotime('1 days');
         $this->db->where(array('order_status'=>300,'order_date <=' =>$days ))->set(array('order_status'=>305,'is_deleted'=>1,'update_date'=>time()))->update('orders');
     }
 
