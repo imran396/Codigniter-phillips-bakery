@@ -19,6 +19,7 @@ class Customers_model extends Crud_Model
         if($count-> num_rows() > 0){
             $row = $count->row();
             $id = $row ->customer_id;
+            $data['is_deleted']=0;
             $this->save($data, $id);
 
         }else{

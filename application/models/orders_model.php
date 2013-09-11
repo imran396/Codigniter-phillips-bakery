@@ -318,6 +318,27 @@ class Orders_model extends Crud_Model
 
     }
 
+    function cronOrderDelete(){
+        $days= strtotime('-1 days');
+        $this->db->where(array('order_status'=>300,'order_date <=' =>$days ))->set(array('order_status'=>305,'is_deleted'=>1,'update_date'=>time()))->update('orders');
+    }
+
+    function cronOrderSold($revel_orders){
+        foreach($revel_orders as $revel):
+            if($revel->remaining_due == 0 ){
+                if($this->getCronOrderStatus($revel->id) > 0){
+                    $this->db->where(array('revel_order_id'=>$revel->id))->set(array('order_status'=>304,'update_date'=>time()))->update('orders');
+                }
+            }
+        endforeach;
+    }
+
+    private function getCronOrderStatus($revelid){
+
+        $count = $this->db->select('revel_order_id')->where(array('revel_order_id'=>$revelid,'order_status'=>303))->get('orders');
+        return $count->num_rows();
+    }
+
 
 
     public function getOrder($order_id){
