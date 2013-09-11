@@ -44,20 +44,22 @@ class Customers_model extends Crud_Model
     }
 
     public function deleteDataExisting($data=0){
-
-         return $count=$this->db->where(array('customer_id' => $data))->count_all_results('orders');
+            $order_status=array(301,3021,303);
+            $this->db->where(array('customer_id' => $data));
+            $this->db->where_in('order_status',$order_status);
+            return $count= $this->db->count_all_results('orders');
     }
 
     public function delete($id)
     {
-        //if(!$this->deleteDataExisting($id) > 0){
-            //$this->remove($id);
+
+        if(!$this->deleteDataExisting($id) > 0){
             $this->db->set(array('is_deleted'=>1,'update_date'=>time()))->where('customer_id',$id)->update('customers');
             $this->session->set_flashdata('delete_msg',"Customer has been deleted successfully");
-        //}else{
+        }else{
 
-            //$this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
-        //}
+            $this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
+        }
 
     }
 

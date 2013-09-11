@@ -177,7 +177,8 @@ class Orders extends API_Controller
         $this->createPDF($rows->order_code);
 
         $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
-        if($mailtouser ==1){
+        $sync = isset($_REQUEST['sync'])? $_REQUEST['sync']:'';
+        if($mailtouser ==1 || $sync ==1 ){
             $this->sendEmail($rows->order_code);
         }
 

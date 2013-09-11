@@ -686,7 +686,7 @@ class Orders_model extends Crud_Model
         $order_code = isset($data['order_code'])?$data['order_code']:'';
         $customer_id = isset($data['customer_id'])? $data['customer_id']:'';
 
-        $where ="'order_date' != '' ";
+        $where ="'is_deleted' != 1";
         if(!empty($order_id)){
 
             $where .=" AND `order_id` = ".$order_id;
