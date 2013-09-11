@@ -12,6 +12,7 @@ class Orders extends API_Controller
         require_once 'Zend/Loader/StandardAutoloader.php';
         $loader = new Zend\Loader\StandardAutoloader(array('autoregister_zf' => true));
         $loader->register();
+        $this->load->config('app');
         $this->load->helper(array('uploader','dompdf','idgenerator'));
         $this->load->model(array('orders_model','productions_model','gallery_model','locations_model'));
         $this->load->library('email');
@@ -94,96 +95,98 @@ class Orders extends API_Controller
         $order_delivery['province']=isset($_REQUEST['province'])? $_REQUEST['province']:'';
         $order_delivery['delivery_instruction']=isset($_REQUEST['delivery_instruction'])? $_REQUEST['delivery_instruction']:'';
 
-        $orders=$this->orders_model->order_insert($data);
-        if(strtolower($data['delivery_type']) == 'delivery') {
+        if(!empty($data)){
 
-            $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
-        }
+            $orders=$this->orders_model->order_insert($data);
+            if(strtolower($data['delivery_type']) == 'delivery') {
 
-        if($orders['order_id']) {
+                $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
+            }
 
-            if(isset($_REQUEST['employee_id'])){
-                $empolyee_code = $this->logs_model->getEmployeeCode($_REQUEST['employee_id']);
-                $log = array(
-                    'employee_id' => $empolyee_code,
-                    'audit_name' => 'order created',
-                    'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
+            if($orders['order_id']) {
+
+                if(isset($_REQUEST['employee_id'])){
+                    $empolyee_code = $this->logs_model->getEmployeeCode($_REQUEST['employee_id']);
+                    $log = array(
+                        'employee_id' => $empolyee_code,
+                        'audit_name' => 'order created',
+                        'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
+                    );
+                    $this->logs_model->insertAuditLog($log);
+                }
+
+            }
+
+            $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
+            if(empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] != '300' ){
+
+                //$revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
+                $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
+                $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+
+                $RevelOrderData = array(
+                    'order_code' => $orders['order_code'],
+                    'revel_customer_id' => $revel_customer,
+                    'revel_location_id' => $revel_location,
+                    'discount'=> $orders['discount_price'],
+                    'subtotal'=> $orders['total_price']
                 );
-                $this->logs_model->insertAuditLog($log);
+               try{
+                   $custom =( $orders['cake_id'] > 0 ) ? $orders['cake_id'] :'';
+                   $status_code_revel =  $this->revel_order->create($RevelOrderData,$custom);
+
+                   $orders['revel_order_id']  = $status_code_revel;
+               } catch (\Exception $e){
+                   $orders['revel_order_id'] = null;
+               }
+
+
+                if($status_code_revel > 0){
+                    $orders['order_code'] = $status_code_revel;
+                    $orders=$this->orders_model->order_update($orders, $orders['order_id']);
+                }
+
             }
 
-        }
+            $result= $this->productions_model->orderPrint($orders['order_id']);
+            $rows = $result->row();
 
-        $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
-        if(empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] != '300' ){
-
-            //$revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
-            $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
-            $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
-
-            $RevelOrderData = array(
-                'order_code' => $orders['order_code'],
-                'revel_customer_id' => $revel_customer,
-                'revel_location_id' => $revel_location,
-                'discount'=> $orders['discount_price'],
-                'subtotal'=> $orders['total_price']
-            );
-           try{
-               $custom =( $orders['cake_id'] > 0 ) ? $orders['cake_id'] :'';
-               $status_code_revel =  $this->revel_order->create($RevelOrderData,$custom);
-
-               $orders['revel_order_id']  = $status_code_revel;
-           } catch (\Exception $e){
-               $orders['revel_order_id'] = null;
-           }
-
-
-            if($status_code_revel > 0){
-                $orders['order_code'] = $status_code_revel;
-                $orders=$this->orders_model->order_update($orders, $orders['order_id']);
+            if(isset($_FILES['onCakeImage'])){
+                $this->orders_model->doUpload($orders['order_id']);
             }
 
-        }
+            if(isset($_FILES['instructionalImages'])){
 
-        $result= $this->productions_model->orderPrint($orders['order_id']);
-        $rows = $result->row();
-
-        if(isset($_FILES['onCakeImage'])){
-            $this->orders_model->doUpload($orders['order_id']);
-        }
-
-        if(isset($_FILES['instructionalImages'])){
-
-            $this->orders_model->instructionalImagesUpload($orders['order_id']);
-        }
-
-        if($rows -> order_status == '301' ){
-
-            $cake_email_photo = isset($rows->cake_email_photo) ? $rows->cake_email_photo:'';
-            if($cake_email_photo == 1 ){
-
-                $this->mailgunSendMessage($rows,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'),$this->lang->line('mailgun_cakeonimage_body'));
+                $this->orders_model->instructionalImagesUpload($orders['order_id']);
             }
 
-            $instructional_email_photo = isset($rows->instructional_email_photo) ? $rows->instructional_email_photo :'';
-            if($instructional_email_photo == 1){
+            if($rows -> order_status == '301' ){
 
-                $this->mailgunSendMessage($rows,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'),$this->lang->line('mailgun_instructional_body'));
+                $cake_email_photo = isset($rows->cake_email_photo) ? $rows->cake_email_photo:'';
+                if($cake_email_photo == 1 ){
+
+                    $this->mailgunSendMessage($rows,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'),$this->lang->line('mailgun_cakeonimage_body'));
+                }
+
+                $instructional_email_photo = isset($rows->instructional_email_photo) ? $rows->instructional_email_photo :'';
+                if($instructional_email_photo == 1){
+
+                    $this->mailgunSendMessage($rows,$this->lang->line('mailgun_instructional_email'),$this->lang->line('mailgun_instructional_name'),$this->lang->line('mailgun_instructional_subject'),$this->lang->line('mailgun_instructional_body'));
+                }
+
             }
 
+            $this->saveBarcodeImage($rows->order_code);
+            $this->createPDF($rows->order_code);
+
+            $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
+            $sync = isset($_REQUEST['sync'])? $_REQUEST['sync']:'';
+            if($mailtouser ==1 || $sync ==1 ){
+                $this->sendEmail($rows->order_code);
+            }
+
+            $this->sendOutput(array('order_id'=> $rows -> order_id ,'order_code'=> $rows->order_code,'order_status' =>  $rows -> order_status));
         }
-
-        $this->saveBarcodeImage($rows->order_code);
-        $this->createPDF($rows->order_code);
-
-        $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
-        $sync = isset($_REQUEST['sync'])? $_REQUEST['sync']:'';
-        if($mailtouser ==1 || $sync ==1 ){
-            $this->sendEmail($rows->order_code);
-        }
-
-        $this->sendOutput(array('order_id'=> $rows -> order_id ,'order_code'=> $rows->order_code,'order_status' =>  $rows -> order_status));
-
     }
 
     public function update()
@@ -227,7 +230,6 @@ class Orders extends API_Controller
         }*/
 
         $orders=$this->orders_model->order_update($data, $data['order_id']);
-
         if($orders['order_id']) {
 
             if(isset($_REQUEST['employee_id'])){
@@ -641,14 +643,16 @@ class Orders extends API_Controller
     }
     public function delete(){
 
-        $data = $this->orders_model->getOrderDelete();
-        $days= strtotime('-30 days');
-        $this->db->where(array('order_status'=>300,'order_date <=' =>$days ))->set(array('order_status'=>305,'is_delete'=>1,'update_date'=>time()))->update('orders');
+       $this->orders_model->cronOrderDelete();
 
     }
     public function sold(){
-
+        header("Content-type=> application/json");
+        $revel_orders = ($this->revel_order->getAll());
+        $this->orders_model->cronOrderSold($revel_orders);
     }
+
+
 
 }
 //0 0 * * * php /var/www/phillips-bakery/web/index.php api/orders delete
