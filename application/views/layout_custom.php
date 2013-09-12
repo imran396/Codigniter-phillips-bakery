@@ -125,7 +125,8 @@
 <script src="<?php echo base_url() ?>assets/bootstrap/extend/bootbox.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/bootstrap/extend/bootstrap-wysihtml5/js/wysihtml5-0.3.0_rc2.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/bootstrap/extend/bootstrap-wysihtml5/js/bootstrap-wysihtml5-0.0.2.js" type="text/javascript"></script>
-<script type="text/javascript" src="<?php echo base_url() ?>/assets/js/imgViewer.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>/assets/js/jquery.wheelzoom.js"></script>
+
 <!-- Theme -->
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/custom.css?var=1" />
 
@@ -135,6 +136,16 @@
 <!--Layout Options-->
 <!--<script src="<?php //echo base_url() ?>/assets/theme/scripts/layout.js"></script>-->
 <link rel="stylesheet" type="text/css" href="/assets/multi-datepicker/css/mdp.css">
+<script language="javascript">
+$(document).ready(function(){
+    $('.popup-gallery .current-img img').wheelzoom();
 
+    // or zoom sets the zoom percent.
+    $('.popup-gallery .current-img img').wheelzoom({zoom:0.05});
+
+    // zooming out can be triggered by calling 'wheelzoom.reset'
+    $('.popup-gallery .current-img img').trigger('wheelzoom.reset')
+});
+</script>
 </body>
 </html>

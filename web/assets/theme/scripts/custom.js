@@ -1,88 +1,107 @@
 $(function()
 {
-	$(".popup").each(function()
-	{
+    $(".popup").each(function()
+    {
 
         var popup = $(this);
         popup.find(".popup-close").click(function()
-		{
-			$(".layer").remove();
-			popup.hide();
-			
-			return false;
-		});
-	});
-	
-	$(".popup-gallery").each(function()
-	{
+        {
+            $(".layer").remove();
+            popup.hide();
+
+            return false;
+        });
+    });
+
+    $(".popup-gallery").each(function()
+    {
 
 
         var gallery = $(this);
 
-		if (gallery.find(".gallery-slider li.selected").length == 0) gallery.find(".gallery-slider li:first").addClass("selected");
-		
-		gallery.find(".current-img").html('<img id="image1" src="'+gallery.find(".gallery-slider .selected a").attr("href")+'" alt="" />');
-		
-		gallery.find(".gallery-slider a").click(function()
-		{
-			gallery.find(".current-img").html('<img id="image1"  src="'+$(this).attr("href")+'" alt="" />');
-			gallery.find(".gallery-slider li.selected").removeClass("selected");
-			$(this).parent().addClass("selected");
-			
-			return false;
-		});
-	});
-	
-	if ($('.slider-img').length > 0)
-	{
-		$('.slider-img').jcarousel({
-			scroll: 1,
-			wrap: "both"
-		});
-		
-		$(".slider-img a").click(function()
-		{
+        if (gallery.find(".gallery-slider li.selected").length == 0) gallery.find(".gallery-slider li:first").addClass("selected");
 
-            var initalpopupimagepath = $(this).find('img').attr('src');
-            $(".current-img").html('<img id="image1" src="'+ initalpopupimagepath+'">');
+        gallery.find(".current-img").html('<img  src="'+gallery.find(".gallery-slider .selected a").attr("href")+'" alt="" />');
+
+        gallery.find(".gallery-slider a").click(function()
+        {
+            updateCurrentImage($(this).attr("href"));
+
+            gallery.find(".gallery-slider li.selected").removeClass("selected");
+            $(this).parent().addClass("selected");
+
+
+
+            return false;
+        });
+    });
+
+    if ($('.slider-img').length > 0)
+    {
+        $('.slider-img').jcarousel({
+            scroll: 1,
+            wrap: "both"
+        });
+
+        $(".slider-img a").click(function()
+        {
+
+            updateCurrentImage($(this).find('img').attr('src'));
 
             var layer = $('<div class="layer" />');
 
             $("body").append(layer);
-			$(".layer").height($("body").height() + 50).show();
-			
-			$("#gallery-popup").show();
-			
-			$(".gallery-slider").jcarousel({
-				scroll: 1,
-				wrap: "both"
-			});
-			
-			return false;
-		});
-	}
-					 
-	$(".timepicker").each(function()
-	{
-		var timepicker = $(this);
-		
-		timepicker.find(".hasTimeDropdown").click(function()
-		{
-			timepicker.find(".timedropdown").toggle();
-		});
+
+            $(".layer").height($("body").height() + 50).show();
 
 
-		
-		$(timepicker.find(".timedropdown .btn-success")).click(function()
-		{
-			$(timepicker.find(".timedropdown")).hide();
-			
-			var ampm = "am";
-			var hours = timepicker.find( ".sliderhour .slider" ).slider( "value" );
+            $("#gallery-popup").show();
 
-			var minutes = timepicker.find( ".sliderminute .slider" ).slider( "value" );
-			
-			if (hours > 11) { hours -= 12; ampm = "pm"; if(hours == 0){hours = 12} }
+            $(".gallery-slider").jcarousel({
+                scroll: 1,
+                wrap: "both"
+            });
+
+            return false;
+        });
+    }
+
+    function updateCurrentImage(initalpopupimagepath){
+
+        $("#current-image-div-id").html('');
+        var img = $('<img/>');
+
+
+        img.one('load', function(){
+            $(img).wheelzoom();
+
+            console.log(this);
+            //this.trigger('load');
+        }).attr('src', initalpopupimagepath).appendTo($("#current-image-div-id"));
+
+    }
+
+    $(".timepicker").each(function()
+    {
+        var timepicker = $(this);
+
+        timepicker.find(".hasTimeDropdown").click(function()
+        {
+            timepicker.find(".timedropdown").toggle();
+        });
+
+
+
+        $(timepicker.find(".timedropdown .btn-success")).click(function()
+        {
+            $(timepicker.find(".timedropdown")).hide();
+
+            var ampm = "am";
+            var hours = timepicker.find( ".sliderhour .slider" ).slider( "value" );
+
+            var minutes = timepicker.find( ".sliderminute .slider" ).slider( "value" );
+
+            if (hours > 11) { hours -= 12; ampm = "pm"; if(hours == 0){hours = 12} }
 
             var time_inp = timepicker.find( ".hasTimeDropdown" );
 
@@ -96,10 +115,10 @@ $(function()
                 $(time_inp.attr('rel')).val(time_inp.val());
 
             }
-			return false;
-		});
-	});
-	try{
+            return false;
+        });
+    });
+    try{
         $('.scrolled').jScrollPane(
             {
                 showArrows: true,
@@ -111,10 +130,10 @@ $(function()
 
     }
 
-try{
+    try{
 
 
-    $('.date-pick')
+        $('.date-pick')
 
             .datePicker(
             {
@@ -152,38 +171,12 @@ try{
             }
         );
 
-}catch (e){
+    }catch (e){
 
-}
+    }
 
-   /* last update ----   */
-
+    /* last update ----   */
 
 
 });
-
-
-(function($) {
-    $("#image1").imgViewer({
-        onClick: function( e, self ) {
-            var pos = self.cursorToImg( e.pageX, e.pageY);
-            $("#position").html(e.pageX + " " + e.pageY + " " + pos.x + " " + pos.y);
-        }
-    });
-    function test(e, self) {
-        var pos = self.cursorToImg( e.pageX, e.pageY);
-        $("#position2").html(e.pageX + " " + e.pageY + " " + pos.x + " " + pos.y);
-    }
-    var img = $("#image2").imgViewer();
-    img.imgViewer("option", "onClick", test);
-
-    $("#image3").imgViewer({
-        onClick: function( e, self ) {
-            var pos = self.cursorToImg( e.pageX, e.pageY);
-            $("#position3").html(e.pageX + " " + e.pageY + " " + pos.x + " " + pos.y);
-        }
-    });
-    $("#image4").imgViewer();
-})(jQuery);
-
 

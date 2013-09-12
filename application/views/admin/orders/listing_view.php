@@ -98,11 +98,11 @@
     $(document).ready(function() {
 
         $('.order-sortable').dataTable( {
-            "aaSorting": [[0,'desc']],
+            "aaSorting": [[1,'desc']],
             "aoColumns": [
                 null,
-                {"sTYpe":   "date-dd-mmm-yyyy" },
-                {"sTYpe":   "date-dd-mmm-yyyy" },
+                {"sTYpe":   "date-mm-dd-yyyy" },
+                {"sTYpe":   "date-mm-dd-yyyy" },
                 null,
                 null,
                 null

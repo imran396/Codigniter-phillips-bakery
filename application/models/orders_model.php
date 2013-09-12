@@ -319,11 +319,12 @@ class Orders_model extends Crud_Model
     }
 
     function cronOrderDelete(){
-        $days= strtotime('1 days');
+        $days= strtotime('-30 days');
         $this->db->where(array('order_status'=>300,'order_date <=' =>$days ))->set(array('order_status'=>305,'is_deleted'=>1,'update_date'=>time()))->update('orders');
     }
 
     function cronOrderSold($revel_orders){
+
         foreach($revel_orders as $revel):
             if($revel->remaining_due == 0 ){
                 if($this->getCronOrderStatus($revel->id) > 0){
@@ -453,7 +454,7 @@ class Orders_model extends Crud_Model
         $this->db->limit($per_page,$limit);
         $this->db->where('orders.is_deleted !=',1);
         //$this->db->where('delivery_date >=',$curdate);
-        $this->db->order_by("orders.order_code", "desc");
+        $this->db->order_by("orders.order_date", "desc");
         //$this->db->order_by("orders.order_status", "desc");
         $query =$this->db->get()->result();
         return array($query,$paging,$total_rows,$limit);

@@ -34,6 +34,7 @@
 
 
         });
+
     });
 </script>
 <script>
@@ -410,7 +411,7 @@
 <div class="popup popup-gallery" id="gallery-popup">
     <a href="" class="popup-close"></a>
     <div class="popup-content">
-        <div class="current-img"></div>
+        <div id="current-image-div-id" class="current-img"></div>
         <div class="gallery-slider">
             <ul>
                 <?php
