@@ -341,7 +341,7 @@
                 $i=$var;
                 foreach($paging[0] as $rows):
                 ?>
-                <tr>
+                <tr style="cursor: pointer" onclick="window.location='/admin/productions/details/<?php echo $rows->order_code; ?>'">
                     <td class="center">
                         <a class="print-none" href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a>
                         <p class="list-code"><?php echo $rows->order_code; ?></p>

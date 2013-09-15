@@ -19,7 +19,7 @@
             <?php
             foreach($query as $rows):
             ?>
-                <tr>
+                <tr style="cursor: pointer" onclick="window.location='/admin/productions/details/<?php echo $rows->order_code; ?>'" >
                     <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
                     <td><?php if($rows->delivery_type =='pickup'){ echo $this->productions_model->getLocations($rows->pickup_location_id); }else{ echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---"; } ?></td>
                     <td><?php echo $rows->cake_name; ?></td>

@@ -148,19 +148,20 @@ $lang['vaughan_location_msg'] = "Another location has been assigned as the Vaugh
 /* Cakes */
 
 $lang['category_id'] 		 	    = 'Cake Category';
+$lang['revel_cake'] 		 	    = 'Revel Cake Name';
 $lang['flavour_id'] 		 	    = 'Flavour Name';
 $lang['location_id'] 		 	    = 'Location Name';
 $lang['cake_title'] 		 	    = 'Cake Name';
 $lang['description'] 		 	    = 'Description';
-$lang['meta_tag'] 		 	    = 'Meta Tag';
+$lang['meta_tag'] 		 	        = 'Meta Tag';
 $lang['start_price'] 		 	    = 'Start Price';
-$lang['price'] 		 	    = 'Price';
-$lang['to'] 		 	    = 'To';
+$lang['price'] 		 	            = 'Price';
+$lang['to'] 		 	            = 'To';
 $lang['add_gallery'] 		 	    = 'Add Gallery';
 $lang['list_cakes'] 		 	    = 'List of Cakes';
 
 $lang['select_one'] 		 	    = 'Select One';
-$lang['select'] 		 	    = 'Select';
+$lang['select'] 		 	        = 'Select';
 
 $lang['upload_image'] 		 	    = 'Upload Image';
 $lang['create_cake'] 		 	    = 'Create Cake';
@@ -170,12 +171,12 @@ $lang['gallery_image'] 		 	    = 'Gallery Image';
 $lang['add_flavours'] 		 	    = 'Add Flavours';
 $lang['flavour_name'] 		 	    = 'Flavour Name';
 $lang['cake_shape'] 		 	    = 'Cake Shape';
-$lang['fondant'] 		 	    = 'Fondant';
+$lang['fondant'] 		 	        = 'Fondant';
 
 
 $lang['add_servings'] 		 	    = 'Add Servings';
 $lang['serving_name'] 		 	    = 'Number of Servings';
-$lang['size'] 		 	    = 'Size';
+$lang['size'] 		 	            = 'Size';
 $lang['size_shape'] 		 	    = 'Size & Shape';
 $lang['printing_surcharge'] 		 	    = 'Printing Surcharge';
 
