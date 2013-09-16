@@ -212,7 +212,7 @@ class Customers_model extends Crud_Model
         $query="SELECT customer_id,first_name,last_name,phone_number,status
                 FROM `customers`
                 WHERE(is_deleted !=1 AND  LOWER(`first_name`) LIKE '%$search%')
-                || (is_deleted !=1 AND LOWER(`last_name`) = '%$search%')
+                || (is_deleted !=1 AND LOWER(`last_name`) LIKE '%$search%')
                 || (is_deleted !=1 AND `phone_number` = '$search')";
 
         $per_page=10;
