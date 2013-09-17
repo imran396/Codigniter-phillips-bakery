@@ -113,6 +113,17 @@ class Servings_model extends Crud_Model
 
     }
 
+    public function getAll()
+    {
+        $data = $this->db->select('serving_id,title as serving_title ,size,printing_surcharge ')->order_by('title','asc')->get('servings')->result_array();
+
+        foreach($data as $key => $val){
+            $data[$key]['serving_id'] = (int) $data[$key]['serving_id'];
+        }
+        return $data;
+    }
+
+
 
 
 }

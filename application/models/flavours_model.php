@@ -126,6 +126,16 @@ class flavours_model extends Crud_Model
 
     }
 
+    public function getAll()
+    {
+        $data = $this->db->select('flavour_id,title as flavours_title,fondant')->order_by('title','asc')->get('flavours')->result_array();
+        foreach($data as $key => $val){
+            $data[$key]['flavour_id'] = (int) $data[$key]['flavour_id'];
+            $data[$key]['fondant'] = (int) $data[$key]['fondant'];
+        }
+        return $data;
+    }
+
 
 
 }

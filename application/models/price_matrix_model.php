@@ -80,5 +80,19 @@ class Price_matrix_model extends Ci_Model
 
     }
 
+    public function getAll($location_id)
+    {
+        $data = $this->db->select('price_matrix_id,location_id,cake_id,serving_id,price')->where(array('location_id'=>$location_id))->order_by('price_matrix_id','asc')->get('price_matrix')->result_array();
+        foreach($data as $key => $val){
+            $data[$key]['price_matrix_id'] = (int) $data[$key]['price_matrix_id'];
+            $data[$key]['cake_id'] = (int) $data[$key]['cake_id'];
+            $data[$key]['location_id'] = (int) $data[$key]['location_id'];
+            $data[$key]['serving_id'] = (int) $data[$key]['serving_id'];
+            $data[$key]['price'] = (float) $data[$key]['price'];
+        }
+        return $data;
+    }
+
+
 
 }
