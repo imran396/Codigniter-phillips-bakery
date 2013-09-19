@@ -12,7 +12,7 @@ class Price_matrix_model extends Ci_Model
     public function save($location_id)
     {
 
-        $flavour = ($this->input->post('flavour_id'));
+        $flavour = ($this->input->post('cake_id'));
         //$this->remove($location_id);
        // $query="TRUNCATE TABLE `price_matrix`";
        // $this->db->query($query);
@@ -25,7 +25,7 @@ class Price_matrix_model extends Ci_Model
                 if($price_matrix[$i] > 0 ){
                     $this->db->set(array('price'=> $price[$i]))->where(array('price_matrix_id'=>$price_matrix[$i]))->update('price_matrix');
                 }else{
-                    $this->db->set(array('location_id'=>$location_id,'flavour_id'=> $flav,'serving_id'=> $serv,'price'=> $price[$i]))->insert('price_matrix');
+                    $this->db->set(array('location_id'=>$location_id,'cake_id'=> $flav,'serving_id'=> $serv,'price'=> $price[$i]))->insert('price_matrix');
                 }
 
                 $i++;
@@ -42,12 +42,12 @@ class Price_matrix_model extends Ci_Model
 
     }
 
-    public function getPrice($location_id,$flavour_id,$serving_id)
+    public function getPrice($location_id,$cake_id,$serving_id)
     {
 
         return $rows= $this->db
             ->select('price_matrix_id,price')
-            ->where(array('location_id'=>$location_id,'flavour_id'=>$flavour_id,'serving_id'=>$serving_id))
+            ->where(array('location_id'=>$location_id,'cake_id'=>$cake_id,'serving_id'=>$serving_id))
             ->get('price_matrix')->result();
 
 
@@ -77,6 +77,12 @@ class Price_matrix_model extends Ci_Model
     {
 
         return $this->db->select('*')->where('status',1)->order_by("title", "asc")->get('flavours')->result();
+
+    }
+    public function getCakes()
+    {
+
+        return $this->db->select('*')->where('status',1)->order_by("title", "asc")->get('cakes')->result();
 
     }
 

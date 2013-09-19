@@ -22,6 +22,7 @@ class Price_matrix extends Crud_Controller
         $this->data['serresult'] = $this->price_matrix_model->getServings();
         $this->data['locresult'] = $this->price_matrix_model->getLocations();
         $this->data['flvresult'] = $this->price_matrix_model->getFlavours();
+        $this->data['flvresult'] = $this->price_matrix_model->getCakes();
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/price_matrix/price_matrix_view', $this->data);
 
@@ -33,6 +34,7 @@ class Price_matrix extends Crud_Controller
         $this->data['serresult'] = $this->price_matrix_model->getServings();
         $this->data['locresult'] = $this->price_matrix_model->getLocations();
         $this->data['flvresult'] = $this->price_matrix_model->getFlavours();
+        $this->data['flvresult'] = $this->price_matrix_model->getCakes();
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/price_matrix/price_matrix_view', $this->data);
 
