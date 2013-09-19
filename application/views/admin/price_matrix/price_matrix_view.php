@@ -38,7 +38,7 @@
     </div>
     <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/price_matrix/save/<?php echo $this->uri->segment(4,0)?>" name="form1" id="form1">
  <div class="innerLR">
-     <input type="hidden" name="flavour_id" id="flavour_id" value="<?php echo(isset($queryup[0]->flavour_id))? $queryup[0]->flavour_id : set_value('flavour_id'); ?>" />
+     <input type="hidden" name="cake_id" id="cake_id" value="<?php echo(isset($queryup[0]->cake_id))? $queryup[0]->cake_id : set_value('cake_id'); ?>" />
      <div class="tab-content" style="padding: 0;">
             <div class="tab-pane active" id="account-details">
 
@@ -49,7 +49,7 @@
                     <div class="widget-body" style="padding: 10px 0;">
 
                         <table class="table table-bordered table-striped">
-                            <tr><td id="matrix-flavour"><?php echo $this->lang->line('flavour_name');?></td>
+                            <tr><td id="matrix-flavour"><?php echo $this->lang->line('cake_name');?></td>
 
                                 <td>
                                     <table class="table table-bordered table-striped" >
@@ -77,20 +77,20 @@
 
                                         foreach($flvresult as $flv):
                                             ?>
-                                            <input type="hidden" name="flavour_id[]" value="<?php echo $flv->flavour_id;  ?>" />
+                                            <input type="hidden" name="cake_id[]" value="<?php echo $flv->cake_id;  ?>" />
                                             <tr>
                                                 <td class="matrix-flavour-name">
                                                     <?php echo $flv->title; ?>
                                                 </td>
                                                 <?php foreach($serresult as $type):
-                                                    $matrix =$this->price_matrix_model->getPrice($location_id,$flv->flavour_id,$type->serving_id);
+                                                    $matrix =$this->price_matrix_model->getPrice($location_id,$flv->cake_id,$type->serving_id);
                                                     $price_matrix_id = isset($matrix[0]->price_matrix_id)? $matrix[0]->price_matrix_id :0 ;
                                                     $price = isset($matrix[0]->price)? $matrix[0]->price :'0.00';
                                                     ?>
                                                     <td>
-                                                    <input type="hidden" name="serving_id_<?php echo $flv->flavour_id; ?>[]" value="<?php echo $type->serving_id;  ?>" />
-                                                    <input type="hidden" name="price_matrix_<?php echo $flv->flavour_id; ?>[]" value="<?php echo $price_matrix_id;  ?>" />
-                                                    <input type="text" class="input-mini numbersOnly" name="price_<?php echo $flv->flavour_id; ?>[]"  value="<?php echo $price; ?>"/> </td>
+                                                    <input type="hidden" name="serving_id_<?php echo $flv->cake_id; ?>[]" value="<?php echo $type->serving_id;  ?>" />
+                                                    <input type="hidden" name="price_matrix_<?php echo $flv->cake_id; ?>[]" value="<?php echo $price_matrix_id;  ?>" />
+                                                    <input type="text" class="input-mini numbersOnly" name="price_<?php echo $flv->cake_id; ?>[]"  value="<?php echo $price; ?>"/> </td>
                                                 <?php endforeach; ?>
                                             </tr>
                                         <?php endforeach; ?>
