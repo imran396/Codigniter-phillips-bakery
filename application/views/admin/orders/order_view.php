@@ -40,12 +40,17 @@ $(document).ready(function(){
 
     })
 
-
-
     $('#cake_id').change(function() {
 
         var cake_id =$("#cake_id").val();
         var delivery_date = $("#datepicker").val();
+        var location_id =$("#location_id").val();
+        if(!location_id > 0 ){
+            $('#flavourid').val('');
+            alert ('Must be select location');
+            $('#s2id_cake_id a span').html('---Select one---');
+            return false;
+        }
         if(cake_id == ""){
             $('#hide_tiers').show();
             return false;
@@ -60,8 +65,11 @@ $(document).ready(function(){
             data:"cake_id="+cake_id+"&location_id="+location_id+"&delivery_date="+delivery_date,
             type:"post",
             success: function(val){
+                console.log(val);
                 var n=val.split("@a&");
                 $('#flavourid').html(n[0]);
+                $('#serving_id').html(n[1]);
+                $('#size_id').html(n[2]);
                 $('#hide_tiers').hide();
 
             }
@@ -85,6 +93,11 @@ $(document).ready(function(){
             $('#s2id_flavourid a span').html('---Select one---');
             return false;
         }
+        if ($('#vaughan_location').is(':checked') == true) {
+            var location_id = 0;
+        }else{
+            var location_id = $("#location_id").val();
+        }
         $.ajax({
             url:"<?php echo site_url('admin/orders/getServings')?>",
             data:"flavour_id="+flavour_id+"&location_id="+location_id+"&delivery_date="+delivery_date,
@@ -94,52 +107,62 @@ $(document).ready(function(){
                 if(n[0] =='error'){
                     alert(n[1]);
                     $('#s2id_flavourid a span').html('---Select one---');
+                }else{
+                    $('#fondant').html(n[0]);
                 }
-                $('#servings').html(n[0]);
-                $('#size').html(n[1]);
-                $('#fondant').html(n[2]);
+
+
             }
         })
     });
 
-    $('#servings').change(function() {
+    $('#serving_id').change(function() {
 
-        var price_matrix_id =$("#servings").val();
-        var flavour_id =$("#flavourid").val();
+        var serving_id =$("#serving_id").val();
+        var cake_id =$("#cake_id").val();
+        var location_id =$("#location_id").val();
+        if(!cake_id > 0 ){
+            return false;
+        }
         $.ajax({
             url:"<?php echo site_url('admin/orders/getPrice')?>",
-            data:"flavour_id="+flavour_id+"&price_matrix_id="+price_matrix_id,
+            data:"cake_id="+cake_id+"&serving_id="+serving_id+'&location_id='+location_id,
             type:"post",
             success: function(val){
-                // console.log(val);
+                 console.log(val);
                 var n=val.split("@a&");
-                $('#servings').html(n[0]);
+                $('#serving_id').html(n[0]);
                 $('#size').html(n[1]);
                 $('#price').html(n[2]);
-                $('#matrix_price').val(n[3]);
-                $('#matrixprice').html("$"+n[3]);
-                $('#s2id_size a span').html(n[5]);
+                $('#matrix_price').val(n[2]);
+                $('#matrixprice').html("$"+n[2]);
+               // $('#s2id_serving_id a span').html(n[3]);
+                $('#s2id_size_id a span').html(n[4]);
             }
         })
     });
 
-    $('#size').change(function() {
+    $('#size_id').change(function() {
 
-        var price_matrix_id =$("#size").val();
-        var flavour_id =$("#flavourid").val();
+        var size_id =$("#size_id").val();
+        var cake_id =$("#cake_id").val();
+        var location_id =$("#location_id").val();
+        if(!cake_id > 0 ){
+            return false;
+        }
         $.ajax({
             url:"<?php echo site_url('admin/orders/getPrice')?>",
-            data:"flavour_id="+flavour_id+"&price_matrix_id="+price_matrix_id,
+            data:"cake_id="+cake_id+"&serving_id="+size_id+'&location_id='+location_id,
             type:"post",
             success: function(val){
-                //console.log(val);
+                console.log(val);
                 var n=val.split("@a&");
                 $('#servings').html(n[0]);
                 $('#size').html(n[1]);
                 $('#price').html(n[2]);
-                $('#matrix_price').val(n[3]);
-                $('#matrixprice').html("$"+n[3]);
-                $('#s2id_servings a span').html(n[4]);
+                $('#matrix_price').val(n[2]);
+                $('#matrixprice').html("$"+n[2]);
+                $('#s2id_serving_id a span').html(n[3]);
             }
         })
     });
@@ -448,9 +471,12 @@ $(document).ready(function(){
         <div class="control-group">
             <label class="control-label" for="username"><?php echo $this->lang->line('serving_name');?></label>
             <div class="controls">
-                <select class="search_dropdown" id="servings" style="width: 100%;"  name="price_matrix_id">
+                <select class="search_dropdown" id="serving_id" style="width: 100%;"  name="serving_id">
                     <option value="0" >---<?php echo $this->lang->line('select_one');?>---</option>
-                    <?php if(!empty($servings)){ echo $servings;} ?>
+                    <?php if(!empty($servings)){  echo $servings; }else{
+                        foreach ($servresult as $serrow){?>
+                        <option value="<?php echo $serrow->serving_id; ?>"><?php echo $serrow->title ?></option>
+                    <?php } } ?>
                 </select>
             </div>
         </div>
@@ -465,9 +491,12 @@ $(document).ready(function(){
         <div class="control-group">
             <label class="control-label" ><?php echo $this->lang->line('size_shape');?></label>
             <div class="controls">
-                <select class="search_dropdown" id="size" style="width: 100%;"  name="size">
+                <select class="search_dropdown" id="size_id" style="width: 100%;"  name="size">
                     <option value="0" >---<?php echo $this->lang->line('select_one');?>---</option>
-                    <?php if(!empty($size)){  echo $size; } ?>
+                    <?php if(!empty($size)){  echo $size; }else{
+                        foreach ($servresult as $serrow){?>
+                            <option value="<?php echo $serrow->serving_id; ?>"><?php echo $serrow->size ?></option>
+                    <?php } } ?>
                 </select>
             </div>
         </div>

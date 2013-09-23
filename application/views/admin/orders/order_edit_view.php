@@ -178,7 +178,8 @@
 <hr class="separator" />
 <?php
 if($this->productions_model->deliveryInfo($queryup->order_id) && $queryup->delivery_zone_id > 0 ){
-$deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id)
+$deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id);
+
 ?>
 <div id="delivery-info">
     <div class="widget-head">
@@ -218,7 +219,7 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id)
             <div class="control-group">
                 <label class="control-label"><?php echo $this->lang->line('delivery_instruction');?></label>
                 <div class="controls">
-                    <textarea rows="" style="width: 320px; height: 95px" class="midium-textarea" cols="" name="delivery_instruction" id="delivery_instruction"> <?php echo (isset($queryup->delivery_instruction))? $queryup->delivery_instruction:set_value('delivery_instruction'); ?></textarea>
+                    <textarea rows="" style="width: 320px; height: 95px" class="midium-textarea" cols="" name="delivery_instruction" id="delivery_instruction"> <?php echo (isset($deliveryInfo->delivery_instruction))? $deliveryInfo->delivery_instruction:set_value('delivery_instruction'); ?></textarea>
                 </div>
             </div>
 

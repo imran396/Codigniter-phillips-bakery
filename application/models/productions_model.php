@@ -181,7 +181,7 @@ class Productions_model extends Crud_Model
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
         $this->db->join('price_matrix','price_matrix.price_matrix_id = orders.price_matrix_id','left');
-        $this->db->join('servings','servings.serving_id = price_matrix.serving_id','left');
+        $this->db->join('servings','servings.serving_id = orders.serving_id','left');
         $this->db->join('zones','zones.zone_id = orders.delivery_zone_id','left');
         $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
         $this->db->where(array("orders.order_code"=> $order_code));
@@ -197,7 +197,7 @@ class Productions_model extends Crud_Model
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
         $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
         $this->db->join('price_matrix','price_matrix.price_matrix_id = orders.price_matrix_id','left');
-        $this->db->join('servings','servings.serving_id = price_matrix.serving_id','left');
+        $this->db->join('servings','servings.serving_id = orders.serving_id','left');
         $this->db->join('zones','zones.zone_id = orders.delivery_zone_id','left');
         $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
         $this->db->where(array("orders.order_id"=> $order_id));
@@ -217,6 +217,7 @@ class Productions_model extends Crud_Model
         }else{
             return false;
         }
+
 
     }
 

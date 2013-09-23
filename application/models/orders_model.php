@@ -14,6 +14,53 @@ class Orders_model extends Crud_Model
 
     /*------------Start Admin Panel Oredr */
 
+    public function getCategories()
+    {
+        return $this->db->select('*')->where('status', 1)->order_by('title','asc')->get('categories')->result();
+    }
+
+
+    public function getServings()
+    {
+        return $this->db->select('*')->where('status', 1)->order_by('ordering','asc')->get('servings')->result();
+    }
+
+    public function getZones()
+    {
+
+        return $this->db->select('*')->where('status', 1)->order_by('title','asc')->get('zones')->result();
+
+    }
+    public function getLocations()
+    {
+
+        return $this->db->select('*')->where('status', 1)->order_by('title','asc')->get('locations')->result();
+
+    }
+    public function getCustomers()
+    {
+
+        return $this->db->select('customer_id,first_name,last_name')->where(array('status'=> 1,'is_deleted !='=>1))->order_by('first_name','asc')->get('customers')->result();
+
+    }
+    public function getEmployees($group_id=0)
+    {
+
+
+        $this->db
+            ->select('users.id,users.group_id,users.username,users.email,meta.first_name,meta.last_name,meta.location_id, users.active');
+        $this->db->join('meta','users.id =meta.user_id');
+        $this->db->join('groups','users.group_id =groups.id');
+        if($group_id > 0){
+            return $this->db->where(array('users.group_id'=>$group_id,'active'=>1))->order_by('first_name','asc')->get('users')->result();
+        }else{
+            return $this->db->where(array('active'=>1))->order_by('first_name','asc')->get('users')->result();
+        }
+
+
+    }
+
+
     public function getOrderStatus($order_id){
         return $row = $this->db->select('order_id,order_code,order_status,')->where('order_id',$order_id)->get('orders')->row();
     }

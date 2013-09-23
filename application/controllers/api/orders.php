@@ -61,6 +61,7 @@ class Orders extends API_Controller
         $data['flavour_id']=isset($_REQUEST['flavour_id'])? $_REQUEST['flavour_id']:'';
         $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:0;
         $data['price_matrix_id']=isset($_REQUEST['price_matrix_id'])? $_REQUEST['price_matrix_id']:'';
+        $data['serving_id']=isset($_REQUEST['serving_id'])? $_REQUEST['serving_id']:'';
         $data['tiers']=isset($_REQUEST['tiers'])? $_REQUEST['tiers']:'';
         $data['matrix_price']=isset($_REQUEST['matrix_price'])? $_REQUEST['matrix_price']:'';
         $data['on_cake_image_needed']=isset($_REQUEST['on_cake_image_needed'])? $_REQUEST['on_cake_image_needed']:'';
@@ -197,7 +198,7 @@ class Orders extends API_Controller
             'order_id','cake_id','customer_id','employee_id',
             'manager_id','location_id','order_date','delivery_type',
             'pickup_location_id','delivery_zone_id','delivery_zone_surcharge',
-            'delivery_date','delivery_time','flavour_id','fondant','tiers','price_matrix_id','matrix_price','cake_email_photo','magic_cake_id','magic_surcharge',
+            'delivery_date','delivery_time','flavour_id','fondant','tiers','price_matrix_id','serving_id','matrix_price','cake_email_photo','magic_cake_id','magic_surcharge',
             'inscription','special_instruction','instructional_email_photo','vaughan_location','order_status','discount_price','total_price',
             'override_price','printed_image_surcharge','on_cake_image_needed'
         );

@@ -24,15 +24,15 @@ class Orders extends Crud_Controller
     function index(){
 
         $this->data['active']=$this->uri->segment(2,0);
-        $this->data['catresult'] = $this->cakes_model->getCategories();
+        $this->data['catresult'] = $this->orders_model->getCategories();
         $this->data['cakeresult'] = $this->orders_model->getCakes($category=0);
         $this->data['flvresult'] = $this->orders_model->getFlavours($location_id=0);
-        $this->data['sapresult'] = $this->cakes_model->getShapes();
-        $this->data['zoneresult'] = $this->cakes_model->getZones();
-        $this->data['locationresult'] = $this->cakes_model->getlocations();
-        $this->data['customerresult'] = $this->cakes_model->getCustomers();
-        $this->data['employeeresult'] = $this->cakes_model->getEmployees($group_id=0);
-        $this->data['managerresult'] = $this->cakes_model->getEmployees($group_id=3);
+        $this->data['servresult'] = $this->orders_model->getServings();
+        $this->data['zoneresult'] = $this->orders_model->getZones();
+        $this->data['locationresult'] = $this->orders_model->getlocations();
+        $this->data['customerresult'] = $this->orders_model->getCustomers();
+        $this->data['employeeresult'] = $this->orders_model->getEmployees($group_id=0);
+        $this->data['managerresult'] = $this->orders_model->getEmployees($group_id=3);
 
 
 
@@ -79,65 +79,59 @@ class Orders extends Crud_Controller
         $location_id = $this->input->post('location_id');
         $blackout=$this->orders_model->checkBlackOut($location_id);
 
-        $row = $this->db->select('flavour_id,tiers')->where(array('cake_id' => $cake_id))->get('cakes')->row();
+        $row = $this->db->select('flavour_id')->where(array('cake_id' => $cake_id))->get('cakes')->row();
         $flavour_id = unserialize($row->flavour_id);
 
         if(empty($blackout)){
-            $flavour = unserialize($row->flavour_id);
+            $flavours = unserialize($row->flavour_id);
         }else{
-            $flavour = array_diff($flavour_id , $blackout);
+            $flavours = array_diff($flavour_id , $blackout);
         }
 
-        $data ="";
-        $data .= "<option value=''>---".$this->lang->line('select_one')."---</option>";
-        foreach($flavour as $flavourid):
+        $flavour ="";
+        $flavour .= "<option value=''>---".$this->lang->line('select_one')."---</option>";
+        foreach($flavours as $flavourid):
             $res = $this->cakes_model->getFlavourName($flavourid);
-            $data .= "<option value='".$res->flavour_id."'>".$res->title."</option>";
-
+            $flavour .= "<option value='".$res->flavour_id."'>".$res->title."</option>";
         endforeach;
 
-        $tiers ="";
-       /* $tier = unserialize($row->tiers);
-        $tiers .= "<option value=''>---".$this->lang->line('select_one')."---</option>";
-        foreach($tier as $tie):
-            $tiers .= "<option value='".$tie."'>".$tie."</option>";
+        if($location_id > 0){
+            $locationid = $location_id;
+        }else{
+            $locationid = $this->orders_model->getVaughanLocation();
+        }
 
-        endforeach;*/
-
-        echo $data."@a&".$tiers;
-    }
-
-    function getServings(){
-
-        $flavour_id = $this->input->post('flavour_id');
-        $location_id = $this->input->post('location_id');
-        $query="SELECT price_matrix.price_matrix_id, price_matrix.price, servings.title AS servings_title, servings.printing_surcharge, servings.size, flavours. *
-FROM price_matrix
-LEFT JOIN servings ON price_matrix.serving_id = servings.serving_id
-LEFT JOIN flavours ON price_matrix.flavour_id = flavours.flavour_id
-WHERE price_matrix.flavour_id = $flavour_id && price > 0 && location_id=$location_id ";
-        $matrix = $this->db->query($query)->result();
-
-        $query="SELECT fondant FROM flavours WHERE flavour_id = $flavour_id ";
-        $fondants = $this->db->query($query)->row();
+        $query="SELECT price_matrix.price,price_matrix.serving_id, servings.title AS servings_title , servings.size
+                FROM price_matrix
+                LEFT JOIN servings ON price_matrix.serving_id = servings.serving_id
+                WHERE price_matrix.cake_id = $cake_id && price > 0 && location_id=$locationid";
+                $matrix = $this->db->query($query)->result();
 
         $servings ="";
         $servings .= "<option value=''>---".$this->lang->line('select_one')."---</option>";
         foreach($matrix as $priceserv):
 
-            $servings .= "<option value='".$priceserv->price_matrix_id."'>".$priceserv->servings_title."</option>";
+            $servings .= "<option value='".$priceserv->serving_id."'>".$priceserv->servings_title."</option>";
 
         endforeach;
-
 
         $size ="";
         $size .= "<option value=''>---".$this->lang->line('select_one')."---</option>";
         foreach($matrix as $pricesize):
 
-            $size .= "<option value='".$pricesize->price_matrix_id."'>".$pricesize->size."</option>";
+            $size .= "<option value='".$pricesize->serving_id."'>".$pricesize->size."</option>";
 
         endforeach;
 
+        echo $flavour."@a&".$servings."@a&".$size;
+    }
+
+    function getServings(){
+
+        $flavour_id = $this->input->post('flavour_id');
+
+        $query="SELECT fondant FROM flavours WHERE flavour_id = $flavour_id ";
+        $fondants = $this->db->query($query)->row();
         $fondant= $fondants->fondant;
         $fond="";
         if($fondant == 1){
@@ -146,13 +140,6 @@ WHERE price_matrix.flavour_id = $flavour_id && price > 0 && location_id=$locatio
         }else{
             $fond .= "<option value='0'>No</option>";
         }
-
-        /*$cprice ="";
-        foreach($matrix as $price):
-
-            $cprice .= "<option  value='".$price->price_matrix_id."'>".$price->price."</option>";
-
-        endforeach;*/
 
         $delivery_date = $this->input->post('delivery_date');
         $location_id = $this->input->post('location_id');
@@ -179,7 +166,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price > 0 && location_id=$locatio
         }
 
         if($blackoutmsg == 'success'){
-            echo $servings."@a&".$size."@a&".$fond;
+            echo $fond;
         }else{
             echo 'error'."@a&".$blackoutmsg;
         }
@@ -187,62 +174,98 @@ WHERE price_matrix.flavour_id = $flavour_id && price > 0 && location_id=$locatio
     }
 
 
+    public function checkFlavourBlackOut(){
+
+        $delivery_date = $this->input->post('delivery_date');
+        $location_id = $this->input->post('location_id');
+        $flavour_id = $this->input->post('flavour_id');
+        $flavourfield['flavour_id']=$flavour_id;
+            $flavour_name = $this->orders_model->getGlobalName('flavours',$flavourfield);
+            $blackout=$this->orders_model->checkBlackOut($location_id,$delivery_date);
+
+            if(!empty($blackout)){
+
+            if (in_array($flavour_id, $blackout)) {
+            if($delivery_date){
+            $blackout_date = dateFormat($delivery_date);
+            }else{
+                $blackout_date = date('d/m/Y');
+            }
+            $blackoutmsg = $flavour_name." is blackout out on ".$blackout_date;
+            }else{
+                $blackoutmsg = "success";
+            }
+            }else{
+                $blackoutmsg =  "success";
+            }
+            echo 'error'."@a&".$blackoutmsg;
+
+}
+
+
     public function getPrice(){
 
-        $price_matrix_id = $this->input->post('price_matrix_id');
-        $flavour_id = $this->input->post('flavour_id');
+        $serving_id = $this->input->post('serving_id');
+        $cake_id = $this->input->post('cake_id');
+        $location_id = $this->input->post('location_id');
+        if($location_id > 0){
+            $locationid = $location_id;
+        }else{
+            $locationid = $this->orders_model->getVaughanLocation();
+        }
 
-        $flavour_id = $this->input->post('flavour_id');
-        $query="SELECT price_matrix.price_matrix_id, price_matrix.price, servings.title AS servings_title, servings.printing_surcharge, servings.size, flavours. *
-FROM price_matrix
-LEFT JOIN servings ON price_matrix.serving_id = servings.serving_id
-LEFT JOIN flavours ON price_matrix.flavour_id = flavours.flavour_id
-WHERE price_matrix.flavour_id = $flavour_id && price >0";
+
+        $query="SELECT price_matrix.price,price_matrix.serving_id, servings.title AS servings_title , servings.size,price_matrix.location_id,price_matrix.cake_id
+                FROM price_matrix
+                LEFT JOIN servings ON price_matrix.serving_id = servings.serving_id
+                WHERE price_matrix.cake_id = $cake_id && price > 0 && location_id=$locationid";
         $matrix = $this->db->query($query)->result();
+
         $servings ="";
         foreach($matrix as $priceserv):
-
-            $selected = ($price_matrix_id == $priceserv->price_matrix_id ) ? "selected='selected'" : "";
-            $servings .= "<option ".$selected." value='".$priceserv->price_matrix_id."'>".$priceserv->servings_title."</option>";
+            echo $serving_id;
+            $selected = ($serving_id == $priceserv->serving_id && $cake_id == $priceserv->cake_id && $locationid == $priceserv->location_id  ) ? "selected='selected'" : "";
+            $servings .= "<option ".$selected." value='".$priceserv->serving_id."'>".$priceserv->servings_title."</option>";
 
         endforeach;
 
+        $s2id_servings="";
         foreach($matrix as $priceserv):
 
-            if($price_matrix_id == $priceserv->price_matrix_id ){
-            $s2id_servings =$priceserv->servings_title;
+            if($serving_id == $priceserv->serving_id && $cake_id == $priceserv->cake_id && $locationid == $priceserv->location_id ){
+                $s2id_servings =$priceserv->servings_title;
             }
 
         endforeach;
-
 
         $size ="";
         foreach($matrix as $pricesize):
 
-            $selected = ($price_matrix_id == $pricesize->price_matrix_id ) ? "selected='selected'" : "";
-            $size .= "<option ".$selected." value='".$pricesize->price_matrix_id."'>".$pricesize->size."</option>";
+            $selected = ($serving_id == $pricesize->serving_id && $cake_id == $pricesize->cake_id && $locationid == $pricesize->location_id) ? "selected='selected'" : "";
+            $size .= "<option ".$selected." value='".$pricesize->serving_id."'>".$pricesize->size."</option>";
 
         endforeach;
 
+        $s2id_size="";
         foreach($matrix as $pricesize):
 
-            if($price_matrix_id == $pricesize->price_matrix_id ){
+            if($serving_id == $pricesize->serving_id && $cake_id == $pricesize->cake_id && $locationid == $pricesize->location_id ){
                 $s2id_size =$pricesize->size;
             }
+
         endforeach;
 
+        $matrix_price=0;
         foreach($matrix as $price):
 
-            if ($price_matrix_id == $price->price_matrix_id ){
+            if ($serving_id == $price->serving_id && $cake_id == $price->cake_id && $locationid == $price->location_id ){
 
                 $matrix_price = $price->price;
             }
 
-
         endforeach;
 
-
-        echo $servings."@a&".$size."@a&".$matrix_price."@a&".$matrix_price."@a&".$s2id_servings."@a&".$s2id_size;
+        echo $servings."@a&".$size."@a&".$matrix_price."@a&".$s2id_servings."@a&".$s2id_size;
 
     }
 
@@ -416,7 +439,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
     {
         $this->form_validation->set_rules('location_id', 'Location name', 'required|trim|xss_clean');
         $this->form_validation->set_rules('flavour_id', 'Flavour name', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('price_matrix_id', 'Servings name', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('serving_id', 'Servings name', 'required|trim|xss_clean');
         $this->form_validation->set_rules('customer_id', 'Customer name', 'required|trim|xss_clean');
         $this->form_validation->set_rules('employee_id', 'Employee name', 'required|trim|xss_clean');
         $this->form_validation->set_rules('delivery_date', 'Delivery date', 'required|trim|xss_clean');
@@ -445,7 +468,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
         $data['flavour_id']=isset($_REQUEST['flavour_id'])? $_REQUEST['flavour_id']:'';
         $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:0;
-        $data['price_matrix_id']=isset($_REQUEST['price_matrix_id'])? $_REQUEST['price_matrix_id']:'';
+        $data['serving_id']=isset($_REQUEST['serving_id'])? $_REQUEST['serving_id']:'';
         $data['tiers']=isset($_REQUEST['tiers'])? $_REQUEST['tiers']:'';
         $data['matrix_price']=isset($_REQUEST['matrix_price'])? $_REQUEST['matrix_price']:'';
         $data['on_cake_image_needed']=isset($_REQUEST['on_cake_image_needed'])? $_REQUEST['on_cake_image_needed']:'';
