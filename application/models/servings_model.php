@@ -119,6 +119,7 @@ class Servings_model extends Crud_Model
 
         foreach($data as $key => $val){
             $data[$key]['serving_id'] = (int) $data[$key]['serving_id'];
+            $data[$key]['printing_surcharge'] = (float) $data[$key]['printing_surcharge'];
         }
         return $data;
     }
