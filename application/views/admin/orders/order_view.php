@@ -40,6 +40,39 @@ $(document).ready(function(){
 
     })
 
+    $('#location_id').change(function() {
+
+        var cake_id =$("#cake_id").val();
+        var location_id =$("#location_id").val();
+        var delivery_date = $("#datepicker").val();
+        if(!cake_id > 0 ){
+            return false;
+        }
+        if(cake_id == ""){
+            $('#hide_tiers').show();
+            return false;
+        }
+        if ($('#vaughan_location').is(':checked') == true) {
+            var kitchen_location_id = 0;
+        }else{
+            var kitchen_location_id = $("#location_id").val();
+        }
+        $.ajax({
+            url:"<?php echo site_url('admin/orders/getFlavour')?>",
+            data:"cake_id="+cake_id+"&location_id="+location_id+"&kitchen_location_id="+kitchen_location_id+"&delivery_date="+delivery_date,
+            type:"post",
+            success: function(val){
+                console.log(val);
+                var n=val.split("@a&");
+                $('#flavourid').html(n[0]);
+                $('#serving_id').html(n[1]);
+                $('#size_id').html(n[2]);
+                $('#hide_tiers').hide();
+
+            }
+        })
+    });
+
     $('#cake_id').change(function() {
 
         var cake_id =$("#cake_id").val();
@@ -56,13 +89,13 @@ $(document).ready(function(){
             return false;
         }
         if ($('#vaughan_location').is(':checked') == true) {
-            var location_id = 0;
+            var kitchen_location_id = 0;
         }else{
-            var location_id = $("#location_id").val();
+            var kitchen_location_id = $("#location_id").val();
         }
         $.ajax({
             url:"<?php echo site_url('admin/orders/getFlavour')?>",
-            data:"cake_id="+cake_id+"&location_id="+location_id+"&delivery_date="+delivery_date,
+            data:"cake_id="+cake_id+"&location_id="+location_id+"&kitchen_location_id="+kitchen_location_id+"&delivery_date="+delivery_date,
             type:"post",
             success: function(val){
                 console.log(val);
