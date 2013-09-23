@@ -46,7 +46,6 @@ class Orders_model extends Crud_Model
     public function getEmployees($group_id=0)
     {
 
-
         $this->db
             ->select('users.id,users.group_id,users.username,users.email,meta.first_name,meta.last_name,meta.location_id, users.active');
         $this->db->join('meta','users.id =meta.user_id');
@@ -62,6 +61,7 @@ class Orders_model extends Crud_Model
 
 
     public function getOrderStatus($order_id){
+
         return $row = $this->db->select('order_id,order_code,order_status,')->where('order_id',$order_id)->get('orders')->row();
     }
 
@@ -72,6 +72,7 @@ class Orders_model extends Crud_Model
         if($category_id > 0){
             $this->db->where('category_id',$category_id);
         }
+        $this->db->where(array('status'=>1,'is_deleted !='=>1));
         $this->db->order_by('title','asc');
         $res = $this->db->get();
         return $res->result();

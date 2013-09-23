@@ -77,7 +77,8 @@ class Orders extends Crud_Controller
 
         $cake_id = $this->input->post('cake_id');
         $location_id = $this->input->post('location_id');
-        $blackout=$this->orders_model->checkBlackOut($location_id);
+        $kitchen_location_id = $this->input->post('kitchen_location_id');
+        $blackout=$this->orders_model->checkBlackOut($kitchen_location_id);
 
         $row = $this->db->select('flavour_id')->where(array('cake_id' => $cake_id))->get('cakes')->row();
         $flavour_id = unserialize($row->flavour_id);
@@ -95,16 +96,10 @@ class Orders extends Crud_Controller
             $flavour .= "<option value='".$res->flavour_id."'>".$res->title."</option>";
         endforeach;
 
-        if($location_id > 0){
-            $locationid = $location_id;
-        }else{
-            $locationid = $this->orders_model->getVaughanLocation();
-        }
-
         $query="SELECT price_matrix.price,price_matrix.serving_id, servings.title AS servings_title , servings.size
                 FROM price_matrix
                 LEFT JOIN servings ON price_matrix.serving_id = servings.serving_id
-                WHERE price_matrix.cake_id = $cake_id && price > 0 && location_id=$locationid";
+                WHERE price_matrix.cake_id = $cake_id && price > 0 && location_id= $location_id";
                 $matrix = $this->db->query($query)->result();
 
         $servings ="";

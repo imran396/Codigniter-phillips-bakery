@@ -168,6 +168,7 @@ class Cakes_model extends CI_Model
 
         //$this->fileDelete($id);
         $this->db->set(array('is_deleted'=>1,'update_date'=>time()))->where('cake_id',$id)->update('cakes');
+        $this->db->set(array('is_deleted'=>1,'update_date'=>time()))->where('cake_id',$id)->update('price_matrix');
         $this->session->set_flashdata('delete_msg', "Cake has been deleted successfully");
         //} else {
         //$this->session->set_flashdata('warning_msg', $this->lang->line('existing_data_msg'));
