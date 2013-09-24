@@ -571,7 +571,7 @@ class Orders_model extends Crud_Model
                 $result[$key]['pickup_location_id'] = (int) $result[$key]['pickup_location_id'];
                 $result[$key]['delivery_zone_id'] = (int) $result[$key]['delivery_zone_id'];
                 $result[$key]['flavour_id'] = (int) $result[$key]['flavour_id'];
-                $result[$key]['price_matrix_id'] = (int) $result[$key]['price_matrix_id'];
+                $result[$key]['serving_id'] = (int) $result[$key]['serving_id'];
                 $result[$key]['delivery_order_id'] = (int) $result[$key]['delivery_order_id'];
                 $result[$key]['order_date'] = (int) $result[$key]['order_date'];
                 $result[$key]['on_cake_image'] = $val['on_cake_image'];
@@ -625,7 +625,7 @@ class Orders_model extends Crud_Model
                 $inserted[$key]['pickup_location_id'] = (int) $inserted[$key]['pickup_location_id'];
                 $inserted[$key]['delivery_zone_id'] = (int) $inserted[$key]['delivery_zone_id'];
                 $inserted[$key]['flavour_id'] = (int) $inserted[$key]['flavour_id'];
-                $inserted[$key]['price_matrix_id'] = (int) $inserted[$key]['price_matrix_id'];
+                $inserted[$key]['serving_id'] = (int) $inserted[$key]['serving_id'];
                 $inserted[$key]['delivery_order_id'] = (int) $inserted[$key]['delivery_order_id'];
                 $inserted[$key]['order_date'] = (int) $inserted[$key]['order_date'];
                 $inserted[$key]['on_cake_image'] = $val['on_cake_image'];
@@ -670,7 +670,7 @@ class Orders_model extends Crud_Model
                 $updated[$key]['pickup_location_id'] = (int) $updated[$key]['pickup_location_id'];
                 $updated[$key]['delivery_zone_id'] = (int) $updated[$key]['delivery_zone_id'];
                 $updated[$key]['flavour_id'] = (int) $updated[$key]['flavour_id'];
-                $updated[$key]['price_matrix_id'] = (int) $updated[$key]['price_matrix_id'];
+                $updated[$key]['serving_id'] = (int) $updated[$key]['serving_id'];
                 $updated[$key]['delivery_order_id'] = (int) $updated[$key]['delivery_order_id'];
                 $updated[$key]['order_date'] = (int) $updated[$key]['order_date'];
                 $updated[$key]['on_cake_image'] = $val['on_cake_image'];
@@ -727,7 +727,7 @@ class Orders_model extends Crud_Model
                 $inserted[$key]['pickup_location_id'] = (int) $inserted[$key]['pickup_location_id'];
                 $inserted[$key]['delivery_zone_id'] = (int) $inserted[$key]['delivery_zone_id'];
                 $inserted[$key]['flavour_id'] = (int) $inserted[$key]['flavour_id'];
-                $inserted[$key]['price_matrix_id'] = (int) $inserted[$key]['price_matrix_id'];
+                $inserted[$key]['serving_id'] = (int) $inserted[$key]['serving_id'];
                 $inserted[$key]['delivery_order_id'] = (int) $inserted[$key]['delivery_order_id'];
                 $inserted[$key]['order_date'] = (int) $inserted[$key]['order_date'];
                 $inserted[$key]['on_cake_image'] = $val['on_cake_image'];
