@@ -41,6 +41,7 @@ $lang['mailgun_instructional_email'] 		 	= 'referenceimage@stphillipsbakery.mail
 $lang['mailgun_instructional_name'] 		 	= 'Reference images';
 $lang['mailgun_instructional_subject'] 		 	= 'St Phillips - Attach your reference images';
 $lang['mailgun_instructional_body'] 		 	= 'Reply to this email and attach the example images you would like your baker to reference.';
+$lang['customer_email'] 		 	= 'Customer will email';
 
 
 /* ---------- Malling Subject information */

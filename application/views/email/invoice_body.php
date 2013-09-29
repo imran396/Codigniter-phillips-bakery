@@ -61,18 +61,14 @@ if( $deliveryInfo->email){ echo $deliveryInfo->email.PHP_EOL;  }
 ----------------------------------------------------------------
 CAKE DETAILS
 
-IMAGE ON CAKE:<?php echo PHP_EOL;  if($queryup->on_cake_image){ echo $this->orders_model->fileName($queryup->on_cake_image).PHP_EOL; }else{ echo $this->lang->line('none').PHP_EOL; } ?>
-
-REFERENCE PHOTO:<?php
+IMAGE ON CAKE:<?php if($queryup->cake_email_photo == 1){ echo $this->lang->line('customer_email'); }elseif(empty($queryup->on_cake_image)){ echo $this->lang->line('none'); }elseif(!empty($queryup->on_cake_image)){ echo PHP_EOL;  echo $this->orders_model->fileName($queryup->on_cake_image).PHP_EOL; } ?>
+<?php $instructionals = $this->productions_model->photoGallery($queryup->order_id); ?>
+REFERENCE PHOTO:<?php if($queryup->instructional_email_photo == 1){ echo $this->lang->line('customer_email'); }elseif(empty($instructionals)){ echo $this->lang->line('none'); }elseif(!empty($instructionals)){
 echo PHP_EOL;
-$instructionals = $this->productions_model->photoGallery($queryup->order_id);
-if(!empty($instructionals)){
     foreach($instructionals as $instructional){
-
-        echo $this->orders_model->fileName($instructional->instructional_photo) ." , ".PHP_EOL;
-
+         echo $this->orders_model->fileName($instructional->instructional_photo) ." , ".PHP_EOL;
     }
-}else{ echo $this->lang->line('none').PHP_EOL; }
+}
 ?>
 
 
