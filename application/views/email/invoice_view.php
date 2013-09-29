@@ -189,19 +189,21 @@ if($queryup->delivery_type == 'delivery' ){
 <br />
 
 <ul class="col_half left">
-    <li>Image on cake: <?php if($queryup->on_cake_image){ echo $this->orders_model->fileName($queryup->on_cake_image); }else{ echo $this->lang->line('none'); } ?></li>
+<li>Image on cake:
+<?php if($queryup->cake_email_photo == 1){ echo $this->lang->line('customer_email'); }elseif(empty($queryup->on_cake_image)){ echo $this->lang->line('none'); }elseif(!empty($queryup->on_cake_image)){ echo $this->orders_model->fileName($queryup->on_cake_image); } ?>
+</li>
 </ul>
 
 <ul class="col_half left">
-    <li>Reference Images:        <?php
+    <li>Reference Images:
+        <?php
         $instructionals = $this->productions_model->photoGallery($queryup->order_id);
-        if(!empty($instructionals)){
+        if($queryup->instructional_email_photo == 1){ echo $this->lang->line('customer_email'); }elseif(empty($instructionals)){ echo $this->lang->line('none'); }elseif(!empty($instructionals)){
             foreach($instructionals as $instructional){
-
                 echo $this->orders_model->fileName($instructional->instructional_photo) ." , ";
-
             }
-        }else{ echo $this->lang->line('none'); } ?>
+        }
+        ?>
     </li>
 </ul>
 <div class="clr"></div>
@@ -238,7 +240,7 @@ if($queryup->delivery_type == 'delivery' ){
     <br />
     <p class="cen">Thank You</p>
     <p class="cen"><?php
-        if(!empty($locations)){ echo $locations[0]->email; } ?></p>
+        if(!empty($locations[0]->email)){ echo $locations[0]->email; } ?></p>
     <p class="cen">stphillipsbakery.com</p>
 
 </div>
