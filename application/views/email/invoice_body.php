@@ -11,7 +11,7 @@ if(!empty($locations)){
 <?php echo $locations[0]->address2.PHP_EOL; ?>
 <?php echo $locations[0]->city; ?>  <?php if($locations[0]->province){ echo ",".$locations[0]->province; } ?> <?php echo $locations[0]->postal_code.PHP_EOL; ?>
 <?php if($locations[0]->country){ echo $locations[0]->country.PHP_EOL;} ?>
-<?php if($locations[0]->country){  echo $locations[0]->email.PHP_EOL;} ?>
+<?php if($locations[0]->email){  echo $locations[0]->email.PHP_EOL;} ?>
 <?php echo $this->orders_model->phoneNoFormat($locations[0]->phone).PHP_EOL; ?>
 <?php } ?>
 
@@ -126,5 +126,5 @@ TOTAL:                                         <?php if($queryup->override_price
 ------------------------------------------------------------
 
 Thank You
-<?php if(!empty($locations)){ echo $locations[0]->email.PHP_EOL; } ?>
+<?php if(!empty($locations[0]->email)){ echo $locations[0]->email.PHP_EOL; } ?>
 stphillipsbakery.com
