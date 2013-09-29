@@ -47,6 +47,7 @@ $lang['mailgun_instructional_body'] 		 	= 'Reply to this email and attach the ex
 
 /* Left menu level*/
 
+
 $lang['menu_level'] 		 	                    = 'Menu Level';
 $lang['dashboard'] 		 	                        = 'Dashboard';
 $lang['settings'] 		 	                        = 'Settings';
@@ -99,7 +100,7 @@ $lang['status_msg']="The selected flavour has been disabled.";
 $lang['tag_msg']="Separate tag with a comma in order to use multiple tags. Example tag1,tag2, etc";
 $lang['move'] 		 	    = 'Move';
 $lang['search'] 		 	    = 'Search';
-
+$lang['none'] 		 	                    = 'None';
 /* User Settings */
 $lang['sign_out'] 		 	    = 'Sign Out';
 $lang['user'] 		 	    = 'User';
