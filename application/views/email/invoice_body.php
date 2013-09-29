@@ -61,7 +61,7 @@ if( $deliveryInfo->email){ echo $deliveryInfo->email.PHP_EOL;  }
 ----------------------------------------------------------------
 CAKE DETAILS
 
-IMAGE ON CAKE: Customer will email <?php echo PHP_EOL;  if($queryup->on_cake_image){ echo $this->orders_model->fileName($queryup->on_cake_image).PHP_EOL; } ?>
+IMAGE ON CAKE: Customer will email <?php echo PHP_EOL;  if($queryup->on_cake_image){ echo $this->orders_model->fileName($queryup->on_cake_image).PHP_EOL; }else{ echo $this->lang->line('none').PHP_EOL; } ?>
 
 REFERENCE PHOTO: Customer will email <?php
 echo PHP_EOL;
@@ -71,7 +71,8 @@ if(!empty($instructionals)){
 
         echo $this->orders_model->fileName($instructional->instructional_photo) ." , ".PHP_EOL;
 
-    } }
+    }
+}else{ echo $this->lang->line('none').PHP_EOL; }
 ?>
 
 
@@ -125,6 +126,5 @@ TOTAL:                                         <?php if($queryup->override_price
 ------------------------------------------------------------
 
 Thank You
-<?php //if(!empty($locations)){ echo $locations[0]->email.PHP_EOL; } ?>
-reply@stphillipsbakery.com
+<?php if(!empty($locations)){ echo $locations[0]->email.PHP_EOL; } ?>
 stphillipsbakery.com

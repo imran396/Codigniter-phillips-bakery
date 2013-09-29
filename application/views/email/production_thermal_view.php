@@ -180,7 +180,7 @@ if(!empty($locations)){
 <hr />
 <p>CAKE DETAILS</p>
 <br />
-<p>IMAGE ON CAKE: <?php if($queryup->on_cake_image){ echo $this->orders_model->fileName($queryup->on_cake_image); } ?></p>
+<p>IMAGE ON CAKE: <?php if($queryup->on_cake_image){ echo $this->orders_model->fileName($queryup->on_cake_image); }else{ echo $this->lang->line('none').PHP_EOL; } ?></p>
 <p>REFERENCE PHOTOS: <?php
     $instructionals = $this->productions_model->photoGallery($queryup->order_id);
     if(!empty($instructionals)){
@@ -188,7 +188,8 @@ if(!empty($locations)){
 
             echo $this->orders_model->fileName($instructional->instructional_photo) ." , ";
 
-        } } ?></p>
+        } }else{ echo $this->lang->line('none').PHP_EOL; } ?>
+</p>
 <br />
 <?php if($queryup->inscription){ ?>
 <p>INSCRIPTION</p>
@@ -242,7 +243,7 @@ if(!empty($locations)){
     <?php if($queryup->serving_title){ ?>
         <li><p><?php echo $queryup->serving_title; ?></p></li>
     <?php } ?>
-    <?php if($queryup->tiers){ ?>
+    <?php if($queryup->orderTiers){ ?>
         <li><p><?php echo $queryup->orderTiers; ?></p></li>
     <?php } ?>
 </ul>

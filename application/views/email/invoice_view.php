@@ -189,7 +189,7 @@ if($queryup->delivery_type == 'delivery' ){
 <br />
 
 <ul class="col_half left">
-    <li>Image on cake: <?php if($queryup->on_cake_image){ echo $this->orders_model->fileName($queryup->on_cake_image); } ?></li>
+    <li>Image on cake: <?php if($queryup->on_cake_image){ echo $this->orders_model->fileName($queryup->on_cake_image); }else{ echo $this->lang->line('none'); } ?></li>
 </ul>
 
 <ul class="col_half left">
@@ -200,7 +200,8 @@ if($queryup->delivery_type == 'delivery' ){
 
                 echo $this->orders_model->fileName($instructional->instructional_photo) ." , ";
 
-            } } ?>
+            }
+        }else{ echo $this->lang->line('none'); } ?>
     </li>
 </ul>
 <div class="clr"></div>

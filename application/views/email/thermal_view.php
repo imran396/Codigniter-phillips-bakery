@@ -169,7 +169,7 @@ if(!empty($locations)){
 <hr />
 <p>CAKE DETAILS</p>
 <br />
-<p>IMAGE ON CAKE: <?php if($queryup->on_cake_image){ echo $this->orders_model->fileName($queryup->on_cake_image); } ?></p>
+<p>IMAGE ON CAKE: <?php if($queryup->on_cake_image){ echo $this->orders_model->fileName($queryup->on_cake_image); }else{ echo $this->lang->line('none'); } ?></p>
 <p>REFERENCE PHOTOS: <?php
     $instructionals = $this->productions_model->photoGallery($queryup->order_id);
     if(!empty($instructionals)){
@@ -177,7 +177,7 @@ if(!empty($locations)){
 
             echo $this->orders_model->fileName($instructional->instructional_photo) ." , ";
 
-        } } ?></p>
+        } }else{ echo $this->lang->line('none'); } ?></p>
 <br />
 <?php if($queryup->inscription){ ?>
 <p>INSCRIPTION</p>
@@ -294,9 +294,8 @@ if(!empty($locations)){
 <br />
 <p class="cen">stphillipsbakery.com</p>
 <br />
-
 <p class="cen">
-    <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
+<img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
 </p>
 <br/>
 <br/>
