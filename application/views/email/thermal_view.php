@@ -231,8 +231,8 @@ if(!empty($locations)){
     <?php if($queryup->serving_title){ ?>
         <li><p><?php echo $queryup->serving_title; ?></p></li>
     <?php } ?>
-    <?php if($queryup->tiers){ ?>
-        <li><p><?php echo $queryup->orderTiers; ?></p></li>
+    <?php if($queryup->orderTiers ==1){ ?>
+        <li><p><?php echo "Yes"; ?></p></li>
     <?php } ?>
 </ul>
 <div class="clr"></div>
