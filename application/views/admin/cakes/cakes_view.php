@@ -78,7 +78,7 @@
                                         <label class="control-label">Available Flavours</label>
                                         <div class="controls">
                                             <div class="row-fluid">
-                                                <select class="validate[required] " style="width: 100%;"  name="flavour_id[]"  multiple>
+                                                <select class="validate[required1] " style="width: 100%;"  name="flavour_id[]"  multiple>
                                                     <option value="" >---<?php echo $this->lang->line('select');?>---</option>
                                                     <?php
 
