@@ -100,8 +100,8 @@ SHAPE: 			        <?php echo $queryup->shape.PHP_EOL; ?>
 <?php if($queryup->serving_title){ ?>
 SERVING: 			    <?php echo $queryup->serving_title.PHP_EOL; ?>
 <?php } ?>
-<?php if($queryup->orderTiers == 1){ ?>
-TIERS: 			        <?php echo "Yes".PHP_EOL; ?>
+<?php if($queryup->orderTiers > 0){ ?>
+TIERS: 			        <?php echo $queryup->orderTiers.PHP_EOL; ?>
 <?php } ?>
 
 <?php if($queryup->printed_image_surcharge >0 ){ ?>

@@ -169,15 +169,14 @@ if(!empty($locations)){
 <hr />
 <p>CAKE DETAILS</p>
 <br />
-<p>IMAGE ON CAKE: <?php if($queryup->on_cake_image){ echo $this->orders_model->fileName($queryup->on_cake_image); }else{ echo $this->lang->line('none'); } ?></p>
-<p>REFERENCE PHOTOS: <?php
-    $instructionals = $this->productions_model->photoGallery($queryup->order_id);
-    if(!empty($instructionals)){
+<p>IMAGE ON CAKE: <?php if($queryup->cake_email_photo == 1){ echo $this->lang->line('customer_email').PHP_EOL; }elseif(empty($queryup->on_cake_image)){ echo $this->lang->line('none'); }elseif(!empty($queryup->on_cake_image)){ echo $this->orders_model->fileName($queryup->on_cake_image); } ?></p>
+<?php $instructionals = $this->productions_model->photoGallery($queryup->order_id); ?>
+<p>REFERENCE PHOTOS: <?php if($queryup->instructional_email_photo == 1){ echo $this->lang->line('customer_email'); }elseif(empty($instructionals)){ echo $this->lang->line('none'); }elseif(!empty($instructionals)){
         foreach($instructionals as $instructional){
-
             echo $this->orders_model->fileName($instructional->instructional_photo) ." , ";
-
-        } }else{ echo $this->lang->line('none'); } ?></p>
+        }
+    }
+    ?></p>
 <br />
 <?php if($queryup->inscription){ ?>
 <p>INSCRIPTION</p>
@@ -210,7 +209,7 @@ if(!empty($locations)){
     <?php if($queryup->serving_title){ ?>
         <li><p>SERVING:</p></li>
     <?php } ?>
-    <?php if($queryup->tiers){ ?>
+    <?php if($queryup->orderTiers > 0){ ?>
         <li><p>TIERS:</p></li>
     <?php } ?></ul>
 
@@ -231,8 +230,8 @@ if(!empty($locations)){
     <?php if($queryup->serving_title){ ?>
         <li><p><?php echo $queryup->serving_title; ?></p></li>
     <?php } ?>
-    <?php if($queryup->orderTiers ==1){ ?>
-        <li><p><?php echo "Yes"; ?></p></li>
+    <?php if($queryup->orderTiers > 0){ ?>
+        <li><p><?php echo $queryup->orderTiersder; ?></p></li>
     <?php } ?>
 </ul>
 <div class="clr"></div>

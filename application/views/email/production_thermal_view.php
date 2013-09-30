@@ -243,7 +243,7 @@ if(!empty($locations)){
     <?php if($queryup->serving_title){ ?>
         <li><p><?php echo $queryup->serving_title; ?></p></li>
     <?php } ?>
-    <?php if($queryup->orderTiers){ ?>
+    <?php if($queryup->orderTiers > 0){ ?>
         <li><p><?php echo $queryup->orderTiers; ?></p></li>
     <?php } ?>
 </ul>
@@ -302,7 +302,7 @@ if(!empty($locations)){
 <hr />
 <br />
 <p class="cen">Thank You</p>
-<?php if(!empty($locations)){ ?><p class="cen"><?php echo $locations[0]->email; ?></p><?php } ?>
+<?php if(!empty($locations[0]->email)){ ?><p class="cen"><?php echo $locations[0]->email; ?></p><?php } ?>
 <p class="cen">stphillipsbakery.com</p>
 </br>
 <p class="cen">

@@ -266,8 +266,8 @@ if($queryup->delivery_type == 'delivery' ){
         <?php if($queryup->serving_title){ ?>
         <tr><td>SERVING:</td><td><?php echo $queryup->serving_title; ?></td></tr>
         <?php } ?>
-        <?php if($queryup->orderTiers ==1){ ?>
-        <tr><td>TIERS:</td><td><?php echo "Yes"; ?></td></tr>
+        <?php if($queryup->orderTiers > 0){ ?>
+        <tr><td>TIERS:</td><td><?php echo $queryup->orderTiers; ?></td></tr>
         <?php } ?>
         <tr><td colspan="2">&nbsp;</td></tr>
         <tr><td colspan="2">&nbsp;</td></tr>
