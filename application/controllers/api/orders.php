@@ -43,8 +43,8 @@ class Orders extends API_Controller
     {
         //echo returnGenerateID();
 
-        //$file = "assets/uploads/errorlog.txt";
-        //file_put_contents($file, json_encode($_REQUEST).PHP_EOL. json_encode($_SERVER).PHP_EOL, FILE_APPEND | LOCK_EX);
+        $file = "assets/uploads/errorlog.txt";
+        file_put_contents($file, json_encode($_REQUEST).PHP_EOL. json_encode($_SERVER).PHP_EOL, FILE_APPEND | LOCK_EX);
 
         $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
         $data['customer_id']=isset($_REQUEST['customer_id'])? $_REQUEST['customer_id']:'';
