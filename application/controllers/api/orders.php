@@ -43,8 +43,8 @@ class Orders extends API_Controller
     {
         //echo returnGenerateID();
 
-        $file = "assets/uploads/errorlog.txt";
-        file_put_contents($file, json_encode($_REQUEST).PHP_EOL. json_encode($_SERVER).PHP_EOL, FILE_APPEND | LOCK_EX);
+        //$file = "assets/uploads/errorlog.txt";
+        //file_put_contents($file, json_encode($_REQUEST).PHP_EOL. json_encode($_SERVER).PHP_EOL, FILE_APPEND | LOCK_EX);
 
         $data['cake_id']=isset($_REQUEST['cake_id'])? $_REQUEST['cake_id']:'';
         $data['customer_id']=isset($_REQUEST['customer_id'])? $_REQUEST['customer_id']:'';
@@ -67,7 +67,6 @@ class Orders extends API_Controller
         }else{
             $data['tiers']=isset($_REQUEST['tiers'])? $_REQUEST['tiers']:0;
         }
-        $data['tiers']=isset($_REQUEST['tiers'])? $_REQUEST['tiers']:'';
         $data['matrix_price']=isset($_REQUEST['matrix_price'])? $_REQUEST['matrix_price']:'';
         $data['on_cake_image_needed']=isset($_REQUEST['on_cake_image_needed'])? $_REQUEST['on_cake_image_needed']:'';
         $data['cake_email_photo']=isset($_REQUEST['cake_email_photo'])? $_REQUEST['cake_email_photo']:'';
