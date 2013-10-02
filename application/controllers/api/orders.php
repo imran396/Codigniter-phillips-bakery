@@ -65,7 +65,7 @@ class Orders extends API_Controller
         if($data['cake_id'] > 0){
             $data['tiers']=0;
         }else{
-            $data['tiers']=isset($_REQUEST['tiers'])? $_REQUEST['tiers']:1;
+            $data['tiers']=isset($_REQUEST['tiers'])? $_REQUEST['tiers']:0;
         }
         $data['tiers']=isset($_REQUEST['tiers'])? $_REQUEST['tiers']:'';
         $data['matrix_price']=isset($_REQUEST['matrix_price'])? $_REQUEST['matrix_price']:'';
