@@ -32,9 +32,9 @@ class flavours_model extends Crud_Model
             ->select('flavours.flavour_id')
             ->from('flavours')
             ->join('cakes', 'cakes.flavour_id = flavours.flavour_id','left')
-            ->join('price_matrix', 'price_matrix.flavour_id = flavours.flavour_id','right')
+            ->join('orders', 'orders.flavour_id = flavours.flavour_id','left')
             ->where(array('flavours.flavour_id'=>$data))
-            ->group_by('price_matrix.flavour_id')
+            ->group_by('orders.flavour_id')
             ->get()
             ->num_rows();
 
