@@ -16,41 +16,45 @@ class flavours_model extends Crud_Model
 
     public function insert($data)
     {
-        //$data['tire_id'] = ($data['tire_id'] !="") ? serialize($data['tire_id']):'';
         $this->db->set($data)->insert('flavours');
     }
 
     public function update($data, $id)
     {
-       // $data['tire_id'] = ($data['tire_id'] !="") ? serialize($data['tire_id']):'';
         $this->db->set($data)->where(array('flavour_id'=>$id))->update('flavours');
+    }
+    function checkSerialize($id_serialize){
+       $s = strlen((string)$id_serialize);
+       return $id_serialize = ';s:'.$s.':"'.$id_serialize.'";';
     }
 
     public function deleteDataExisting($data=0){
 
-        $count=$this->db
-            ->select('flavours.flavour_id')
-            ->from('flavours')
-            ->join('cakes', 'cakes.flavour_id = flavours.flavour_id','left')
-            ->join('orders', 'orders.flavour_id = flavours.flavour_id','left')
-            ->where(array('flavours.flavour_id'=>$data))
-            ->group_by('orders.flavour_id')
-            ->get()
-            ->num_rows();
-
+        $id_serialize = $this->checkSerialize($data);
+        $req =  ("SELECT cake_id FROM cakes WHERE flavour_id LIKE  '%" . $id_serialize . "%'");
+        $sql = $this->db->query($req)->num_rows();
+        if($sql > 0 ){
+            return $sql;
+        }else{
+            $count=$this->db
+                ->select('orders.flavour_id')
+                ->from('orders')
+                ->where(array('orders.flavour_id'=>$data))
+                ->get()
+                ->num_rows();
             return $count;
+        }return false;
+
 
     }
 
     public function delete($id)
     {
 
-
         if(!$this->deleteDataExisting($id) > 0){
             $this->remove($id);
             $this->session->set_flashdata('delete_msg',"Flavour has been deleted successfully");
         }else{
-
             $this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
         }
 
