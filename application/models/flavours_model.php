@@ -32,17 +32,26 @@ class flavours_model extends Crud_Model
 
         $id_serialize = $this->checkSerialize($data);
         $req =  ("SELECT cake_id FROM cakes WHERE flavour_id LIKE  '%" . $id_serialize . "%'");
-        $sql = $this->db->query($req)->num_rows();
-        if($sql > 0 ){
-            return $sql;
-        }else{
-            $count=$this->db
-                ->select('orders.flavour_id')
-                ->from('orders')
-                ->where(array('orders.flavour_id'=>$data))
-                ->get()
-                ->num_rows();
+        $count = $this->db->query($req)->num_rows();
+
+        $order_count=$this->db
+            ->select('orders.flavour_id')
+            ->from('orders')
+            ->where(array('orders.flavour_id'=>$data))
+            ->get()->num_rows();
+
+        $blackout_count=$this->db
+            ->select('blackouts.flavour_id')
+            ->from('blackouts')
+            ->where(array('blackouts.flavour_id'=>$data))
+            ->get()->num_rows();
+
+        if($count > 0 ){
             return $count;
+        }elseif($order_count > 0){
+            return $order_count;
+        }elseif($blackout_count > 0){
+            return $blackout_count;
         }return false;
 
 
