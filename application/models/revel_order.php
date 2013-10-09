@@ -69,7 +69,7 @@ class Revel_Order extends Revel_Model
                 "points_added"         => 0,
                 "tax"                  => 0.0,
                 "bills_info"           => "",
-                "table"                => "/resources/Table/1/",
+                "table"                => NULL,
                 "discount_reason"      => "",
                 "points_redeemed"      => 0,
                 "call_number"          => 0,
@@ -118,7 +118,7 @@ class Revel_Order extends Revel_Model
             )
         );
 
-        $this->postResource('OrderAllInOne', $revelData, true);
+       $test_revel =  $this->postResource('OrderAllInOne', $revelData, true);
         return basename($this->headers['location']) ;
     }
 
@@ -169,7 +169,7 @@ class Revel_Order extends Revel_Model
             "service_charge"          => 0,
             "subtotal"                => $data['subtotal'],
             "surcharge"               => 0,
-            "table"                   => "/resources/Table/1/",
+            "table"                   => NULL,
             "table_owner"             => null,
             "tax"                     => 0,
             "tax_country"             => "",
