@@ -38,7 +38,7 @@
                 <div class="span6">
 
                     <div class="control-group">
-                        <label class="control-label" for="username">Revel User ID</label>
+                        <label class="control-label" for="username">Revel User</label>
                         <div class="controls">
                             <select style="width: 100%;" id="revel_user_id"  name="revel_user_id" >
                                 <?php $revel_user_id = (isset($queryup[0]->revel_user_id))? $queryup[0]->revel_user_id:set_value('revel_user_id');
