@@ -64,7 +64,7 @@
                             <select style="width: 100%;" id="revel_user_id"  name="revel_user_id" >
                                 <?php $revel_user_id = (isset($queryup[0]->revel_user_id))? $queryup[0]->revel_user_id:set_value('revel_user_id');
                                 foreach($revel_users as $rows): ?>
-                                    <option value="<?php echo $rows->id ?>" <?php if($revel_user_id ==  $rows->id ){ echo "selected='selected'"; } ?> ><?php echo $rows->last_name.' '.$rows->first_name; ?></option>
+                                    <option value="<?php echo $rows->id ?>" <?php if($revel_user_id ==  $rows->id ){ echo "selected='selected'"; } ?> ><?php echo $rows->first_name.' '.$rows->last_name; ?></option>
                                 <?php endforeach;?>
 
                             </select>
