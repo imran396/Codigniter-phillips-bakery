@@ -15,7 +15,7 @@ class Users_model extends Crud_Model
 
     public function update($data, $id)
     {
-        $array = array('first_name'=>$data['first_name'],'last_name'=>$data['last_name']);
+        $array = array('first_name'=>$data['first_name'],'last_name'=>$data['last_name'],'revel_user_id'=>$data['revel_user_id']);
         $this->db->set($array)->where(array('id'=>$id))->update('meta');
         $array = array('email'=>$data['email'],'group_id'=>$data['group_id']);
         $this->db->set($array)->where(array('id'=>$id))->update('users');
@@ -82,7 +82,7 @@ class Users_model extends Crud_Model
     {
 
         return $this->db
-            ->select('users.id,users.group_id,users.username,users.email,meta.first_name,meta.last_name,meta.location_id, users.active')
+            ->select('users.id,users.group_id,users.username,users.email,meta.first_name,meta.last_name,meta.location_id,meta.revel_user_id, users.active')
             ->join('meta','users.id =meta.user_id')
             ->join('groups','users.group_id =groups.id')
             ->where(array('username'=>$username))->get('users')->result();

@@ -7,7 +7,7 @@ class users extends Crud_Controller
     {
         parent::__construct();
         $this->layout->setLayout('layout_admin');
-        $this->load->model('users_model');
+        $this->load->model(array('users_model','revel_employee'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
@@ -16,6 +16,9 @@ class users extends Crud_Controller
 
     public function index()
     {
+        header("Content-type=> application/json");
+        $revel_user = ($this->revel_employee->getUserEnterprise());
+        $this->data['revel_users'] =$revel_user;
         $this->data['groupresult'] = $this->users_model->getGroup();
         $this->data['locresult'] = $this->users_model->getLocations();
         $this->data['active']=$this->uri->segment(2,0);
@@ -40,22 +43,45 @@ class users extends Crud_Controller
 
             if ($this->form_validation->run()) {
                 $username = strtolower($this->input->post('username'));
+                $first_name = $this->input->post('first_name');
+                $last_name= $this->input->post('last_name');
                 $email = $this->input->post('email');
                 $password = $this->input->post('password');
+                $revel_user_id = $this->input->post('revel_user_id');
                 $row=$this->db->select('id')->order_by('id','desc')->limit(1)->get('meta')->row();
                 $last_id = $row->id;
                 $employee_id = "SP-".(10000+$last_id);
 
+
+
                 $additional_data = array(
-                    'first_name' => $this->input->post('first_name'),
-                    'last_name' => $this->input->post('last_name'),
+                    'first_name' => $first_name,
+                    'last_name' => $last_name,
                     'group_id' => $this->input->post('group_id'),
                     'location_id' => $this->input->post('location_id'),
                     'employee_id' => $employee_id,
+                    'revel_user_id' => $revel_user_id,
                     'status' => 1
                 );
-                //print_r($additional_data);
-               // exit;
+
+
+                /*
+                $revel_user=array(
+                    'first_name' => $first_name,
+                    'last_name' => $last_name,
+                    'email' => "shafiq@emicrograph.com"
+                );
+
+               try{
+                    $revel_user_id = $this->revel_employee->create($revel_user);
+                    $revel_user_id  = $revel_user_id;
+                }catch (\Exception $e){
+                    $revel_user_id  = null;
+                }
+
+
+                print_r($revel_user_id);
+                exit;*/
             }
 
             if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data))
@@ -167,6 +193,9 @@ class users extends Crud_Controller
 
     public function edit($username){
 
+        header("Content-type=> application/json");
+        $revel_user = ($this->revel_employee->getUserEnterprise());
+        $this->data['revel_users'] =$revel_user;
         $this->data['queryup'] = $this->users_model->getusers($username);
         $this->data['groupresult'] = $this->users_model->getGroup();
         $this->data['active']=$this->uri->segment(2,0);
@@ -205,7 +234,6 @@ class users extends Crud_Controller
 
     private function saveData()
     {
-
         $data = $this->input->post();
         if (!empty($data['username'])) {
             $this->users_model->update($data, $data['id']);

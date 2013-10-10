@@ -19,6 +19,7 @@ class Price_matrix_model extends Ci_Model
         foreach ($flavour as $flav):
             $serving = $this->input->post('serving_id_'.$flav);
             $price = $this->input->post('price_'.$flav);
+            $price =isset($price)?$price:0.00;
             $price_matrix = $this->input->post('price_matrix_'.$flav);
             $i=0;
             foreach ($serving as $serv):

@@ -515,11 +515,13 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
             $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
             $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+            $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
 
             $RevelOrderData = array(
                 'order_code' => $orders['order_code'],
                 'revel_customer_id' => $revel_customer,
                 'revel_location_id' => $revel_location,
+                'revel_user_id' => $revel_user,
                 'discount'=> $orders['discount_price'],
                 'subtotal'=> $orders['total_price'],
             );
@@ -531,13 +533,15 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
                 $orders['revel_order_id']  = null;
             }
 
-
             if($status_code_revel > 0){
                 $orders['order_code'] = $status_code_revel;
                 $orders=$this->orders_model->order_update($orders, $orders['order_id']);
             }
 
+        }
+        if(!empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] == '305' ){
 
+            $this->revel_order->delete($revel_order_id);
         }
 
         $order_delivery['name']=isset($_REQUEST['name']) ? $_REQUEST['name']:'';

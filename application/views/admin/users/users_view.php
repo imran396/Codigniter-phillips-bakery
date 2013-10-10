@@ -59,6 +59,18 @@
                 </div>
                 <div class="span6">
                     <div class="control-group">
+                        <label class="control-label" for="username">Revel User</label>
+                        <div class="controls">
+                            <select style="width: 100%;" id="revel_user_id"  name="revel_user_id" >
+                                <?php $revel_user_id = (isset($queryup[0]->revel_user_id))? $queryup[0]->revel_user_id:set_value('revel_user_id');
+                                foreach($revel_users as $rows): ?>
+                                    <option value="<?php echo $rows->id ?>" <?php if($revel_user_id ==  $rows->id ){ echo "selected='selected'"; } ?> ><?php echo $rows->last_name.' '.$rows->first_name; ?></option>
+                                <?php endforeach;?>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
                         <label class="control-label" for="password"><?php echo $this->lang->line('password');?></label>
                         <div class="controls"><input type="password" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('password');?>" value=""  class="validate[required] span10" name="password" id="password"  /></div>
                     </div>

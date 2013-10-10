@@ -31,9 +31,10 @@ class Test extends Crud_Controller
         $revel_product = ($this->revel_product->getAll());
 
         var_dump($revel_product);
-        exit;
-        $revel_location = ($this->revel_location->getAll());
 
+        //$revel_location = ($this->revel_location->getAll());
+        //var_dump($revel_location);
+        exit;
         $revel_location_arr=array();
         foreach($revel_location as $rows):
            echo  $rows->id.'<br/>';
@@ -111,6 +112,11 @@ class Test extends Crud_Controller
     public function customers()
     {
         var_dump($this->revel_customer->getAll());
+    }
+
+    public function employee()
+    {
+        var_dump($this->revel_employee->getUserEnterprise());
     }
 
     public function createCustomers()

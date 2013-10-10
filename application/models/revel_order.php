@@ -22,7 +22,7 @@ class Revel_Order extends Revel_Model
                 "discount_reason"        => "",
                 "uuid"                   => $this->generateUUID(),
                 "temp_sort"              => time(),
-                "created_by"             => $this->revel['user'],
+                "created_by"             => ($data['revel_user_id'] > 0 ) ? "/enterprise/User/".$data['revel_user_id']."/" : "/enterprise/User/1/",
                 "station"                => ($data['revel_location_id'] > 0 ) ? "/resources/PosStation/".$data['revel_location_id']."/" : "resources/PosStation/1/",
                 "course_number"          => 0,
                 "shared"                 => 0,
@@ -34,7 +34,7 @@ class Revel_Order extends Revel_Model
                 "exchanged"              => 0,
                 "product"                => ($catalog) ?  $this->revel['catalogCake']:$this->revel['customCake'],
                 "combo_used"             => null,
-                "updated_by"             => $this->revel['user'],
+                "updated_by"             => ($data['revel_user_id'] > 0 ) ? "/enterprise/User/".$data['revel_user_id']."/" : "/enterprise/User/1/",
                 "product_name_override"  => null,
                 "deleted"                => 0,
                 "price"                  => $data['subtotal'],
@@ -76,7 +76,7 @@ class Revel_Order extends Revel_Model
                 "uuid"                 => $this->generateUUID(),
                 "gratuity"             => 0,
                 "orderhistory"         => array(),
-                "created_by"           => $this->revel['user'],
+                "created_by"           => ($data['revel_user_id'] > 0 ) ? "/enterprise/User/".$data['revel_user_id']."/" : "/enterprise/User/1/",
                 "closed"               => 0,
                 "tax_country"          => "",
                 "surcharge"            => 0,
@@ -85,7 +85,7 @@ class Revel_Order extends Revel_Model
                 "updated_date"         => date("c"),
                 "prevailing_tax"       => 0.0,
                 "prevailing_surcharge" => 0,
-                "updated_by"           => $this->revel['user'],
+                "updated_by"           => ($data['revel_user_id'] > 0 ) ? "/enterprise/User/".$data['revel_user_id']."/" : "/enterprise/User/1/",
                 "delivery_clock_out"   => null,
                 "delivery_employee"    => null,
                 "dining_option"        => 1,
@@ -118,7 +118,7 @@ class Revel_Order extends Revel_Model
             )
         );
 
-       $test_revel =  $this->postResource('OrderAllInOne', $revelData, true);
+        $this->postResource('OrderAllInOne', $revelData, true);
         return basename($this->headers['location']) ;
     }
 
@@ -184,6 +184,12 @@ class Revel_Order extends Revel_Model
 
     }
 
+    public function delete($revel_order_id){
+
+        return $this->deleteResource('Order', $revel_order_id, true);
+
+    }
+
     public function getRevelID($table, $id)
     {
         if ($table == 'cakes') {
@@ -198,6 +204,9 @@ class Revel_Order extends Revel_Model
         } elseif ($table == 'orders') {
             $rid       = 'revel_order_id';
             $condition = array('order_id' => $id);
+        } elseif ($table == 'meta') {
+            $rid       = 'revel_user_id';
+            $condition = array('user_id' => $id);
         }
 
         $row = $this->db->select($rid)->where($condition)->get($table);

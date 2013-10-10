@@ -125,17 +125,19 @@ class Orders extends API_Controller
             $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
             if(empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] != '300' ){
 
-                //$revel_product = $this->revel_order->getRevelID('cakes',$orders['cake_id']);
                 $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
                 $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+                $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
 
                 $RevelOrderData = array(
                     'order_code' => $orders['order_code'],
                     'revel_customer_id' => $revel_customer,
                     'revel_location_id' => $revel_location,
+                    'revel_user_id' => $revel_user,
                     'discount'=> $orders['discount_price'],
-                    'subtotal'=> $orders['total_price']
+                    'subtotal'=> $orders['total_price'],
                 );
+
                try{
                    $custom =( $orders['cake_id'] > 0 ) ? $orders['cake_id'] :'';
                    $status_code_revel =  $this->revel_order->create($RevelOrderData,$custom);
@@ -152,6 +154,7 @@ class Orders extends API_Controller
                 }
 
             }
+
 
             $result= $this->productions_model->orderPrint($orders['order_id']);
             $rows = $result->row();
@@ -250,6 +253,10 @@ class Orders extends API_Controller
             }
         }
 
+        if(!empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] == '305' ){
+             $this->revel_order->delete($revel_order_id);
+        }
+
         if(isset($order_delivery)){
             $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
         }
@@ -276,13 +283,15 @@ class Orders extends API_Controller
 
             $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
             $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+            $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
 
             $RevelOrderData = array(
                 'order_code' => $orders['order_code'],
                 'revel_customer_id' => $revel_customer,
                 'revel_location_id' => $revel_location,
+                'revel_user_id' => $revel_user,
                 'discount'=> $orders['discount_price'],
-                'subtotal'=> $orders['total_price']
+                'subtotal'=> $orders['total_price'],
             );
 
            try{
@@ -307,14 +316,17 @@ class Orders extends API_Controller
 
                 $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
                 $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+                $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
+
                 $RevelOrderData = array(
                     'order_code' => $orders['order_code'],
-                    'revel_order_id' => $revel_order_id,
                     'revel_customer_id' => $revel_customer,
                     'revel_location_id' => $revel_location,
+                    'revel_user_id' => $revel_user,
                     'discount'=> $orders['discount_price'],
-                    'subtotal'=> $orders['total_price']
+                    'subtotal'=> $orders['total_price'],
                 );
+
                 $this->revel_order->update($RevelOrderData);
                 try{
                     $this->revel_order->update($RevelOrderData);
@@ -325,7 +337,11 @@ class Orders extends API_Controller
                 }
 
             }
-        }
+         }
+
+         if(!empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] == '305'){
+                $this->revel_order->delete($revel_order_id);
+         }
 
             $result= $this->productions_model->orderPrint($orders['order_id']);
             $rows = $result->row();
