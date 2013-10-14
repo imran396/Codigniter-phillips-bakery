@@ -50,10 +50,7 @@ class users extends Crud_Controller
                 $revel_user_id = $this->input->post('revel_user_id');
                 $row=$this->db->select('id')->order_by('id','desc')->limit(1)->get('meta')->row();
                 $last_id = $row->id;
-                $employee_id = "SP-".(10000+$last_id);
-
-
-
+                $employee_id =(1000+$last_id);
                 $additional_data = array(
                     'first_name' => $first_name,
                     'last_name' => $last_name,
