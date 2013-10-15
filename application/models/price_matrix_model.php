@@ -18,6 +18,8 @@ class Price_matrix_model extends Ci_Model
        // $this->db->query($query);
         foreach ($flavour as $flav):
             $serving = $this->input->post('serving_id_'.$flav);
+            print_r($serving);
+            exit;
             $price = $this->input->post('price_'.$flav);
             $price_matrix = $this->input->post('price_matrix_'.$flav);
             $i=0;
