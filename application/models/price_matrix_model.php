@@ -18,12 +18,12 @@ class Price_matrix_model extends Ci_Model
        // $this->db->query($query);
         foreach ($flavour as $flav):
             $serving = $this->input->post('serving_id_'.$flav);
-            print_r($serving);
-            exit;
+            print_r($serving)."</br>";
+
             $price = $this->input->post('price_'.$flav);
             $price_matrix = $this->input->post('price_matrix_'.$flav);
             $i=0;
-            foreach ($serving as $serv):
+            /*foreach ($serving as $serv):
                 $matrix_price =isset($price[$i])?$price[$i]:'0.00';
                 if($price_matrix[$i] > 0 ){
                     $this->db->set(array('price'=> $matrix_price))->where(array('price_matrix_id'=>$price_matrix[$i]))->update('price_matrix');
@@ -32,8 +32,9 @@ class Price_matrix_model extends Ci_Model
                 }
 
                 $i++;
-            endforeach;
+            endforeach;*/
         endforeach;
+        exit;
     }
 
 
