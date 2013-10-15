@@ -84,7 +84,7 @@ class Price_matrix_model extends Ci_Model
     public function getCakes()
     {
 
-        return $this->db->select('*')->where(array('status'=> 1,'is_deleted !='=>1))->order_by("title", "asc")->get('cakes')->result();
+        return $this->db->select('*')->where(array('status'=> 1,'is_deleted !='=>1))->order_by("title", "asc")->limit(20)->get('cakes')->result();
 
     }
 
