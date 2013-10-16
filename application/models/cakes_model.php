@@ -281,7 +281,7 @@ class Cakes_model extends CI_Model
                 WHERE (is_deleted != 1 AND  LOWER(cakes.title) LIKE '%$search%')
                 || (is_deleted != 1 AND LOWER(meta_tag) LIKE '%$search%')";
 
-        $per_page=1;
+        $per_page=10;
         $page   = intval($start);
         if($page<=0)  $page  = 1;
         $limit=($page-1)*$per_page;
