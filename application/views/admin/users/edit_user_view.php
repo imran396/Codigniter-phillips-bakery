@@ -31,10 +31,11 @@
                         <label class="control-label" for="lastname"><?php echo $this->lang->line('last_name');?></label>
                         <div class="controls"><input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('last_name');?>" value="<?php echo(isset($queryup[0]->last_name))? $queryup[0]->last_name:set_value('last_name'); ?>"  class="span12" name="last_name" id="last_name"  /></div>
                     </div>
-
-
-
-                </div>
+                    <div class="control-group">
+                        <label class="control-label" for="lastname"><?php echo $this->lang->line('passcode');?></label>
+                        <div class="controls"><input type="text" placeholder="<?php echo $this->lang->line('passcode').' '.$this->lang->line('passcode');?>" value="<?php echo(isset($queryup[0]->employee_id))? $queryup[0]->employee_id:set_value('employee_id'); ?>"  class="span4" name="employee_id" id="employee_id"  /></div>
+                    </div>
+               </div>
                 <div class="span6">
 
                     <div class="control-group">

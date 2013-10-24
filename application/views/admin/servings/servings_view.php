@@ -36,12 +36,12 @@
                                         <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('serving_name');?>" value="<?php echo(isset($queryup[0]->title))? $queryup[0]->title:set_value('title'); ?>"  class="validate[required] span10" name="title" id="title"  />
                                     </div>
                                 </div>
-                                <div class="control-group">
-                                    <label class="control-label"><?php echo $this->lang->line('size_shape');?></label>
+                    <!--            <div class="control-group">
+                                    <label class="control-label"><?php /*echo $this->lang->line('size_shape');*/?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('size_shape');?>" value="<?php  echo(isset($queryup[0]->size))? form_prep($queryup[0]->size):set_value('size'); ?>"  class="validate[required] span10" name="size" id="size"  />
+                                        <input type="text" placeholder="<?php /*echo $this->lang->line('enter').' '.$this->lang->line('size_shape');*/?>" value="<?php /* echo(isset($queryup[0]->size))? form_prep($queryup[0]->size):set_value('size'); */?>"  class="validate[required] span10" name="size" id="size"  />
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('printing_surcharge');?></label>
                                     <div class="controls">

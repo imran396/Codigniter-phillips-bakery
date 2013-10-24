@@ -48,11 +48,11 @@ class users extends Crud_Controller
                 $email = $this->input->post('email');
                 $password = $this->input->post('password');
                 $revel_user_id = $this->input->post('revel_user_id');
-                $row=$this->db->select('id')->order_by('id','desc')->limit(1)->get('meta')->row();
-                $last_id = $row->id;
-                $employee_id = "SP-".(10000+$last_id);
 
-
+                do{
+                    $employee_id = $this->simpleRandString(4);
+                    $count = $this->db->where(array('employee_id'=>$employee_id))->get('meta')->num_rows();
+                }while($count > 0 );
 
                 $additional_data = array(
                     'first_name' => $first_name,
@@ -102,7 +102,16 @@ class users extends Crud_Controller
         //$this->index();
 
     }
-
+    function simpleRandString($length=16, $list="0123456789"){
+        mt_srand((double)microtime()*1000000);
+        $newstring="";
+        if($length>0){
+            while(strlen($newstring)<$length){
+                $newstring.=$list[mt_rand(0, strlen($list)-1)];
+            }
+        }
+        return $newstring;
+    }
 
     public function profile($username)
     {

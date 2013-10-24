@@ -44,6 +44,8 @@ class Cakes_model extends CI_Model
         $insert['meta_tag'] = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
         $insert['revel_product_id'] = ($data['revel_product_id'] !="") ? $data['revel_product_id'] :'';
         $insert['flavour_id'] =($flavour_id !="") ? serialize($flavour_id):'';
+        $shape_id = (!empty($data['shape_id'])) ? $data['shape_id'] :'';
+        $insert['shape_id'] =($shape_id !="") ? serialize($shape_id):'';
         $insert['status'] = ($data['status'] !="") ? $data['status'] :'';
         $insert['insert_date']=time();
         $insert['update_date']=time();
@@ -70,6 +72,8 @@ class Cakes_model extends CI_Model
         $insert['description'] = ($data['description'] !="") ? $data['description'] :'';
         $insert['category_id'] = ($data['category_id'] !="") ? $data['category_id'] :'';
         $insert['flavour_id'] =($flavour_id !="") ? serialize($flavour_id):'';
+        $shape_id = (!empty($data['shape_id'])) ? $data['shape_id'] :'';
+        $insert['shape_id'] =($shape_id !="") ? serialize($shape_id):'';
         $insert['meta_tag'] = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
         $insert['status'] = ($data['status'] !="") ? $data['status'] :'';
         $insert['update_date']=time();

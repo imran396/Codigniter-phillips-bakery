@@ -97,6 +97,42 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="control-group uniformjs">
+                                        <label class="control-label"><?php echo $this->lang->line('shapes');?></label>
+                                        <div class="separator"></div>
+                                        <?php
+                                        if(isset($queryup[0]->cake_id) > 0){
+                                            $shape_id =($queryup[0]->shape_id !="" ) ? $queryup[0]->shape_id : serialize(array());
+                                        }else{
+                                            $shape_id =(isset($queryup[0]->shape_id)) ? $queryup[0]->shape_id : serialize(array());
+                                        }
+
+                                        $shapeid=(unserialize($shape_id));
+                                        foreach($sapresult as $shapes):
+                                            ?>
+
+                                            <label class="radio">
+                                                <input type="checkbox" class="radio" name="shape_id[]" value="<?php echo $shapes->title;?>" <?php if( in_array($shapes->title, $shapeid) ){?> checked="checked" <?php } ?> />
+                                                <?php echo $shapes->title;?>
+                                            </label>
+                                        <?php endforeach; ?>
+
+                                    </div>
+                                    <div class="control-group uniformjs">
+                                        <label class="control-label"><?php echo $this->lang->line('fondant');?></label>
+                                        <div class="separator"></div>
+                                        <?php $fondant = (isset($queryup[0]->fondant))? $queryup[0]->fondant:1; ?>
+                                        <label class="radio">
+                                            <input type="radio" class="radio" name="fondant" value="1" <?php if($fondant ==1){?> checked="checked" <?php } ?> />
+                                            <?php echo $this->lang->line('yes');?>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" class="radio" name="fondant" value="0" <?php if($fondant !=1 ){?> checked="checked" <?php } ?>  />
+                                            <?php echo $this->lang->line('no');?>
+                                        </label><br/>
+
+                                    </div>
 <!--
                                     <div class="control-group uniformjs">
                                         <label class="control-label"><?php /*echo $this->lang->line('tiers');*/?></label>

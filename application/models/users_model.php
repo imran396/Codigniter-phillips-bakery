@@ -82,7 +82,7 @@ class Users_model extends Crud_Model
     {
 
         return $this->db
-            ->select('users.id,users.group_id,users.username,users.email,meta.first_name,meta.last_name,meta.location_id,meta.revel_user_id, users.active')
+            ->select('users.*,meta.*')
             ->join('meta','users.id =meta.user_id')
             ->join('groups','users.group_id =groups.id')
             ->where(array('username'=>$username))->get('users')->result();
