@@ -134,9 +134,17 @@ class Productions extends Crud_Controller
 
     public function status($order_code,$order_status){
 
-       $this->productions_model->statusChange($order_code,$order_status);
+        $this->productions_model->statusChange($order_code,$order_status);
 
-       $session_data =  $this->session->all_userdata();
+        $result= $this->productions_model->orderDetails($order_code);
+        $row=$result->row();
+        $revel_order_id =$row->revel_order_id;
+
+        if(!empty($revel_order_id) && $order_code && $order_status == '305' ){
+            $this->revel_order->delete($revel_order_id);
+        }
+
+        $session_data =  $this->session->all_userdata();
         $data = array(
             'employee_id' => $session_data['empolyee_code'],
             'audit_name' => 'orderstatus',
