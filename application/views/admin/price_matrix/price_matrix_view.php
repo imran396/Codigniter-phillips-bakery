@@ -53,11 +53,11 @@
 
                                 <td>
                                     <table class="table table-bordered table-striped" >
-                                        <tr>
-                                            <?php foreach($serresult as $size): ?>
-                                                <td><?php echo $size->size ?></td>
-                                            <?php endforeach; ?>
-                                        </tr>
+                               <!--         <tr>
+                                            <?php /*foreach($serresult as $size): */?>
+                                                <td><?php /*echo $size->size */?></td>
+                                            <?php /*endforeach; */?>
+                                        </tr>-->
                                         <tr>
                                             <?php foreach($serresult as $servingtitle): ?>
                                                 <td style="border-top:1px solid #000 " ><?php echo $servingtitle->title ?></td>
@@ -67,8 +67,6 @@
                                 </td>
                             </tr>
                             <tr>
-
-
 
                                 <td colspan="2">
                                     <table class="table table-bordered table-striped" >

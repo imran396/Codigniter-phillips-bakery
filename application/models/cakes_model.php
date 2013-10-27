@@ -46,6 +46,7 @@ class Cakes_model extends CI_Model
         $insert['flavour_id'] =($flavour_id !="") ? serialize($flavour_id):'';
         $shape_id = (!empty($data['shape_id'])) ? $data['shape_id'] :'';
         $insert['shape_id'] =($shape_id !="") ? serialize($shape_id):'';
+        $insert['fondant'] = ($data['fondant'] !="") ? $data['fondant'] :0;
         $insert['status'] = ($data['status'] !="") ? $data['status'] :'';
         $insert['insert_date']=time();
         $insert['update_date']=time();
@@ -75,6 +76,7 @@ class Cakes_model extends CI_Model
         $shape_id = (!empty($data['shape_id'])) ? $data['shape_id'] :'';
         $insert['shape_id'] =($shape_id !="") ? serialize($shape_id):'';
         $insert['meta_tag'] = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
+        $insert['fondant'] = ($data['fondant'] !="") ? $data['fondant'] :0;
         $insert['status'] = ($data['status'] !="") ? $data['status'] :'';
         $insert['update_date']=time();
         $this->db->set($insert)->where(array('cake_id' => $id))->update('cakes');
