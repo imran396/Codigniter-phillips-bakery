@@ -41,8 +41,6 @@ class Reports extends Crud_Controller
             $this->data['result']="";
         }
 
-        print_r($this->data['result']);
-
         $this->layout->view('admin/reports/report_category_view', $this->data);
     }
 
