@@ -37,9 +37,9 @@ class Reports extends Crud_Controller
         $sql=$this->db->query($query);
         if($sql ->num_rows > 0){
             $this->data['result']=$sql->result();
-        }else{
-            return false;
         }
+
+        print_r($this->data['result']);
 
         $this->layout->view('admin/reports/category_report_view', $this->data);
     }
