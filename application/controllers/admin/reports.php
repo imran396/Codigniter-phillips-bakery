@@ -65,8 +65,7 @@ class Reports extends Crud_Controller
             GROUP BY orders.cake_id ORDER BY orders.cake_id ASC";
 
         $sql=$this->db->query($query);
-        $query=$sql->result();
-        query_to_csv($query, TRUE, 'category_reports.csv');
+        query_to_csv($sql, TRUE, 'category_reports.csv');
 
     }
 
