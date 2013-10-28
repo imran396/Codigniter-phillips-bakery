@@ -37,6 +37,9 @@ class users extends Crud_Controller
 
     public function save()
     {
+        header("Content-type=> application/json");
+        $revel_user = ($this->revel_employee->getUserEnterprise());
+
         if (!empty($_POST)) {
 
             $this->addValidation();
@@ -98,6 +101,7 @@ class users extends Crud_Controller
                 redirect('admin/users/listing', 'refresh');
             }else{
 
+                $this->data['revel_users'] =$revel_user;
                 $this->data['groupresult'] = $this->users_model->getGroup();
                 $this->data['locresult'] = $this->users_model->getLocations();
                 $this->data['success_msg'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));

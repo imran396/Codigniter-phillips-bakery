@@ -18,7 +18,6 @@ class Servings extends Crud_Controller
     public function index()
     {
 
-
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/servings/servings_view', $this->data);
 
@@ -64,7 +63,7 @@ class Servings extends Crud_Controller
 
     private function addValidation()
     {
-        $this->form_validation->set_rules('title', 'Category', 'required|trim|xss_clean|callback_checkTitle');
+        $this->form_validation->set_rules('title', 'Serving name', 'required|trim|xss_clean|callback_checkTitle');
         $this->form_validation->set_rules('serving_id');
         $this->form_validation->set_rules('status');
 
