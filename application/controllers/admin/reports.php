@@ -43,7 +43,7 @@ class Reports extends Crud_Controller
 
         print_r($this->data['result']);
 
-        $this->layout->view('admin/reports/category_report_view', $this->data);
+        $this->layout->view('admin/reports/report_category_view', $this->data);
     }
 
     public function category_orders_csvfile()
