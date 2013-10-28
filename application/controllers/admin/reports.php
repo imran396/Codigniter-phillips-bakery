@@ -54,15 +54,12 @@ class Reports extends Crud_Controller
         $start_date= isset($data['start_date']) ? strtotime($data['start_date']):$firstDay;
         $end_date= isset($data['end_date']) ? strtotime($data['end_date']):$lastDay;
 
-        $query="SELECT orders.cake_id,
-                orders.order_date,
-                COUNT(orders.cake_id) AS ordered,
-                COALESCE(cakes.title,'Custom cake') AS cake_name,
-                COALESCE(categories.title,'Custom cake') AS cake_category_name
-            FROM orders LEFT OUTER JOIN cakes ON orders.cake_id = cakes.cake_id
-                 LEFT JOIN categories ON cakes.category_id = categories.category_id
-            WHERE (order_date >= '$start_date' && order_date <= '$end_date' && order_status !=300)
-            GROUP BY orders.cake_id ORDER BY orders.cake_id ASC";
+        $query="SELECT COALESCE(cakes.title,'Custom cake') AS cake_name,
+                COALESCE(categories.title,'Custom cake') AS category_name,COUNT(orders.cake_id) AS ordered,
+                FROM orders LEFT OUTER JOIN cakes ON orders.cake_id = cakes.cake_id
+                LEFT JOIN categories ON cakes.category_id = categories.category_id
+                WHERE (order_date >= '$start_date' && order_date <= '$end_date' && order_status !=300)
+                GROUP BY orders.cake_id ORDER BY orders.cake_id ASC";
 
         $sql=$this->db->query($query);
         query_to_csv($sql, TRUE, 'category_reports.csv');
