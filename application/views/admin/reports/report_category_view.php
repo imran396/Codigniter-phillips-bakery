@@ -16,8 +16,8 @@
         <div class="buttons pull-right">
 
             <form action="/admin/reports/category_reports" method="get">
-                From&nbsp;<input type="text" value="<?php echo isset($_REQUEST['start_date'])?$_REQUEST['start_date']:''; ?>"  name="start_date" placeholder="Enter start date" id="start_date">
-                &nbsp;To&nbsp;<input type="text" value="<?php echo isset($_REQUEST['end_date'])?$_REQUEST['end_date']:''; ?>"  name="end_date" placeholder="Enter end date" id="end_date"><button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok mbutton"><i></i><?php echo $this->lang->line('search');?></button></form>
+                From&nbsp;<input type="text" value="<?php echo isset($_REQUEST['start_date'])?$_REQUEST['start_date']:''; ?>"  name="start_date" placeholder="<?php echo $this->lang->line('enter_start_date'); ?>" id="start_date">
+                &nbsp;To&nbsp;<input type="text" value="<?php echo isset($_REQUEST['end_date'])?$_REQUEST['end_date']:''; ?>"  name="end_date" placeholder="<?php echo $this->lang->line('enter_end_date'); ?>" id="end_date"><button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok mbutton"><i></i><?php echo $this->lang->line('search');?></button></form>
 
         </div>
         <div class="clearfix"></div>
