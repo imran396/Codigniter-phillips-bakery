@@ -284,20 +284,29 @@ $lang['delivery_zone'] 		 	    = 'Delivery Zone';
 $lang['order_status'] 		 	    = 'Order Status';
 
 
-$lang['matrix_price'] 		 	    = 'Cake Price';
-$lang['discount_price'] 		 	    = 'Discount';
-$lang['printed_image_surcharge'] 		 	    = 'Printed Image Surcharge';
-$lang['magic_surcharge'] 		 	    = 'Magic Surcharge';
-$lang['delivery_zone_surcharge'] 		 	    = 'Delivery Zone Surcharge';
-$lang['override_price'] 		 	    = 'Price Override';
-$lang['total_price'] 		 	    = 'Total Price';
-$lang['total'] 		 	    = 'Total';
-$lang['order_notes'] 		 	    = 'Order Notes';
-$lang['added_by'] 		 	    = 'Added By';
-$lang['notes'] 		 	    = 'Notes';
-$lang['mailtouser'] 		 	    = 'Mail to user';
+$lang['matrix_price'] 		 	            = 'Cake Price';
+$lang['discount_price'] 		 	        = 'Discount';
+$lang['printed_image_surcharge'] 		 	= 'Printed Image Surcharge';
+$lang['magic_surcharge'] 		 	        = 'Magic Surcharge';
+$lang['delivery_zone_surcharge'] 		 	= 'Delivery Zone Surcharge';
+$lang['override_price'] 		 	        = 'Price Override';
+$lang['total_price'] 		 	            = 'Total Price';
+$lang['total'] 		 	                    = 'Total';
+$lang['order_notes'] 		 	            = 'Order Notes';
+$lang['added_by'] 		 	                = 'Added By';
+$lang['notes'] 		 	                    = 'Notes';
+$lang['mailtouser'] 		 	            = 'Mail to user';
 
 /* -------- Orders --------------*/
 $lang['Size and Servings'] = 'Size and Servings';
 $lang['cakes categories'] = 'Cakes Categories';
 $lang['auditlog'] = 'Audit Log';
+
+
+/*-------------------Reports----------------------*/
+
+$lang['reports'] 		 	    = 'Reports';
+$lang['product_reports'] 		 	    = 'Product Reports';
+$lang['category_reports'] 		 	    = 'Category Reports';
+$lang['customer_reports'] 		 	    = 'Customer Reports';
+$lang['notes'] 		 	    = 'Notes';
