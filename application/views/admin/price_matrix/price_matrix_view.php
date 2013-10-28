@@ -54,7 +54,7 @@
                                 <td>
                                     <table class="table table-bordered table-striped" >
                                        <tr>
-                                        <td align="left" colspan="<?php echo $count=($serresult); ?>" >List of Servings</td>
+                                        <td align="left" colspan="<?php echo $count=count($serresult); ?>" >List of Servings</td>
 
                                         </tr>
                                         <tr>
