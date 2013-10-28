@@ -26,7 +26,7 @@ class Reports extends Crud_Controller
 
         $query="SELECT orders.cake_id,
                 orders.order_date,
-                COUNT(orders.cake_id),
+                COUNT(orders.cake_id) AS ordered,
                 COALESCE(cakes.title,'Custom cake') AS cake_name,
                 COALESCE(categories.title,'Custom cake') AS cake_category_name
             FROM orders LEFT OUTER JOIN cakes ON orders.cake_id = cakes.cake_id
