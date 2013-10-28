@@ -309,4 +309,5 @@ $lang['reports'] 		 	    = 'Reports';
 $lang['product_reports'] 		 	    = 'Product Reports';
 $lang['category_reports'] 		 	    = 'Category Reports';
 $lang['customer_reports'] 		 	    = 'Customer Reports';
-$lang['notes'] 		 	    = 'Notes';
+$lang['enter_start_date'] 		 	    = 'Enter start date[mm/dd/yyyyy]';
+$lang['enter_end_date'] 		 	    = 'Enter end date[mm/dd/yyyy]';
