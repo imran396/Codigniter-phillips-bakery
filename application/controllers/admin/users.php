@@ -52,7 +52,7 @@ class users extends Crud_Controller
 
                 do{
                     $employeeid = $this->simpleRandString(4);
-                    $count = $this->db->where(array('employee_id'=>$employee_id))->get('meta')->num_rows();
+                    $count = $this->db->where(array('employee_id'=>$employeeid))->get('meta')->num_rows();
                 }while($count > 0 );
 
                 if($employeeID > 0 ){
