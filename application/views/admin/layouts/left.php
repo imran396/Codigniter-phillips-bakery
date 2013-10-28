@@ -24,8 +24,8 @@ $array = array('roles','controls','access_controls');
 
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'flavours') ? 'active' : ''; ?>"><a href="/admin/flavours/listing"><i></i><span><?php echo $this->lang->line('flavours'); ?></span></a></li>
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'servings') ? 'active' : ''; ?>"><a href="/admin/servings/listing"><i></i><span><?php echo $this->lang->line('servings'); ?></span></a></li>
-           <!-- <li class="glyphicons cogwheels <?php /*echo (!empty($active) && $active == 'shapes') ? 'active' : ''; */?>"><a href="/admin/shapes/listing"><i></i><span><?php /*echo $this->lang->line('shapes'); */?></span></a></li>
--->
+           <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'shapes') ? 'active' : ''; ?>"><a href="/admin/shapes/listing"><i></i><span><?php echo $this->lang->line('shapes'); ?></span></a></li>
+
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'locations') ? 'active' : ''; ?>"><a href="/admin/locations/listing"><i></i><span><?php echo $this->lang->line('locations'); ?></span></a></li>
 <!--            <li class="glyphicons cogwheels --><?php //echo (!empty($active) && $active == 'blackouts') ? 'active' : ''; ?><!--" ><a href="/admin/blackouts/listing"><i></i><span>--><?php //echo $this->lang->line('blackouts'); ?><!--</span></a></li>-->
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'zones') ? 'active' : ''; ?>"><a href="/admin/zones/listing"><i></i><span><?php echo $this->lang->line('zone'); ?></span></a></li>
