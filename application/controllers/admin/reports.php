@@ -35,8 +35,10 @@ class Reports extends Crud_Controller
             GROUP BY orders.cake_id ORDER BY orders.cake_id ASC";
 
         $sql=$this->db->query($query);
-        if($sql ->num_rows > 0){
+        if($sql ->num_rows() > 0){
             $this->data['result']=$sql->result();
+        }else{
+            $this->data['result']="";
         }
 
         print_r($this->data['result']);
