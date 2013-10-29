@@ -89,7 +89,7 @@ class Reports extends Crud_Controller
 
         $val =array();
         foreach($result as $rows):
-            $val[] =($rows->cake_name.','.$rows->category_name.','.$rows->ordered);
+            $val[] =($rows->cake_name.','.$rows->category_name.','.$rows->ordered).",";
         endforeach;
 
         $array = array(
