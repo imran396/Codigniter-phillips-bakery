@@ -107,8 +107,8 @@ class Reports extends Crud_Controller
         );
 
         //$this->load->helper('csv');
-        echo array_to_csv($array);
-        //array_to_csv($array, 'toto.csv');
+        //echo array_to_csv($array);
+        array_to_csv($array, 'toto.csv');
 
     }
 
