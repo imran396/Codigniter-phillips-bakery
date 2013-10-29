@@ -93,7 +93,7 @@ class Reports extends Crud_Controller
         endforeach;
 
         $array = array(
-            array($start_date.',To,'.$end_date),
+            array($start_date.','.'To'.','.$end_date),
             array('Cake Name', 'Category Name', 'Ordered'),
 
         );
