@@ -63,7 +63,10 @@
 
     </div><!-- End Wrapper -->
 </div>
-
 <script type="text/javascript">
-
+    $(document).ready(function(){
+        $("#start_date").datepicker();
+        $("#end_date").datepicker();
+    });
 </script>
+

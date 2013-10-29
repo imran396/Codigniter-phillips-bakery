@@ -149,4 +149,54 @@ ORDER BY customers.first_name ASC";
 
     }
 
+    private function  totalServings($flavour_id,$serving_id){
+
+        $query = "SELECT count(orders.serving_id) AS servings
+                  FROM orders
+                  WHERE orders.flavour_id = $flavour_id && orders.serving_id = $serving_id";
+
+        $result=$this->db->query($query);
+        if($result -> num_rows() > 0){
+            $row = $result->row();
+            return  $row->servings;
+        }else{
+            return false;
+        }
+
+
+    }
+
+    function getReportProducts(){
+
+        $data="";
+            $query='SELECT servings.title,servings.serving_id FROM servings';
+            $result=$this->db->query($query);
+            $serings = $result->result();
+
+            $query='SELECT flavours.title,flavours.flavour_id FROM flavours';
+            $result=$this->db->query($query);
+            $flavours = $result->result();
+            $data .='<table>';
+
+            $data .="<th>";
+            foreach($serings as $serv){
+            $data .="<td>".$serv->title."</td>";
+
+            }
+            $data .="</th>";
+            foreach($flavours as $flav){
+                $data .="<tr>";
+                foreach($serings as $serv ){
+                    $data .="<td>".$this->totalServings($flav->flavour_id,$serv->serving_id)."</td>";
+
+                }
+                $data .="</tr>";
+            }
+
+        $data .='</table>';
+
+        return $data;
+
+    }
+
 }

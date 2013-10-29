@@ -30,44 +30,11 @@
     <div class="innerLR hidden-paging" id="filterResult">
         <div class="widget">
             <div class="widget-body">
-                <table class="table table-bordered table-primary table-striped">
-                    <thead>
-                    <tr>
-                        <th width="70">No #</th>
-                        <th width="166">Name</th>
-                        <th width="93">Phone</th>
-                        <th width="93">Address</th>
-                        <th width="93">City</th>
-                        <th width="93">Postal code</th>
-                        <th width="93">Province</th>
-                        <th width="93"># of orders</th>
-                        <th width="93">Total sales of orders</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    if(!empty($result)){
-                        $i=1;
-                        foreach($result as $rows):
-
-                            ?>
-                            <tr>
-                                <td> <?php echo $i; ?></td>
-                                <td> <?php echo $rows->customer_name; ?></td>
-                                <td> <?php echo $rows->phone_number; ?></td>
-                                <td> <?php echo $rows->address_1; ?></td>
-                                <td> <?php echo $rows->city; ?></td>
-                                <td> <?php echo $rows->postal_code; ?></td>
-                                <td> <?php echo $rows->province; ?></td>
-                                <td> <?php echo $rows->ordered; ?></td>
-                                <td> <?php echo $rows->totalPrice; ?></td>
-                            </tr>
-                            <?php $i++; endforeach; }else{ ?>
-                        <tr><td colspan="4">No Records found</td></tr>
-                    <?php } ?>
-
-                    </tbody>
-                </table>
+            <?php
+                if(!empty($result)){
+                    echo $result;
+                }
+            ?>
             </div>
         </div>
 
@@ -75,8 +42,8 @@
 </div>
 
 <script type="text/javascript">
-$(document).ready(function(){
-    $("#start_date").datepicker();
-    $("#end_date").datepicker();
-});
+    $(document).ready(function(){
+        $("#start_date").datepicker();
+        $("#end_date").datepicker();
+    });
 </script>

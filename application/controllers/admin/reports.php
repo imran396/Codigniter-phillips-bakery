@@ -56,11 +56,12 @@ class Reports extends Crud_Controller
 
     }
 
-    public function customers($start=0)
+    public function product_reports($start=0)
     {
-        $this->data['paging'] = $this->logs_model->getListing($start);
         $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/auditlog/listing_view', $this->data);
+        $data = $_REQUEST;
+        $this->data['result']=$this->reports_model->getReportProducts($data);
+        $this->layout->view('admin/reports/report_customer_view', $this->data);
     }
 
     public function customers_csvfile()
@@ -70,5 +71,7 @@ class Reports extends Crud_Controller
         query_to_csv($query, TRUE, 'toto.csv');
 
     }
+
+
 
 }
