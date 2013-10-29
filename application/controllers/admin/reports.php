@@ -93,23 +93,7 @@ class Reports extends Crud_Controller
         endforeach;
 
         $array = array(
-            array($start_date.'To'.$end_date),
-            array('Cake Name', 'Category Name', 'Ordered'),
-            $val
-        );
-
-        //array_to_csv($array, 'category_reports.csv');
-        $array1 = array(
-            array('Last Name', 'First Name', 'Gender'),
-            array('Furtado', 'Nelly', 'female'),
-            array('Twain', 'Shania', 'female'),
-            array('Farmer', 'Mylene', 'female')
-        );
-
-
-        $array = array();
-        $array = array(
-            array($start_date.'To'.$end_date),
+            array($start_date.',To,'.$end_date),
             array('Cake Name', 'Category Name', 'Ordered'),
 
         );
@@ -123,12 +107,7 @@ class Reports extends Crud_Controller
             $array[] = $line;
         }
 
-        echo array_to_csv($array, 'toto.csv');
-
-
-//$this->load->helper('csv');
-        //echo array_to_csv($val);
-        //array_to_csv($val, 'toto.csv');
+        array_to_csv($array, 'category_reports.csv');
 
     }
 
