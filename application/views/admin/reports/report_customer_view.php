@@ -41,7 +41,6 @@
                         <th width="93">Postal code</th>
                         <th width="93">Province</th>
                         <th width="93"># of orders</th>
-                        <th width="93"># of orders</th>
                         <th width="93">Total sales of orders</th>
                     </tr>
                     </thead>
