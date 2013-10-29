@@ -166,7 +166,7 @@ ORDER BY customers.first_name ASC";
 
     }
 
-    function getReportProducts(){
+    function getReportProducts($data=array()){
 
         $firstDay = date('d-m-Y', mktime(0, 0, 0, date("m", strtotime("-1 month")), 1, date("Y",strtotime("-1 month"))));
         $lastDay = date('d-m-Y', mktime(-1, 0, 0, date("m"), 1, date("Y")));
@@ -211,7 +211,7 @@ ORDER BY customers.first_name ASC";
 
     }
 
-    function getReportProductsCSV(){
+    function getReportProductsCSV($data=array()){
 
         $firstDay = date('d-m-Y', mktime(0, 0, 0, date("m", strtotime("-1 month")), 1, date("Y",strtotime("-1 month"))));
         $lastDay = date('d-m-Y', mktime(-1, 0, 0, date("m"), 1, date("Y")));
