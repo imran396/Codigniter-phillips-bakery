@@ -56,12 +56,12 @@ class Reports extends Crud_Controller
 
     }
 
-    public function product_reports($start=0)
+    public function product_reports()
     {
         $this->data['active']=$this->uri->segment(2,0);
         $data = $_REQUEST;
         $this->data['result']=$this->reports_model->getReportProducts($data);
-        $this->layout->view('admin/reports/report_customer_view', $this->data);
+        $this->layout->view('admin/reports/report_product_view', $this->data);
     }
 
     public function customers_csvfile()
