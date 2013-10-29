@@ -107,15 +107,6 @@ class Reports extends Crud_Controller
         );
 
 
-            $line = array();
-            foreach ($query->list_fields() as $name)
-            {
-                $line[] = $name;
-            }
-            $array[] = $line;
-
-
-
         $array = array();
         $array = array(
             array($start_date.'To'.$end_date),
