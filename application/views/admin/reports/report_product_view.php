@@ -11,7 +11,7 @@
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('category_reports');?></h3>
         <div class="buttons pull-right">
-            <a href="/admin/reports/product_reports_csvfileproduct_reports_csvfile/?start_date=<?php echo isset($_REQUEST['start_date'])?$_REQUEST['start_date']:''; ?>&end_date=<?php echo isset($_REQUEST['end_date'])?$_REQUEST['end_date']:''; ?>" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Export CSV</a>
+            <a href="/admin/reports/product_reports_csvfile/?start_date=<?php echo isset($_REQUEST['start_date'])?$_REQUEST['start_date']:''; ?>&end_date=<?php echo isset($_REQUEST['end_date'])?$_REQUEST['end_date']:''; ?>" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Export CSV</a>
         </div>
         <div class="buttons pull-right">
 
