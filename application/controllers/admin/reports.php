@@ -21,8 +21,8 @@ class Reports extends Crud_Controller
         $firstDay = date('d-m-Y', mktime(0, 0, 0, date("m", strtotime("-1 month")), 1, date("Y",strtotime("-1 month"))));
         $lastDay = date('d-m-Y', mktime(-1, 0, 0, date("m"), 1, date("Y")));
 
-        $start_date= isset($data['start_date']) ? strtotime($data['start_date']):$firstDay;
-        $end_date= isset($data['end_date']) ? strtotime($data['end_date']):$lastDay;
+        $start_date= isset($data['start_date']) ? strtotime($data['start_date']):strtotime($firstDay);
+        $end_date= isset($data['end_date']) ? strtotime($data['end_date']):strtotime($lastDay);
 
         $query="SELECT orders.cake_id,
                 orders.order_date,
@@ -51,8 +51,8 @@ class Reports extends Crud_Controller
         $firstDay = date('d-m-Y', mktime(0, 0, 0, date("m", strtotime("-1 month")), 1, date("Y",strtotime("-1 month"))));
         $lastDay = date('d-m-Y', mktime(-1, 0, 0, date("m"), 1, date("Y")));
 
-        $start_date= isset($data['start_date']) ? strtotime($data['start_date']):$firstDay;
-        $end_date= isset($data['end_date']) ? strtotime($data['end_date']):$lastDay;
+        $start_date= isset($data['start_date']) ? strtotime($data['start_date']):strtotime($firstDay);
+        $end_date= isset($data['end_date']) ? strtotime($data['end_date']):strtotime($lastDay);
 
         $query="SELECT COALESCE(cakes.title,'Custom cake') AS cake_name,
                 COALESCE(categories.title,'Custom cake') AS category_name,COUNT(orders.cake_id) AS ordered
@@ -63,6 +63,42 @@ class Reports extends Crud_Controller
 
         $sql=$this->db->query($query);
         query_to_csv($sql, TRUE, 'category_reports.csv');
+
+    }
+
+    public function customer_orders_csvfile()
+    {
+
+        $data = $_REQUEST;
+        $firstDay = date('d-m-Y', mktime(0, 0, 0, date("m", strtotime("-1 month")), 1, date("Y",strtotime("-1 month"))));
+        $lastDay = date('d-m-Y', mktime(-1, 0, 0, date("m"), 1, date("Y")));
+
+        $start_date= isset($data['start_date']) ? ($data['start_date']):($firstDay);
+        $end_date= isset($data['end_date']) ? ($data['end_date']):($lastDay);
+        $startdate  = strtotime($start_date);
+        $enddate    = strtotime($end_date);
+        $query="SELECT COALESCE(cakes.title,'Custom cake') AS cake_name,
+                COALESCE(categories.title,'Custom cake') AS category_name,COUNT(orders.cake_id) AS ordered
+                FROM orders LEFT OUTER JOIN cakes ON orders.cake_id = cakes.cake_id
+                LEFT JOIN categories ON cakes.category_id = categories.category_id
+                WHERE (order_date >= '$startdate' && order_date <= '$enddate' && order_status !=300)
+                GROUP BY orders.cake_id ORDER BY orders.cake_id ASC";
+
+        $sql=$this->db->query($query);
+        $result=$sql->result();
+
+        $val ="";
+        foreach($result as $rows):
+            $val .=array($rows->cake_name, $rows->category_name, $rows->ordered);
+        endforeach;
+
+        $array = array(
+            array($start_date.'To'.$end_date),
+            array('Cake Name', 'Category Name', 'Ordered'),
+            $val
+        );
+
+        array_to_csv($array, 'category_reports.csv');
 
     }
 
