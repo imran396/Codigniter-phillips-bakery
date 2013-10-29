@@ -106,8 +106,22 @@ class Reports extends Crud_Controller
             array('Farmer', 'Mylene', 'female')
         );
 
-        $array = array();
 
+            $line = array();
+            foreach ($query->list_fields() as $name)
+            {
+                $line[] = $name;
+            }
+            $array[] = $line;
+
+
+
+        $array = array();
+        $array = array(
+            array($start_date.'To'.$end_date),
+            array('Cake Name', 'Category Name', 'Ordered'),
+
+        );
         foreach ($sql->result_array() as $row)
         {
             $line = array();
