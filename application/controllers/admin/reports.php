@@ -106,9 +106,24 @@ class Reports extends Crud_Controller
             array('Farmer', 'Mylene', 'female')
         );
 
-        //$this->load->helper('csv');
+        $array = array();
+
+        foreach ($sql->result_array() as $row)
+        {
+            $line = array();
+            foreach ($row as $item)
+            {
+                $line[] = $item;
+            }
+            $array[] = $line;
+        }
+
+        echo array_to_csv($array, 'toto.csv');
+
+
+//$this->load->helper('csv');
         //echo array_to_csv($val);
-        array_to_csv($val, 'toto.csv');
+        //array_to_csv($val, 'toto.csv');
 
     }
 
