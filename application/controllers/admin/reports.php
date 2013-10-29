@@ -89,7 +89,7 @@ class Reports extends Crud_Controller
 
         $val ="";
         foreach($result as $rows):
-            $val =array($rows->cake_name.','.$rows->category_name.','.$rows->ordered).",";
+            $val .=array($rows->cake_name.','.$rows->category_name.','.$rows->ordered).",";
         endforeach;
 
         $array = array(
@@ -107,8 +107,8 @@ class Reports extends Crud_Controller
         );
 
         //$this->load->helper('csv');
-        //echo array_to_csv($array);
-        array_to_csv($array, 'toto.csv');
+        echo array_to_csv($array);
+        //array_to_csv($array, 'toto.csv');
 
     }
 
