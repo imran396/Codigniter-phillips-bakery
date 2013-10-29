@@ -66,7 +66,7 @@ class Reports extends Crud_Controller
 
     }
 
-    public function customer_orders_csvfile()
+    public function customer_reports_csvfile()
     {
 
         $data = $_REQUEST;
