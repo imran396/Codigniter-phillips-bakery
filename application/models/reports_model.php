@@ -168,12 +168,23 @@ ORDER BY customers.first_name ASC";
 
     function getReportProducts(){
 
+        $firstDay = date('d-m-Y', mktime(0, 0, 0, date("m", strtotime("-1 month")), 1, date("Y",strtotime("-1 month"))));
+        $lastDay = date('d-m-Y', mktime(-1, 0, 0, date("m"), 1, date("Y")));
+
+        $start_date= isset($data['start_date']) ? ($data['start_date']):($firstDay);
+        $end_date= isset($data['end_date']) ? ($data['end_date']):($lastDay);
+        $startdate  = strtotime($start_date);
+        $enddate    = strtotime($end_date);
+
         $data="";
             $query='SELECT servings.title,servings.serving_id FROM servings';
             $result=$this->db->query($query);
             $serings = $result->result();
 
-            $query='SELECT flavours.title,flavours.flavour_id FROM flavours';
+            $query="SELECT flavours.flavour_id, flavours.title
+                    FROM flavours INNER JOIN orders ON flavours.flavour_id = orders.flavour_id
+                    WHERE order_date >= '$startdate' && order_date <= '$enddate' && order_status !=300
+                    GROUP BY orders.flavour_id ORDER BY flavours.title ASC";
             $result=$this->db->query($query);
             $flavours = $result->result();
             $data .='<table class="table table-bordered table-primary table-striped" >';
@@ -215,7 +226,10 @@ ORDER BY customers.first_name ASC";
         $serv_result=$this->db->query($query);
         $serings = $serv_result->result();
 
-        $query='SELECT flavours.title,flavours.flavour_id FROM flavours';
+        $query="SELECT flavours.flavour_id, flavours.title
+                    FROM flavours INNER JOIN orders ON flavours.flavour_id = orders.flavour_id
+                    WHERE order_date >= '$startdate' && order_date <= '$enddate' && order_status !=300
+                    GROUP BY orders.flavour_id ORDER BY flavours.title ASC";
         $result=$this->db->query($query);
         $flavours = $result->result();
 
