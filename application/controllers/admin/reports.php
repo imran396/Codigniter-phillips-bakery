@@ -64,11 +64,12 @@ class Reports extends Crud_Controller
         $this->layout->view('admin/reports/report_product_view', $this->data);
     }
 
-    public function customers_csvfile()
+    public function product_reports_csvfile()
     {
-
-        $query = $this->db->get('auditlog');
-        query_to_csv($query, TRUE, 'toto.csv');
+        $this->data['active']=$this->uri->segment(2,0);
+        $data = $_REQUEST;
+        $table=$this->reports_model->getReportProductsCSV($data);
+        table_to_csv($table, 'product_reports.csv');
 
     }
 
