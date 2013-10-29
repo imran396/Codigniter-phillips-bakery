@@ -224,9 +224,10 @@ ORDER BY customers.first_name ASC";
 
         foreach ($serv_result->result() as $row)
         {
-            $array[] = $row->title;
+            $servarr = array();
+            $servarr[] = $row->title;
         }
-
+        $array[] = $servarr;
         foreach ($flavours as $flav)
         {
             $line = array();
