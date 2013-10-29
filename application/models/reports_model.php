@@ -220,25 +220,18 @@ ORDER BY customers.first_name ASC";
         $flavours = $result->result();
 
 
-/*        $data .='<table>';
-        $data .="<tr>";
-        foreach($serings as $serv){
-            $data .="<td>".$serv->title." , </td>";
-
-        }
-        $data .="</tr>";
-        foreach($flavours as $flav){
-            $data .="<tr>";
-            $data .="<td>".$flav->title." , </td>";
-            foreach($serings as $serv ){
-                $data .="<td>".$this->totalServings($flav->flavour_id,$serv->serving_id)." , </td>";
-
-            }
-            $data .="</tr>";
-        }
-
-        $data .='</table>';*/
         $array =array();
+
+        foreach ($serv_result->result_array() as $row)
+        {
+            $line = array();
+            foreach ($row as $item)
+            {
+                $line[] = $item;
+            }
+            $array[] = $line;
+        }
+
         foreach ($flavours as $flav)
         {
             $line = array();
