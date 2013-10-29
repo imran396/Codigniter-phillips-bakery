@@ -187,7 +187,7 @@ ORDER BY customers.first_name ASC";
             foreach($flavours as $flav){
                 $data .="<tr>";
                 foreach($serings as $serv ){
-                    $data .="<td>".$this->totalServings($flav->flavour_id,$serv->serving_id)."</td>";
+                    $data .="<td>".$this->totalServings($flav->flavour_id,$serv->serving_id).", </td>";
 
                 }
                 $data .="</tr>";

@@ -1,5 +1,6 @@
 <?php
 $array = array('roles','controls','access_controls');
+$reports = array('product_reports','category_reports','customer_reports');
 ?>
 <div id="menu" class="hidden-phone">
     <div id="menuInner">
@@ -44,9 +45,9 @@ $array = array('roles','controls','access_controls');
                 </ul>
             </li>
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'auditlog') ? 'active' : ''; ?>"><a href="/admin/auditlog/listing"><i></i><span><?php echo $this->lang->line('auditlog'); ?></span></a></li>
-            <li class="hasSubmenu <?php echo (!empty($active) && in_array($active,$array) ) ? 'active' : ''; ?>">
-                <a data-toggle="collapse " class="glyphicons show_thumbnails_with_lines " href="#menu_access"><i></i><span onclick="window.location='/admin/reports/product_reports'" ><?php echo $this->lang->line('reports'); ?></span></a>
-                <ul class="collapse <?php echo (!empty($active) && in_array($active,$array )) ? 'in' : ''; ?>" id="menu_access">
+            <li class="hasSubmenu <?php echo (!empty($active) && in_array($active,$reports) ) ? 'active' : ''; ?>">
+                <a data-toggle="collapse " class="glyphicons show_thumbnails_with_lines " href="#menu_report"><i></i><span onclick="window.location='/admin/reports/product_reports'" ><?php echo $this->lang->line('reports'); ?></span></a>
+                <ul class="collapse <?php echo (!empty($active) && in_array($active,$reports )) ? 'in' : ''; ?>" id="menu_access">
 
                     <li class=""><a href="/admin/reports/product_reports"><span><?php echo $this->lang->line('product_reports'); ?></span></a></li>
                     <li class=""><a href="/admin/reports/customer_reports"><span><?php echo $this->lang->line('customer_reports'); ?></span></a></li>
