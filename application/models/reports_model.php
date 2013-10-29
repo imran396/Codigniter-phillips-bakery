@@ -178,15 +178,15 @@ ORDER BY customers.first_name ASC";
             $flavours = $result->result();
             $data .='<table class="table table-bordered table-primary table-striped" >';
 
-            $data .="<thead><th>";
+            $data .="<thead><tr><th>Flavour Name</th>";
             foreach($serings as $serv){
-            $data .="<td>".$serv->title."</td>";
+            $data .="<th>".$serv->title."</th>";
 
             }
-            $data .="</th></thead><tbody>";
+            $data .="</tr></thead><tbody>";
             foreach($flavours as $flav){
                 $data .="<tr>";
-                $data .="<td>".$flav->title." , </td>";
+                $data .="<td>".$flav->title."</td>";
                 foreach($serings as $serv ){
                     $data .="<td>".$this->totalServings($flav->flavour_id,$serv->serving_id)."</td>";
 
@@ -221,7 +221,7 @@ ORDER BY customers.first_name ASC";
         $data .='<table>';
         $data .="<tr>";
         foreach($serings as $serv){
-            $data .="<td>".$serv->title."</td>";
+            $data .="<td>".$serv->title." , </td>";
 
         }
         $data .="</tr>";
