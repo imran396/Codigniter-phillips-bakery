@@ -87,9 +87,9 @@ class Reports extends Crud_Controller
         $sql=$this->db->query($query);
         $result=$sql->result();
 
-        $val ="";
+        $val =array();
         foreach($result as $rows):
-            $val .=array($rows->cake_name, $rows->category_name, $rows->ordered);
+            $val[] =($rows->cake_name.','.$rows->category_name.','.$rows->ordered);
         endforeach;
 
         $array = array(
