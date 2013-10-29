@@ -16,7 +16,7 @@ class Reports extends Crud_Controller
 
     public function category_reports()
     {
-        $this->data['active']=$this->uri->segment(2,0);
+        $this->data['active']=$this->uri->segment(3,0);
         $data = $_REQUEST;
         $this->data['result']=$this->reports_model->getReportCategory($data);
         $this->layout->view('admin/reports/report_category_view', $this->data);
@@ -24,7 +24,7 @@ class Reports extends Crud_Controller
 
     public function category_report_csvfile()
     {
-        $this->data['active']=$this->uri->segment(2,0);
+        $this->data['active']=$this->uri->segment(3,0);
         $data = $_REQUEST;
         $array =$this->reports_model->getReportCategoryCSV($data);
         if(!empty($array)){
@@ -36,7 +36,7 @@ class Reports extends Crud_Controller
     }
 
     public function customer_reports(){
-        $this->data['active']=$this->uri->segment(2,0);
+        $this->data['active']=$this->uri->segment(3,0);
         $data = $_REQUEST;
         $this->data['result']=$this->reports_model->getReportCustomer($data);
         $this->layout->view('admin/reports/report_customer_view', $this->data);
@@ -45,7 +45,7 @@ class Reports extends Crud_Controller
     public function customer_reports_csvfile()
     {
 
-        $this->data['active']=$this->uri->segment(2,0);
+        $this->data['active']=$this->uri->segment(3,0);
         $data = $_REQUEST;
         $array =$this->reports_model->getReportCustomerCSV($data);
         if(!empty($array)){
@@ -58,7 +58,7 @@ class Reports extends Crud_Controller
 
     public function product_reports()
     {
-        $this->data['active']=$this->uri->segment(2,0);
+        $this->data['active']=$this->uri->segment(3,0);
         $data = $_REQUEST;
         $this->data['result']=$this->reports_model->getReportProducts($data);
         $this->layout->view('admin/reports/report_product_view', $this->data);
@@ -66,10 +66,11 @@ class Reports extends Crud_Controller
 
     public function product_reports_csvfile()
     {
-        $this->data['active']=$this->uri->segment(2,0);
+        $this->data['active']=$this->uri->segment(3,0);
         $data = $_REQUEST;
         $table=$this->reports_model->getReportProductsCSV($data);
-        table_to_csv($table, 'product_reports.csv');
+        array_to_csv($table,'category_reports.csv');
+        //table_to_csv($table, 'product_reports.csv');
 
     }
 
