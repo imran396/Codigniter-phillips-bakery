@@ -91,7 +91,7 @@ class Reports_model extends Crud_Model
 	COUNT(orders.customer_id) AS ordered,
 	SUM(orders.total_price) AS totalPrice
 FROM customers INNER JOIN orders ON customers.customer_id = orders.customer_id
-WHERE (order_date >= '1377619511' && order_date <= '1377624939' && order_status !=300)
+WHERE (order_date >= '1380720468' && order_date <= '1381429376' && order_status !=300)
 GROUP BY customers.customer_id
 ORDER BY customers.first_name ASC";
 
@@ -124,7 +124,7 @@ ORDER BY customers.first_name ASC";
 	COUNT(orders.customer_id) AS ordered,
 	SUM(orders.total_price) AS totalPrice
 FROM customers INNER JOIN orders ON customers.customer_id = orders.customer_id
-WHERE (order_date >= '1377619511' && order_date <= '1377624939' && order_status !=300)
+WHERE (order_date >= '1380720468' && order_date <= '1381429376' && order_status !=300)
 GROUP BY customers.customer_id
 ORDER BY customers.first_name ASC";
 
