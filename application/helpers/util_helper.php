@@ -58,6 +58,7 @@ function dateFormatStr($date=NULL){
 }
 
 function phoneNoFormat($phone){
+
     return  $to = sprintf("%s-%s-%s",
         substr($phone, 0, 3),
         substr($phone, 3, 3),

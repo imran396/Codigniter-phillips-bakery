@@ -235,26 +235,19 @@ ORDER BY customers.first_name ASC";
 
 
         $array =array();
-
-       /* foreach ($serv_result->result() as $row)
+        $line = array();
+        $line[] = 'Flavour Name';
+        foreach ($serv_result->result() as $row)
         {
-            $servarr = array();
-            $servarr[] = $row->title;
-
-            $line = array();
-            foreach ($row as $item)
-            {
-                $line[] = $item;
-            }
-            $array[] = $line;
+            $line[] = $row->title;
         }
-            $array[] = $servarr;
-     */
 
+        $array[] = $line;
 
         foreach ($flavours as $flav)
         {
             $line = array();
+            $line[] = $flav->title;
             foreach($serings as $serv ){
 
                 $line[] = $this->totalServings($flav->flavour_id,$serv->serving_id);
@@ -264,45 +257,6 @@ ORDER BY customers.first_name ASC";
 
         return $array;
 
-
-    }
-    function getReportProductsCSVTable(){
-
-        $firstDay = date('d-m-Y', mktime(0, 0, 0, date("m", strtotime("-1 month")), 1, date("Y",strtotime("-1 month"))));
-        $lastDay = date('d-m-Y', mktime(-1, 0, 0, date("m"), 1, date("Y")));
-
-        $start_date= isset($data['start_date']) ? ($data['start_date']):($firstDay);
-        $end_date= isset($data['end_date']) ? ($data['end_date']):($lastDay);
-        $startdate  = strtotime($start_date);
-        $enddate    = strtotime($end_date);
-
-        $data="";
-        $query='SELECT servings.title,servings.serving_id FROM servings';
-        $serv_result=$this->db->query($query);
-        $serings = $serv_result->result();
-
-        $query='SELECT flavours.title,flavours.flavour_id FROM flavours';
-        $result=$this->db->query($query);
-        $flavours = $result->result();
-        $data .='<table>';
-        $data .="<tr>";
-        foreach($serings as $serv){
-            $data .="<td>".$serv->title." , </td>";
-
-        }
-        $data .="</tr>";
-        foreach($flavours as $flav){
-            $data .="<tr>";
-            $data .="<td>".$flav->title." , </td>";
-            foreach($serings as $serv ){
-                $data .="<td>".$this->totalServings($flav->flavour_id,$serv->serving_id)." , </td>";
-
-            }
-            $data .="</tr>";
-        }
-
-        $data .='</table>';
-        return $data;
 
     }
 
