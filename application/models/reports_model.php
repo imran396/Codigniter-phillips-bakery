@@ -235,6 +235,9 @@ ORDER BY customers.first_name ASC";
 
 
         $array =array();
+        $array = array(
+            array($start_date.'To'.$end_date)
+        );
         $line = array();
         $line[] = 'Flavour Name';
         foreach ($serv_result->result() as $row)
