@@ -2,7 +2,7 @@
 
 include_once __DIR__ . '/API_Controller.php';
 
-class Flavours extends API_Controller
+class Shapes extends API_Controller
 {
     public function __construct()
     {

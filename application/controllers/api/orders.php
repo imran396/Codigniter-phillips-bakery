@@ -5,6 +5,7 @@ include_once __DIR__ . '/API_Controller.php';
 class Orders extends API_Controller
 {
 
+
     public function __construct()
     {
         parent::__construct();
@@ -62,6 +63,7 @@ class Orders extends API_Controller
         $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:0;
         $data['price_matrix_id']=isset($_REQUEST['price_matrix_id'])? $_REQUEST['price_matrix_id']:'';
         $data['serving_id']=isset($_REQUEST['serving_id'])? $_REQUEST['serving_id']:'';
+        $data['shape_id']=isset($_REQUEST['shape_id'])? $_REQUEST['shape_id']:'';
         if($data['cake_id'] > 0){
             $data['tiers']=0;
         }else{
@@ -138,14 +140,14 @@ class Orders extends API_Controller
                     'subtotal'=> $orders['total_price'],
                 );
 
-               try{
-                   $custom =( $orders['cake_id'] > 0 ) ? $orders['cake_id'] :'';
-                   $status_code_revel =  $this->revel_order->create($RevelOrderData,$custom);
+                try{
+                    $custom =( $orders['cake_id'] > 0 ) ? $orders['cake_id'] :'';
+                    $status_code_revel =  $this->revel_order->create($RevelOrderData,$custom);
 
-                   $orders['revel_order_id']  = $status_code_revel;
-               } catch (\Exception $e){
-                   $orders['revel_order_id'] = null;
-               }
+                    $orders['revel_order_id']  = $status_code_revel;
+                } catch (\Exception $e){
+                    $orders['revel_order_id'] = null;
+                }
 
 
                 if($status_code_revel > 0){
@@ -229,90 +231,57 @@ class Orders extends API_Controller
         $row = $this->orders_model->getOrderStatus($data['order_id']);
         if($row->order_status < 303 ){
 
-        /*$vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
-        if($vaughan_location == 1 ){
-            $vaughan_location = $this->orders_model->getVaughanLocation();
-            $data['kitchen_location_id'] = $vaughan_location;
-        }else{
-            $data['kitchen_location_id'] = isset($_REQUEST['location_id'])? $_REQUEST['location_id']:'';
-        }*/
+            /*$vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
+            if($vaughan_location == 1 ){
+                $vaughan_location = $this->orders_model->getVaughanLocation();
+                $data['kitchen_location_id'] = $vaughan_location;
+            }else{
+                $data['kitchen_location_id'] = isset($_REQUEST['location_id'])? $_REQUEST['location_id']:'';
+            }*/
 
-        $orders=$this->orders_model->order_update($data, $data['order_id']);
-        if($orders['order_id']) {
+            $orders=$this->orders_model->order_update($data, $data['order_id']);
+            if($orders['order_id']) {
 
-            if(isset($_REQUEST['employee_id'])){
+                if(isset($_REQUEST['employee_id'])){
 
-                $empolyee_code = $this->logs_model->getEmployeeCode($_REQUEST['employee_id']);
-                $log = array(
-                    'employee_id' => $empolyee_code,
-                    'audit_name' => 'order updated',
-                    'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
-                );
+                    $empolyee_code = $this->logs_model->getEmployeeCode($_REQUEST['employee_id']);
+                    $log = array(
+                        'employee_id' => $empolyee_code,
+                        'audit_name' => 'order updated',
+                        'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
+                    );
 
-                $this->logs_model->insertAuditLog($log);
-            }
-        }
-
-        if(!empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] == '305' ){
-             $this->revel_order->delete($revel_order_id);
-        }
-
-        if(isset($order_delivery)){
-            $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
-        }
-
-        if(isset($_REQUEST['removedOnCakeImage'])){
-
-            $image=$_REQUEST['removedOnCakeImage'];
-            if(!empty($image)){
-                $this->orders_model->fileDelete($orders['order_id']);
-            }
-        }
-
-        if(isset($_REQUEST['removedinstructionalImages'])){
-
-            $image=$_REQUEST['removedinstructionalImages'];
-            if(!empty($image)){
-                $this->orders_model->instructionalPhotoDelete($image,$orders['order_id']);
-            }
-        }
-
-
-        $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
-        if(empty($revel_order_id) && $orders['order_status'] != '300' ){
-
-            $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
-            $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
-            $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
-
-            $RevelOrderData = array(
-                'order_code' => $orders['order_code'],
-                'revel_customer_id' => $revel_customer,
-                'revel_location_id' => $revel_location,
-                'revel_user_id' => $revel_user,
-                'discount'=> $orders['discount_price'],
-                'subtotal'=> $orders['total_price'],
-            );
-
-           try{
-
-               $custom =( $orders['cake_id'] > 0 ) ? $orders['cake_id'] :'';
-               $status_code_revel =  $this->revel_order->create($RevelOrderData,$custom);
-
-               $orders['revel_order_id']  = $status_code_revel;
-           } catch (\Exception $e){
-               $orders['revel_order_id'] = null;
-           }
-
-
-            if($status_code_revel > 0){
-                $orders['order_code'] = $status_code_revel;
-                $orders=$this->orders_model->order_update($orders, $orders['order_id']);
+                    $this->logs_model->insertAuditLog($log);
+                }
             }
 
-         }else{
+            if(!empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] == '305' ){
+                $this->revel_order->delete($revel_order_id);
+            }
 
-            if($revel_order_id){
+            if(isset($order_delivery)){
+                $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
+            }
+
+            if(isset($_REQUEST['removedOnCakeImage'])){
+
+                $image=$_REQUEST['removedOnCakeImage'];
+                if(!empty($image)){
+                    $this->orders_model->fileDelete($orders['order_id']);
+                }
+            }
+
+            if(isset($_REQUEST['removedinstructionalImages'])){
+
+                $image=$_REQUEST['removedinstructionalImages'];
+                if(!empty($image)){
+                    $this->orders_model->instructionalPhotoDelete($image,$orders['order_id']);
+                }
+            }
+
+
+            $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
+            if(empty($revel_order_id) && $orders['order_status'] != '300' ){
 
                 $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
                 $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
@@ -327,21 +296,54 @@ class Orders extends API_Controller
                     'subtotal'=> $orders['total_price'],
                 );
 
-                $this->revel_order->update($RevelOrderData);
                 try{
-                    $this->revel_order->update($RevelOrderData);
-                } catch (\Exception $e){
-                    echo $e->getMessage();
 
-                   die;
+                    $custom =( $orders['cake_id'] > 0 ) ? $orders['cake_id'] :'';
+                    $status_code_revel =  $this->revel_order->create($RevelOrderData,$custom);
+
+                    $orders['revel_order_id']  = $status_code_revel;
+                } catch (\Exception $e){
+                    $orders['revel_order_id'] = null;
                 }
 
-            }
-         }
 
-         if(!empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] == '305'){
+                if($status_code_revel > 0){
+                    $orders['order_code'] = $status_code_revel;
+                    $orders=$this->orders_model->order_update($orders, $orders['order_id']);
+                }
+
+            }else{
+
+                if($revel_order_id){
+
+                    $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
+                    $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+                    $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
+
+                    $RevelOrderData = array(
+                        'order_code' => $orders['order_code'],
+                        'revel_customer_id' => $revel_customer,
+                        'revel_location_id' => $revel_location,
+                        'revel_user_id' => $revel_user,
+                        'discount'=> $orders['discount_price'],
+                        'subtotal'=> $orders['total_price'],
+                    );
+
+                    $this->revel_order->update($RevelOrderData);
+                    try{
+                        $this->revel_order->update($RevelOrderData);
+                    } catch (\Exception $e){
+                        echo $e->getMessage();
+
+                        die;
+                    }
+
+                }
+            }
+
+            if(!empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] == '305'){
                 $this->revel_order->delete($revel_order_id);
-         }
+            }
 
             $result= $this->productions_model->orderPrint($orders['order_id']);
             $rows = $result->row();
@@ -379,10 +381,10 @@ class Orders extends API_Controller
                 $this->sendEmail($rows->order_code);
             }
 
-             $this->sendOutput(array('order_id'=> $rows->order_id,'order_code'=> $rows->order_code,'order_status' => $rows->order_status));
+            $this->sendOutput(array('order_id'=> $rows->order_id,'order_code'=> $rows->order_code,'order_status' => $rows->order_status));
 
         }else{
-             $this->sendOutput(array('order_id'=> $row->order_id,'order_code'=> $row->order_code,'order_status' => $row->order_status));
+            $this->sendOutput(array('order_id'=> $row->order_id,'order_code'=> $row->order_code,'order_status' => $row->order_status));
         }
 
     }
@@ -522,29 +524,29 @@ class Orders extends API_Controller
         $order_id = $_REQUEST['order_id'];
         $result= $this->productions_model->orderPrint($order_id);
         if($result ->num_rows() > 0){
-        $this->data['queryup']=$result->row();
-        $customer_email=$this->data['queryup']->email;
-        $order_status=$this->data['queryup']->order_status;
+            $this->data['queryup']=$result->row();
+            $customer_email=$this->data['queryup']->email;
+            $order_status=$this->data['queryup']->order_status;
 
-        if($order_status == 301){
+            if($order_status == 301){
                 $orderstatus="Order";
-        }else{
+            }else{
                 $orderstatus = $this->data['queryup']->orderstatus;
-        }
-        $pdfname ='stpb-'.$this->data['queryup']->order_code;
+            }
+            $pdfname ='stpb-'.$this->data['queryup']->order_code;
 
             if(!empty($customer_email)){
 
-            $body          = $this->load->view('email/invoice_body', $this->data,true);
-            $this->email->set_newline("\r\n");
-            $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
-            $this->email->to($customer_email);
-            $this->email->subject($this->lang->line('global_email_subject').' - Cake '.$orderstatus);
-            $this->email->message(nl2br($body));
-            if (file_exists($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf')) {
-                $this->email->attach($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
-            }
-            $this->email->send();
+                $body          = $this->load->view('email/invoice_body', $this->data,true);
+                $this->email->set_newline("\r\n");
+                $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
+                $this->email->to($customer_email);
+                $this->email->subject($this->lang->line('global_email_subject').' - Cake '.$orderstatus);
+                $this->email->message(nl2br($body));
+                if (file_exists($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf')) {
+                    $this->email->attach($_SERVER['DOCUMENT_ROOT'].'/assets/uploads/orders/pdf/'.$pdfname.'.pdf');
+                }
+                $this->email->send();
             }
 
             if(!empty($customer_email)){
@@ -609,20 +611,20 @@ class Orders extends API_Controller
         }
     }
 
-   /* public function sendOrderEmail($order_code,$ordertype="Estimate"){
+    /* public function sendOrderEmail($order_code,$ordertype="Estimate"){
 
-        // $this->load->helper(array('dompdf', 'file'));
-        $result= $this->productions_model->orderDetails($order_code);
-        $this->data['queryup']=$result->row();
-        $this->data['invoice_title']= $ordertype;
-        $body          = $this->load->view('email/invoice_body', $this->data,true);
-         $html          = $this->load->view('email/invoice_view', $this->data,true);
-         $invoiceNumber = str_pad($ordertype.'-'.$order_code,8,0,STR_PAD_LEFT);
-         $pdf           = pdf_create($html, $invoiceNumber, false);
-         $filePath      = realpath(APPPATH . "../web/assets/uploads/orders/pdf/"). DIRECTORY_SEPARATOR . $invoiceNumber.".pdf";
-         file_put_contents($filePath,$pdf);
-         $this->sendEmail($body);
-    }*/
+         // $this->load->helper(array('dompdf', 'file'));
+         $result= $this->productions_model->orderDetails($order_code);
+         $this->data['queryup']=$result->row();
+         $this->data['invoice_title']= $ordertype;
+         $body          = $this->load->view('email/invoice_body', $this->data,true);
+          $html          = $this->load->view('email/invoice_view', $this->data,true);
+          $invoiceNumber = str_pad($ordertype.'-'.$order_code,8,0,STR_PAD_LEFT);
+          $pdf           = pdf_create($html, $invoiceNumber, false);
+          $filePath      = realpath(APPPATH . "../web/assets/uploads/orders/pdf/"). DIRECTORY_SEPARATOR . $invoiceNumber.".pdf";
+          file_put_contents($filePath,$pdf);
+          $this->sendEmail($body);
+     }*/
 
 
 
@@ -664,7 +666,7 @@ class Orders extends API_Controller
     }
     public function delete(){
 
-       $this->orders_model->cronOrderDelete();
+        $this->orders_model->cronOrderDelete();
 
     }
     public function sold(){

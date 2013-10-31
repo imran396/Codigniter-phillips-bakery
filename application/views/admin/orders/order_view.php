@@ -103,6 +103,9 @@ $(document).ready(function(){
                 $('#flavourid').html(n[0]);
                 $('#serving_id').html(n[1]);
                 $('#size_id').html(n[2]);
+                if(n[3] != 0){
+                    $('#fondant').html(n[3]);
+                }
                 $('#hide_tiers').hide();
 
             }
@@ -117,6 +120,7 @@ $(document).ready(function(){
 
     $('#flavourid').change(function() {
 
+        var cake_id =$("#cake_id").val();
         var flavour_id =$("#flavourid").val();
         var location_id =$("#location_id").val();
         var delivery_date = $("#datepicker").val();
@@ -133,15 +137,17 @@ $(document).ready(function(){
         }
         $.ajax({
             url:"<?php echo site_url('admin/orders/getServings')?>",
-            data:"flavour_id="+flavour_id+"&location_id="+location_id+"&delivery_date="+delivery_date,
+            data:"cake_id="+cake_id+"&flavour_id="+flavour_id+"&location_id="+location_id+"&delivery_date="+delivery_date,
             type:"post",
             success: function(val){
                 var n=val.split("@a&");
                 if(n[0] =='error'){
                     alert(n[1]);
-                    $('#s2id_flavourid a span').html('---Select one---');
                 }else{
-                    $('#fondant').html(n[0]);
+                    if(n[0] !=""){
+                        $('#fondant').html(n[0]);
+                    }
+
                 }
 
 
@@ -165,7 +171,7 @@ $(document).ready(function(){
                  console.log(val);
                 var n=val.split("@a&");
                 $('#serving_id').html(n[0]);
-                $('#size').html(n[1]);
+               /* $('#size').html(n[1]);*/
                 $('#price').html(n[2]);
                 $('#matrix_price').val(n[2]);
                 $('#matrixprice').html("$"+n[2]);
@@ -175,7 +181,7 @@ $(document).ready(function(){
         })
     });
 
-    $('#size_id').change(function() {
+    $('#size_id_off').change(function() {
 
         var size_id =$("#size_id").val();
         var cake_id =$("#cake_id").val();
@@ -515,20 +521,16 @@ $(document).ready(function(){
         </div>
         <div class="control-group">
             <label class="control-label" for="email"><?php echo $this->lang->line('fondant');?></label>
-            <div class="controls">
-                <select class="search_dropdown"  id="fondant" style="width: 100%;"  name="fondant">
-                    <?php if(!empty($fond)){  echo $fond; } ?>
-                </select>
-            </div>
+            <div class="controls" id="fondant"><input type="hidden" id="fondant_id" value="0"></div>
         </div>
         <div class="control-group">
-            <label class="control-label" ><?php echo $this->lang->line('size_shape');?></label>
+            <label class="control-label" ><?php echo $this->lang->line('shapes');?></label>
             <div class="controls">
-                <select class="search_dropdown" id="size_id" style="width: 100%;"  name="size">
+                <select class="search_dropdown" id="shape_id" style="width: 100%;"  name="shape_id">
                     <option value="0" >---<?php echo $this->lang->line('select_one');?>---</option>
                     <?php if(!empty($size)){  echo $size; }else{
-                        foreach ($servresult as $serrow){?>
-                            <option value="<?php echo $serrow->serving_id; ?>"><?php echo $serrow->size ?></option>
+                        foreach ($shaperesult as $serrow){?>
+                            <option value="<?php echo $serrow->shape_id; ?>"><?php echo $serrow->title ?></option>
                     <?php } } ?>
                 </select>
             </div>

@@ -127,7 +127,6 @@ class Cakes extends Crud_Controller
             $this->data['active']=$this->uri->segment(2,0);
             $this->layout->view('admin/cakes/listing_view', $this->data);
 
-
         }else{
 
             $this->session->set_flashdata('warnings_msg',$this->lang->line('update_msg'));

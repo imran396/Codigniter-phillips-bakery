@@ -175,7 +175,7 @@ class Productions_model extends Crud_Model
 
     public function orderDetails($order_code){
 
-        $this->db->select('orders.*, orders.location_id AS locationid , orders.tiers AS orderTiers  ,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, servings.size AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description,order_status.description AS orderstatus');
+        $this->db->select('orders.*, orders.location_id AS locationid , orders.tiers AS orderTiers  ,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, shapes.title AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description,order_status.description AS orderstatus');
         $this->db->from('orders');
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
@@ -183,6 +183,7 @@ class Productions_model extends Crud_Model
         $this->db->join('price_matrix','price_matrix.price_matrix_id = orders.price_matrix_id','left');
         $this->db->join('servings','servings.serving_id = orders.serving_id','left');
         $this->db->join('zones','zones.zone_id = orders.delivery_zone_id','left');
+        $this->db->join('shapes','shapes.shape_id = orders.shape_id','left');
         $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
         $this->db->where(array("orders.order_code"=> $order_code));
         return $this->db->get();
@@ -191,7 +192,7 @@ class Productions_model extends Crud_Model
     }
      public function orderPrint($order_id){
 
-        $this->db->select('orders.*, orders.location_id AS locationid , orders.tiers AS orderTiers  ,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, servings.size AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description,order_status.description AS orderstatus');
+        $this->db->select('orders.*, orders.location_id AS locationid , orders.tiers AS orderTiers  ,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, shapes.title AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description,order_status.description AS orderstatus');
         $this->db->from('orders');
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
@@ -199,12 +200,11 @@ class Productions_model extends Crud_Model
         $this->db->join('price_matrix','price_matrix.price_matrix_id = orders.price_matrix_id','left');
         $this->db->join('servings','servings.serving_id = orders.serving_id','left');
         $this->db->join('zones','zones.zone_id = orders.delivery_zone_id','left');
+        $this->db->join('shapes','shapes.shape_id = orders.shape_id','left');
         $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
         $this->db->where(array("orders.order_id"=> $order_id));
         return $this->db->get();
-
-
-    }
+     }
 
 
     public function deliveryInfo($order_id=0){

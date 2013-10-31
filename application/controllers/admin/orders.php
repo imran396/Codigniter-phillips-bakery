@@ -29,6 +29,7 @@ class Orders extends Crud_Controller
         $this->data['flvresult'] = $this->orders_model->getFlavours($location_id=0);
         $this->data['servresult'] = $this->orders_model->getServings();
         $this->data['zoneresult'] = $this->orders_model->getZones();
+        $this->data['shaperesult'] = $this->orders_model->getShapes();
         $this->data['locationresult'] = $this->orders_model->getlocations();
         $this->data['customerresult'] = $this->orders_model->getCustomers();
         $this->data['employeeresult'] = $this->orders_model->getEmployees($group_id=0);
@@ -80,7 +81,7 @@ class Orders extends Crud_Controller
         $kitchen_location_id = $this->input->post('kitchen_location_id');
         $blackout=$this->orders_model->checkBlackOut($kitchen_location_id);
 
-        $row = $this->db->select('flavour_id')->where(array('cake_id' => $cake_id))->get('cakes')->row();
+        $row = $this->db->select('flavour_id,shape_id,fondant')->where(array('cake_id' => $cake_id))->get('cakes')->row();
         $flavour_id = unserialize($row->flavour_id);
 
         if(empty($blackout)){
@@ -110,30 +111,53 @@ class Orders extends Crud_Controller
 
         endforeach;
 
+        $fondant= $row->fondant;
+        $fond="";
+        if($fondant == 1){
+            $fond .= "<input name='fondant' type='hidden' value=1>  Yes";
+        }else{
+            $fond .= "No";
+        }
+
+
+        $shapes = unserialize($row->shape_id);
         $size ="";
-        $size .= "<option value=''>---".$this->lang->line('select_one')."---</option>";
-        foreach($matrix as $pricesize):
+        if(!empty($shapes)){
+            $size ="";
+            $size .= "<option value=''>---".$this->lang->line('select_one')."---</option>";
+            foreach($shapes as $shapeid):
+                $shape = $this->orders_model->getShapeName($shapeid);
+                $size .= "<option value='".$shape->shape_id."'>".$shape->title."</option>";
 
-            $size .= "<option value='".$pricesize->serving_id."'>".$pricesize->size."</option>";
+            endforeach;
+        }else{
+            $size .= "<option value=''>---".$this->lang->line('select_one')."---</option>";
+        }
 
-        endforeach;
-
-        echo $flavour."@a&".$servings."@a&".$size;
+        echo $flavour."@a&".$servings."@a&".$size."@a&".$fond;
     }
 
     function getServings(){
 
         $flavour_id = $this->input->post('flavour_id');
+        $cake_id = $this->input->post('cake_id');
+        $row = $this->db->select('fondant')->where(array('cake_id' => $cake_id,'fondant'=>1))->get('cakes');
 
         $query="SELECT fondant FROM flavours WHERE flavour_id = $flavour_id ";
         $fondants = $this->db->query($query)->row();
         $fondant= $fondants->fondant;
-        $fond="";
-        if($fondant == 1){
-            $fond .= "<option value='1' selected='selected'>Yes</option>";
-            $fond .= "<option value='0'>No</option>";
-        }else{
-            $fond .= "<option value='0'>No</option>";
+
+        $fond = "";
+
+        if($row->num_rows()== 0 ){
+
+            if($fondant == 1){
+                $fond .= "<input name='fondant' id='fondant_id' type='radio' value='1' checked='checked'> Yes";
+                $fond .= "<input name='fondant' type='radio' value='0'> No";
+            }else{
+                $fond .= "No";
+            }
+
         }
 
         $delivery_date = $this->input->post('delivery_date');
@@ -464,6 +488,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $data['flavour_id']=isset($_REQUEST['flavour_id'])? $_REQUEST['flavour_id']:'';
         $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:0;
         $data['serving_id']=isset($_REQUEST['serving_id'])? $_REQUEST['serving_id']:'';
+        $data['shape_id']=isset($_REQUEST['shape_id'])? $_REQUEST['shape_id']:'';
         $data['tiers']=isset($_REQUEST['tiers'])? $_REQUEST['tiers']:'';
         $data['matrix_price']=isset($_REQUEST['matrix_price'])? $_REQUEST['matrix_price']:'';
         $data['on_cake_image_needed']=isset($_REQUEST['on_cake_image_needed'])? $_REQUEST['on_cake_image_needed']:'';
@@ -482,6 +507,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
         $data['order_status'] = isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'300';
         $data['order_date']=time();
+
 
         $vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
 
