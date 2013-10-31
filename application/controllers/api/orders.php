@@ -209,7 +209,7 @@ class Orders extends API_Controller
             'pickup_location_id','delivery_zone_id','delivery_zone_surcharge',
             'delivery_date','delivery_time','flavour_id','fondant','tiers','price_matrix_id','serving_id','matrix_price','cake_email_photo','magic_cake_id','magic_surcharge',
             'inscription','special_instruction','instructional_email_photo','vaughan_location','order_status','discount_price','total_price',
-            'override_price','printed_image_surcharge','on_cake_image_needed'
+            'override_price','printed_image_surcharge','on_cake_image_needed','shape_id'
         );
 
         $array_delivery_key = array('name','phone','address_1','address_2','postal','city','province','delivery_instruction');
