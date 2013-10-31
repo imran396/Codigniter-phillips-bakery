@@ -102,7 +102,7 @@ $(document).ready(function(){
                 var n=val.split("@a&");
                 $('#flavourid').html(n[0]);
                 $('#serving_id').html(n[1]);
-                $('#size_id').html(n[2]);
+                $('#shape_id').html(n[2]);
                 if(n[3] != 0){
                     $('#fondant').html(n[3]);
                 }
