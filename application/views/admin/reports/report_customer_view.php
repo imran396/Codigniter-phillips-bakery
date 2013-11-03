@@ -9,7 +9,7 @@
     <?php $this->load->view('admin/layouts/message'); ?>
     <br/>
     <div class="heading-buttons">
-        <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('category_reports');?></h3>
+        <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('customer_reports');?></h3>
         <div class="buttons pull-right">
             <a href="/admin/reports/customer_reports_csvfile/?start_date=<?php echo isset($_REQUEST['start_date'])?$_REQUEST['start_date']:''; ?>&end_date=<?php echo isset($_REQUEST['end_date'])?$_REQUEST['end_date']:''; ?>" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Export CSV</a>
         </div>
@@ -76,7 +76,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-    $("#start_date").datepicker();
-    $("#end_date").datepicker();
+    $("#start_date_ex").datepicker();
+    $("#end_date_ex").datepicker();
 });
 </script>
