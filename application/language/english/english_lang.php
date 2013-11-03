@@ -179,7 +179,7 @@ $lang['fondant'] 		 	        = 'Fondant';
 $lang['add_servings'] 		 	    = 'Add Servings';
 $lang['serving_name'] 		 	    = 'Number of Servings';
 $lang['size'] 		 	            = 'Size';
-$lang['size_shape'] 		 	    = 'Size & Shape';
+$lang['size_shape'] 		 	    = 'Shape';
 $lang['printing_surcharge'] 		 	    = 'Printing Surcharge';
 
 /* price matrix */
@@ -306,8 +306,8 @@ $lang['auditlog'] = 'Audit Log';
 /*-------------------Reports----------------------*/
 
 $lang['reports'] 		 	    = 'Reports';
-$lang['product_reports'] 		 	    = 'Product Reports';
-$lang['category_reports'] 		 	    = 'Category Reports';
-$lang['customer_reports'] 		 	    = 'Customer Reports';
+$lang['product_reports'] 		 	    = 'Product report';
+$lang['category_reports'] 		 	    = 'Category report';
+$lang['customer_reports'] 		 	    = 'Customer report';
 $lang['enter_start_date'] 		 	    = 'Enter start date[mm/dd/yyyyy]';
 $lang['enter_end_date'] 		 	    = 'Enter end date[mm/dd/yyyy]';
