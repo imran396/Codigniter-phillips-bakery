@@ -10,11 +10,13 @@ class Reports_model extends Crud_Model
 
     function getReportCategory($data=array()){
 
-        $firstDay = date('d-m-Y', mktime(0, 0, 0, date("m", strtotime("-1 month")), 1, date("Y",strtotime("-1 month"))));
-        $lastDay = date('d-m-Y', mktime(-1, 0, 0, date("m"), 1, date("Y")));
+        $tomorrow  = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+        $lastDay =date('m/d/Y',$tomorrow);
+        $lastmonth = mktime(0, 0, 0, date("m")-1, date("d"),   date("Y"));
+        $firstDay=date('m/d/Y',$lastmonth);
 
-        $start_date= isset($data['start_date']) ? ($data['start_date']):($firstDay);
-        $end_date= isset($data['end_date']) ? ($data['end_date']):($lastDay);
+        $start_date= isset($data['start_date']) && ($data['start_date'] !="")  ? ($data['start_date']):($firstDay);
+        $end_date= isset($data['end_date']) && ($data['end_date'] !="") ? ($data['end_date']):($lastDay);
         $startdate  = strtotime($start_date);
         $enddate    = strtotime($end_date);
         $query="SELECT
@@ -38,11 +40,13 @@ class Reports_model extends Crud_Model
 
     function getReportCategoryCSV($data=array()){
 
-        $firstDay = date('d-m-Y', mktime(0, 0, 0, date("m", strtotime("-1 month")), 1, date("Y",strtotime("-1 month"))));
-        $lastDay = date('d-m-Y', mktime(-1, 0, 0, date("m"), 1, date("Y")));
+        $tomorrow  = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+        $lastDay =date('m/d/Y',$tomorrow);
+        $lastmonth = mktime(0, 0, 0, date("m")-1, date("d"),   date("Y"));
+        $firstDay=date('m/d/Y',$lastmonth);
 
-        $start_date= isset($data['start_date']) ? ($data['start_date']):($firstDay);
-        $end_date= isset($data['end_date']) ? ($data['end_date']):($lastDay);
+        $start_date= isset($data['start_date']) && ($data['start_date'] !="")  ? ($data['start_date']):($firstDay);
+        $end_date= isset($data['end_date']) && ($data['end_date'] !="") ? ($data['end_date']):($lastDay);
         $startdate  = strtotime($start_date);
         $enddate    = strtotime($end_date);
         $query="SELECT COALESCE(cakes.title,'Custom cake') AS cake_name,
@@ -55,7 +59,7 @@ class Reports_model extends Crud_Model
         $result=$this->db->query($query);
 
         $array = array(
-            array($start_date.'To'.$end_date),
+            array($start_date.' To '.$end_date),
             array('Cake Name', 'Category Name', 'Ordered'),
 
         );
@@ -74,15 +78,19 @@ class Reports_model extends Crud_Model
     }
     function getReportCustomer($data=array()){
 
-        $firstDay = date('d-m-Y', mktime(0, 0, 0, date("m", strtotime("-1 month")), 1, date("Y",strtotime("-1 month"))));
-        $lastDay = date('d-m-Y', mktime(-1, 0, 0, date("m"), 1, date("Y")));
 
-        $start_date= isset($data['start_date']) ? ($data['start_date']):($firstDay);
-        $end_date= isset($data['end_date']) ? ($data['end_date']):($lastDay);
+        $tomorrow  = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+        $lastDay =date('m/d/Y',$tomorrow);
+        $lastmonth = mktime(0, 0, 0, date("m")-1, date("d"),   date("Y"));
+        $firstDay=date('m/d/Y',$lastmonth);
+
+
+        $start_date= isset($data['start_date']) && ($data['start_date'] !="")  ? ($data['start_date']):($firstDay);
+        $end_date= isset($data['end_date']) && ($data['end_date'] !="") ? ($data['end_date']):($lastDay);
         $startdate  = strtotime($start_date);
         $enddate    = strtotime($end_date);
         $query="SELECT
-	CONCAT(customers.last_name,customers.first_name) AS customer_name,
+	CONCAT_WS(', ', customers.last_name,customers.first_name) AS customer_name,
 	customers.phone_number,
 	customers.address_1,
 	customers.city,
@@ -107,20 +115,23 @@ ORDER BY customers.first_name ASC";
 
     function getReportCustomerCSV($data=array()){
 
-        $firstDay = date('d-m-Y', mktime(0, 0, 0, date("m", strtotime("-1 month")), 1, date("Y",strtotime("-1 month"))));
-        $lastDay = date('d-m-Y', mktime(-1, 0, 0, date("m"), 1, date("Y")));
+        $tomorrow  = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+        $lastDay =date('m/d/Y',$tomorrow);
+        $lastmonth = mktime(0, 0, 0, date("m")-1, date("d"),   date("Y"));
+        $firstDay=date('m/d/Y',$lastmonth);
 
-        $start_date= isset($data['start_date']) ? ($data['start_date']):($firstDay);
-        $end_date= isset($data['end_date']) ? ($data['end_date']):($lastDay);
+        $start_date= isset($data['start_date']) && ($data['start_date'] !="")  ? ($data['start_date']):($firstDay);
+        $end_date= isset($data['end_date']) && ($data['end_date'] !="") ? ($data['end_date']):($lastDay);
         $startdate  = strtotime($start_date);
         $enddate    = strtotime($end_date);
+
         $query="SELECT
-	CONCAT(customers.last_name,customers.first_name) AS customer_name,
+	CONCAT_WS(', ', customers.last_name,customers.first_name) AS customer_name,
 	customers.phone_number,
 	customers.address_1,
 	customers.city,
-	customers.postal_code,
 	customers.province,
+	customers.postal_code,
 	COUNT(orders.customer_id) AS ordered,
 	SUM(orders.total_price) AS totalPrice
 FROM customers INNER JOIN orders ON customers.customer_id = orders.customer_id
@@ -131,7 +142,7 @@ ORDER BY customers.first_name ASC";
         $result=$this->db->query($query);
 
         $array = array(
-            array($start_date.'To'.$end_date),
+            array($start_date.' To '.$end_date),
             array('Name','Phone','Address', 'City ', 'Postal code ','Province','# of orders','Total sales of orders'),
 
         );
@@ -146,6 +157,8 @@ ORDER BY customers.first_name ASC";
         }
 
         return $array;
+
+
 
     }
 
@@ -168,11 +181,13 @@ ORDER BY customers.first_name ASC";
 
     function getReportProducts($data=array()){
 
-        $firstDay = date('d-m-Y', mktime(0, 0, 0, date("m", strtotime("-1 month")), 1, date("Y",strtotime("-1 month"))));
-        $lastDay = date('d-m-Y', mktime(-1, 0, 0, date("m"), 1, date("Y")));
+        $tomorrow  = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+        $lastDay =date('m/d/Y',$tomorrow);
+        $lastmonth = mktime(0, 0, 0, date("m")-1, date("d"),   date("Y"));
+        $firstDay=date('m/d/Y',$lastmonth);
 
-        $start_date= isset($data['start_date']) ? ($data['start_date']):($firstDay);
-        $end_date= isset($data['end_date']) ? ($data['end_date']):($lastDay);
+        $start_date= isset($data['start_date']) && ($data['start_date'] !="")  ? ($data['start_date']):($firstDay);
+        $end_date= isset($data['end_date']) && ($data['end_date'] !="") ? ($data['end_date']):($lastDay);
         $startdate  = strtotime($start_date);
         $enddate    = strtotime($end_date);
 
@@ -213,11 +228,13 @@ ORDER BY customers.first_name ASC";
 
     function getReportProductsCSV($data=array()){
 
-        $firstDay = date('d-m-Y', mktime(0, 0, 0, date("m", strtotime("-1 month")), 1, date("Y",strtotime("-1 month"))));
-        $lastDay = date('d-m-Y', mktime(-1, 0, 0, date("m"), 1, date("Y")));
+        $tomorrow  = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+        $lastDay =date('m/d/Y',$tomorrow);
+        $lastmonth = mktime(0, 0, 0, date("m")-1, date("d"),   date("Y"));
+        $firstDay=date('m/d/Y',$lastmonth);
 
-        $start_date= isset($data['start_date']) ? ($data['start_date']):($firstDay);
-        $end_date= isset($data['end_date']) ? ($data['end_date']):($lastDay);
+        $start_date= isset($data['start_date']) && ($data['start_date'] !="")  ? ($data['start_date']):($firstDay);
+        $end_date= isset($data['end_date']) && ($data['end_date'] !="") ? ($data['end_date']):($lastDay);
         $startdate  = strtotime($start_date);
         $enddate    = strtotime($end_date);
 
@@ -236,7 +253,7 @@ ORDER BY customers.first_name ASC";
 
         $array =array();
         $array = array(
-            array($start_date.'To'.$end_date)
+            array($start_date.' To '.$end_date)
         );
         $line = array();
         $line[] = 'Flavour Name';
