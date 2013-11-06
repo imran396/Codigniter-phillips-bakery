@@ -113,7 +113,7 @@
                                             ?>
 
                                             <label class="radio">
-                                                <input type="checkbox" class="radio" name="shape_id[]" value="<?php echo $shapes->shape_id;?>" <?php if( in_array($shapes->shape_id, $shapeid) ){?> checked="checked" <?php } ?> />
+                                                <input type="checkbox" class="validate[minCheckbox[1]] radio" name="shape_id[]" value="<?php echo $shapes->shape_id;?>" <?php if( in_array($shapes->shape_id, $shapeid) ){?> checked="checked" <?php } ?> />
                                                 <?php echo $shapes->title;?>
                                             </label>
                                         <?php endforeach; ?>

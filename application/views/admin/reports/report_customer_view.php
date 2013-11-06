@@ -14,11 +14,11 @@
             <a href="/admin/reports/customer_reports_csvfile/?start_date=<?php echo isset($_REQUEST['start_date'])?$_REQUEST['start_date']:''; ?>&end_date=<?php echo isset($_REQUEST['end_date'])?$_REQUEST['end_date']:''; ?>" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Export CSV</a>
         </div>
         <div class="buttons pull-right">
-
+<!--
             <form action="/admin/reports/customer_reports" method="get">
-                From&nbsp;<input type="text" value="<?php echo isset($_REQUEST['start_date'])?$_REQUEST['start_date']:''; ?>"  name="start_date" placeholder="<?php echo $this->lang->line('enter_start_date'); ?>" id="start_date">
-                &nbsp;To&nbsp;<input type="text" value="<?php echo isset($_REQUEST['end_date'])?$_REQUEST['end_date']:''; ?>"  name="end_date" placeholder="<?php echo $this->lang->line('enter_end_date'); ?>" id="end_date"><button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok mbutton"><i></i><?php echo $this->lang->line('search');?></button></form>
-
+                From&nbsp;<input type="text" value="<?php /*echo isset($_REQUEST['start_date'])?$_REQUEST['start_date']:''; */?>"  name="start_date" placeholder="<?php /*echo $this->lang->line('enter_start_date'); */?>" id="start_date">
+                &nbsp;To&nbsp;<input type="text" value="<?php /*echo isset($_REQUEST['end_date'])?$_REQUEST['end_date']:''; */?>"  name="end_date" placeholder="<?php /*echo $this->lang->line('enter_end_date'); */?>" id="end_date"><button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok mbutton"><i></i><?php /*echo $this->lang->line('search');*/?></button></form>
+-->
         </div>
         <div class="clearfix"></div>
     </div>

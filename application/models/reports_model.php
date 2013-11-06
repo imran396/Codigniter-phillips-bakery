@@ -99,7 +99,7 @@ class Reports_model extends Crud_Model
 	COUNT(orders.customer_id) AS ordered,
 	SUM(orders.total_price) AS totalPrice
 FROM customers INNER JOIN orders ON customers.customer_id = orders.customer_id
-WHERE (order_date >= '$startdate' && order_date <= '$enddate' && order_status !=300)
+WHERE (order_status !=300)
 GROUP BY customers.customer_id
 ORDER BY customers.first_name ASC";
 
@@ -135,7 +135,7 @@ ORDER BY customers.first_name ASC";
 	COUNT(orders.customer_id) AS ordered,
 	SUM(orders.total_price) AS totalPrice
 FROM customers INNER JOIN orders ON customers.customer_id = orders.customer_id
-WHERE (order_date >= '$startdate' && order_date <= '$enddate' && order_status !=300)
+WHERE (order_status !=300)
 GROUP BY customers.customer_id
 ORDER BY customers.first_name ASC";
 
@@ -206,8 +206,7 @@ ORDER BY customers.first_name ASC";
 
             $data .="<thead><tr><th>Flavour Name</th>";
             foreach($serings as $serv){
-            $data .="<th>".$serv->title."</th>";
-
+                $data .="<th>".$serv->title."S</th>";
             }
             $data .="</tr></thead><tbody>";
             foreach($flavours as $flav){
