@@ -6,21 +6,45 @@ class Users_model extends Crud_Model
     public function __construct()
     {
         parent::__construct();
-
         $this->loadTable('users','id');
-
-
     }
 
 
     public function update($data, $id)
     {
-        $array = array('first_name'=>$data['first_name'],'last_name'=>$data['last_name'],'revel_user_id'=>$data['revel_user_id']);
+        $array = array('first_name'=>$data['first_name'],'last_name'=>$data['last_name'],'revel_user_id'=>$data['revel_user_id'],'employee_id'=>$data['employee_id']);
         $this->db->set($array)->where(array('id'=>$id))->update('meta');
         $array = array('email'=>$data['email'],'group_id'=>$data['group_id']);
         $this->db->set($array)->where(array('id'=>$id))->update('users');
 
     }
+
+    public function getCheckPasscode($id,$passcode){
+
+      $dbpasscode = $this->checkUniquePasscode($id);
+
+        if ($passcode != $dbpasscode) {
+
+            $count=$this->db->select('employee_id')->where(array( 'employee_id' => $passcode ))->get('meta')->num_rows();
+            if ($count > 0) {
+                $this->form_validation->set_message('checkPasscode', $passcode . ' %s ' . $this->lang->line('duplicate_msg'));
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+    }
+
+
+    public function checkUniquePasscode($id)
+    {
+        if (!empty($id)) {
+            $dbtitle = $this->db->select('employee_id')->where('id', $id)->get('meta')->row();
+            return $dbtitle->employee_id;
+        }
+    }
+
 
     public function deleteDataExisting($data=0){
 

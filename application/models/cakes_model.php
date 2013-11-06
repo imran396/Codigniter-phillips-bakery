@@ -46,6 +46,7 @@ class Cakes_model extends CI_Model
         $insert['flavour_id'] =($flavour_id !="") ? serialize($flavour_id):'';
         $shape_id = (!empty($data['shape_id'])) ? $data['shape_id'] :'';
         $insert['shape_id'] =($shape_id !="") ? serialize($shape_id):'';
+        $insert['fondant'] = ($data['fondant'] !="") ? $data['fondant'] :0;
         $insert['status'] = ($data['status'] !="") ? $data['status'] :'';
         $insert['insert_date']=time();
         $insert['update_date']=time();
@@ -75,6 +76,7 @@ class Cakes_model extends CI_Model
         $shape_id = (!empty($data['shape_id'])) ? $data['shape_id'] :'';
         $insert['shape_id'] =($shape_id !="") ? serialize($shape_id):'';
         $insert['meta_tag'] = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
+        $insert['fondant'] = ($data['fondant'] !="") ? $data['fondant'] :0;
         $insert['status'] = ($data['status'] !="") ? $data['status'] :'';
         $insert['update_date']=time();
         $this->db->set($insert)->where(array('cake_id' => $id))->update('cakes');
@@ -349,7 +351,7 @@ class Cakes_model extends CI_Model
     public function getAllCakes(){
         $imageurlprefix = base_url().'assets';
         $sql = "SELECT
-                C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.tiers,
+                C.cake_id,C.title,C.category_id,C.flavour_id,C.shape_id,C.tiers,C.fondant,C.meta_tag,C.description,C.image,
               GROUP_CONCAT(G.image ORDER BY G.ordering ASC SEPARATOR ',') as gallery_images
               FROM cakes As C
               LEFT JOIN cake_gallery AS G
@@ -362,8 +364,9 @@ class Cakes_model extends CI_Model
         foreach($data as $key=>$row){
             $data[$key]['cake_id'] = (int) $data[$key]['cake_id'];
             $data[$key]['category_id'] = (int) $data[$key]['category_id'];
-            //$data[$key]['flavour_id'] = (int) $data[$key]['flavour_id'];
             $data[$key]['flavour_id'] =  !empty($row['flavour_id']) ? unserialize($row['flavour_id']):array();
+            $data[$key]['shape_id'] =  !empty($row['shape_id']) ? unserialize($row['shape_id']):array();
+            $data[$key]['fondant'] = (int) $data[$key]['fondant'];
             $data[$key]['image'] = !empty($data[$key]['image']) ? base_url().$data[$key]['image'] : "";
             //$data[$key]['tiers'] = (int) $data[$key]['tiers'];
             $data[$key]['tiers'] = array('1');
@@ -390,13 +393,13 @@ class Cakes_model extends CI_Model
         $imageurlprefix = base_url().'assets';
 
         $sql = "SELECT
-C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.tiers,
-GROUP_CONCAT(G.image ORDER BY G.ordering ASC SEPARATOR ',') as gallery_images
-FROM cakes As C
-LEFT JOIN cake_gallery AS G
-ON ( C.cake_id = G.cake_id )
-WHERE C.status =1 && is_deleted != 1 && insert_date > $lastdate
-GROUP BY C.title";
+                C.cake_id,C.title,C.category_id,C.flavour_id,C.shape_id,C.tiers,C.fondant,C.meta_tag,C.description,C.image,
+                GROUP_CONCAT(G.image ORDER BY G.ordering ASC SEPARATOR ',') as gallery_images
+                FROM cakes As C
+                LEFT JOIN cake_gallery AS G
+                ON ( C.cake_id = G.cake_id )
+                WHERE C.status =1 && is_deleted != 1 && insert_date > $lastdate
+                GROUP BY C.title";
 
         $inserted = $this->db->query($sql)->result_array();
 
@@ -404,6 +407,8 @@ GROUP BY C.title";
             $inserted[$key]['cake_id'] = (int) $inserted[$key]['cake_id'];
             $inserted[$key]['category_id'] = (int) $inserted[$key]['category_id'];
             $inserted[$key]['flavour_id'] =  !empty($row['flavour_id']) ? unserialize($row['flavour_id']):array();
+            $data[$key]['shape_id'] =  !empty($row['shape_id']) ? unserialize($row['shape_id']):array();
+            $data[$key]['fondant'] = (int) $data[$key]['fondant'];
             $inserted[$key]['image'] = !empty($inserted[$key]['image']) ? base_url().$inserted[$key]['image'] : "";
             $inserted[$key]['tiers'] = array('1');
             $inserted[$key]['gallery_images'] = explode(',', $row['gallery_images']);
@@ -419,13 +424,13 @@ GROUP BY C.title";
         }
 
         $update = "SELECT
-C.cake_id,C.category_id,C.flavour_id,C.title,C.description,C.shape_id As shapes ,C.meta_tag,C.image,C.tiers,
-GROUP_CONCAT(G.image ORDER BY G.ordering ASC SEPARATOR ',') as gallery_images
-FROM cakes As C
-LEFT JOIN cake_gallery AS G
-ON ( C.cake_id = G.cake_id )
-WHERE C.status =1 && is_deleted != 1  && insert_date < $lastdate && update_date > $lastdate
-GROUP BY C.title";
+                C.cake_id,C.title,C.category_id,C.flavour_id,C.shape_id,C.tiers,C.fondant,C.meta_tag,C.description,C.image,
+                GROUP_CONCAT(G.image ORDER BY G.ordering ASC SEPARATOR ',') as gallery_images
+                FROM cakes As C
+                LEFT JOIN cake_gallery AS G
+                ON ( C.cake_id = G.cake_id )
+                WHERE C.status =1 && is_deleted != 1  && insert_date < $lastdate && update_date > $lastdate
+                GROUP BY C.title";
 
         $updated = $this->db->query($update)->result_array();
 
@@ -433,6 +438,8 @@ GROUP BY C.title";
             $updated[$key]['cake_id'] =  (int) $updated[$key]['cake_id'];
             $updated[$key]['category_id'] = (int) $updated[$key]['category_id'];
             $updated[$key]['flavour_id'] =  !empty($row['flavour_id']) ? unserialize($row['flavour_id']):array();
+            $data[$key]['shape_id'] =  !empty($row['shape_id']) ? unserialize($row['shape_id']):array();
+            $data[$key]['fondant'] = (int) $data[$key]['fondant'];
             $updated[$key]['image'] = !empty($updated[$key]['image']) ? base_url().$updated[$key]['image'] : "";
             $updated[$key]['tiers'] = array('1');
 

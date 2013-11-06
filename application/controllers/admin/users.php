@@ -37,6 +37,9 @@ class users extends Crud_Controller
 
     public function save()
     {
+        header("Content-type=> application/json");
+        $revel_user = ($this->revel_employee->getUserEnterprise());
+
         if (!empty($_POST)) {
 
             $this->addValidation();
@@ -47,12 +50,19 @@ class users extends Crud_Controller
                 $last_name= $this->input->post('last_name');
                 $email = $this->input->post('email');
                 $password = $this->input->post('password');
+                $employeeID = $this->input->post('employee_id');
                 $revel_user_id = $this->input->post('revel_user_id');
 
                 do{
-                    $employee_id = $this->simpleRandString(4);
-                    $count = $this->db->where(array('employee_id'=>$employee_id))->get('meta')->num_rows();
+                    $employeeid = $this->simpleRandString(4);
+                    $count = $this->db->where(array('employee_id'=>$employeeid))->get('meta')->num_rows();
                 }while($count > 0 );
+
+                if($employeeID > 0 ){
+                    $employee_id = $employeeID;
+                }else{
+                    $employee_id = $employeeid;
+                }
 
                 $additional_data = array(
                     'first_name' => $first_name,
@@ -91,6 +101,7 @@ class users extends Crud_Controller
                 redirect('admin/users/listing', 'refresh');
             }else{
 
+                $this->data['revel_users'] =$revel_user;
                 $this->data['groupresult'] = $this->users_model->getGroup();
                 $this->data['locresult'] = $this->users_model->getLocations();
                 $this->data['success_msg'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -218,6 +229,7 @@ class users extends Crud_Controller
         $this->form_validation->set_rules('first_name', 'First name', 'required');
         $this->form_validation->set_rules('last_name', 'Last name', 'required');
         $this->form_validation->set_rules('email', 'Email Address', 'valid_email');
+        $this->form_validation->set_rules('employee_id', 'Passcode', 'required|max_length[4]|trim|xss_clean|callback_checkPasscode');
 
         if ($this->form_validation->run() == false)
         {
@@ -239,6 +251,12 @@ class users extends Crud_Controller
 
         }
 
+    }
+
+    public function checkPasscode($employee_id){
+
+        $id = $this->input->post('id');
+        return  $this->users_model->getCheckPasscode($id,$employee_id);
     }
 
     private function saveData()

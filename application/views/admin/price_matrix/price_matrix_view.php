@@ -53,10 +53,9 @@
 
                                 <td>
                                     <table class="table table-bordered table-striped" >
-                                        <tr>
-                                            <?php foreach($serresult as $size): ?>
-                                                <td><?php echo $size->size ?></td>
-                                            <?php endforeach; ?>
+                                       <tr>
+                                        <td align="left" colspan="<?php echo $count=count($serresult); ?>" >List of Servings</td>
+
                                         </tr>
                                         <tr>
                                             <?php foreach($serresult as $servingtitle): ?>
@@ -67,8 +66,6 @@
                                 </td>
                             </tr>
                             <tr>
-
-
 
                                 <td colspan="2">
                                     <table class="table table-bordered table-striped" >

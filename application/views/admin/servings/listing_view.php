@@ -29,7 +29,7 @@
                     <tr>
                         <th class="center">No.</th>
                         <th><?php echo $this->lang->line('servings');?></th>
-                        <th><?php echo $this->lang->line('size_shape');?></th>
+                       <!-- <th><?php /*echo $this->lang->line('size_shape');*/?></th>-->
                         <th><?php echo $this->lang->line('printing_surcharge');?></th>
 
                         <th style="width: 1%;" class="center"><?php echo $this->lang->line('drag');?></th>
@@ -44,7 +44,7 @@
                         <tr class="selectable" id="listItem_<?php echo $rows->serving_id; ?>" >
                             <td class="center"><?php echo $i; ?></td>
                             <td><?php echo $rows->title; ?></td>
-                            <td><?php echo $rows->size; ?></td>
+                           <!-- <td><?php /*echo $rows->size; */?></td>-->
                             <td><?php echo $rows->printing_surcharge; ?></td>
                             <td class="center js-sortable-handle"><span  class="glyphicons btn-action single move" style="margin-right: 0;"><i></i></span></td>
                             <td>

@@ -43,6 +43,26 @@ class Orders_model extends Crud_Model
         return $this->db->select('customer_id,first_name,last_name')->where(array('status'=> 1,'is_deleted !='=>1))->order_by('first_name','asc')->get('customers')->result();
 
     }
+
+    public function getShapes()
+    {
+
+        return $this->db->select('*')->where('status', 1)->order_by('title','asc')->get('shapes')->result();
+
+    }
+
+    public function getShapeName($shapeid){
+        return $res=$this->db->select('shape_id,title')->where('shape_id',$shapeid)->get('shapes')->row();
+
+    }
+
+    public function getFlavourName($flavourid){
+
+        return $res=$this->db->select('flavour_id,title')->where('flavour_id',$flavourid)->get('flavours')->row();
+
+    }
+
+
     public function getEmployees($group_id=0)
     {
 
@@ -119,6 +139,7 @@ class Orders_model extends Crud_Model
             return $res=$this->db
                 ->select('flavour_id,title')
                 ->where('status',1)
+                ->order_by('title','asc')
                 ->get('flavours')
                 ->result();
         }else{
@@ -126,6 +147,7 @@ class Orders_model extends Crud_Model
                 ->select('flavour_id,title')
                 ->where('status',1)
                 ->where_not_in('flavour_id',$blackout)
+                ->order_by('title','asc')
                 ->get('flavours')
                 ->result();
         }
@@ -146,7 +168,12 @@ class Orders_model extends Crud_Model
         }else{
             $data['insert_date']=time();
             $data['update_date']=time();
+            if($data['override_price'] > 0 ){
+                $data['total_price'] =  $data['override_price'];
+            }
+
             $order_id = $this->insert($data);
+
             $order_code=(100000+$order_id);
             $this->db->set(array('order_code'=>$order_code))->where('order_id',$order_id)->update('orders');
 
@@ -414,17 +441,19 @@ class Orders_model extends Crud_Model
 
     public function getGlobalName($table_name,$field){
 
-        $location = $this->db
+        $var = $this->db
             ->select('title')
             ->from($table_name)
             ->where($field)
             ->get();
-        if($location->num_rows() > 0){
-            $row = $location->row();
+        if($var ->num_rows() > 0){
+            $row = $var->row();
             return $row->title;
         }
         return false;
     }
+
+
 
     function getCustomerName($table_name,$field){
 
@@ -574,6 +603,7 @@ class Orders_model extends Crud_Model
                 $result[$key]['delivery_zone_id'] = (int) $result[$key]['delivery_zone_id'];
                 $result[$key]['flavour_id'] = (int) $result[$key]['flavour_id'];
                 $result[$key]['serving_id'] = (int) $result[$key]['serving_id'];
+                $result[$key]['shape_id'] = (int) $result[$key]['shape_id'];
                 $result[$key]['delivery_order_id'] = (int) $result[$key]['delivery_order_id'];
                 $result[$key]['order_date'] = (int) $result[$key]['order_date'];
                 $result[$key]['on_cake_image'] = $val['on_cake_image'];
@@ -865,6 +895,7 @@ class Orders_model extends Crud_Model
     }
 
     public function getOrderNotes($order_id){
+
        $data = $this->db->select('order_id,employee_id,create_date,notes')->where(array('is_deleted !='=>1,'order_id'=>$order_id))->order_by('order_id','asc')->get('order_notes')->result_array();
        foreach($data as $key=>$val){
            $data[$key]['order_id'] = (int) $data[$key]['order_id'];
