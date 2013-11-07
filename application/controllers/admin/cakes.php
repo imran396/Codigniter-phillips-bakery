@@ -77,6 +77,7 @@ class Cakes extends Crud_Controller
         $this->form_validation->set_rules('category_id');
         $this->form_validation->set_rules('description');
         $this->form_validation->set_rules('meta_tag');
+        $this->form_validation->set_rules('shape_id', 'Shape','required');
         $this->form_validation->set_rules('price');
         $this->form_validation->set_rules('status');
 
