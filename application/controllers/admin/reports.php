@@ -28,7 +28,7 @@ class Reports extends Crud_Controller
         $data = $_REQUEST;
         $array =$this->reports_model->getReportCategoryCSV($data);
         if(!empty($array)){
-            array_to_csv($array,'category_reports.csv');
+            array_to_csv($array,'category report.csv');
         }else{
             $this->layout->view('admin/reports/report_category_view', $this->data);
         }
@@ -49,7 +49,7 @@ class Reports extends Crud_Controller
         $data = $_REQUEST;
         $array =$this->reports_model->getReportCustomerCSV($data);
         if(!empty($array)){
-            array_to_csv($array,'category_reports.csv');
+            array_to_csv($array,'customer report.csv');
         }else{
             $this->layout->view('admin/reports/report_customer_view', $this->data);
         }
@@ -69,8 +69,7 @@ class Reports extends Crud_Controller
         $this->data['active']=$this->uri->segment(3,0);
         $data = $_REQUEST;
         $table=$this->reports_model->getReportProductsCSV($data);
-        array_to_csv($table,'category_reports.csv');
-        //table_to_csv($table, 'product_reports.csv');
+        array_to_csv($table,'product report.csv');
 
     }
 

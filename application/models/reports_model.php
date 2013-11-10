@@ -206,7 +206,7 @@ ORDER BY customers.first_name ASC";
 
             $data .="<thead><tr><th>Flavour Name</th>";
             foreach($serings as $serv){
-                $data .="<th>".$serv->title."S</th>";
+                $data .="<th>Servings ".$serv->title."</th>";
             }
             $data .="</tr></thead><tbody>";
             foreach($flavours as $flav){
@@ -258,7 +258,7 @@ ORDER BY customers.first_name ASC";
         $line[] = 'Flavour Name';
         foreach ($serv_result->result() as $row)
         {
-            $line[] = "serving(".$row->title.")";
+            $line[] = "Servings ".$row->title;
         }
 
         $array[] = $line;
