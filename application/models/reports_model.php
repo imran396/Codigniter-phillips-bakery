@@ -206,7 +206,7 @@ ORDER BY customers.first_name ASC";
 
             $data .="<thead><tr><th>Flavour Name</th>";
             foreach($serings as $serv){
-                $data .="<th>Servings ".$serv->title."</th>";
+                $data .="<th>".$serv->title."</th>";
             }
             $data .="</tr></thead><tbody>";
             foreach($flavours as $flav){
