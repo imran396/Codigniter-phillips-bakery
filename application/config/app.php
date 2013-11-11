@@ -19,5 +19,5 @@ $config['revel']['api_secret'] = '65409fdecef64defaee3ef130982cff17813cc98b38d47
 // Default Data
 $config['revel']['user']          = '/enterprise/User/1/';
 $config['revel']['establishment'] = '/enterprise/Establishment/1/';
-$config['revel']['customCake']    = "/resources/Product/1/";
-$config['revel']['catalogCake']   = "/resources/Product/2/";
+$config['revel']['customCake']    = "/resources/Product/2125/";
+$config['revel']['catalogCake']   = "/resources/Product/2126/";
