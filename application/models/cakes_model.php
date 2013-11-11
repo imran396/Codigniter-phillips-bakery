@@ -405,8 +405,8 @@ class Cakes_model extends CI_Model
             $inserted[$key]['cake_id'] = (int) $inserted[$key]['cake_id'];
             $inserted[$key]['category_id'] = (int) $inserted[$key]['category_id'];
             $inserted[$key]['flavour_id'] =  !empty($row['flavour_id']) ? unserialize($row['flavour_id']):array();
-            $updated[$key]['shape_id'] =  !empty($row['shape_id']) ? unserialize($row['shape_id']):array();
-            $updated[$key]['fondant'] = (int) $data[$key]['fondant'];
+            $inserted[$key]['shape_id'] =  !empty($row['shape_id']) ? unserialize($row['shape_id']):array();
+            $inserted[$key]['fondant'] = (int) $inserted[$key]['fondant'];
             $inserted[$key]['image'] = !empty($inserted[$key]['image']) ? base_url().$inserted[$key]['image'] : "";
             $inserted[$key]['tiers'] = array('1');
             $inserted[$key]['gallery_images'] = explode(',', $row['gallery_images']);
@@ -437,7 +437,7 @@ class Cakes_model extends CI_Model
             $updated[$key]['category_id'] = (int) $updated[$key]['category_id'];
             $updated[$key]['flavour_id'] =  !empty($row['flavour_id']) ? unserialize($row['flavour_id']):array();
             $updated[$key]['shape_id'] =  !empty($row['shape_id']) ? unserialize($row['shape_id']):array();
-            $updated[$key]['fondant'] = (int) $data[$key]['fondant'];
+            $updated[$key]['fondant'] = (int) $updated[$key]['fondant'];
             $updated[$key]['image'] = !empty($updated[$key]['image']) ? base_url().$updated[$key]['image'] : "";
             $updated[$key]['tiers'] = array('1');
 
