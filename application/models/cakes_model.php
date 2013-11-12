@@ -276,7 +276,7 @@ class Cakes_model extends CI_Model
 
     function searching($search,$start){
 
-        $search=strtolower($search);
+        $search=urldecode(strtolower($search));
         $query="SELECT cakes.* , categories.title AS categories_name , flavours.title AS flavours_name
                 FROM `cakes`
                 LEFT JOIN categories ON (categories.category_id = cakes.category_id)
@@ -284,15 +284,19 @@ class Cakes_model extends CI_Model
                 WHERE (is_deleted != 1 AND  LOWER(cakes.title) LIKE '%$search%')
                 || (is_deleted != 1 AND LOWER(meta_tag) LIKE '%$search%')";
 
-        $per_page=1;
+        $per_page=10    ;
         $page   = intval($start);
+
         if($page<=0)  $page  = 1;
         $limit=($page-1)*$per_page;
+
         $base_url   = site_url('admin/cakes/search/'.$search);
         $num = $this->db->query($query);
+
         $total_rows = $num->num_rows();
         $paging = paginate($base_url, $total_rows,$start,$per_page);
-        $limit = "LIMIT $limit , $per_page";
+        $limit = " LIMIT $limit , $per_page";
+
         $pagequery=$query.$limit;
         $query = $this->db->query($pagequery);
         return array($query,$paging,$total_rows,$limit);

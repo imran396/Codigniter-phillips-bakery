@@ -24,7 +24,7 @@
                 $search=$searchval;
             }else{
                 if($consearchseg =='search')
-                $search=$searchseg;
+                $search=urldecode($searchseg);
             }
             ?>
            <form action="/admin/cakes/search" method="get"><input type="text" value="<?php if(!empty($search)){echo $search;} ?>"  name="search" placeholder="serach by name,tag" id="search"><button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok mbutton"><i></i><?php echo $this->lang->line('search');?></button></form>

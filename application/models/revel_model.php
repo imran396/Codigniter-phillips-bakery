@@ -139,6 +139,7 @@ class Revel_Model extends CI_Model
             mt_rand(0, 0x3fff) | 0x8000,
 
             // 48 bits for "node"
+
             mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
 
         );
@@ -152,6 +153,6 @@ class Revel_Model extends CI_Model
             $data = $var;
         }
 
-        file_put_contents(APPPATH . '../revel_debug.log', '[' . date('Y-m-d H:i:s') . '] ' . $data . PHP_EOL, FILE_APPEND);
+        //file_put_contents(APPPATH . '../revel_debug.log', '[' . date('Y-m-d H:i:s') . '] ' . $data . PHP_EOL, FILE_APPEND);
     }
 }
