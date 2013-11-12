@@ -114,12 +114,12 @@ class Cakes extends Crud_Controller
     function search($urlsearch=NULL,$start=0){
 
 
-        $getsearch = $this->input->get('search');
+        $getsearch = urlencode($this->input->get('search'));
 
         if($getsearch){
            $search = $getsearch;
         }else{
-            $search = $urlsearch;
+            $search = ($urlsearch);
         }
 
         if(!empty($search)){
