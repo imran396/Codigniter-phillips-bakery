@@ -21,6 +21,8 @@ class Cakes extends Crud_Controller
     public function index()
     {
 
+        echo date("c");
+        exit;
         $this->data['catresult'] = $this->cakes_model->getCategories();
         $this->data['flvresult'] = $this->cakes_model->getFlavours();
         $this->data['sapresult'] = $this->cakes_model->getShapes();
