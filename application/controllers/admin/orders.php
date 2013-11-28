@@ -24,12 +24,6 @@ class Orders extends Crud_Controller
     function index(){
 
 
-        echo date('d-m-Y H:m',1385619198);
-        //$d= new \Zend\I18n\Validator\DateTime(1385617093);
-        //echo $d->getTimezone();
-
-        exit;
-
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['catresult'] = $this->orders_model->getCategories();
         $this->data['cakeresult'] = $this->orders_model->getCakes($category=0);
