@@ -23,6 +23,11 @@ class Orders extends Crud_Controller
 
     function index(){
 
+
+        $d= new \Zend\I18n\Validator\DateTime(1385617093);
+        echo $d->getTimezone();
+        exit;
+
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['catresult'] = $this->orders_model->getCategories();
         $this->data['cakeresult'] = $this->orders_model->getCakes($category=0);
@@ -429,6 +434,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     }
     public function edit($order_id){
+
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['employeeresult'] = $this->cakes_model->getEmployees($group_id=0);
         $result = $this->productions_model->orderPrint($order_id);
@@ -618,6 +624,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         }
 
         $notes = isset($_REQUEST['notes']) ? $_REQUEST['notes']:'';
+
         if(!empty($notes)){
 
             $notes_data['notes']=isset($_REQUEST['notes']) ? $_REQUEST['notes']:'';
