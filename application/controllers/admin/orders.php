@@ -24,8 +24,10 @@ class Orders extends Crud_Controller
     function index(){
 
 
-        $d= new \Zend\I18n\Validator\DateTime(1385617093);
-        echo $d->getTimezone();
+        echo new DateTime('d-m-Y H:m',1385617093);
+        //$d= new \Zend\I18n\Validator\DateTime(1385617093);
+        //echo $d->getTimezone();
+
         exit;
 
         $this->data['active']=$this->uri->segment(2,0);
