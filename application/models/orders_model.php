@@ -740,7 +740,7 @@ class Orders_model extends Crud_Model
               LEFT JOIN instructional_photo AS I
                 ON ( I.instructional_order_id = O.order_id )
               LEFT JOIN order_delivery AS OD
-                ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1 && kitchen_location_id = $vaughan_location && order_status != 300 && O.update_date > $lastdate
+                ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1 && kitchen_location_id = $vaughan_location && vaughan_location=1  && order_status != 300 && O.update_date > $lastdate
               GROUP BY O.order_id ORDER BY O.update_date ASC LIMIT 0,10 ";
 
 
