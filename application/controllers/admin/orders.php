@@ -23,6 +23,7 @@ class Orders extends Crud_Controller
 
     function index(){
 
+
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['catresult'] = $this->orders_model->getCategories();
         $this->data['cakeresult'] = $this->orders_model->getCakes($category=0);
