@@ -28,6 +28,8 @@ class Customers extends API_Controller
 
     public function insert()
     {
+
+
             $data = $this->input->post();
             $data['status']=1;
 
