@@ -72,6 +72,7 @@ class Gallery_model extends CI_Model
             unlink($_SERVER['DOCUMENT_ROOT'].'/'.$rows->image);
         }
         $this->db->where(array('gallery_id'=>$id))->delete('cake_gallery');
+
     }
 
 
@@ -89,6 +90,8 @@ class Gallery_model extends CI_Model
         }else{
             $this->session->set_flashdata('wrinn_msg',$this->lang->line('delete_msg'));
         }
+        $insert['update_date']=time();
+        $this->db->set($insert)->where(array('cake_id' => $id))->update('cakes');
     }
 
 

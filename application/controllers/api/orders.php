@@ -281,6 +281,7 @@ class Orders extends API_Controller
 
 
             $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
+
             if(empty($revel_order_id) && $orders['order_status'] != '300' ){
 
                 $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
@@ -321,6 +322,7 @@ class Orders extends API_Controller
                     $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
 
                     $RevelOrderData = array(
+                        'revel_order_id' => $revel_order_id,
                         'order_code' => $orders['order_code'],
                         'revel_customer_id' => $revel_customer,
                         'revel_location_id' => $revel_location,

@@ -430,6 +430,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
     }
     public function edit($order_id){
+
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['employeeresult'] = $this->cakes_model->getEmployees($group_id=0);
         $result = $this->productions_model->orderPrint($order_id);
@@ -619,6 +620,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         }
 
         $notes = isset($_REQUEST['notes']) ? $_REQUEST['notes']:'';
+
         if(!empty($notes)){
 
             $notes_data['notes']=isset($_REQUEST['notes']) ? $_REQUEST['notes']:'';

@@ -249,7 +249,7 @@ class Orders_model extends Crud_Model
     {
 
         $filePath  = "assets/uploads/cakes/";
-        $file_name=resize_image($_FILES['onCakeImage'],$filePath,700,480);
+        $file_name=resize_image($_FILES['onCakeImage'],$filePath,1024,1024);
         $this->fileDelete($id);
         $filePath  = "assets/uploads/cakes/".$file_name;
         $this->fileDelete($id);
@@ -284,7 +284,7 @@ class Orders_model extends Crud_Model
         for($i=1;$i<=$count;$i++){
             $attachment = $_FILES["attachment-$i"];
             $filePath  = "assets/uploads/gallery/";
-            $file_name=resize_image($attachment,$filePath,730,480);
+            $file_name=resize_image($attachment,$filePath,1024,1024);
             $instructional_photo  = "assets/uploads/gallery/".$file_name;
 
             $this->db->set(array('instructional_order_id'=>$data['order_id'],'instructional_photo' => $instructional_photo))->insert('instructional_photo');
