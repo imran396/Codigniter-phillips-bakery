@@ -24,7 +24,7 @@ class Orders extends Crud_Controller
     function index(){
 
         echo date("c")."<br/>";
-        echo date("Y-m-d h:m:i a")."<br/>";
+        echo date("Y-m-d h:m:i a I")."<br/>";
         exit;
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['catresult'] = $this->orders_model->getCategories();
