@@ -120,6 +120,8 @@ class Revel_Order extends Revel_Model
         );
 
         $this->postResource('OrderAllInOne', $revelData, true);
+        print_r($revelData);
+        exit;
         return basename($this->headers['location']) ;
     }
 
@@ -177,12 +179,10 @@ class Revel_Order extends Revel_Model
             "tax_rebate"              => null,
             "updated_by"              => "/enterprise/User/1/",
             "uuid"                    => $this->generateUUID(),
-            "web_order"               => false
+            "web_order"               => true
         );
 
         return $this->putResource('Order', $revelData, $data['revel_order_id'], true);
-
-
     }
 
     public function delete($revel_order_id){
