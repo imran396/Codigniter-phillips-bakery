@@ -120,8 +120,6 @@ class Revel_Order extends Revel_Model
         );
 
         $this->postResource('OrderAllInOne', $revelData, true);
-        print_r($revelData);
-        exit;
         return basename($this->headers['location']) ;
     }
 
