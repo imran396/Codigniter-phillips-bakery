@@ -13,6 +13,7 @@ function resize_image($source, $output, $width = 100, $height = 100){
 
         // yes, the file is on the server
         // below are some example settings which can be used if the uploaded file is an image.
+
         if($img_width > $img_height){
 
             $handle->image_resize            = true;
