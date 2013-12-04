@@ -4,6 +4,7 @@ include(APPPATH."/helpers/class.upload.php");
 function resize_image($source, $output, $width = 100, $height = 100){
 
     list($img_width, $img_height) = getimagesize($source['tmp_name']);
+
     $handle = new Upload($source);
 
     // then we check if the file has been uploaded properly
@@ -12,10 +13,18 @@ function resize_image($source, $output, $width = 100, $height = 100){
 
         // yes, the file is on the server
         // below are some example settings which can be used if the uploaded file is an image.
-        $handle->image_resize            = true;
-        //$handle->image_ratio_y           = true;
-        $handle->image_x                 = $width;
-        $handle->image_y                 = $height;
+        if($img_width > $img_height){
+
+            $handle->image_resize            = true;
+            $handle->image_ratio_y           = true;
+            $handle->image_x                 = $width;
+
+        }else{
+            $handle->image_resize            = true;
+            $handle->image_ratio_x           = true;
+            $handle->image_y                 = $height;
+
+        }
 
         // now, we start the upload 'process'. That is, to copy the uploaded file
         // from its temporary location to the wanted location
