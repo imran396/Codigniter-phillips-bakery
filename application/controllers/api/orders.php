@@ -671,10 +671,19 @@ class Orders extends API_Controller
         $this->orders_model->cronOrderDelete();
 
     }
+
+
     public function sold(){
         header("Content-type=> application/json");
         $revel_orders = ($this->revel_order->getAll());
         $this->orders_model->cronOrderSold($revel_orders);
+    }
+
+    public function getAllOrder(){
+        header("Content-type=> application/json");
+        $revel_orders = ($this->revel_order->getAll());
+        var_dump($revel_orders);
+
     }
 
 
