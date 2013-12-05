@@ -277,6 +277,7 @@ class Cakes_model extends CI_Model
     function searching($search,$start){
 
         $search=urldecode(strtolower($search));
+
         $query="SELECT cakes.* , categories.title AS categories_name , flavours.title AS flavours_name
                 FROM `cakes`
                 LEFT JOIN categories ON (categories.category_id = cakes.category_id)
