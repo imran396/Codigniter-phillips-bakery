@@ -114,7 +114,8 @@ class Revel_Order extends Revel_Model
                     "order_opened_at" => ($data['revel_location_id'] > 0) ? "/resources/PosStation/".$data['revel_location_id']."/": "/resources/PosStation/1/",
                     "closed"          => null,
                     "order"           => null,
-                    "uuid"            => $this->generateUUID()
+                    "uuid"            => $this->generateUUID(),
+                    "web_order"       => true
                 )
             )
         );
