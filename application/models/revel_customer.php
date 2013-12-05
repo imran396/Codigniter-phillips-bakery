@@ -8,10 +8,7 @@ class Revel_Customer extends Revel_Model
     }
     public function create($data)
     {
-
-        //$date = new DateTime('2000-01-01', new DateTimeZone('Pacific/Nauru'));
-        //$revel_date=  $date->format("Y-m-dTH:i:s");
-
+        $created = date('Y-m-d') . 'T' . date('H:i:s');
 
         $customerData = array(
             "active"                => true,
@@ -41,10 +38,10 @@ class Revel_Customer extends Revel_Model
             "cc_number"             => null,
             "city"                  => isset($data['city']) ? $data['city'] : null,
             "created_by"            => "/enterprise/User/1/",
-            "created_date"          => date("c"),
+            "created_date"          => $created,
             "customer_groups"       => array(),
             "email"                 => isset($data['email']) ? $data['email'] : null,
-            "exp_date"              => date("c"),
+            "exp_date"              => $created,
             "first_name"            => isset($data['first_name']) ? $data['first_name'] : null,
             "is_visitor"            => false,
             "last_name"             => isset($data['last_name']) ? $data['last_name'] : null,
@@ -57,7 +54,7 @@ class Revel_Customer extends Revel_Model
             "total_purchases"       => 0,
             "total_visits"          => 0,
             "updated_by"            => "/enterprise/User/1/",
-            "updated_date"          => date("c"),
+            "updated_date"          => $created,
             "uuid"                  => $this->generateUUID(),
             "zipcode"               => isset($data['postal_code']) ? $data['postal_code'] : null
 
