@@ -1,3 +1,4 @@
 .idea
 web/assets/uploads
 application/config/database.php
+application/config/app.php
