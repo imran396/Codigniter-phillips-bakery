@@ -42,10 +42,6 @@ class Customers extends API_Controller
                     $data['revel_customer_id'] = 0;
                 }
             }
-        echo date("c").'<br/>';
-
-        print_r($data);
-        exit;
 
             $customer_id = $this->customers_model->create($data);
             $data = array(
