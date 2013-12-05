@@ -9,10 +9,10 @@ class Revel_Order extends Revel_Model
 
     public function create($data, $catalog = false)
     {
-
+        $created = date('Y-m-d') . 'T' . date('H:i:s');
         $revelData = array(
             "items"     => array(array(
-                "updated_date"           => date("c"),
+                "updated_date"           => $created,
                 "modifier_amount"        => 0.0,
                 "weight"                 => 0,
                 "cost"                   => 0,
@@ -55,7 +55,7 @@ class Revel_Order extends Revel_Model
                 "expedited"              => null,
                 "date_paid"              => null,
                 "taxed_flag"             => 0,
-                "created_date"           => date("c"),
+                "created_date"           => $created,
                 "order"                  => $data['order_code'],
                 "web_orders"             => true,
                 "quantity"               => 1
@@ -83,7 +83,7 @@ class Revel_Order extends Revel_Model
                 "surcharge"            => 0,
                 "establishment"        => $this->revel['establishment'],
                 "discount_taxed"       => null,
-                "updated_date"         => date("c"),
+                "updated_date"         => $created,
                 "prevailing_tax"       => 0.0,
                 "prevailing_surcharge" => 0,
                 "updated_by"           => ($data['revel_user_id'] > 0 ) ? "/enterprise/User/".$data['revel_user_id']."/" : "/enterprise/User/1/",
@@ -103,13 +103,13 @@ class Revel_Order extends Revel_Model
                 "delivery_clock_in"    => null,
                 "local_id"             => 57189,
                 "remaining_due"        => $data['subtotal'],
-                "created_date"         => date('c'),
+                "created_date"         => $created ,
                 "rounding_delta"       => 0
             ),
             "history"   => array(
                 array(
                     "order_closed_by" => null,
-                    "opened"          => date('c'),
+                    "opened"          => $created,
                     "order_opened_by" => $this->revel['user'],
                     "order_opened_at" => ($data['revel_location_id'] > 0) ? "/resources/PosStation/".$data['revel_location_id']."/": "/resources/PosStation/1/",
                     "closed"          => null,
