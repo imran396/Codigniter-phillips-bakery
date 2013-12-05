@@ -57,7 +57,7 @@ class Revel_Order extends Revel_Model
                 "taxed_flag"             => 0,
                 "created_date"           => $created,
                 "order"                  => $data['order_code'],
-                "web_orders"             => true,
+                "web_order"             => true,
                 "quantity"               => 1
             )),
             "payments"  => array(
