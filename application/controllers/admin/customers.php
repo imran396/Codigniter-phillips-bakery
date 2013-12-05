@@ -101,7 +101,9 @@ class Customers extends Crud_Controller
                 $this->customers_model->create($data);
             }
           $this->session->set_flashdata('success_msg',"New customer has been added successfully");
+
         } else {
+
             $customerUpdatedData = $this->customers_model->getcustomers($data['customer_id']);
             $data['revel_customer_id'] = $customerUpdatedData[0]->revel_customer_id;
 

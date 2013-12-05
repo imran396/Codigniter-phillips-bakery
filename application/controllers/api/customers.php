@@ -14,6 +14,7 @@ class Customers extends API_Controller
     public function index()
     {
 
+
         $lastdate=$this->input->get('lastupdate');
         if(empty($lastdate)){
             $data = $this->customers_model->getAll();
@@ -28,7 +29,10 @@ class Customers extends API_Controller
 
     public function insert()
     {
-            $data = $this->input->post();
+
+
+
+        $data = $this->input->post();
             $data['status']=1;
 
             if(isset($data)){
@@ -38,6 +42,9 @@ class Customers extends API_Controller
                     $data['revel_customer_id'] = 0;
                 }
             }
+
+        print_r($data);
+        exit;
 
             $customer_id = $this->customers_model->create($data);
             $data = array(
