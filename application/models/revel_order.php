@@ -57,7 +57,6 @@ class Revel_Order extends Revel_Model
                 "taxed_flag"             => 0,
                 "created_date"           => $created,
                 "order"                  => $data['order_code'],
-                "web_order"              => true,
                 "quantity"               => 1
             )),
             "payments"  => array(
@@ -104,7 +103,8 @@ class Revel_Order extends Revel_Model
                 "local_id"             => 57189,
                 "remaining_due"        => $data['subtotal'],
                 "created_date"         => $created ,
-                "rounding_delta"       => 0
+                "rounding_delta"       => 0,
+                "web_order"            => true
             ),
             "history"   => array(
                 array(
@@ -117,6 +117,9 @@ class Revel_Order extends Revel_Model
                     "uuid"            => $this->generateUUID()                )
             )
         );
+
+        //echo str_replace('\\/', '/', json_encode($revelData));
+
 
         $dat=$this->postResource('OrderAllInOne', $revelData, true);
         return basename($this->headers['location']) ;
