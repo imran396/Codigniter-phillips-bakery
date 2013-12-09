@@ -29,7 +29,6 @@ class Customers extends API_Controller
     public function insert()
     {
 
-
             $data = $this->input->post();
             $data['status']=1;
 
@@ -63,7 +62,7 @@ class Customers extends API_Controller
                 }
             }
 
-           $this->sendOutput($data);
+            $this->sendOutput($data);
     }
 
     public function update(){
