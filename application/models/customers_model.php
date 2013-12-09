@@ -209,7 +209,7 @@ class Customers_model extends Crud_Model
     function searching($search,$start){
 
         $search=strtolower($search);
-        $query="SELECT customer_id,first_name,last_name,phone_number,status
+        $query="SELECT customer_id,revel_customer_id,first_name,last_name,phone_number,status
                 FROM `customers`
                 WHERE(is_deleted !=1 AND  LOWER(`first_name`) LIKE '%$search%')
                 || (is_deleted !=1 AND LOWER(`last_name`) LIKE '%$search%')

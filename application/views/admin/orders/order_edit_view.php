@@ -99,7 +99,7 @@
             <label class="control-label" for="lastname"><?php echo $this->lang->line('employee_name');?></label>
             <div class="controls">
 
-                <?php //echo $this->productions_model->getEmployee($queryup ->employee_id); ?>
+                <?php echo $this->productions_model->getEmployee($queryup ->employee_id); ?>
             </div>
         </div>
 

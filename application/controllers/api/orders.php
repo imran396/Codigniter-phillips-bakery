@@ -128,7 +128,13 @@ class Orders extends API_Controller
             if(empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] != '300' ){
 
                 $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
-                $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+
+                if($orders['pickup_location_id'] > 0 && $orders['delivery_type']=='pickup'){
+                    $revel_location = $this->revel_order->getRevelID('locations',$orders['pickup_location_id']);
+                }else{
+                    $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+                }
+
                 $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
 
                 $RevelOrderData = array(
@@ -285,7 +291,13 @@ class Orders extends API_Controller
             if(empty($revel_order_id) && $orders['order_status'] != '300' ){
 
                 $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
-                $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+
+                if($orders['pickup_location_id'] > 0 && $orders['delivery_type']=='pickup'){
+                    $revel_location = $this->revel_order->getRevelID('locations',$orders['pickup_location_id']);
+                }else{
+                    $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+                }
+
                 $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
 
                 $RevelOrderData = array(
@@ -671,10 +683,19 @@ class Orders extends API_Controller
         $this->orders_model->cronOrderDelete();
 
     }
+
+
     public function sold(){
         header("Content-type=> application/json");
         $revel_orders = ($this->revel_order->getAll());
         $this->orders_model->cronOrderSold($revel_orders);
+    }
+
+    public function getAllOrder(){
+        header("Content-type=> application/json");
+        $revel_orders = ($this->revel_order->getAll());
+        var_dump($revel_orders);
+
     }
 
 

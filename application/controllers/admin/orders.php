@@ -23,7 +23,6 @@ class Orders extends Crud_Controller
 
     function index(){
 
-
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['catresult'] = $this->orders_model->getCategories();
         $this->data['cakeresult'] = $this->orders_model->getCakes($category=0);
@@ -542,7 +541,13 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         if(empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] != '300' ){
 
             $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
-            $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+
+            if($orders['pickup_location_id'] > 0 && $orders['delivery_type']=='pickup'){
+                $revel_location = $this->revel_order->getRevelID('locations',$orders['pickup_location_id']);
+            }else{
+                $revel_location = $this->revel_order->getRevelID('locations',$orders['location_id']);
+            }
+
             $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
 
             $RevelOrderData = array(

@@ -187,6 +187,8 @@ class Orders_model extends Crud_Model
         $order['total_price']=  $dbdata->total_price;
         $order['cake_id']=  $dbdata->cake_id;
         $order['customer_id']=  $dbdata->customer_id;
+        $order['delivery_type']=  $dbdata->delivery_type;
+        $order['pickup_location_id']=  $dbdata->pickup_location_id;
         $order['location_id']=  $dbdata->location_id;
         $order['employee_id']=  $dbdata->employee_id;
         $order['on_cake_image_needed']=  $dbdata->on_cake_image_needed;
@@ -206,6 +208,8 @@ class Orders_model extends Crud_Model
             $order['order_status']=  $dbdata->order_status;
             $order['cake_id']=  $dbdata->cake_id;
             $order['customer_id']=  $dbdata->customer_id;
+            $order['delivery_type']=  $dbdata->delivery_type;
+            $order['pickup_location_id']=  $dbdata->pickup_location_id;
             $order['location_id']=  $dbdata->location_id;
             $order['employee_id']=  $dbdata->employee_id;
             $order['on_cake_image_needed']=  $dbdata->on_cake_image_needed;
@@ -403,7 +407,7 @@ class Orders_model extends Crud_Model
     function cronOrderSold($revel_orders){
 
         foreach($revel_orders as $revel):
-            if($revel->remaining_due == 0 ){
+            if($revel->remaining_dueremaining_due == 0 ){
                 if($this->getCronOrderStatus($revel->id) > 0){
                     $this->db->where(array('revel_order_id'=>$revel->id))->set(array('order_status'=>304,'update_date'=>time()))->update('orders');
                 }
@@ -740,7 +744,7 @@ class Orders_model extends Crud_Model
               LEFT JOIN instructional_photo AS I
                 ON ( I.instructional_order_id = O.order_id )
               LEFT JOIN order_delivery AS OD
-                ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1 && kitchen_location_id = $vaughan_location && order_status != 300 && O.update_date > $lastdate
+                ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1 && kitchen_location_id = $vaughan_location && vaughan_location = 1  && order_status != 300 && vaughan_print !=1 && O.update_date > $lastdate
               GROUP BY O.order_id ORDER BY O.update_date ASC LIMIT 0,10 ";
 
 
@@ -748,6 +752,8 @@ class Orders_model extends Crud_Model
             $inserted = $this->db->query($insert)->result_array();
 
             foreach($inserted  as $key => $val){
+
+                $this->db->set(array('vaughan_print'=>1))->where(array('order_id'=>$inserted[$key]['order_id']))->update('orders');
 
                 $inserted[$key]['order_id'] = (int) $inserted[$key]['order_id'];
                 $inserted[$key]['order_code'] = (int) $inserted[$key]['order_code'];
@@ -770,6 +776,7 @@ class Orders_model extends Crud_Model
                 }else{
                     $inserted[$key]['instructional_photo'] = array();
                 }
+
 
             }
 

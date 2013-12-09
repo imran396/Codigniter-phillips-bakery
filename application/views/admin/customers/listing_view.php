@@ -45,6 +45,8 @@
                     <thead>
                     <tr>
                         <th class="center">No.</th>
+
+                        <th>Customer Revel ID</th>
                         <th><?php echo $this->lang->line('name');?></th>
                         <th><?php echo $this->lang->line('phone_number');?></th>
                         <th><?php echo $this->lang->line('orders');?></th>
@@ -60,12 +62,9 @@
                     foreach($paging[0]->result() as  $rows ) :?>
                     <tr>
                         <td class="center"><?php echo $i; ?></td>
+                        <td><?php echo $rows->revel_customer_id; ?></td>
                         <td><?php echo $rows->first_name.' '.$rows->last_name; ?></td>
-                        <td> <?php $from = $rows->phone_number;
-                            echo $to = sprintf("%s-%s-%s",
-                                substr($from, 0, 3),
-                                substr($from, 3, 3),
-                                substr($from, 6, 8));?></td>
+                        <td> <?php echo phoneNoFormat($rows->phone_number); ?></td>
                         <td><?php if($this->customers_model->orderCount($rows->customer_id,301) > 0){ ?><a class="orderStatus" rel="301" id="<?php echo $rows->customer_id; ?>" href="javascript:void(0)"><?php echo $this->customers_model->orderCount($rows->customer_id,301); ?></a><?php }else{ echo 0; } ?></td>
                         <td><?php if($this->customers_model->orderCount($rows->customer_id,300) > 0){ ?><a class="orderStatus" rel="300" id="<?php echo $rows->customer_id; ?>" href="javascript:void(0)"><?php echo $this->customers_model->orderCount($rows->customer_id,300); ?></a><?php }else{ echo 0; } ?></td>
                         <td>
