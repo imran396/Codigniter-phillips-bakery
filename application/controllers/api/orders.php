@@ -134,7 +134,7 @@ class Orders extends API_Controller
                 }else{
                     $revel_location_id = $this->revel_order->getRevelID('locations',$orders['location_id']);
                 }
-                $revel_create_location_id = $this->revel_order->getRevelID('locations',$orders['location_id']);
+                $revel_location_create_id = $this->revel_order->getRevelID('locations',$orders['location_id']);
 
                 $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
 
@@ -142,7 +142,7 @@ class Orders extends API_Controller
                     'order_code' => $orders['order_code'],
                     'revel_customer_id' => $revel_customer,
                     'revel_location_id' => $revel_location_id,
-                    'revel_location_create_id' => $revel_create_location_id,
+                    'revel_location_create_id' => $revel_location_create_id,
                     'revel_user_id' => $revel_user,
                     'discount'=> $orders['discount_price'],
                     'subtotal'=> $orders['total_price'],
@@ -299,7 +299,7 @@ class Orders extends API_Controller
                 }else{
                     $revel_location_id = $this->revel_order->getRevelID('locations',$orders['location_id']);
                 }
-                $revel_create_location_id = $this->revel_order->getRevelID('locations',$orders['location_id']);
+                $revel_location_create_id = $this->revel_order->getRevelID('locations',$orders['location_id']);
 
 
                 $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
@@ -308,7 +308,7 @@ class Orders extends API_Controller
                     'order_code' => $orders['order_code'],
                     'revel_customer_id' => $revel_customer,
                     'revel_location_id' => $revel_location_id,
-                    'revel_create_location_id' => $revel_create_location_id,
+                    'revel_location_create_id' => $revel_location_create_id,
                     'revel_user_id' => $revel_user,
                     'discount'=> $orders['discount_price'],
                     'subtotal'=> $orders['total_price'],
