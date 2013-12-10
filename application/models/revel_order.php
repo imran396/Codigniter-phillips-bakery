@@ -99,7 +99,7 @@ class Revel_Order extends Revel_Model
                 "customer"             => ($data['revel_customer_id'] > 0 ) ? "/resources/Customer/".$data['revel_customer_id']."/" : "/resources/Customer/1/",
                 "final_total"          => $data['subtotal'],
                 "number_of_people"     => 1,
-                "created_at"           => ($data['revel_location_create_id'] > 0 ) ? "/resources/PosStation/".$data['revel_location_create_id']."/": "/resources/PosStation/1/",
+                "created_at"           => ($data['revel_location_id'] > 0 ) ? "/resources/PosStation/".$data['revel_location_id']."/": "/resources/PosStation/1/",
                 "delivery_clock_in"    => null,
                 "local_id"             => 57189,
                 "remaining_due"        => $data['subtotal'],
@@ -120,6 +120,8 @@ class Revel_Order extends Revel_Model
         );
 
         //echo str_replace('\\/', '/', json_encode($revelData));
+
+
         $this->postResource('OrderAllInOne', $revelData, true);
         return basename($this->headers['location']) ;
     }
