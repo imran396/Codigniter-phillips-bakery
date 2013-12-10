@@ -119,9 +119,7 @@ class Revel_Order extends Revel_Model
             )
         );
 
-        echo str_replace('\\/', '/', json_encode($revelData));
-exit;
-
+        //echo str_replace('\\/', '/', json_encode($revelData));
         $this->postResource('OrderAllInOne', $revelData, true);
         return basename($this->headers['location']) ;
     }
