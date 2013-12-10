@@ -404,15 +404,11 @@ class Orders_model extends Crud_Model
         $this->db->where(array('order_status'=>300,'order_date <=' =>$days ))->set(array('order_status'=>305,'is_deleted'=>1,'update_date'=>time()))->update('orders');
     }
 
-    function cronOrderSold($revel_orders){
+    function cronOrderSold($revel_order_id){
+        if($this->getCronOrderStatus($revel_order_id) > 0){
+            $this->db->where(array('revel_order_id'=>$revel_order_id))->set(array('order_status'=>304,'update_date'=>time()))->update('orders');
+        }
 
-        foreach($revel_orders as $revel):
-            if($revel->remaining_dueremaining_due == 0 ){
-                if($this->getCronOrderStatus($revel->id) > 0){
-                    $this->db->where(array('revel_order_id'=>$revel->id))->set(array('order_status'=>304,'update_date'=>time()))->update('orders');
-                }
-            }
-        endforeach;
     }
 
     private function getCronOrderStatus($revelid){
@@ -744,7 +740,7 @@ class Orders_model extends Crud_Model
               LEFT JOIN instructional_photo AS I
                 ON ( I.instructional_order_id = O.order_id )
               LEFT JOIN order_delivery AS OD
-                ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1 && kitchen_location_id = $vaughan_location && vaughan_location = 1  && order_status != 300 && vaughan_print !=1 && O.update_date > $lastdate
+                ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1 && kitchen_location_id = $vaughan_location && vaughan_location = 1  && order_status != 300 && vaughan_print !=1
               GROUP BY O.order_id ORDER BY O.update_date ASC LIMIT 0,10 ";
 
 

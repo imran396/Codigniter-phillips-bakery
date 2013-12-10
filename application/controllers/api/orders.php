@@ -684,11 +684,18 @@ class Orders extends API_Controller
 
     }
 
-
     public function sold(){
+
         header("Content-type=> application/json");
-        $revel_orders = ($this->revel_order->getAll());
-        $this->orders_model->cronOrderSold($revel_orders);
+        $result = $this->db->select('revel_order_id')->where('order_status','303')->get('orders')->result();
+        foreach($result as $rows){
+            $revel_order_id = $rows->revel_order_id;
+            $revel = ($this->revel_order->getRevelOrderSold($revel_order_id));
+            if(isset($revel->remaining_due) && $revel->remaining_due == 0 ){
+                $this->orders_model->cronOrderSold($revel_order_id);
+            }
+        }
+
     }
 
     public function getAllOrder(){

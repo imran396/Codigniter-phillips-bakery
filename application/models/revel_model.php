@@ -58,6 +58,28 @@ class Revel_Model extends CI_Model
         return $response->raw_body;
     }
 
+    public function getRevelOrderSold($resource=0, $offset = 0, $limit = 20, $format = 'json', $debug = false)
+    {
+        $params = array('offset' => $offset, 'limit' => $limit, 'format' => $format);
+        $client = \Httpful\Request::get($this->revel['endpoint'] . '/resources/Order/' . $resource . '/?' . http_build_query($params));
+
+        $client->addHeaders(array('API-AUTHENTICATION' => $this->revel['api_key'] . ':' . $this->revel['api_secret']));
+        $response = $client->send();
+
+        $this->code     = $response->code;
+        $this->response = $response->body;
+        $this->headers  = $response->headers;
+
+        if ($debug) {
+            $this->log($response);
+        }
+
+        return json_decode($response->raw_body);
+
+    }
+
+
+
     protected function postResource($resource, $data, $debug = false)
     {
         $client = \Httpful\Request::post($this->revel['endpoint'] . '/resources/' . $resource . '/');
