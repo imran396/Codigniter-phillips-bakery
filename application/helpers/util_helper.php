@@ -38,6 +38,12 @@ function orderStatusClass($code){
     }
 }
 
+function getOrderPrintDateFormat($date=NULL){
+
+    $udate =date("D, M j, Y",$date);
+    return $udate;
+}
+
 function getOrderDateFormat($date=NULL){
 
     $udate =date("m/d/Y",$date);
@@ -52,7 +58,7 @@ function dateFormat($date=NULL){
 }
 
 function dateFormatStr($date=NULL){
-    //$udate =date("m/d/Y h:m:s",$date);
+
     $udate =date("m/d/Y h:i A",$date);
     return $udate;
 }
@@ -82,6 +88,7 @@ function timeFormatAmPm($time){
 
 
 function wordLimit($text,$n=10){
+
     $text=strip_tags($text);  // not neccssary for none HTML
 // $text=strip_shortcodes($text); // uncomment only inside wordpress system
     $text = trim(preg_replace("/\s+/"," ",$text));

@@ -59,24 +59,10 @@
 <div id="wrapper">
 <h1 class="cen"><?php if( $queryup->order_status !=301 ){ echo strtoupper($queryup ->orderstatus); }else{ echo "ORDER"; } ?></h1>
 <br />
-
 <p class="cen" ><?php echo $this->lang->line('global_email_subject'); ?></p>
 <hr />
-<?php
-$locations=$this->locations_model->getLocations($queryup->locationid);
-if(!empty($locations)){
-?>
-<?php if($locations[0]->title){ ?><p class="cen"><?php echo $locations[0]->title; ?></p><?php } ?>
-<?php if($locations[0]->address1){ ?><p class="cen"><?php echo $locations[0]->address1; ?></p><?php } ?>
-<?php if($locations[0]->address2){ ?><p class="cen"><?php echo $locations[0]->address2; ?></p><?php } ?>
-<?php if($locations[0]->city || $locations[0]->province || $locations[0]->postal_code){ ?><p class="cen"><?php echo $locations[0]->city; ?> , <?php echo $locations[0]->province; ?> <?php echo $locations[0]->postal_code; ?></p><?php } ?>
-<?php if($locations[0]->country){ ?><p class="cen"><?php echo $locations[0]->country; ?></p><?php } ?>
-<?php if($locations[0]->email){ ?><p class="cen"><?php echo $locations[0]->email; ?></p><?php } ?>
-<?php if($locations[0]->phone){ ?><p class="cen"><?php echo $this->orders_model->phoneNoFormat($locations[0]->phone); ?></p><?php } ?>
-<?php } ?>
-<br />
 
-<p>ORDER #<?php echo $queryup->order_code; ?> <?php echo getOrderDateFormat($queryup->order_date); ?></p>
+<p>ORDER #<?php echo $queryup->order_code; ?> <br/><?php echo getOrderPrintDateFormat($queryup->order_date); ?></p>
 <hr />
 
 <ul class="col_1">
@@ -166,7 +152,7 @@ if(!empty($locations)){
 
 <ul class="col_2">
     <li><?php echo ucfirst($queryup->delivery_type); ?></li>
-    <li><?php echo $this->orders_model->dateFormat($queryup->delivery_date); ?> <?php echo $this->orders_model->timeFormat($queryup->delivery_time); ?></li>
+    <li><?php $delivery_date = strtotime($queryup->delivery_date); echo getOrderPrintDateFormat($delivery_date).","; ?> <?php echo timeFormatAmPm($queryup->delivery_time); ?></li>
     <?php
     if($queryup->delivery_type != 'delivery' ){
         ?>
@@ -178,79 +164,73 @@ if(!empty($locations)){
 <div class="clr"></div>
 
 <hr />
-<p>CAKE DETAILS</p>
+<?php if($queryup->title){ ?>
+<p><strong><?php echo strtoupper($queryup->title); ?></strong></p>
 <br />
-<p>IMAGE ON CAKE: <?php if($queryup->on_cake_image){ echo $this->orders_model->fileName($queryup->on_cake_image); }else{ echo $this->lang->line('none').PHP_EOL; } ?></p>
-<p>REFERENCE PHOTOS: <?php
-    $instructionals = $this->productions_model->photoGallery($queryup->order_id);
-    if(!empty($instructionals)){
-        foreach($instructionals as $instructional){
-
-            echo $this->orders_model->fileName($instructional->instructional_photo) ." , ";
-
-        } }else{ echo $this->lang->line('none').PHP_EOL; } ?>
-</p>
-<br />
-<?php if($queryup->inscription){ ?>
-<p>INSCRIPTION</p>
-<br />
-<p>> <?php echo $queryup->inscription; ?>
- <?php } ?>
-    <br />
-    <?php if($queryup->special_instruction){ ?>
-<p>SPECIAL INSTRUCTIONS</p>
-<br />
-<p>> <?php echo $queryup->special_instruction; ?></p>
 <?php } ?>
-<hr />
 <ul class="col_1">
-    <?php if($queryup->title){ ?>
-        <li><p><?php echo $queryup->title ?></p></li>
-    <?php } ?>
+
     <?php if($queryup->magic_cake_id){ ?>
-        <li><p>MAGIC CAKE ID:</p></li>
+        <li><p><strong>MAGIC CAKE ID:</strong></p></li>
     <?php } ?>
     <?php if($queryup->flavour_name){ ?>
-        <li><p>FLAVOUR:</p></li>
-    <?php } ?>
-    <?php if($queryup->serving_size){ ?>
-        <li><p>SIZE:</p></li>
+        <li><p><strong>FLAVOUR:</strong></p></li>
     <?php } ?>
     <?php if($queryup->shape){ ?>
-        <li><p>SHAPE:</p></li>
+        <li><p><strong>SHAPE:</strong></p></li>
     <?php } ?>
     <?php if($queryup->serving_title){ ?>
-        <li><p>SERVING:</p></li>
+        <li><p><strong>SERVING:</strong></p></li>
     <?php } ?>
     <?php if($queryup->tiers){ ?>
-        <li><p>TIERS:</p></li>
+        <li><p><strong>TIERS:</strong></p></li>
     <?php } ?></ul>
 
 <ul class="col_2">
-    <li><p><?php echo "$".$queryup->matrix_price; ?></p></li>
+
     <?php if($queryup->magic_cake_id){ ?>
-        <li><p><?php echo $queryup->magic_cake_id; ?></p></li>
+        <li><p><strong><?php echo $queryup->magic_cake_id; ?></strong></p></li>
     <?php } ?>
     <?php if($queryup->flavour_name){ ?>
-        <li><p><?php echo $queryup->flavour_name; ?></p></li>
-    <?php } ?>
-    <?php if($queryup->serving_size){ ?>
-        <li><p><?php echo $queryup->serving_size; ?></p></li>
+        <li><p><strong><?php echo $queryup->flavour_name; ?></strong></p></li>
     <?php } ?>
     <?php if($queryup->shape){ ?>
-        <li><p><?php echo $queryup->shape; ?></p></li>
+        <li><p><strong><?php echo $queryup->shape; ?></strong></p></li>
     <?php } ?>
     <?php if($queryup->serving_title){ ?>
-        <li><p><?php echo $queryup->serving_title; ?></p></li>
+        <li><p><strong><?php echo $queryup->serving_title; ?></strong></p></li>
     <?php } ?>
     <?php if($queryup->orderTiers > 0){ ?>
-        <li><p><?php echo $queryup->orderTiers; ?></p></li>
+        <li><p><strong><?php echo $queryup->orderTiers; ?></strong></p></li>
     <?php } ?>
 </ul>
+
+<br />
+<div class="clr"></div>
+<br />
+<?php if($queryup->inscription){ ?>
+<p><strong>INSCRIPTION</strong></p>
+<p><strong>*<?php echo $queryup->inscription; ?></strong></p>
+ <?php } ?>
+ <br />
+ <?php if($queryup->special_instruction){ ?>
+<p><strong>SPECIAL INSTRUCTIONS</strong></p>
+     <?php $special_instruction = explode(PHP_EOL,$queryup->special_instruction);
+     foreach($special_instruction as $instruction){
+     ?>
+    <p><strong>*<?php echo $instruction; ?></strong></p>
+     <?php } ?>
+<?php } ?>
+<hr />
+
 <div class="clr"></div>
 
 
 <ul class="col_1">
+    <?php if($queryup->title){ ?>
+        <li><p><?php echo strtoupper($queryup->title) ?></p></li>
+    <?php } ?>
+
     <?php if($queryup->printed_image_surcharge >0 ){ ?>
         <li><p>PRINTED IMAGE:</p></li>
     <?php } ?>
@@ -258,7 +238,7 @@ if(!empty($locations)){
         <li><p>DELIVERY:</p></li>
     <?php } ?>
     <?php if($queryup->magic_surcharge){ ?>
-        <li><p>MAGIC SURCHARGE:</p></li>
+        <li><p>OTHER SURCHARGE:</p></li>
     <?php } ?>
     <?php if($queryup->discount_price){ ?>
         <li><p>DISCOUNT:</p></li>
@@ -266,6 +246,9 @@ if(!empty($locations)){
 </ul>
 
 <ul class="col_2">
+    <?php if($queryup->matrix_price >0 ){ ?>
+    <li><p><?php echo "$".$queryup->matrix_price; ?></p></li>
+    <?php } ?>
     <?php if($queryup->printed_image_surcharge >0 ){ ?>
         <li><p><?php echo "$".$queryup->printed_image_surcharge; ?></p></li>
     <?php } ?>
@@ -273,7 +256,7 @@ if(!empty($locations)){
         <li><p><?php echo "$".$queryup->delivery_zone_surcharge; ?></p></li>
     <?php } ?>
     <?php if($queryup->magic_surcharge){ ?>
-        <li><p><?php echo "$".$queryup->magic_surcharge; ?></p></li>
+        <li><p><?php echo "$(".$queryup->magic_surcharge.')'; ?></p></li>
     <?php } ?>
     <?php if($queryup->discount_price){ ?>
         <li><p><?php echo "$".$queryup->discount_price; ?></p></li>
@@ -298,7 +281,6 @@ if(!empty($locations)){
 </ul>
 <div class="clr"></div>
 
-<br />
 <hr />
 <br />
 <p class="cen">Thank You</p>
