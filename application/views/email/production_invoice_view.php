@@ -97,6 +97,7 @@
 <p>ORDER #<?php echo $queryup->order_code; ?> <?php echo getOrderDateFormat($queryup->order_date); ?></p>
 <hr />
 <br />
+
 <ul class="copl_fourth left">
     <li>CUSTOMER DETAILS</li>
 </ul>

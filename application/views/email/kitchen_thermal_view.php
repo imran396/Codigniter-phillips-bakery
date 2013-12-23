@@ -31,6 +31,7 @@
     #wrapper
     {
         width:275px;
+
     }
     hr
     {
@@ -41,131 +42,77 @@
     }
     h1
     {
-        font-size:32px;
-        line-height:40px;
-        letter-spacing:5px;
+        font-size:24px;
+        line-height:24px;
+
+    }
+    h2
+    {
+        font-size:22px;
+        line-height:32px;
+
+    }
+
+    h3{
+
+        font-size:16px;
+        line-height:20px;
+        text-align: center;
+
+
+    }
+    h4
+    {
+        font-size:14px;
+        line-height:18px;
+
     }
     .col_1
     {
         float:left;
         width:50%;
     }
+
+    .col_1 strong{
+        font-size: 14px;
+        font-weight: bold;
+    }
+
     .col_2
     {
         float:right;
         width:50%;
     }
+    .col_2 strong{
+        font-size: 15px;
+        font-weight: bold;
+    }
+    p span{
+        float: right;
+        display: inline-block;
+    }
+
 </style>
 <div id="wrapper">
-<h1 class="cen"><?php if( $queryup->order_status !=301 ){ echo strtoupper($queryup ->orderstatus); }else{ echo "ORDER"; } ?></h1>
-<br />
+<h1 class="cen"><?php
+
+    $locations=$this->locations_model->getLocations($queryup->locationid);
+    if($locations[0]->title){ ?><?php echo strtoupper($locations[0]->title); ?><?php } ?></h1>
+
 <p class="cen" ><?php echo $this->lang->line('global_email_subject'); ?></p>
+<br/>
+<p>ORDER #<?php echo $queryup->order_code; ?><span><?php echo strtoupper($queryup->employee_first_name.' '.$queryup->employee_last_name); ?></span></p>
+<p>CUSTOMER:<?php echo $queryup->first_name.' '. $queryup->last_name ?></p>
+<p><?php $delivery_date = strtotime($queryup->delivery_date); echo getOrderPrintKitchenDateFormat($delivery_date).","; ?> <?php echo timeFormatAmPm($queryup->delivery_time); ?></p>
 <hr />
 
-<p>ORDER #<?php echo $queryup->order_code; ?> <br/><?php echo getOrderPrintDateFormat($queryup->order_date); ?></p>
-<hr />
-
-<ul class="col_1">
-    <li>
-        <p>CUSTOMER DETAILS</p>
-    </li>
-</ul>
-
-<ul class="col_2">
-    <li>
-        <p>DELIVERY DETAILS</p>
-    </li>
-</ul>
+<?php if($queryup->on_cake_image ==""){ ?><p><h3>*IMAGE ON CAKE*</h3></p><?php } ?>
+<?php if($queryup->on_cake_image ==""){ ?><p><h3>*REFERENCE IMAGES*</h3></p><?php } ?>
 <div class="clr"></div>
-<br />
-
-<ul class="col_1">
-    <li><?php echo $queryup->first_name.' '. $queryup->last_name ?></li>
-    <?php if($queryup->address_1){?>
-    <li><?php echo $queryup->address_1; ?></li>
-    <?php } ?>
-    <?php if($queryup->address_2){?>
-    <li><?php echo $queryup->address_2; ?></li>
-    <?php } ?>
-    <?php if($queryup->city !="" || $queryup->province !="" || $queryup->postal_code !=""  ){?>
-    <li><?php echo $queryup->city; ?>, <?php echo $queryup->province; ?> <?php echo $queryup->postal_code; ?></li>
-    <?php } ?>
-    <?php if($queryup->phone_number){?>
-    <li><?php echo $this->orders_model->phoneNoFormat($queryup->phone_number); ?></li>
-    <?php } ?>
-    <?php if($queryup->email){?>
-    <li><?php echo $queryup->email; ?></li>
-    <?php } ?>
-</ul>
-
-<ul class="col_2">
-    <?php
-    if($this->productions_model->deliveryInfo($queryup->order_id) && $queryup->delivery_type == 'delivery'){
-        $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id);
-        ?>
-        <?php if( $deliveryInfo->name){ ?>
-            <li><?php echo $deliveryInfo->name; ?></li>
-        <?php } ?>
-        <?php if( $deliveryInfo->address_1){ ?>
-            <li><?php echo $deliveryInfo->address_1; ?></li>
-        <?php } ?>
-        <?php if( $deliveryInfo->address_2){ ?>
-            <li><?php echo $deliveryInfo->address_2; ?></li>
-        <?php } ?>
-        <?php if( $deliveryInfo->city || $deliveryInfo->postal ){ ?>
-            <li><?php if($deliveryInfo->city){  echo $deliveryInfo->city; } ?>  <?php if($deliveryInfo->province){  echo ", ".$deliveryInfo->province; } ?>  <?php if( $deliveryInfo->postal){ ?> <?php echo $deliveryInfo->postal; } ?></li>
-        <?php } ?>
-        <li><?php echo $this->orders_model->phoneNoFormat($deliveryInfo->phone); ?></li>
-        <?php if( $deliveryInfo->email){ ?>
-            <li><?php echo $deliveryInfo->email; ?></li>
-        <?php } ?>
-    <?php } ?>
-
-</ul>
-
-<div class="clr"></div>
-<br />
-
 <hr />
-<p>ORDER INFORMATION</p>
-<br />
-
-<ul class="col_1">
-    <li>
-        <p>PICKUP/DELIVERY:</p>
-    </li>
-    <li>
-        <p>DATE:</p>
-    </li>
-    <?php
-    if($queryup->delivery_type != 'delivery' ){
-    ?>
-    <li>
-        <p>PICKUP LOCATION:</p>
-    </li>
-    <?php }else{ ?>
-    <li>
-        <p>DELIVERY ZONE:</p>
-    </li>
-    <?php } ?>
-</ul>
-
-<ul class="col_2">
-    <li><?php echo ucfirst($queryup->delivery_type); ?></li>
-    <li><?php $delivery_date = strtotime($queryup->delivery_date); echo getOrderPrintDateFormat($delivery_date).","; ?> <?php echo timeFormatAmPm($queryup->delivery_time); ?></li>
-    <?php
-    if($queryup->delivery_type != 'delivery' ){
-        ?>
-        <li><?php  echo $this->productions_model->getLocations($queryup->pickup_location_id);  ?></li>
-    <?php }else{ ?>
-        <li><?php echo $queryup->zone_title; ?></li>
-    <?php } ?>
-</ul>
 <div class="clr"></div>
-
-<hr />
 <?php if($queryup->title){ ?>
-<p><strong><?php echo strtoupper($queryup->title); ?></strong></p>
+<p><h2><?php echo strtoupper($queryup->title); ?></h2></p>
 <br />
 <?php } ?>
 <ul class="col_1">
@@ -209,16 +156,16 @@
 <div class="clr"></div>
 <br />
 <?php if($queryup->inscription){ ?>
-<p><strong>INSCRIPTION</strong></p>
-<p><strong>*<?php echo $queryup->inscription; ?></strong></p>
+<p><h4>INSCRIPTION</h4></p>
+<p><h4>*<?php echo $queryup->inscription; ?></h4></p>
  <?php } ?>
  <br />
  <?php if($queryup->special_instruction){ ?>
-<p><strong>SPECIAL INSTRUCTIONS</strong></p>
+<p><h4>SPECIAL INSTRUCTIONS</h4></p>
      <?php $special_instruction = explode(PHP_EOL,$queryup->special_instruction);
      foreach($special_instruction as $instruction){
      ?>
-    <p><strong>*<?php echo $instruction; ?></strong></p>
+    <p><h4>*<?php echo $instruction; ?></h4></p>
      <?php } ?>
 <?php } ?>
 <hr />
@@ -280,6 +227,7 @@
     <?php } ?>
 </ul>
 <div class="clr"></div>
+
 <hr />
 </br>
 <p class="cen">

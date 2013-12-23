@@ -44,6 +44,12 @@ function getOrderPrintDateFormat($date=NULL){
     return $udate;
 }
 
+function getOrderPrintKitchenDateFormat($date=NULL){
+
+    $udate =date("l, F j, Y",$date);
+    return $udate;
+}
+
 function getOrderDateFormat($date=NULL){
 
     $udate =date("m/d/Y",$date);

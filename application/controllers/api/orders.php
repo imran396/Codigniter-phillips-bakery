@@ -524,6 +524,10 @@ class Orders extends API_Controller
 
                 $this->load->view('email/production_thermal_view', $this->data);
 
+            }elseif($invoice =="kitchen"){
+
+                $this->load->view('email/kitchen_thermal_view', $this->data);
+
             }else{
 
                 $this->load->view('email/production_invoice_view', $this->data);
