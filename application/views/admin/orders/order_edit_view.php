@@ -65,7 +65,7 @@
         <div class="control-group">
             <label class="control-label" for="email"><?php echo $this->lang->line('fondant');?></label>
             <div class="controls">
-                <?php  if($queryup->fondant ==1) echo "Yes"; else echo "No";  ?>
+                <?php  if($queryup->fondant == 1) echo "Yes"; else echo "No";  ?>
             </div>
         </div>
         <div class="control-group">

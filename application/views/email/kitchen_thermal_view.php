@@ -1,10 +1,10 @@
 <script>
-    window.print();
+    //window.print();
     CheckWindowState();
 
     function CheckWindowState()    {
         if(document.readyState=="complete") {
-            window.close();
+            //window.close();
         } else {
             setTimeout("CheckWindowState()", 2000)
         }
@@ -15,9 +15,9 @@
     {
         margin:0;
         padding:0;
-        line-height:16px;
-        font-size:12px;
-        font-family:Times;
+        line-height:22px;
+        font-size:15px;
+        font-family:Tahoma, Verdana, Arial, Helvetica;
     }
     .clr
     {
@@ -31,6 +31,8 @@
     #wrapper
     {
         width:275px;
+        margin: 0 auto;
+        overflow: hidden;
 
     }
     hr
@@ -42,14 +44,14 @@
     }
     h1
     {
-        font-size:24px;
-        line-height:24px;
+        font-size:34px;
+        line-height:32px;
 
     }
     h2
     {
-        font-size:22px;
-        line-height:32px;
+        font-size:20px;
+        line-height:30px;
 
     }
 
@@ -65,27 +67,55 @@
     {
         font-size:14px;
         line-height:18px;
+        font-weight: normal;
 
     }
     .col_1
     {
         float:left;
-        width:50%;
+        width:45%;
     }
 
+
+
     .col_1 strong{
-        font-size: 14px;
+        font-size: 18px;
         font-weight: bold;
+
     }
 
     .col_2
     {
         float:right;
-        width:50%;
+        width:55%;
+        text-align: right;
     }
+
+    .col_price_1
+    {
+        float:left;
+        width:75%;
+        font-size: 16px;
+    }
+    .col_delivery
+    {
+        float:left;
+        width:100%;
+        font-size: 16px;
+    }
+
+    .col_price_2
+    {
+        float:left;
+        width:25%;
+        text-align: right;
+        font-size: 16px;
+    }
+
     .col_2 strong{
-        font-size: 15px;
+        font-size: 18px;
         font-weight: bold;
+        text-align: right;
     }
     p span{
         float: right;
@@ -95,60 +125,67 @@
 </style>
 <div id="wrapper">
 <h1 class="cen"><?php
+if($queryup->delivery_type == 'pickup' ){
+ echo strtoupper($queryup->pickup_location_name);
+}else{
+ //echo strtoupper($queryup->location_name);
+  echo "DELIVERY";
+}
 
-    $locations=$this->locations_model->getLocations($queryup->locationid);
-    if($locations[0]->title){ ?><?php echo strtoupper($locations[0]->title); ?><?php } ?></h1>
 
-<p class="cen" ><?php echo $this->lang->line('global_email_subject'); ?></p>
-<br/>
-<p>ORDER #<?php echo $queryup->order_code; ?><span><?php echo strtoupper($queryup->employee_first_name.' '.$queryup->employee_last_name); ?></span></p>
-<p>CUSTOMER:<?php echo $queryup->first_name.' '. $queryup->last_name ?></p>
-<p><?php $delivery_date = strtotime($queryup->delivery_date); echo getOrderPrintKitchenDateFormat($delivery_date).","; ?> <?php echo timeFormatAmPm($queryup->delivery_time); ?></p>
-<hr />
+?>
+</h1>
+<h2 class="cen" ><?php if( $queryup->order_status !=301 ){ echo strtoupper($queryup ->orderstatus); }else{ echo "ORDER"; } ?></h2>
 
-<?php if($queryup->on_cake_image ==""){ ?><p><h3>*IMAGE ON CAKE*</h3></p><?php } ?>
-<?php if($queryup->on_cake_image ==""){ ?><p><h3>*REFERENCE IMAGES*</h3></p><?php } ?>
+**********************************************************
+<p><?php  echo getOrderPrintDateFormat($queryup->order_date); ?><span><?php echo strtoupper($queryup->employee_first_name.' '.$queryup->employee_last_name); ?></span></p>
+**********************************************************
+
 <div class="clr"></div>
-<hr />
-<div class="clr"></div>
-<?php if($queryup->title){ ?>
-<p><h2><?php echo strtoupper($queryup->title); ?></h2></p>
-<br />
-<?php } ?>
-<ul class="col_1">
 
-    <?php if($queryup->magic_cake_id){ ?>
-        <li><p><strong>MAGIC CAKE ID:</strong></p></li>
-    <?php } ?>
+<p><h1><?php if($queryup->title){ echo strtoupper($queryup->title); }else{ echo "CUSTOME CAKE"; } ?></h1></p>
     <?php if($queryup->flavour_name){ ?>
-        <li><p><strong>FLAVOUR:</strong></p></li>
+    <p><h2><?php echo strtoupper($queryup->flavour_name);  ?></h2></p>
     <?php } ?>
-    <?php if($queryup->shape){ ?>
-        <li><p><strong>SHAPE:</strong></p></li>
-    <?php } ?>
+    <br />
+
+<ul class="col_1">
     <?php if($queryup->serving_title){ ?>
         <li><p><strong>SERVING:</strong></p></li>
     <?php } ?>
-    <?php if($queryup->tiers){ ?>
+
+    <?php if($queryup->serving_size){ ?>
+        <li><p><strong>SHAPE:</strong></p></li>
+    <?php } ?>
+    <?php if($queryup->fondant > 0){ ?>
+        <li><p><strong>FONDANT:</strong></p></li>
+    <?php } ?>
+
+    <?php if($queryup->orderTiers){ ?>
         <li><p><strong>TIERS:</strong></p></li>
-    <?php } ?></ul>
+    <?php } ?>
+    <?php if($queryup->magic_cake_id){ ?>
+        <li><p><strong>MAGIC CAKE:</strong></p></li>
+    <?php } ?>
+</ul>
+
 
 <ul class="col_2">
 
-    <?php if($queryup->magic_cake_id){ ?>
-        <li><p><strong><?php echo $queryup->magic_cake_id; ?></strong></p></li>
-    <?php } ?>
-    <?php if($queryup->flavour_name){ ?>
-        <li><p><strong><?php echo $queryup->flavour_name; ?></strong></p></li>
-    <?php } ?>
-    <?php if($queryup->shape){ ?>
-        <li><p><strong><?php echo $queryup->shape; ?></strong></p></li>
-    <?php } ?>
     <?php if($queryup->serving_title){ ?>
         <li><p><strong><?php echo $queryup->serving_title; ?></strong></p></li>
     <?php } ?>
+    <?php if($queryup->serving_size){ ?>
+        <li><p><strong><?php echo $queryup->serving_size; ?></strong></p></li>
+    <?php } ?>
+    <?php if($queryup->fondant > 0){ ?>
+        <li><p><strong>Yes</strong></p></li>
+    <?php } ?>
     <?php if($queryup->orderTiers > 0){ ?>
         <li><p><strong><?php echo $queryup->orderTiers; ?></strong></p></li>
+    <?php } ?>
+    <?php if($queryup->magic_cake_id){ ?>
+        <li><p><strong><?php echo $queryup->magic_cake_id; ?></strong></p></li>
     <?php } ?>
 </ul>
 
@@ -157,82 +194,81 @@
 <br />
 <?php if($queryup->inscription){ ?>
 <p><h4>INSCRIPTION</h4></p>
-<p><h4>*<?php echo $queryup->inscription; ?></h4></p>
+<p><h4><strong><?php echo $queryup->inscription; ?></strong></h4></p>
  <?php } ?>
  <br />
  <?php if($queryup->special_instruction){ ?>
 <p><h4>SPECIAL INSTRUCTIONS</h4></p>
-     <?php $special_instruction = explode(PHP_EOL,$queryup->special_instruction);
-     foreach($special_instruction as $instruction){
-     ?>
-    <p><h4>*<?php echo $instruction; ?></h4></p>
-     <?php } ?>
+    <p><h4><strong><?php echo$queryup->special_instruction; ?></strong></h4></p>
 <?php } ?>
-<hr />
+<?php
+if($this->productions_model->deliveryInfo($queryup->order_id) && $queryup->delivery_type == 'delivery'){
+$deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id);
+?>
+<br />
+<p><h2>DELIVERY DETAILS</h2></p>
+    <ul class="col_delivery">
+            <?php if( $deliveryInfo->name){ ?>
+                <li><?php echo $deliveryInfo->name; ?></li>
+            <?php } ?>
+            <?php if( $deliveryInfo->address_1){ ?>
+                <li><?php echo $deliveryInfo->address_1; ?></li>
+            <?php } ?>
+            <?php if( $deliveryInfo->address_2){ ?>
+                <li><?php echo $deliveryInfo->address_2; ?></li>
+            <?php } ?>
+            <?php if( $deliveryInfo->city || $deliveryInfo->postal ){ ?>
+                <li><?php if($deliveryInfo->city){  echo $deliveryInfo->city; } ?>  <?php if($deliveryInfo->province){  echo ", ".$deliveryInfo->province; } ?>  <?php if( $deliveryInfo->postal){ ?> <?php echo $deliveryInfo->postal; } ?></li>
+            <?php } ?>
+            <li><?php echo $this->orders_model->phoneNoFormat($deliveryInfo->phone); ?></li>
+            <?php if( $deliveryInfo->email){ ?>
+                <li><?php echo $deliveryInfo->email; ?></li>
+            <?php } ?>
+
+            <?php if( $deliveryInfo->delivery_instruction){ ?>
+                <li><br /><?php echo $deliveryInfo->delivery_instruction; ?></li>
+            <?php } ?>
+    </ul>
+<?php } ?>
+<?php if($queryup->on_cake_image ==1 || $queryup->instructional_email_photo == 1 ){ ?>
+<br />
+**********************************************************
+<?php if($queryup->on_cake_image ==1){ ?><p><h2>**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EDIBLE IMAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**</h2></p><?php } ?>
+<?php if($queryup->instructional_email_photo == 1){ ?><p><h2>**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;REF PHOTOS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**</h2></p><?php } ?>
+<div class="clr"></div>
+<?php } ?>
+**********************************************************
+<div class="clr"></div>
+    <table style="width: 100%">
+        <tr><td class="col_price_1"><?php if($queryup->title){ echo strtoupper($queryup->title); }else{ echo 'Custom Cake'; } ?></td><td class="col_price_2"><?php if($queryup->matrix_price >0 ){ echo "$".$queryup->matrix_price; } ?></td></tr>
+        <?php if($queryup->printed_image_surcharge > 0){ ?>
+        <tr><td class="col_price_1">EDITABLE IMAGE</td><td class="col_price_2"><?php  echo "$".$queryup->printed_image_surcharge;  ?></td></tr>
+        <?php } ?>
+
+        <?php if($queryup->magic_surcharge > 0){ ?>
+        <tr><td class="col_price_1">MAGIC CAKE</td><td class="col_price_2"><?php  echo "$".$queryup->magic_surcharge;  ?></td></tr>
+        <?php } ?>
+
+            <tr><td class="col_price_1"><?php if($queryup->delivery_type == 'pickup' ){ ?>PICKUP<?php }else{?>DELIVERY<?php } ?><br/><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php
+                        echo ($queryup->delivery_type == 'pickup' ) ? $queryup->pickup_location_name : $queryup->location_name;
+                        $delivery_date = strtotime($queryup->delivery_date); echo "</br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".getOrderPrintKitchenDateFormat($delivery_date).","; ?> <?php echo timeFormatAmPm($queryup->delivery_time); ?></p>
+                </td>
+                <td class="col_price_2" valign="top"><?php  echo "$".$queryup->delivery_zone_surcharge;  ?></td>
+            </tr>
+        <?php if($queryup->discount_price > 0){ ?>
+            <tr><td class="col_price_1">DISCOUNT</td><td class="col_price_2">(<?php  echo "$".$queryup->discount_price;  ?>)</td></tr>
+        <?php } ?>
+        <tr><td colspan="2">&nbsp;</td></tr>
+        <tr><td class="col_price_1">TOTAL</td><td class="col_price_2"><?php if($queryup->override_price > 0){ echo "$".$queryup->override_price;}else{ echo "$".$queryup->total_price;} ?></td></tr>
+    </table>
 
 <div class="clr"></div>
-
-
-<ul class="col_1">
-    <?php if($queryup->title){ ?>
-        <li><p><?php echo strtoupper($queryup->title) ?></p></li>
-    <?php } ?>
-
-    <?php if($queryup->printed_image_surcharge >0 ){ ?>
-        <li><p>PRINTED IMAGE:</p></li>
-    <?php } ?>
-    <?php if($queryup->delivery_zone_surcharge){ ?>
-        <li><p>DELIVERY:</p></li>
-    <?php } ?>
-    <?php if($queryup->magic_surcharge){ ?>
-        <li><p>OTHER SURCHARGE:</p></li>
-    <?php } ?>
-    <?php if($queryup->discount_price){ ?>
-        <li><p>DISCOUNT:</p></li>
-    <?php } ?>
-</ul>
-
-<ul class="col_2">
-    <?php if($queryup->matrix_price >0 ){ ?>
-    <li><p><?php echo "$".$queryup->matrix_price; ?></p></li>
-    <?php } ?>
-    <?php if($queryup->printed_image_surcharge >0 ){ ?>
-        <li><p><?php echo "$".$queryup->printed_image_surcharge; ?></p></li>
-    <?php } ?>
-    <?php if($queryup->delivery_zone_surcharge){ ?>
-        <li><p><?php echo "$".$queryup->delivery_zone_surcharge; ?></p></li>
-    <?php } ?>
-    <?php if($queryup->magic_surcharge){ ?>
-        <li><p><?php echo "$(".$queryup->magic_surcharge.')'; ?></p></li>
-    <?php } ?>
-    <?php if($queryup->discount_price){ ?>
-        <li><p><?php echo "$".$queryup->discount_price; ?></p></li>
-    <?php } ?>
-
-</ul>
-<div class="clr"></div>
-
-
-<hr />
-
-<ul class="col_1">
-    <li>
-        <p>TOTAL:</p>
-    </li>
-</ul>
-
-<ul class="col_2">
-    <?php if($queryup->total_price){ ?>
-        <li><p><?php if($queryup->override_price > 0){ echo "$".$queryup->override_price;}else{ echo "$".$queryup->total_price;} ?></p></li>
-    <?php } ?>
-</ul>
-<div class="clr"></div>
-
-<hr />
+**********************************************************
 </br>
 <p class="cen">
     <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
 </p>
+    <p class="cen">ORDER #<?php echo $queryup->order_code; ?></p>
 <br/>
 <br/>
 <br/>

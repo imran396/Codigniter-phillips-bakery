@@ -192,7 +192,7 @@ class Productions_model extends Crud_Model
     }
      public function orderPrint($order_id){
 
-        $this->db->select('orders.*, orders.location_id AS locationid , orders.tiers AS orderTiers  ,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, shapes.title AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description,order_status.description AS orderstatus,meta.first_name AS employee_first_name,meta.last_name AS employee_last_name');
+        $this->db->select('orders.*, orders.location_id AS locationid ,order_location.title AS location_name , pickup_location.title as pickup_location_name, orders.tiers AS orderTiers  ,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, shapes.title AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description,order_status.description AS orderstatus,meta.first_name AS employee_first_name,meta.last_name AS employee_last_name');
         $this->db->from('orders');
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('meta','meta.user_id = orders.employee_id','left');
@@ -202,6 +202,8 @@ class Productions_model extends Crud_Model
         $this->db->join('servings','servings.serving_id = orders.serving_id','left');
         $this->db->join('zones','zones.zone_id = orders.delivery_zone_id','left');
         $this->db->join('shapes','shapes.shape_id = orders.shape_id','left');
+        $this->db->join('locations AS order_location','order_location.location_id = orders.location_id','left');
+        $this->db->join('locations AS pickup_location','pickup_location.location_id = orders.pickup_location_id','left');
         $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
         $this->db->where(array("orders.order_id"=> $order_id));
         return $this->db->get();
