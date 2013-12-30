@@ -1,10 +1,10 @@
 <script>
-    //window.print();
+    window.print();
     CheckWindowState();
 
     function CheckWindowState()    {
         if(document.readyState=="complete") {
-            //window.close();
+            window.close();
         } else {
             setTimeout("CheckWindowState()", 2000)
         }
@@ -31,7 +31,6 @@
     #wrapper
     {
         width:275px;
-        margin: 0 auto;
         overflow: hidden;
         margin-top: 10px;
 
@@ -125,7 +124,7 @@
 
 </style>
 <div id="wrapper">
-    <?php if( $queryup->order_status = 300 ){ ?>
+    <?php if( $queryup->order_status == 300 ){ ?>
     <h1 class="cen" ><?php if( $queryup->order_status =300 ){ echo "ESTIMATE"; } ?></h1>
     <h2 class="cen" >Valid for 30 Days</h2>
     <?php } ?>
