@@ -138,7 +138,7 @@ if($queryup->delivery_type == 'pickup' ){
 <h2 class="cen" ><?php if( $queryup->order_status !=301 ){ echo strtoupper($queryup ->orderstatus); }else{ echo "ORDER"; } ?></h2>
 
 **********************************************************
-<p><?php  echo getOrderPrintDateFormat($queryup->order_date); ?><span><?php echo strtoupper($queryup->employee_first_name.' '.$queryup->employee_last_name); ?></span></p>
+<p><?php  echo getOrderPrintDateFormat($queryup->order_date); ?><span><?php echo strtoupper($queryup->employee_first_name.' '.$queryup->employee_last_name[0]); ?></span></p>
 **********************************************************
 
 <div class="clr"></div>

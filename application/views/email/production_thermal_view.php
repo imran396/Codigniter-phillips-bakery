@@ -1,10 +1,10 @@
 <script>
-    window.print();
+    //window.print();
     CheckWindowState();
 
     function CheckWindowState()    {
         if(document.readyState=="complete") {
-            window.close();
+            //window.close();
         } else {
             setTimeout("CheckWindowState()", 2000)
         }
@@ -88,7 +88,7 @@
     {
         float:right;
         width:55%;
-        text-align: right;
+        text-align: left;
     }
 
     .col_price_1
@@ -142,7 +142,7 @@
         <?php if($locations[0]->phone){ ?><p class="cen"><?php echo $this->orders_model->phoneNoFormat($locations[0]->phone); ?></p><?php } ?>
     <?php } ?>
     **********************************************************
-    <p><?php  echo getOrderPrintDateFormat($queryup->order_date); ?><span><?php echo strtoupper($queryup->employee_first_name.' '.$queryup->employee_last_name); ?></span></p>
+    <p><?php  echo getOrderPrintDateFormat($queryup->order_date); ?><span><?php echo strtoupper($queryup->employee_first_name.' '.$queryup->employee_last_name[0]); ?></span></p>
     **********************************************************
 
     <div class="clr"></div>
