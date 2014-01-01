@@ -30,7 +30,7 @@
     }
     #wrapper
     {
-        width:275px;
+        width:300px;
         overflow: hidden;
         margin-top: 10px;
 
