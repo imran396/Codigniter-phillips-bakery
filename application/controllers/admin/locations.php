@@ -24,6 +24,9 @@ class Locations extends Crud_Controller
 
         header("Content-type=> application/json");
         $revel_location = ($this->revel_location->getAll());
+
+       // var_dump($revel_location);
+
         $this->data['revel_location'] =$revel_location;
         $this->data['active'] = $this->uri->segment(2,0);
         $this->layout->view('admin/locations/locations_view', $this->data);

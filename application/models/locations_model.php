@@ -18,6 +18,10 @@ class Locations_model extends Crud_Model
         }
 
         unset($data['location_id']);
+        $revel_location_id = explode('|',$data['revel_location_id']);
+        $data['revel_location_id']=$revel_location_id[0];
+        $data['revel_establishment_id']=$revel_location_id[1];
+
         $this->insert($data);
     }
 
@@ -26,7 +30,7 @@ class Locations_model extends Crud_Model
         $vaughan_location = (!empty($data['vaughan_location'])) ? $data['vaughan_location'] : '';
         $row = $this->getLocations($id);
         $row[0]->vaughan_location;
-        echo $count =($this->checkVaughan()+$vaughan_location+$row[0]->vaughan_location);
+        $count =($this->checkVaughan()+$vaughan_location+$row[0]->vaughan_location);
         if ( $count == 2 && $row[0]->vaughan_location == 1) {
             $data['vaughan_location'] = 0;
 
@@ -34,6 +38,10 @@ class Locations_model extends Crud_Model
             $data['vaughan_location'] = 0;
             $this->session->set_flashdata('warning_msg', $this->lang->line('vaughan_location_msg'));
         }
+
+        $revel_location_id = explode('|',$data['revel_location_id']);
+        $data['revel_location_id']=$revel_location_id[0];
+        $data['revel_establishment_id']=$revel_location_id[1];
 
         $this->update($data, $id);
     }

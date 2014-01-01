@@ -44,6 +44,8 @@ $reports = array('product_reports','category_reports','customer_reports');
 
                 </ul>
             </li>
+            <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'establishments') ? 'active' : ''; ?>"><a href="/admin/establishments/listing"><i></i><span><?php echo $this->lang->line('establishments'); ?></span></a></li>
+
             <li class="glyphicons cogwheels <?php echo (!empty($active) && $active == 'auditlog') ? 'active' : ''; ?>"><a href="/admin/auditlog/listing"><i></i><span><?php echo $this->lang->line('auditlog'); ?></span></a></li>
             <li class="hasSubmenu <?php echo (!empty($active) && in_array($active,$reports) ) ? 'active' : ''; ?>">
                 <a data-toggle="collapse " class="glyphicons show_thumbnails_with_lines " href="#menu_report"><i></i><span onclick="window.location='/admin/reports/product_reports'" ><?php echo $this->lang->line('reports'); ?></span></a>

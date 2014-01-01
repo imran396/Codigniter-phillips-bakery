@@ -34,7 +34,7 @@ class Revel_Order extends Revel_Model
                 "split_with_seat"        => 0,
                 "discount_taxed"         => null,
                 "exchanged"              => 0,
-                "product"                => ($catalog) ?  $this->revel['catalogCake']:$this->revel['customCake'],
+                "product"                => ($data['revel_product_id'] > 0 ) ? "/resources/Product/".$data['revel_product_id']."/" : "/resources/Product/".$data['revel_product_id']."/",
                 "combo_used"             => null,
                 "updated_by"             => ($data['revel_user_id'] > 0 ) ? "/enterprise/User/".$data['revel_user_id']."/" : "/enterprise/User/1/",
                 "product_name_override"  => null,
@@ -82,7 +82,7 @@ class Revel_Order extends Revel_Model
                 "closed"               => 0,
                 "tax_country"          => "",
                 "surcharge"            => 0,
-                "establishment"        => $this->revel['establishment'],
+                "establishment"        => ($data['revel_establishment_id'] > 0 ) ? "/enterprise/Establishment/".$data['revel_establishment_id']."/" : "/enterprise/Establishment/".$data['revel_establishment_id']."/",
                 "discount_taxed"       => null,
                 "updated_date"         => $created,
                 "prevailing_tax"       => 0.0,
@@ -116,13 +116,9 @@ class Revel_Order extends Revel_Model
                     "order_opened_at" => ($data['revel_location_id'] > 0) ? "/resources/PosStation/".$data['revel_location_id']."/": "/resources/PosStation/1/",
                     "closed"          => null,
                     "order"           => null,
-                    "uuid"            => $this->generateUUID()                )
+                    "uuid"            => $this->generateUUID())
             )
         );
-
-       // echo str_replace('\\/', '/', json_encode($revelData));
-        //print_r($data);
-        //exit;
 
         $this->postResource('OrderAllInOne', $revelData, true);
         return basename($this->headers['location']) ;
@@ -191,6 +187,38 @@ class Revel_Order extends Revel_Model
     public function delete($revel_order_id){
 
         return $this->deleteResource('Order', $revel_order_id, true);
+
+    }
+
+    public function getEstablishmentID($location_id){
+
+        $row = $this->db->select('revel_establishment_id')->where(array('location_id'=>$location_id))->get('locations');
+        if ($row->num_rows() > 0) {
+            $res = $row->row();
+
+            return $res->revel_establishment_id;
+
+        } else {
+
+            return null;
+        }
+    }
+
+    public function getEstablishmentProductID($revel_establishment_id,$is_custom=0){
+
+        if($is_custom ==1){
+            $row = $this->db->select('revel_product_id')->where(array('revel_establishment_id'=>$revel_establishment_id,'is_custom_product'=>$is_custom))->get('establishments');
+        }else{
+            $row = $this->db->select('revel_product_id')->where(array('revel_establishment_id'=>$revel_establishment_id,'is_custom_product !='=>1))->get('establishments');
+        }
+
+        if ($row->num_rows() > 0) {
+
+            $res = $row->row();
+            return $res->revel_product_id;
+        } else {
+            return null;
+        }
 
     }
 

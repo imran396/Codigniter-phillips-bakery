@@ -36,8 +36,11 @@
                                             <option value="">---<?php echo $this->lang->line('select_one'); ?>---</option>
                                             <?php
                                              $revel_location_id = (isset($queryup[0]->revel_location_id))? $queryup[0]->revel_location_id:set_value('revel_location_id');
-                                            foreach($revel_location as $rows): ?>
-                                                <option value="<?php echo $rows->id ?>" <?php if($revel_location_id ==  $rows->id ){ echo "selected='selected'"; } ?></option><?php echo $rows->name; ?></option>
+                                            foreach($revel_location as $rows):
+                                                $establistment = explode('/',$rows->establishment);
+
+                                                ?>
+                                                <option value="<?php echo $rows->id.'|'.$establistment[3] ?>" <?php if($revel_location_id ==  $rows->id ){ echo "selected='selected'"; } ?> ><?php echo $rows->name; ?> | Establishment-<?php echo $establistment[3]; ?></option>
                                             <?php endforeach;?>
                                         </select>
                                     </div>

@@ -311,3 +311,9 @@ $lang['category_reports'] 		 	    = 'Category report';
 $lang['customer_reports'] 		 	    = 'Customer report';
 $lang['enter_start_date'] 		 	    = 'Enter start date[mm/dd/yyyyy]';
 $lang['enter_end_date'] 		 	    = 'Enter end date[mm/dd/yyyy]';
+
+
+$lang['establishments'] 		 	    = 'Establishments Products';
+$lang['establishment_id'] 		 	    = 'Establishments ID';
+$lang['cake_id'] 		 	    = 'Revel Product ID';
+$lang['is_custom_product'] 		 	    = 'Custom Cake';
