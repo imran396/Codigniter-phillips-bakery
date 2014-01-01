@@ -24,9 +24,6 @@ class Locations extends Crud_Controller
 
         header("Content-type=> application/json");
         $revel_location = ($this->revel_location->getAll());
-
-       // var_dump($revel_location);
-
         $this->data['revel_location'] =$revel_location;
         $this->data['active'] = $this->uri->segment(2,0);
         $this->layout->view('admin/locations/locations_view', $this->data);
@@ -98,30 +95,12 @@ class Locations extends Crud_Controller
 
         if (empty($data['location_id'])) {
 
-            /*if (isset($data['title'])) {
-
-                try {
-                    $data['revel_location_id'] = $this->revel_location->create($data);
-                } catch (\Exception $e) {
-                    $data['revel_location_id'] = null;
-                }
-
-            }*/
-
             $this->locations_model->create($data);
             $this->session->set_flashdata('success_msg', "New location has been added successfully");
 
         } else {
 
             $this->locations_model->save($data, $data['location_id']);
-            /*$location_data = $this->locations_model->getLocations($data['location_id']);
-            $data['revel_location_id']= $location_data[0]->revel_location_id;
-
-            try {
-                $this->revel_location->update($data);
-            } catch (\Exception $e) {
-
-            }*/
             $this->session->set_flashdata('success_msg', "Location has been updated successfully");
         }
 
@@ -156,6 +135,8 @@ class Locations extends Crud_Controller
     {
 
         $data = $this->input->post();
+        $revel_location_id = explode('|',$revel_location_id);
+        $revel_location_id=$revel_location_id[0];
         return $this->locations_model->checkPosLocation($data['location_id'], $revel_location_id);
     }
 
