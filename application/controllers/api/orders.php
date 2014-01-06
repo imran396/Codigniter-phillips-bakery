@@ -317,8 +317,6 @@ class Orders extends API_Controller
                 }
 
                 $revel_location_create_id = $this->revel_order->getRevelID('locations',$orders['location_id']);
-
-
                 $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
 
                 $RevelOrderData = array(
