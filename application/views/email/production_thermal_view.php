@@ -147,7 +147,7 @@
 
     <div class="clr"></div>
 
-    <p><h1><?php if($queryup->title){ echo strtoupper($queryup->title); }else{ echo "CUSTOME CAKE"; } ?></h1></p>
+    <p><h1><?php if($queryup->title){ echo strtoupper($queryup->title); }else{ echo "CUSTOM CAKE"; } ?></h1></p>
     <?php if($queryup->flavour_name){ ?>
         <p><h2><?php echo strtoupper($queryup->flavour_name);  ?></h2></p>
     <?php } ?>
