@@ -131,21 +131,30 @@ class Orders extends API_Controller
 
                 if($orders['pickup_location_id'] > 0 && $orders['delivery_type']=='pickup'){
                     $revel_location_id = $this->revel_order->getRevelID('locations',$orders['pickup_location_id']);
+                    $revel_establishment_id = $this->revel_order->getEstablishmentID($orders['pickup_location_id']);
+                    $revel_product_id = $this->revel_order->getEstablishmentProductID($revel_establishment_id , $orders['cake_id']);
+
                 }else{
                     $revel_location_id = $this->revel_order->getRevelID('locations',$orders['location_id']);
+                    $revel_establishment_id = $this->revel_order->getEstablishmentID($orders['location_id']);
+                    $revel_product_id = $this->revel_order->getEstablishmentProductID($revel_establishment_id , $orders['cake_id']);
+
                 }
                 $revel_location_create_id = $this->revel_order->getRevelID('locations',$orders['location_id']);
 
                 $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
 
                 $RevelOrderData = array(
+
                     'order_code' => $orders['order_code'],
                     'revel_customer_id' => $revel_customer,
                     'revel_location_id' => $revel_location_id,
                     'revel_location_create_id' => $revel_location_create_id,
+                    'revel_establishment_id' => $revel_establishment_id,
+                    'revel_product_id' => $revel_product_id,
                     'revel_user_id' => $revel_user,
                     'discount'=> $orders['discount_price'],
-                    'subtotal'=> $orders['total_price'],
+                    'subtotal'=> $orders['total_price']
                 );
 
                 try{
@@ -294,24 +303,35 @@ class Orders extends API_Controller
 
                 $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
 
+
                 if($orders['pickup_location_id'] > 0 && $orders['delivery_type']=='pickup'){
                     $revel_location_id = $this->revel_order->getRevelID('locations',$orders['pickup_location_id']);
+                    $revel_establishment_id = $this->revel_order->getEstablishmentID($orders['pickup_location_id']);
+                    $revel_product_id = $this->revel_order->getEstablishmentProductID($revel_establishment_id , $orders['cake_id']);
+
                 }else{
                     $revel_location_id = $this->revel_order->getRevelID('locations',$orders['location_id']);
+                    $revel_establishment_id = $this->revel_order->getEstablishmentID($orders['location_id']);
+                    $revel_product_id = $this->revel_order->getEstablishmentProductID($revel_establishment_id , $orders['cake_id']);
+
                 }
+
                 $revel_location_create_id = $this->revel_order->getRevelID('locations',$orders['location_id']);
 
 
                 $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
 
                 $RevelOrderData = array(
+
                     'order_code' => $orders['order_code'],
                     'revel_customer_id' => $revel_customer,
                     'revel_location_id' => $revel_location_id,
                     'revel_location_create_id' => $revel_location_create_id,
+                    'revel_establishment_id' => $revel_establishment_id,
+                    'revel_product_id' => $revel_product_id,
                     'revel_user_id' => $revel_user,
                     'discount'=> $orders['discount_price'],
-                    'subtotal'=> $orders['total_price'],
+                    'subtotal'=> $orders['total_price']
                 );
 
                 try{
