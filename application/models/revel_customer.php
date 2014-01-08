@@ -105,5 +105,10 @@ class Revel_Customer extends Revel_Model
         return basename($this->headers['location']);
     }
 
+    public function delete($id)
+    {
+        $this->deleteResource('Customer', $id, true);
+    }
+
 
 }

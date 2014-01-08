@@ -55,8 +55,11 @@ class Customers_model extends Crud_Model
     {
 
         if(!$this->deleteDataExisting($id) > 0){
+
+            $this->revel_customer->delete($id);
             $this->db->set(array('is_deleted'=>1,'update_date'=>time()))->where('customer_id',$id)->update('customers');
             $this->session->set_flashdata('delete_msg',"Customer has been deleted successfully");
+
         }else{
 
             $this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
