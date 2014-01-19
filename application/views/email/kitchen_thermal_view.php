@@ -31,7 +31,6 @@
     #wrapper
     {
         width:320px;
-        margin: 0 auto;
         overflow: hidden;
 
     }
@@ -69,6 +68,12 @@
         line-height:18px;
         font-weight: normal;
 
+    }
+
+    h5{
+
+        font-size: 18px;
+        font-weight: bold;
     }
     .col_1
     {
@@ -193,12 +198,12 @@ if($queryup->delivery_type == 'pickup' ){
 <div class="clr"></div>
 <br />
 <?php if($queryup->inscription){ ?>
-<p><h4>INSCRIPTION</h4></p>
+<p><h5>INSCRIPTION</h5></p>
 <p><h4><strong><?php echo $queryup->inscription; ?></strong></h4></p>
  <?php } ?>
  <br />
  <?php if($queryup->special_instruction){ ?>
-<p><h4>SPECIAL INSTRUCTIONS</h4></p>
+<p><h5>SPECIAL INSTRUCTIONS</h5></p>
     <p><h4><strong><?php echo$queryup->special_instruction; ?></strong></h4></p>
 <?php } ?>
 <?php

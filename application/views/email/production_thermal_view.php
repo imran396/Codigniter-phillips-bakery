@@ -1,10 +1,10 @@
 <script>
-    window.print();
+    //window.print();
     CheckWindowState();
 
     function CheckWindowState()    {
         if(document.readyState=="complete") {
-            window.close();
+            //window.close();
         } else {
             setTimeout("CheckWindowState()", 2000)
         }
@@ -61,22 +61,26 @@
         line-height:20px;
         text-align: center;
 
-
     }
+
     h4
     {
         font-size:14px;
         line-height:18px;
         font-weight: normal;
-
     }
+
+    h5{
+
+        font-size: 18px;
+        font-weight: bold;
+    }
+
     .col_1
     {
         float:left;
         width:45%;
     }
-
-
 
     .col_1 strong{
         font-size: 18px;
@@ -197,12 +201,12 @@
     <div class="clr"></div>
     <br />
     <?php if($queryup->inscription){ ?>
-        <p><h4>INSCRIPTION</h4></p>
+        <p><h5>INSCRIPTION</h5></p>
         <p><h4><strong><?php echo $queryup->inscription; ?></strong></h4></p>
     <?php } ?>
     <br />
     <?php if($queryup->special_instruction){ ?>
-        <p><h4>SPECIAL INSTRUCTIONS</h4></p>
+        <p><h5>SPECIAL INSTRUCTIONS</h5></p>
         <p><h4><strong><?php echo$queryup->special_instruction; ?></strong></h4></p>
     <?php } ?>
     <?php
