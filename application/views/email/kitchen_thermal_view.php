@@ -1,10 +1,10 @@
 <script>
-    window.print();
+   window.print();
     CheckWindowState();
 
     function CheckWindowState()    {
         if(document.readyState=="complete") {
-            window.close();
+           window.close();
         } else {
             setTimeout("CheckWindowState()", 2000)
         }
@@ -72,7 +72,7 @@
 
     h5{
 
-        font-size: 18px;
+        font-size: 13px;
         font-weight: bold;
     }
     .col_1
@@ -109,12 +109,16 @@
         font-size: 16px;
     }
 
+    .col_delivery li{
+        font-size: 18px;
+    }
+
     .col_price_2
     {
         float:left;
         width:25%;
         text-align: right;
-        font-size: 16px;
+        font-size: 18px;
     }
 
     .col_2 strong{
@@ -199,19 +203,19 @@ if($queryup->delivery_type == 'pickup' ){
 <br />
 <?php if($queryup->inscription){ ?>
 <p><h5>INSCRIPTIONS</h5></p>
-<p><h4><strong><?php echo $queryup->inscription; ?></strong></h4></p>
+<p><h2><?php echo $queryup->inscription; ?></h2></p>
  <?php } ?>
  <br />
  <?php if($queryup->special_instruction){ ?>
 <p><h5>SPECIAL INSTRUCTIONS</h5></p>
-    <p><h4><strong><?php echo$queryup->special_instruction; ?></strong></h4></p>
+    <p><h2><?php echo $queryup->special_instruction; ?></h2></p>
 <?php } ?>
 <?php
 if($this->productions_model->deliveryInfo($queryup->order_id) && $queryup->delivery_type == 'delivery'){
 $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id);
 ?>
 <br />
-<p><h2>DELIVERY DETAILS</h2></p>
+<p><h5><strong>DELIVERY DETAILS</strong></h5></p>
     <ul class="col_delivery">
             <?php if( $deliveryInfo->name){ ?>
                 <li><?php echo $deliveryInfo->name; ?></li>
@@ -254,9 +258,9 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id);
         <tr><td class="col_price_1">MAGIC CAKE</td><td class="col_price_2"><?php  echo "$".$queryup->magic_surcharge;  ?></td></tr>
         <?php } ?>
 
-            <tr><td class="col_price_1"><?php if($queryup->delivery_type == 'pickup' ){ ?>PICKUP<?php }else{?>DELIVERY<?php } ?><br/><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php
-                        echo ($queryup->delivery_type == 'pickup' ) ? $queryup->pickup_location_name : $queryup->location_name;
-                        $delivery_date = strtotime($queryup->delivery_date); echo "</br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".getOrderPrintKitchenDateFormat($delivery_date).","; ?> <?php echo timeFormatAmPm($queryup->delivery_time); ?></p>
+            <tr><td class="col_price_1"><?php if($queryup->delivery_type == 'pickup' ){ ?>PICKUP<?php }else{?>DELIVERY<?php } ?><br/><h2>&nbsp;&nbsp;&nbsp;<?php
+                        echo ($queryup->delivery_type == 'pickup' ) ? $queryup->pickup_location_name : $queryup->location_name.'</h2>';
+                        $delivery_date = strtotime($queryup->delivery_date); echo "<h2>&nbsp;&nbsp;&nbsp;".getOrderPrintKitchenDateFormat($delivery_date).","; ?> <?php echo timeFormatAmPm($queryup->delivery_time); ?></h2>
                 </td>
                 <td class="col_price_2" valign="top"><?php  echo "$".$queryup->delivery_zone_surcharge;  ?></td>
             </tr>
