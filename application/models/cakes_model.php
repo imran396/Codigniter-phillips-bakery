@@ -34,20 +34,20 @@ class Cakes_model extends CI_Model
     {
         $flavour_id = (!empty($data['flavour_id'])) ? $data['flavour_id'] :'';
 
-        $insert['title'] = ($data['title'] !="") ? $data['title'] :'';
+        $insert['title']            = ($data['title'] !="") ? $data['title'] :'';
         $insert['revel_product_id'] = ($data['revel_product_id'] !="") ? $data['revel_product_id'] :'';
-        $insert['description'] = ($data['description'] !="") ? $data['description'] :'';
-        $insert['category_id'] = ($data['category_id'] !="") ? $data['category_id'] :'';
-        $insert['flavour_id'] = ($data['flavour_id'] !="") ? $data['flavour_id'] :'';
-        $insert['meta_tag'] = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
+        $insert['description']      = ($data['description'] !="") ? $data['description'] :'';
+        $insert['category_id']      = ($data['category_id'] !="") ? $data['category_id'] :'';
+        $insert['flavour_id']       = ($data['flavour_id'] !="") ? $data['flavour_id'] :'';
+        $insert['meta_tag']         = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
         $insert['revel_product_id'] = ($data['revel_product_id'] !="") ? $data['revel_product_id'] :'';
-        $insert['flavour_id'] =($flavour_id !="") ? serialize($flavour_id):'';
-        $shape_id = (!empty($data['shape_id'])) ? $data['shape_id'] :'';
-        $insert['shape_id'] =($shape_id !="") ? serialize($shape_id):'';
-        $insert['fondant'] = ($data['fondant'] !="") ? $data['fondant'] :0;
-        $insert['status'] = ($data['status'] !="") ? $data['status'] :'';
-        $insert['insert_date']=time();
-        $insert['update_date']=time();
+        $insert['flavour_id']       = ($flavour_id !="") ? serialize($flavour_id):'';
+        $shape_id                   = (!empty($data['shape_id'])) ? $data['shape_id'] :'';
+        $insert['shape_id']         =($shape_id !="") ? serialize($shape_id):'';
+        $insert['fondant']          = ($data['fondant'] !="") ? $data['fondant'] :0;
+        $insert['status']           = ($data['status'] !="") ? $data['status'] :'';
+        $insert['insert_date']      =time();
+        $insert['update_date']      =time();
         $this->db->set($insert)->insert('cakes');
         return $this->db->insert_id();
     }
@@ -65,18 +65,18 @@ class Cakes_model extends CI_Model
     private function update($data, $id)
     {
 
-        $flavour_id = (!empty($data['flavour_id'])) ? $data['flavour_id'] :'';
-        $insert['title'] = ($data['title'] !="") ? $data['title'] :'';
+        $flavour_id             = (!empty($data['flavour_id'])) ? $data['flavour_id'] :'';
+        $insert['title']        = ($data['title'] !="") ? $data['title'] :'';
         //$insert['revel_product_id'] = ($data['revel_product_id'] !="") ? $data['revel_product_id'] :'';
-        $insert['description'] = ($data['description'] !="") ? $data['description'] :'';
-        $insert['category_id'] = ($data['category_id'] !="") ? $data['category_id'] :'';
-        $insert['flavour_id'] =($flavour_id !="") ? serialize($flavour_id):'';
-        $shape_id = (!empty($data['shape_id'])) ? $data['shape_id'] :'';
-        $insert['shape_id'] =($shape_id !="") ? serialize($shape_id):'';
-        $insert['meta_tag'] = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
-        $insert['fondant'] = ($data['fondant'] !="") ? $data['fondant'] :0;
-        $insert['status'] = ($data['status'] !="") ? $data['status'] :'';
-        $insert['update_date']=time();
+        $insert['description']  = ($data['description'] !="") ? $data['description'] :'';
+        $insert['category_id']  = ($data['category_id'] !="") ? $data['category_id'] :'';
+        $insert['flavour_id']   = ($flavour_id !="") ? serialize($flavour_id):'';
+        $shape_id               = (!empty($data['shape_id'])) ? $data['shape_id'] :'';
+        $insert['shape_id']     = ($shape_id !="") ? serialize($shape_id):'';
+        $insert['meta_tag']     = ($data['meta_tag'] !="") ? $data['meta_tag'] :'';
+        $insert['fondant']      = ($data['fondant'] !="" ) ? $data['fondant'] : 0;
+        $insert['status']       = ($data['status'] !="") ? $data['status'] :'';
+        $insert['update_date']  = time();
         $this->db->set($insert)->where(array('cake_id' => $id))->update('cakes');
     }
     public function doUpload($id)
@@ -463,6 +463,11 @@ class Cakes_model extends CI_Model
             $delete[] =  (int)$val->cake_id;
         }
         $delete = isset($delete) ? $delete:array();
+
+        $content = array('inserted'=>$sql,'updated'=>$update,'deleted'=>$deleted);
+
+        file_put_contents('assets/uploads/errorlog.txt','[' . date('Y-m-d H:i:s') . '] '. PHP_EOL . $sql. PHP_EOL. $update . PHP_EOL , FILE_APPEND);
+
         return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>$delete);
 
     }
