@@ -360,7 +360,7 @@ class Cakes_model extends CI_Model
               LEFT JOIN cake_gallery AS G
                 ON ( C.cake_id = G.cake_id )
               WHERE C.status =1 && is_deleted != 1
-              GROUP BY C.title";
+              GROUP BY C.cake_id";
 
         $data = $this->db->query($sql)->result_array();
 
@@ -402,7 +402,7 @@ class Cakes_model extends CI_Model
                 LEFT JOIN cake_gallery AS G
                 ON ( C.cake_id = G.cake_id )
                 WHERE C.status =1 && is_deleted != 1 && insert_date > $lastdate
-                GROUP BY C.title";
+                GROUP BY C.cake_id";
 
         $inserted = $this->db->query($sql)->result_array();
 
@@ -433,7 +433,7 @@ class Cakes_model extends CI_Model
                 LEFT JOIN cake_gallery AS G
                 ON ( C.cake_id = G.cake_id )
                 WHERE C.status =1 && is_deleted != 1  && insert_date < $lastdate && update_date > $lastdate
-                GROUP BY C.title";
+                GROUP BY C.cake_id";
 
         $updated = $this->db->query($update)->result_array();
 
@@ -463,10 +463,6 @@ class Cakes_model extends CI_Model
             $delete[] =  (int)$val->cake_id;
         }
         $delete = isset($delete) ? $delete:array();
-
-        $content = array('inserted'=>$sql,'updated'=>$update,'deleted'=>$deleted);
-
-        file_put_contents('assets/uploads/errorlog.txt','[' . date('Y-m-d H:i:s') . '] '. PHP_EOL . $sql. PHP_EOL. $update . PHP_EOL , FILE_APPEND);
 
         return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>$delete);
 
