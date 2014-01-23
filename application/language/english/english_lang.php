@@ -280,6 +280,7 @@ $lang['custom_cake_surcharge'] 		 	    = 'Add an image on cake (Applicable surch
 $lang['is_vaughan_location'] 		= 'Cake made in Vaughan location';
 $lang['instructional_email_photo'] 	= 'Customer will email instructional photo';
 $lang['cake_email_photo'] 		 	= 'Customer will email photo';
+$lang['instructional_photo'] 		 	= 'Instructional photo';
 $lang['delivery_zone'] 		 	    = 'Delivery Zone';
 $lang['order_status'] 		 	    = 'Order Status';
 

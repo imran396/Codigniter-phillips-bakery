@@ -316,6 +316,7 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id);
 <hr class="separator" />
 <div class="row-fluid">
     <div class="span12">
+        <?php if($on_cake_image_needed > 0){ ?>
         <div class="control-group" id="cakeemailphoto">
             <label class="control-label"><?php echo $this->lang->line('onCakeImage'); ?></label>
             <div class="controls">
@@ -335,6 +336,7 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id);
 
             </div>
         </div>
+        <?php } ?>
         <div class="control-group">
             <label class="control-label" ><?php echo $this->lang->line('inscription');?></label>
             <div class="controls">
@@ -371,13 +373,15 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id);
             <?php  } } ?>
         <div class="clear"></div>
         <br/>
+        <?php if($on_cake_image_needed > 0){ ?>
         <div id="instructionalemailphoto">
-
+            <label class="control-label"><?php echo $this->lang->line('instructional_photo');?></label>
             <div id="pluploadUploader">
                 <p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
             </div>
 
         </div>
+        <?php } ?>
         <div class="control-group">
             <label class="control-label" ><?php echo $this->lang->line('order_status');?></label>
             <?php $order_status = (isset($queryup->order_status))? $queryup->order_status:set_value('order_status'); ?>

@@ -4,7 +4,7 @@
 
     function CheckWindowState()    {
         if(document.readyState=="complete") {
-            window.close();
+           window.close();
         } else {
             setTimeout("CheckWindowState()", 2000)
         }
@@ -238,11 +238,14 @@
             <?php } ?>
         </ul>
     <?php } ?>
-    <?php if($queryup->on_cake_image ==1 || $queryup->instructional_email_photo == 1 ){ ?>
+    <?php if($queryup->on_cake_image_needed == 1 ){
+        $instructionals = $this->productions_model->photoGallery($queryup->order_id);
+
+        ?>
         <br />
         **********************************************************
-        <?php if($queryup->on_cake_image ==1){ ?><p><h2>**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EDIBLE IMAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**</h2></p><?php } ?>
-        <?php if($queryup->instructional_email_photo == 1){ ?><p><h2>**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;REF PHOTOS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**</h2></p><?php } ?>
+        <?php if($queryup->on_cake_image != "" ){ ?><p><h2>**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EDIBLE IMAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**</h2></p><?php } ?>
+        <?php if( count($instructionals) > 0 ){ ?><p><h2>**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;REF PHOTOS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**</h2></p><?php } ?>
         <div class="clr"></div>
     <?php } ?>
     **********************************************************
