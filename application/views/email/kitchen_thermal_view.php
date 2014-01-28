@@ -201,12 +201,12 @@ if($queryup->delivery_type == 'pickup' ){
 <div class="clr"></div>
 <br />
 <?php if($queryup->inscription){ ?>
-<p><h5>INSCRIPTIONS</h5></p>
+<p>INSCRIPTIONS</p>
 <p><h2><?php echo $queryup->inscription; ?></h2></p>
  <?php } ?>
  <br />
  <?php if($queryup->special_instruction){ ?>
-<p><h5>SPECIAL INSTRUCTIONS</h5></p>
+<p>SPECIAL INSTRUCTIONS</p>
     <p><h2><?php echo $queryup->special_instruction; ?></h2></p>
 <?php } ?>
 <?php
