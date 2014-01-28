@@ -1,5 +1,5 @@
 <script>
-    window.print();
+   window.print();
     CheckWindowState();
 
     function CheckWindowState()    {
@@ -72,7 +72,7 @@
     h5{
 
         font-size: 13px;
-        font-weight: bold;
+
     }
     .col_1
     {
