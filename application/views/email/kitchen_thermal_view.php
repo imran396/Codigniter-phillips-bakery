@@ -58,10 +58,9 @@
 
         font-size:16px;
         line-height:20px;
-        text-align: center;
-
 
     }
+
     h4
     {
         font-size:14px;
@@ -147,7 +146,7 @@ if($queryup->delivery_type == 'pickup' ){
 <h2 class="cen" ><?php if( $queryup->order_status !=301 ){ echo strtoupper($queryup ->orderstatus); }else{ echo "ORDER"; } ?></h2>
 
 **********************************************************
-<p><?php  echo getOrderPrintDateFormat($queryup->order_date); ?><span><?php echo strtoupper($queryup->employee_first_name.' '.$queryup->employee_last_name[0]); ?></span></p>
+<p><span><?php echo strtoupper($queryup->employee_first_name.' '.$queryup->employee_last_name[0]); ?></span></p>
 **********************************************************
 
 <div class="clr"></div>
@@ -261,9 +260,9 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id);
         <tr><td class="col_price_1">MAGIC CAKE</td><td class="col_price_2"><?php  echo "$".$queryup->magic_surcharge;  ?></td></tr>
         <?php } ?>
 
-            <tr><td class="col_price_1"><?php if($queryup->delivery_type == 'pickup' ){ ?>PICKUP<?php }else{?>DELIVERY<?php } ?><br/><h2>&nbsp;&nbsp;&nbsp;<?php
-                        echo ($queryup->delivery_type == 'pickup' ) ? $queryup->pickup_location_name : $queryup->location_name.'</h2>';
-                        $delivery_date = strtotime($queryup->delivery_date); echo "<h2>&nbsp;&nbsp;&nbsp;".getOrderPrintKitchenDateFormat($delivery_date).","; ?> <?php echo timeFormatAmPm($queryup->delivery_time); ?></h2>
+            <tr><td class="col_price_1"><?php if($queryup->delivery_type == 'pickup' ){ ?>PICKUP<?php }else{?>DELIVERY<?php } ?><br/><h3>&nbsp;&nbsp;&nbsp;<?php
+                        echo ($queryup->delivery_type == 'pickup' ) ? $queryup->pickup_location_name : $queryup->location_name.'</h3>';
+                        $delivery_date = strtotime($queryup->delivery_date); echo "<h3>&nbsp;&nbsp;&nbsp;".getOrderPrintKitchenDateFormat($delivery_date).","; ?> <?php echo timeFormatAmPm($queryup->delivery_time); ?></h3>
                 </td>
                 <td class="col_price_2" valign="top"><?php  echo "$".$queryup->delivery_zone_surcharge;  ?></td>
             </tr>
@@ -280,8 +279,10 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id);
 <p class="cen">
     <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
 </p>
-    <p class="cen">ORDER #<?php echo $queryup->order_code; ?></p>
-<br/>
+    <p class="cen" >ORDER #<?php echo $queryup->order_code; ?></p>
+    <p class="cen" ><?php echo ($queryup->first_name.' '.$queryup->last_name); ?></span></p>
+
+    <br/>
 <br/>
 <br/>
 </div>
