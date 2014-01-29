@@ -74,6 +74,11 @@
         font-size: 13px;
 
     }
+    h6{
+        font-size: 18px;
+        line-height: 14px;
+        font-weight: normal;
+    }
     .col_1
     {
         float:left;
@@ -280,7 +285,7 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id);
     <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
 </p>
     <p class="cen" >ORDER #<?php echo $queryup->order_code; ?></p>
-    <p class="cen" ><?php echo ($queryup->first_name.' '.$queryup->last_name); ?></span></p>
+    <h6 class="cen" ><?php echo ($queryup->first_name.' '.$queryup->last_name); ?></h6>
 
     <br/>
 <br/>
