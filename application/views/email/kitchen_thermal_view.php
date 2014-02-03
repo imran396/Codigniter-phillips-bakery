@@ -285,7 +285,7 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id);
     <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
 </p>
     <p class="cen" >ORDER #<?php echo $queryup->order_code; ?></p>
-    <h6 class="cen" ><?php echo ($queryup->first_name.' '.$queryup->last_name); ?></h6>
+    <h6 class="cen" ><strong><?php echo ($queryup->first_name.' '.$queryup->last_name); ?></strong></h6>
 
     <br/>
 <br/>
