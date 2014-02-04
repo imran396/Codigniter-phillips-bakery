@@ -100,10 +100,6 @@
         text-align: right;
     }
 
-    .col_price_1
-    {
-        float:left;
-        width:80%;
         font-size: 16px;
     }
     .col_delivery
@@ -121,6 +117,10 @@
     {
         float:left;
         width:20%;
+    .col_price_1
+    {
+        float:left;
+        width:80%;
         text-align: right;
         font-size: 18px;
     }
@@ -265,9 +265,9 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id);
         <tr><td class="col_price_1">MAGIC CAKE</td><td class="col_price_2"><?php  echo "$".$queryup->magic_surcharge;  ?></td></tr>
         <?php } ?>
 
-            <tr><td class="col_price_1"><?php if($queryup->delivery_type == 'pickup' ){ ?>PICKUP<?php }else{?>DELIVERY<?php } ?><br/><h3>&nbsp;&nbsp;&nbsp;<?php
+            <tr><td class="col_price_1"><?php if($queryup->delivery_type == 'pickup' ){ ?>PICKUP<?php }else{?>DELIVERY<?php } ?><br/><h3>&nbsp;<?php
                         echo ($queryup->delivery_type == 'pickup' ) ? $queryup->pickup_location_name : $queryup->location_name.'</h3>';
-                        $delivery_date = strtotime($queryup->delivery_date); echo "<h3>&nbsp;&nbsp;&nbsp;".getOrderPrintKitchenDateFormat($delivery_date).","; ?> <?php echo timeFormatAmPm($queryup->delivery_time); ?></h3>
+                        $delivery_date = strtotime($queryup->delivery_date); echo "<h3>&nbsp;".getOrderPrintKitchenDateFormat($delivery_date).","; ?> <?php echo timeFormatAmPm($queryup->delivery_time); ?></h3>
                 </td>
                 <td class="col_price_2" valign="top"><?php  echo "$".$queryup->delivery_zone_surcharge;  ?></td>
             </tr>
