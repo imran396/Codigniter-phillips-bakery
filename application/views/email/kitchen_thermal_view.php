@@ -103,7 +103,7 @@
     .col_price_1
     {
         float:left;
-        width:75%;
+        width:80%;
         font-size: 16px;
     }
     .col_delivery
@@ -120,7 +120,7 @@
     .col_price_2
     {
         float:left;
-        width:25%;
+        width:20%;
         text-align: right;
         font-size: 18px;
     }
