@@ -720,6 +720,7 @@ class Orders extends API_Controller
             $revel = ($this->revel_order->getRevelOrderSold($revel_order_id));
             if(isset($revel->remaining_due) && $revel->remaining_due == 0 ){
                 $this->orders_model->cronOrderSold($revel_order_id);
+                $this->orders_model->updateOrderUser($revel_order_id);
             }
         }
 
@@ -732,8 +733,23 @@ class Orders extends API_Controller
 
     }
 
+    public function getOrder(){
+        header("Content-type=> application/json");
+        $revel_order = ($this->revel_order->getById(260394));
+        $revel_order_payment = ($this->revel_order->getPayment(260394));
+        var_dump($revel_order);
+        var_dump($revel_order_payment);
 
+    }
+
+    public function updateOrder() {
+        $this->revel_order->updateOrderUser(254286);
+    }
+
+    public function  localCronCheck(){
+
+    }
 
 }
 //0 0 * * * php /var/www/phillips-bakery/web/index.php api/orders delete
-//0 0 * * * php /var/www/phillips-bakery/web/index.php api/orders sold
+//0 * * * * php /var/www/phillips-bakery/web/index.php api/orders sold
