@@ -715,6 +715,7 @@ class Orders extends API_Controller
 
         header("Content-type=> application/json");
         $result = $this->db->select('revel_order_id')->where('order_status','303')->get('orders')->result();
+
         foreach($result as $rows){
             $revel_order_id = $rows->revel_order_id;
             $revel = ($this->revel_order->getRevelOrderSold($revel_order_id));
@@ -733,18 +734,31 @@ class Orders extends API_Controller
 
     }
 
-    public function getOrder(){
+
+    public function updateOrder($revel_id=0) {
+        if($revel_id > 0 ){
+            $this->revel_order->updateOrderUser($revel_id);
+        }
+        return false;
+    }
+
+
+    public function getOrder($revel_id=0){
+
+
         header("Content-type=> application/json");
-        $revel_order = ($this->revel_order->getById(260394));
-        $revel_order_payment = ($this->revel_order->getPayment(260394));
-        var_dump($revel_order);
-        var_dump($revel_order_payment);
+        if($revel_id > 0 ){
+            $revel_order = ($this->revel_order->getById($revel_id));
+            $revel_order_payment = ($this->revel_order->getPayment($revel_id));
+            var_dump($revel_order);
+            var_dump($revel_order_payment);
+        }
+        return false;
 
     }
 
-    public function updateOrder() {
-        $this->revel_order->updateOrderUser(254286);
-    }
+
+
 
     public function  localCronCheck(){
 

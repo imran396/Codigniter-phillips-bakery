@@ -251,4 +251,42 @@ class Revel_Order extends Revel_Model
             return null;
         }
     }
+
+    public function getById($orderId)
+    {
+        return json_decode($this->getResource('OrderAllInOne/' . $orderId . '/'), true);
+    }
+
+    public function updateOrderUser($orderId)
+    {
+        $order = $this->getById($orderId);
+        $payment = $this->getPayment($orderId);
+
+        if ($payment) {
+            $order['created_by'] = $payment['created_by'];
+            $this->putResource('Order', $order, $orderId);
+        }
+    }
+
+    public function getPayment($orderId)
+    {
+        $params = array('format' => 'json', 'order' => $orderId);
+        $resource = 'Payment';
+
+        $client = \Httpful\Request::get($this->revel['endpoint'] . '/resources/' . $resource . '/?' . http_build_query($params));
+
+        $client->addHeaders(array('API-AUTHENTICATION' => $this->revel['api_key'] . ':' . $this->revel['api_secret']));
+        $response = $client->send();
+
+        $this->code     = $response->code;
+        $this->response = $response->body;
+        $this->headers  = $response->headers;
+
+        if ($response->code == 200) {
+            $result = json_decode($response->raw_body, true);
+            return $result['objects'][0];
+        }
+
+        return false;
+    }
 }
