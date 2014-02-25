@@ -721,7 +721,7 @@ class Orders extends API_Controller
             $revel = ($this->revel_order->getRevelOrderSold($revel_order_id));
             if(isset($revel->remaining_due) && $revel->remaining_due == 0 ){
                 $this->orders_model->cronOrderSold($revel_order_id);
-                $this->orders_model->updateOrderUser($revel_order_id);
+                $this->revel_order->updateOrderUser($revel_order_id);
             }
         }
 
