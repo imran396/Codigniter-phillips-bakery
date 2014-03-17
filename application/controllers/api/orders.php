@@ -722,9 +722,10 @@ class Orders extends API_Controller
             if(isset($revel->remaining_due) && $revel->remaining_due == 0 ){
                 $this->orders_model->cronOrderSold($revel_order_id);
                 $this->revel_order->updateOrderUser($revel_order_id);
-                $this->checkCron($revel_order_id);
+
             }
         }
+        $this->checkCron();
 
 
 
@@ -764,14 +765,15 @@ class Orders extends API_Controller
 
     }
 
-    public function checkCron($id=0){
+    public function checkCron(){
+
 
         $this->email->set_newline("\r\n");
         $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
         $this->email->to('shafiq@emicrograph.com');
         $this->email->cc(array('maksud@emicrograph.com','nmkhna@emicrograph.com','dan@gsisolutions.ca','emran@emicrograph.com'));
         $this->email->subject('Check Cron Time');
-        $this->email->message($id);
+        $this->email->message(date( "Y-m-d H:i:s"));
         $this->email->send();
 
     }
