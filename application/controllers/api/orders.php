@@ -713,6 +713,10 @@ class Orders extends API_Controller
 
     public function sold(){
 
+        $cronId = rand(111111, 999999);
+        $this->checkCron($cronId, "Start");
+        $revel_order_ids = array();
+
         header("Content-type=> application/json");
         $result = $this->db->select('revel_order_id')->where('order_status','303')->get('orders')->result();
 
@@ -723,12 +727,11 @@ class Orders extends API_Controller
                 $this->orders_model->cronOrderSold($revel_order_id);
                 $this->revel_order->updateOrderUser($revel_order_id);
 
+                $revel_order_ids[] = $revel_order_id;
             }
         }
-        $this->checkCron();
 
-
-
+        $this->checkCron($cronId, "Completed following revel order ids: ".implode(",", $revel_order_ids));
     }
 
     public function getAllOrder(){
@@ -765,15 +768,17 @@ class Orders extends API_Controller
 
     }
 
-    public function checkCron(){
-
+    public function checkCron($cronId, $message = ""){
 
         $this->email->set_newline("\r\n");
         $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
         $this->email->to('shafiq@emicrograph.com');
         $this->email->cc(array('maksud@emicrograph.com','nmkhna@emicrograph.com','dan@gsisolutions.ca','emran@emicrograph.com'));
         $this->email->subject('Check Cron Time');
-        $this->email->message(date( "Y-m-d H:i:s"));
+
+        $cronText = " = Cron ID: " . $cronId;
+        $body = (!empty($message)) ? $cronText . ", Message: " . $message : $cronText;
+        $this->email->message(date( "Y-m-d H:i:s") . $body);
         $this->email->send();
 
     }
