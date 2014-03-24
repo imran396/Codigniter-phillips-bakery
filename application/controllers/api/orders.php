@@ -772,8 +772,8 @@ class Orders extends API_Controller
 
         $this->email->set_newline("\r\n");
         $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
-        $this->email->to('shafiq@emicrograph.com');
-        $this->email->cc(array('maksud@emicrograph.com','nmkhan@emicrograph.com','dan@gsisolutions.ca','emran@emicrograph.com'));
+        $this->email->to('dan@gsisolutions.ca');
+        // $this->email->cc(array('maksud@emicrograph.com','nmkhan@emicrograph.com','dan@gsisolutions.ca','emran@emicrograph.com'));
         $this->email->subject('Check Cron Time');
 
         $cronText = " = Cron ID: " . $cronId;
