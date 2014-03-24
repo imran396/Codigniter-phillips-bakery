@@ -713,9 +713,9 @@ class Orders extends API_Controller
 
     public function sold(){
 
-        $cronId = rand(111111, 999999);
-        $this->checkCron($cronId, "Start cron");
-        $revel_order_ids = array();
+        //$cronId = rand(111111, 999999);
+        //$this->checkCron($cronId, "Start cron");
+        //$revel_order_ids = array();
 
         header("Content-type=> application/json");
         $result = $this->db->select('revel_order_id')->where('order_status','303')->get('orders')->result();
@@ -727,11 +727,11 @@ class Orders extends API_Controller
                 $this->orders_model->cronOrderSold($revel_order_id);
                 $this->revel_order->updateOrderUser($revel_order_id);
 
-                $revel_order_ids[] = $revel_order_id;
+                //$revel_order_ids[] = $revel_order_id;
             }
         }
 
-        $this->checkCron($cronId, "Finish cron. Call revel api for following revel order ids: ".implode(",", $revel_order_ids));
+        //$this->checkCron($cronId, "Finish cron. Call revel api for following revel order ids: ".implode(",", $revel_order_ids));
     }
 
     public function getAllOrder(){
