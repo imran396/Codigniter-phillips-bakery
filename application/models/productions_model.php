@@ -175,7 +175,7 @@ class Productions_model extends Crud_Model
 
     public function orderDetails($order_code){
 
-        $this->db->select('orders.*, orders.location_id AS locationid , orders.tiers AS orderTiers  ,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, shapes.title AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description,order_status.description AS orderstatus');
+        $this->db->select('orders.* , orders.location_id AS locationid , orders.tiers AS orderTiers  ,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, shapes.title AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description,order_status.description AS orderstatus');
         $this->db->from('orders');
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
@@ -192,7 +192,7 @@ class Productions_model extends Crud_Model
     }
      public function orderPrint($order_id){
 
-        $this->db->select('orders.*, orders.location_id AS locationid ,order_location.title AS location_name , pickup_location.title as pickup_location_name, orders.tiers AS orderTiers  ,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, shapes.title AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description,order_status.description AS orderstatus,meta.first_name AS employee_first_name,meta.last_name AS employee_last_name');
+        $this->db->select('orders.* ,orders.flavour_id AS orders_flavour_id ,orders.tiers AS orders_tiers , orders.fondant AS orders_fondant ,  orders.location_id AS locationid ,order_location.title AS location_name , pickup_location.title as pickup_location_name, orders.tiers AS orderTiers  ,cakes.*,flavours.title AS flavour_name ,customers.*,price_matrix.*,servings.title AS serving_title, shapes.title AS serving_size, zones.title AS zone_title, zones.title AS zone_title, zones.description AS zone_description,order_status.description AS orderstatus,meta.first_name AS employee_first_name,meta.last_name AS employee_last_name');
         $this->db->from('orders');
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('meta','meta.user_id = orders.employee_id','left');
