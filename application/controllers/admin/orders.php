@@ -341,24 +341,19 @@ class Orders extends Crud_Controller
 
     public function edit_data($order_id){
 
-        $this->data['queryup'] = $this->orders_model->getAdminOrder($order_id);
+        $result = $this->productions_model->orderPrint($order_id);
+        $this->data['queryup']=$result->row();
 
+        $cake_id =  $this->data['queryup']->cake_id;
+        $location_id =  $this->data['queryup']->location_id;
+        $flavour_id =  $this->data['queryup']->orders_flavour_id;
+        $price_matrix_id =  $this->data['queryup']->price_matrix_id;
 
-        //print_r($this->data['queryup'][0]->customer_id);
-        //exit;
-
-        $flavour_id =  $this->data['queryup'][0]->flavour_id;
-        $price_matrix_id =  $this->data['queryup'][0]->price_matrix_id;
-
-        $query="SELECT price_matrix.price_matrix_id, price_matrix.price, servings.title AS servings_title, servings.printing_surcharge, servings.size, flavours. *
-FROM price_matrix
-LEFT JOIN servings ON price_matrix.serving_id = servings.serving_id
-LEFT JOIN flavours ON price_matrix.flavour_id = flavours.flavour_id
-WHERE price_matrix.flavour_id = $flavour_id && price >0";
+        $query="SELECT price_matrix.price_matrix_id,price_matrix.price,price_matrix.serving_id, servings.title AS servings_title , servings.size,price_matrix.location_id,price_matrix.cake_id
+                FROM price_matrix
+                LEFT JOIN servings ON price_matrix.serving_id = servings.serving_id
+                WHERE price_matrix.cake_id = $cake_id && price > 0 && location_id=$location_id";
         $matrix = $this->db->query($query)->result();
-
-        $query="SELECT fondant FROM flavours WHERE flavour_id = $flavour_id";
-        $fondants = $this->db->query($query)->row();
 
         $servings ="";
         foreach($matrix as $priceserv):
@@ -369,20 +364,17 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         endforeach;
 
 
-        $order_fondant=$this->data['queryup'][0]->fondant;
-        $fondant= $fondants->fondant;
+        $order_fondant=$this->data['queryup']->orders_fondant;
+
         $fond="";
-        if($fondant == 1){
-            if($order_fondant ==1){
-                $fond .= "<option value='1'>Yes</option>";
-                $fond .= "<option value='0'>No</option>";
-            }else{
-                $fond .= "<option value='0'>No</option>";
-                $fond .= "<option value='1'>Yes</option>";
-            }
+        if($order_fondant == 1){
+            $selected1 = ($order_fondant == 1 ) ? "checked='checked'" : "";
+            $selected0  = ($order_fondant == 0) ? "checked='checked'" : "";
+            $fond .= "<input name='fondant' ".$selected1." class='radio' type='radio' value='1'>Yes</option>";
+            $fond .= "<input name='fondant' ".$selected0." class='radio' type='radio' value='0'>No</option>";
 
         }else{
-            $fond .= "<option value='0'>No</option>";
+            $fond .= "No";
         }
 
 
@@ -394,7 +386,6 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
 
         endforeach;
 
-
         $matrix_price="";
         foreach($matrix as $price):
 
@@ -403,6 +394,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
                 $matrix_price = $price->price;
             }
         endforeach;
+
 
         $this->data['servings']=$servings;
         $this->data['fond']=$fond;
@@ -421,11 +413,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
         $this->data['employeeresult'] = $this->cakes_model->getEmployees($group_id=0);
         $this->data['managerresult'] = $this->cakes_model->getEmployees($group_id=3);
 
-
-
-        $result = $this->productions_model->orderPrint($order_id);
-        $data['queryup']=$result->row();
-        $this->layout->view('admin/orders/order_edit_view', $this->data);
+        $this->layout->view('admin/orders/edit_view', $this->data);
 
     }
     public function edit($order_id){
@@ -575,7 +563,7 @@ WHERE price_matrix.flavour_id = $flavour_id && price >0";
                 'revel_product_id' => $revel_product_id,
                 'revel_user_id' => $revel_user,
                 'discount'=> $orders['discount_price'],
-                'subtotal'=> $orders['total_price'],
+                'subtotal'=> $orders['total_price']
             );
 
             try{
