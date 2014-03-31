@@ -339,7 +339,7 @@ class Orders extends Crud_Controller
 
     }
 
-    public function edit_data($order_id){
+    public function edit($order_id){
 
         $this->data['queryup'] = $this->orders_model->orderEdit($order_id);
 
@@ -429,7 +429,7 @@ class Orders extends Crud_Controller
         $this->layout->view('admin/orders/edit_view', $this->data);
 
     }
-    public function edit($order_id){
+    public function edit1($order_id){
 
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['employeeresult'] = $this->cakes_model->getEmployees($group_id=0);
