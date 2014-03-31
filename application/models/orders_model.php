@@ -153,6 +153,51 @@ class Orders_model extends Crud_Model
         }
     }
 
+    public function orderEdit($order_id){
+
+        $this->db->select('
+
+        orders.*
+        ,orders.flavour_id AS orders_flavour_id
+        ,orders.tiers AS orders_tiers
+        ,orders.shape_id AS orders_shape
+        ,orders.fondant AS orders_fondant
+        ,orders.location_id AS locationid
+        ,order_location.title AS location_name
+        ,pickup_location.title as pickup_location_name
+        ,orders.tiers AS orderTiers
+        ,cakes.*
+        ,flavours.title AS flavour_name
+        ,customers.*
+        ,price_matrix.*
+        ,servings.title AS serving_title
+        ,zones.title AS zone_title
+        ,zones.title AS zone_title
+        ,zones.description AS zone_description
+        ,order_status.description AS orderstatus
+        ,meta.first_name AS employee_first_name
+        ,meta.last_name AS employee_last_name
+        ,order_delivery.*
+
+        ');
+
+        $this->db->from('orders');
+        $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
+        $this->db->join('meta','meta.user_id = orders.employee_id','left');
+        $this->db->join('customers','customers.customer_id = orders.customer_id','left');
+        $this->db->join('flavours','flavours.flavour_id = orders.flavour_id','left');
+        $this->db->join('price_matrix','price_matrix.price_matrix_id = orders.price_matrix_id','left');
+        $this->db->join('servings','servings.serving_id = orders.serving_id','left');
+        $this->db->join('zones','zones.zone_id = orders.delivery_zone_id','left');
+        $this->db->join('order_delivery','order_delivery.delivery_order_id = orders.order_id','left');
+        $this->db->join('locations AS order_location','order_location.location_id = orders.location_id','left');
+        $this->db->join('locations AS pickup_location','pickup_location.location_id = orders.pickup_location_id','left');
+        $this->db->join('order_status','order_status.production_status_code = orders.order_status','left');
+        $this->db->where(array("orders.order_id"=> $order_id));
+        return $this->db->get()->row();
+    }
+
+
     /*------------End Admin Panel Oredr */
 
     public function order_insert($data){
@@ -199,6 +244,9 @@ class Orders_model extends Crud_Model
     }
 
     public function order_update($data,$order_id){
+
+        //print_r($data);
+        //exit;
 
         $data['update_date']=time();
         $order_id = $this->update($data,$order_id);
@@ -350,6 +398,7 @@ class Orders_model extends Crud_Model
     public function delivery_order($order_delivery,$order_id){
 
         $order_delivery['delivery_order_id'] =  $order_id;
+        $order_delivery['email'] =  '';
         $dbdata =$this->getOrder($order_id);
         $delivery_order_id = $dbdata->delivery_order_id;
 

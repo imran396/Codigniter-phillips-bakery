@@ -408,7 +408,7 @@ $(document).ready(function(){
 <div class="widget-head">
     <h4 class="heading glyphicons edit"><i></i><?php echo $this->lang->line('cake_information');?></h4>
 </div>
-<?php  //print_r($queryup); ?>
+<?php  print_r($queryup); ?>
 <hr class="separator" />
 <div class="row-fluid">
     <div class="span6">
@@ -493,7 +493,6 @@ $(document).ready(function(){
             <label class="control-label" ><?php echo $this->lang->line('size_shape');?></label>
             <div class="controls">
                 <select class="search_dropdown" id="shape_id" style="width: 60%;"  name="shape_id">
-                    <option value="0" >---<?php echo $this->lang->line('select_one');?>---</option>
                     <?php if(!empty($size)){  echo $size; } ?>
                 </select>
             </div>
@@ -951,7 +950,9 @@ if($this->productions_model->orderNotes($queryup->order_id)){
     <tr>
         <?php $matrix_price = (isset($queryup->matrix_price))? $queryup->matrix_price:'0.00'; ?>
         <input type="hidden" name="matrix_price" id="matrix_price" value="<?php echo $matrix_price; ?>">
-        <td><?php echo $this->lang->line('matrix_price');?></td><td id="matrixprice">$<?php echo $matrix_price; ?></td>
+        <td><?php echo $this->lang->line('matrix_price');?></td><td><span id="matrixprice" >$<?php echo $matrix_price; ?></span>
+            <span id="override_price1" ><?php $override_price = (isset($queryup->override_price))? $queryup->override_price:'0.00'; ?><input type="text" value="<?php echo $override_price; ?>" name="override_price" id="override_price"></span>
+            </td>
     </tr>
     <tr>
         <?php $discount_price = (isset($queryup->discount_price))? $queryup->discount_price:'0.00'; ?>
@@ -979,13 +980,7 @@ if($this->productions_model->orderNotes($queryup->order_id)){
     <input type="hidden"  name="total_price" id="total_price" value="<?php echo $total_price;?>">
         <td><?php echo $this->lang->line('total_price');?></td><td>$<span id="totalprice"><?php echo $total_price;?></span><span style="float: right; display: inline-block"><button type="button" id="totalPrice" class="btn btn-default"><?php echo $this->lang->line('total');?></button></span></td>
     </tr>
-    <tr>
 
-        <td><?php echo $this->lang->line('override_price');?></td>
-        <td id="override_price">
-            <?php $override_price = (isset($queryup->override_price))? $queryup->override_price:'0.00'; ?>
-            <span style="display: block; line-height: 30px; float:left">$</span><input type="text" value="<?php echo $override_price; ?>" name="override_price" id="override_price"></td>
-    </tr>
 
 </table>
 </div>
@@ -1002,7 +997,14 @@ if($this->productions_model->orderNotes($queryup->order_id)){
 </form>
 
 </div>
-
+<style>
+    .table th, .table td{
+        vertical-align: middle;
+    }
+    #override_price{
+        margin-bottom: 0;
+    }
+</style>
 <!-- plupload -->
 <style type="text/css">@import url(/assets/theme/scripts/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css);</style>
 <!-- Third party script for BrowserPlus runtime (Google Gears included in Gears runtime now) -->

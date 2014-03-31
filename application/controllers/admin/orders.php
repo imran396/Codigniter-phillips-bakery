@@ -341,12 +341,10 @@ class Orders extends Crud_Controller
 
     public function edit_data($order_id){
 
-        $result = $this->productions_model->orderPrint($order_id);
-        $this->data['queryup']=$result->row();
+        $this->data['queryup'] = $this->orders_model->orderEdit($order_id);
 
         $cake_id =  $this->data['queryup']->cake_id;
         $location_id =  $this->data['queryup']->location_id;
-        $flavour_id =  $this->data['queryup']->orders_flavour_id;
         $price_matrix_id =  $this->data['queryup']->price_matrix_id;
 
         $query="SELECT price_matrix.price_matrix_id,price_matrix.price,price_matrix.serving_id, servings.title AS servings_title , servings.size,price_matrix.location_id,price_matrix.cake_id
@@ -363,7 +361,6 @@ class Orders extends Crud_Controller
 
         endforeach;
 
-
         $order_fondant=$this->data['queryup']->orders_fondant;
 
         $fond="";
@@ -378,13 +375,29 @@ class Orders extends Crud_Controller
         }
 
 
-        $size ="";
+        /*$size ="";
         foreach($matrix as $pricesize):
 
             $selected = ($price_matrix_id == $pricesize->price_matrix_id ) ? "selected='selected'" : "";
             $size .= "<option ".$selected." value='".$pricesize->price_matrix_id."'>".$pricesize->size."</option>";
 
-        endforeach;
+        endforeach;*/
+
+        $shapes = unserialize($this->data['queryup']->shape_id);
+        $size ="";
+        if(!empty($shapes)){
+            $size ="";
+            $size .= "<option value=''>---".$this->lang->line('select_one')."---</option>";
+            foreach($shapes as $shapeid):
+                $shape = $this->orders_model->getShapeName($shapeid);
+                $selected = ($shapeid == $this->data['queryup']->orders_shape ) ? "selected='selected'" : "";
+                $size .= "<option ". $selected ." value='".$shape->shape_id."'>".$shape->title."</option>";
+
+            endforeach;
+        }else{
+            $size .= "<option value=''>---".$this->lang->line('select_one')."---</option>";
+        }
+
 
         $matrix_price="";
         foreach($matrix as $price):
@@ -516,7 +529,7 @@ class Orders extends Crud_Controller
                 'special_instruction' => $data['special_instruction'],
                 'order_status' => $data['order_status']
             );
-                $orders=$this->orders_model->order_update($order_data,$orderID);
+                $orders=$this->orders_model->order_update($data,$orderID);
                 $this->session->set_flashdata('success_msg','Order has been updated successfully');
 
         }else{
@@ -576,6 +589,7 @@ class Orders extends Crud_Controller
             }
 
             if($status_code_revel > 0){
+
                 $orders['order_code'] = $status_code_revel;
                 $orders=$this->orders_model->order_update($orders, $orders['order_id']);
             }
@@ -672,7 +686,7 @@ class Orders extends Crud_Controller
 
         }
 
-        redirect('admin/orders/edit/'.$orders['order_id']);
+        redirect('admin/orders/edit_data/'.$orders['order_id']);
 
 
     }
