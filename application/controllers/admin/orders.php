@@ -684,7 +684,7 @@ class Orders extends Crud_Controller
 
         }
 
-        redirect('admin/orders/edit_data/'.$orders['order_id']);
+        redirect('admin/orders/edit/'.$orders['order_id']);
 
 
     }
