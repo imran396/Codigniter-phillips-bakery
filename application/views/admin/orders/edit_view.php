@@ -330,7 +330,7 @@ $(document).ready(function(){
 
         $.ajax({
             url:"<?php echo site_url('admin/orders/getTotalPrice')?>",
-            data:"matrix_price="+matrix_price+"&discount_price="+discount_price+"&printed_image_surcharge="+printed_image_surcharge+"&magic_surcharge="+magic_surcharge+"&delivery_zone_surcharge="+delivery_zone_surcharge+"override_price="+override_price,
+            data:"matrix_price="+matrix_price+"&discount_price="+discount_price+"&printed_image_surcharge="+printed_image_surcharge+"&magic_surcharge="+magic_surcharge+"&delivery_zone_surcharge="+delivery_zone_surcharge+"&override_price="+override_price,
             type:"post",
             success: function(val){
                 //console.log(val);
