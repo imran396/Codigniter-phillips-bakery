@@ -322,15 +322,15 @@ $(document).ready(function(){
 
         var matrix_price = parseFloat($("#matrix_price").val());
         var discount_price = parseFloat($("#discount_price").val());
-        var discount_price = document.getElementById('discount_price').value;
         var printed_image_surcharge = parseFloat($("#printed_image_surcharge").val());
         var magic_surcharge = parseFloat($("#magic_surcharge").val());
         var delivery_zone_surcharge = parseFloat($("#delivery_zone_surcharge").val());
+        var override_price = parseFloat($("#override_price").val());
 
 
         $.ajax({
             url:"<?php echo site_url('admin/orders/getTotalPrice')?>",
-            data:"matrix_price="+matrix_price+"&discount_price="+discount_price+"&printed_image_surcharge="+printed_image_surcharge+"&magic_surcharge="+magic_surcharge+"&delivery_zone_surcharge="+delivery_zone_surcharge,
+            data:"matrix_price="+matrix_price+"&discount_price="+discount_price+"&printed_image_surcharge="+printed_image_surcharge+"&magic_surcharge="+magic_surcharge+"&delivery_zone_surcharge="+delivery_zone_surcharge+"override_price="+override_price,
             type:"post",
             success: function(val){
                 //console.log(val);
@@ -408,7 +408,7 @@ $(document).ready(function(){
 <div class="widget-head">
     <h4 class="heading glyphicons edit"><i></i><?php echo $this->lang->line('cake_information');?></h4>
 </div>
-<?php  print_r($queryup); ?>
+<?php // print_r($queryup); ?>
 <hr class="separator" />
 <div class="row-fluid">
     <div class="span6">
@@ -498,7 +498,7 @@ $(document).ready(function(){
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label" ><?php echo $this->lang->line('price');?>&nbsp;&nbsp;$<span id="price"><?php if(!empty($cprice)){  echo $cprice;} ?></span></label>
+            <label class="control-label" ><?php echo $this->lang->line('price');?>&nbsp;&nbsp;$<span id="price"><?php echo $queryup->matrix_price ?></span></label>
 
         </div>
 
@@ -519,19 +519,11 @@ $(document).ready(function(){
                 <select  id="customer_id" style="width: 100%;"  name="customer_id">
                     <?php
                     $customer_id = (isset($queryup->customer_id))? $queryup->customer_id:set_value('customer_id');
-                    if($customer_id > 0){
-                        $customerfield['customer_id']=$customer_id;
-                        ?>
-                        <option value="<?php echo $customer_id; ?>" ><?php echo $this->orders_model->getCustomerName('customers',$customerfield); ?></option>
-                    <?php }else{ ?>
-                        <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
-                    <?php
-                    }
                     foreach($customerresult as $customer):
-                        if($customer_id != $customer->customer_id){
+
                             ?>
-                            <option value="<?php echo $customer->customer_id;  ?>" ><?php echo $customer->first_name.' '.$customer->last_name; ?></option>
-                        <?php } endforeach; ?>
+                            <option <?php  if($customer_id == $customer->customer_id){ echo "selected='selected'"; }?> value="<?php echo $customer->customer_id;  ?>" ><?php echo $customer->first_name.' '.$customer->last_name; ?></option>
+                        <?php  endforeach; ?>
                 </select>
             </div>
         </div>
@@ -541,19 +533,10 @@ $(document).ready(function(){
                 <select  id="employee_id" style="width: 100%;"  name="employee_id">
                     <?php
                     $employee_id = (isset($queryup->employee_id))? $queryup->employee_id:set_value('employee_id');
-                    if($employee_id > 0){
-                        $employeefield['user_id']=$employee_id;
-                        ?>
-                        <option value="<?php echo $employee_id; ?>" ><?php echo $this->orders_model->getCustomerName('meta',$employeefield); ?></option>
-                    <?php }else{ ?>
-                        <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
-                    <?php
-                    }
                     foreach($employeeresult as $employee):
-                        if($employee_id != $employee->id){
-                            ?>
-                            <option value="<?php echo $employee->id;  ?>" ><?php echo $employee->first_name.' '.$employee->last_name; ?></option>
-                        <?php } endforeach; ?>
+                    ?>
+                    <option <?php  if($employee_id == $employee->id){ echo "selected='selected'"; }?> value="<?php echo $employee->id;  ?>" ><?php echo $employee->first_name.' '.$employee->last_name; ?></option>
+                    <?php  endforeach; ?>
                 </select>
             </div>
         </div>
@@ -566,19 +549,11 @@ $(document).ready(function(){
                 <select  id="manager_id" style="width: 100%;"  name="manager_id">
                     <?php
                     $manager_id = (isset($queryup->manager_id))? $queryup->manager_id:set_value('manager_id');
-                    if($manager_id > 0){
-                        $managerfield['user_id']=$manager_id;
-                        ?>
-                        <option value="<?php echo $manager_id; ?>" ><?php echo $this->orders_model->getCustomerName('meta',$managerfield); ?></option>
-                    <?php }else{ ?>
-                        <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
-                    <?php
-                    }
                     foreach($managerresult as $manager):
-                        if($manager_id != $manager->id){
-                            ?>
-                            <option value="<?php echo $manager->id;  ?>" ><?php echo $manager->first_name.' '.$manager->last_name; ?></option>
-                        <?php } endforeach; ?>
+
+                    ?>
+                     <option <?php  if($manager_id == $manager->id){ echo "selected='selected'"; }?> value="<?php echo $manager->id;  ?>" ><?php echo $manager->first_name.' '.$manager->last_name; ?></option>
+                    <?php  endforeach; ?>
                 </select>
 
             </div>
@@ -622,20 +597,10 @@ $(document).ready(function(){
                 <select  id="pickup_location_id" style="width: 100%;"  name="pickup_location_id" class="search_dropdown">
                     <?php
                     $pickup_location_id = (isset($queryup->pickup_location_id))? $queryup->pickup_location_id:set_value('pickup_location_id');
-                    if($pickup_location_id > 0){
-                        $pickfield['location_id']=$pickup_location_id;
-                        ?>
-                        <option value="<?php echo $pickup_location_id; ?>" ><?php echo $this->orders_model->getGlobalName('locations',$pickfield); ?></option>
-                    <?php }else{ ?>
-                        <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
-                    <?php
-                    }
                     foreach($locationresult as $location):
-
-                        if($pickup_location_id != $location->location_id){
-                            ?>
-                            <option value="<?php echo $location->location_id;  ?>" ><?php echo $location->title; ?></option>
-                        <?php } endforeach; ?>
+                    ?>
+                        <option <?php  if($pickup_location_id == $location->location_id ){ echo "selected='selected'"; } ?> value="<?php echo $location->location_id;  ?>" ><?php echo $location->title; ?></option>
+                    <?php  endforeach; ?>
                 </select>
             </div>
         </div>
@@ -646,20 +611,10 @@ $(document).ready(function(){
                 <select  id="delivery_zone_id" style="width: 100%;"  name="delivery_zone_id" class="search_dropdown">
                     <?php
                     $delivery_zone_id = (isset($queryup->delivery_zone_id))? $queryup->delivery_zone_id:set_value('delivery_zone_id');
-                    if($delivery_zone_id > 0){
-                        $zonefield['zone_id']=$delivery_zone_id;
-                        ?>
-                        <option value="<?php echo $delivery_zone_id; ?>" ><?php echo $this->orders_model->getGlobalName('zones',$zonefield); ?></option>
-                    <?php }else{ ?>
-                        <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
-                    <?php
-                    }
-
                     foreach($zoneresult as $zone):
-                        if($delivery_zone_id !=  $zone->zone_id ){
-                            ?>
-                            <option value="<?php echo $zone->zone_id;  ?>" ><?php echo $zone->title; ?></option>
-                        <?php } endforeach; ?>
+                    ?>
+                    <option <?php  if($delivery_zone_id == $zone->zone_id ){ echo "selected='selected'"; } ?> value="<?php echo $zone->zone_id;  ?>" ><?php echo $zone->title; ?></option>
+                    <?php  endforeach; ?>
                 </select>
             </div>
         </div>
@@ -709,12 +664,14 @@ $(document).ready(function(){
                 <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('phone_number');?>" value="<?php echo(isset($queryup->phone))? $queryup->phone:set_value('phone'); ?>"  class="validate[required,custom[phone]] span10" name="phone" id="phone"  />
             </div>
         </div>
- <!--       <div class="control-group">
-            <label class="control-label"><?php /*echo $this->lang->line('email');*/?></label>
+        <!--
+        <div class="control-group">
+            <label class="control-label"><?php /*echo $this->lang->line('email');*/ ?></label>
             <div class="controls">
-                <input type="text" placeholder="<?php /*echo $this->lang->line('enter').' '.$this->lang->line('email');*/?>" value="<?php /*echo(isset($queryup->email))? $queryup->email:set_value('email'); */?>"  class="validate[custom[email]] span10" name="email" id="email"  />
+                <input type="text" placeholder="<?php /*echo $this->lang->line('enter').' '.$this->lang->line('email');*/ ?>" value="<?php /*echo(isset($queryup->email))? $queryup->email:set_value('email'); */?>"  class="validate[custom[email]] span10" name="email" id="email"  />
             </div>
-        </div>-->
+        </div>
+        -->
 
 
         <div class="control-group">

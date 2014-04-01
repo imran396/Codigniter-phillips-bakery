@@ -154,6 +154,7 @@ class Orders extends Crud_Controller
             if($fondant == 1){
                 $fond .= "<input name='fondant' id='fondant_id' type='radio' value='1' checked='checked'> Yes";
                 $fond .= "<input name='fondant' type='radio' value='0'> No";
+
             }else{
                 $fond .= "No";
             }
@@ -321,8 +322,14 @@ class Orders extends Crud_Controller
         $magic_surcharge = $this->input->post('magic_surcharge');
         $delivery_zone_surcharge = $this->input->post('delivery_zone_surcharge');
         $discount_price = $this->input->post('discount_price');
+        $override_price = $this->input->post('override_price');
+        if( floatval($override_price) > 0 ){
+            echo $total=((floatval($override_price)+floatval($printed_image_surcharge)+floatval($magic_surcharge)+floatval($delivery_zone_surcharge))-floatval($discount_price));
+        }else{
+            echo $total=((floatval($matrix_price)+floatval($printed_image_surcharge)+floatval($magic_surcharge)+floatval($delivery_zone_surcharge))-floatval($discount_price));
 
-        echo $total=((floatval($matrix_price)+floatval($printed_image_surcharge)+floatval($magic_surcharge)+floatval($delivery_zone_surcharge))-floatval($discount_price));
+        }
+
 
     }
 
@@ -345,31 +352,31 @@ class Orders extends Crud_Controller
 
         $cake_id =  $this->data['queryup']->cake_id;
         $location_id =  $this->data['queryup']->location_id;
-        $price_matrix_id =  $this->data['queryup']->price_matrix_id;
 
-        $query="SELECT price_matrix.price_matrix_id,price_matrix.price,price_matrix.serving_id, servings.title AS servings_title , servings.size,price_matrix.location_id,price_matrix.cake_id
+
+        $query="SELECT price_matrix.serving_id, servings.title AS servings_title
                 FROM price_matrix
                 LEFT JOIN servings ON price_matrix.serving_id = servings.serving_id
-                WHERE price_matrix.cake_id = $cake_id && price > 0 && location_id=$location_id";
+                WHERE price_matrix.cake_id = $cake_id && price > 0 && location_id = $location_id";
         $matrix = $this->db->query($query)->result();
 
         $servings ="";
         foreach($matrix as $priceserv):
 
-            $selected = ($price_matrix_id == $priceserv->price_matrix_id ) ? "selected='selected'" : "";
-            $servings .= "<option ".$selected." value='".$priceserv->price_matrix_id."'>".$priceserv->servings_title."</option>";
+            $selected = ($this->data['queryup']->serving_id == $priceserv->serving_id ) ? "selected='selected'" : "";
+            $servings .= "<option ". $selected ." value='". $priceserv->serving_id ."'>".$priceserv->servings_title."</option>";
 
         endforeach;
 
-        $order_fondant=$this->data['queryup']->orders_fondant;
+        $order_fondant=$this->data['queryup']->fondant;
 
         $fond="";
         if($order_fondant == 1){
-            $selected1 = ($order_fondant == 1 ) ? "checked='checked'" : "";
-            $selected0  = ($order_fondant == 0) ? "checked='checked'" : "";
-            $fond .= "<input name='fondant' ".$selected1." class='radio' type='radio' value='1'>Yes</option>";
-            $fond .= "<input name='fondant' ".$selected0." class='radio' type='radio' value='0'>No</option>";
-
+            //$selected1 = ($order_fondant == 1 ) ? "checked='checked'" : "";
+            //$selected0  = ($order_fondant == 0) ? "checked='checked'" : "";
+           // $fond .= "<input name='fondant' ".$selected1." class='radio' type='radio' value='1'>Yes</option>";
+           // $fond .= "<input name='fondant' ".$selected0." class='radio' type='radio' value='0'>No</option>";
+            $fond .= "Yes";
         }else{
             $fond .= "No";
         }
@@ -383,14 +390,14 @@ class Orders extends Crud_Controller
 
         endforeach;*/
 
-        $shapes = unserialize($this->data['queryup']->shape_id);
+        $shapes = unserialize($this->data['queryup']->cake_shape);
         $size ="";
         if(!empty($shapes)){
             $size ="";
             $size .= "<option value=''>---".$this->lang->line('select_one')."---</option>";
             foreach($shapes as $shapeid):
                 $shape = $this->orders_model->getShapeName($shapeid);
-                $selected = ($shapeid == $this->data['queryup']->orders_shape ) ? "selected='selected'" : "";
+                $selected = ($shapeid == $this->data['queryup']->shape_id ) ? "selected='selected'" : "";
                 $size .= "<option ". $selected ." value='".$shape->shape_id."'>".$shape->title."</option>";
 
             endforeach;
@@ -399,21 +406,12 @@ class Orders extends Crud_Controller
         }
 
 
-        $matrix_price="";
-        foreach($matrix as $price):
-
-            if ($price_matrix_id == $price->price_matrix_id ){
-
-                $matrix_price = $price->price;
-            }
-        endforeach;
 
 
         $this->data['servings']=$servings;
         $this->data['fond']=$fond;
         $this->data['size']=$size;
-        $this->data['cprice']=$matrix_price;
-        $this->data['matrix_price']=$matrix_price;
+
 
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['catresult'] = $this->cakes_model->getCategories();

@@ -322,11 +322,10 @@ $(document).ready(function(){
 
         var matrix_price = parseFloat($("#matrix_price").val());
         var discount_price = parseFloat($("#discount_price").val());
-        var discount_price = document.getElementById('discount_price').value;
         var printed_image_surcharge = parseFloat($("#printed_image_surcharge").val());
         var magic_surcharge = parseFloat($("#magic_surcharge").val());
         var delivery_zone_surcharge = parseFloat($("#delivery_zone_surcharge").val());
-
+        var override_price = parseFloat($("#override_price").val());
 
         $.ajax({
             url:"<?php echo site_url('admin/orders/getTotalPrice')?>",
@@ -992,10 +991,13 @@ if($uporder_id > 0){
 <hr class="separator" />
 <table style="width: 100%" class="table table-bordered table-condensed">
     <tr>
-        <?php $matrix_price = (isset($queryup[0]->matrix_price))? $queryup[0]->matrix_price:'0.00'; ?>
+        <?php $matrix_price = (isset($queryup->matrix_price))? $queryup->matrix_price:'0.00'; ?>
         <input type="hidden" name="matrix_price" id="matrix_price" value="<?php echo $matrix_price; ?>">
-        <td><?php echo $this->lang->line('matrix_price');?></td><td id="matrixprice">$<?php echo $matrix_price; ?></td>
+        <td><?php echo $this->lang->line('matrix_price');?></td><td><span id="matrixprice" >$<?php echo $matrix_price; ?></span>
+            <span id="override_price1" ><?php $override_price = (isset($queryup->override_price))? $queryup->override_price:'0.00'; ?><input type="text" value="<?php echo $override_price; ?>" name="override_price" id="override_price"></span>
+        </td>
     </tr>
+
     <tr>
         <?php $discount_price = (isset($queryup[0]->discount_price))? $queryup[0]->discount_price:'0.00'; ?>
         <input type="hidden" name="discount_price" id="discount_price" value="<?php echo $discount_price; ?>">
@@ -1022,13 +1024,7 @@ if($uporder_id > 0){
         <input type="hidden"  name="total_price" id="total_price" value="<?php echo $total_price;?>">
         <td><?php echo $this->lang->line('total_price');?></td><td>$<span id="totalprice"><?php echo $total_price;?></span><span style="float: right; display: inline-block"><button type="button" id="totalPrice" class="btn btn-default"><?php echo $this->lang->line('total');?></button></span></td>
     </tr>
-    <tr>
 
-        <td><?php echo $this->lang->line('override_price');?></td>
-        <td id="override_price">
-            <?php $override_price = (isset($queryup[0]->override_price))? $queryup[0]->override_price:'0.00'; ?>
-            <span style="display: block; line-height: 30px; float:left">$</span><input type="text" value="<?php echo $override_price; ?>" name="override_price" id="override_price"></td>
-    </tr>
 
 </table>
 </div>
@@ -1045,7 +1041,14 @@ if($uporder_id > 0){
 </form>
 
 </div>
-
+<style>
+    .table th, .table td{
+        vertical-align: middle;
+    }
+    #override_price{
+        margin-bottom: 0;
+    }
+</style>
 <!-- plupload -->
 <style type="text/css">@import url(/assets/theme/scripts/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css);</style>
 <!-- Third party script for BrowserPlus runtime (Google Gears included in Gears runtime now) -->
