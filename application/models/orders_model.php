@@ -541,7 +541,7 @@ class Orders_model extends Crud_Model
 
         $total_rows = $this->db->where('orders.is_deleted !=',1)->count_all_results('orders');
         $paging = production_paginate($base_url, $total_rows,$start,$per_page);
-        $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name,customers.first_name,customers.last_name,order_status.description AS orderstatus');
+        $this->db->select('orders.order_id , orders.revel_order_id , orders.order_code , orders.order_date , orders.delivery_date , orders.delivery_time ,orders.order_status , cakes.title AS cake_name ,flavours.title AS flavour_name,customers.first_name,customers.last_name,order_status.description AS orderstatus');
         $this->db->from('orders');
         $this->db->join('cakes','cakes.cake_id = orders.cake_id','left');
         $this->db->join('customers','customers.customer_id = orders.customer_id','left');
