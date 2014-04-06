@@ -538,7 +538,7 @@ class Orders extends Crud_Controller
 
         $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
 
-        if(empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] != '300' ){
+        if(empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] != '303' ){
 
             $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
 
@@ -580,15 +580,16 @@ class Orders extends Crud_Controller
             try{
                 $custom =( $orders['cake_id'] > 0 ) ? $orders['cake_id'] :'';
 
-                $status_code_revel =  $this->revel_order->create($RevelOrderData,$custom);
-                $orders['revel_order_id']  = $status_code_revel;
+                $revel_order_id =  $this->revel_order->create($RevelOrderData,$custom);
+
             }catch (\Exception $e){
                 $orders['revel_order_id']  = null;
             }
 
-            if($status_code_revel > 0){
+            if($revel_order_id > 0){
 
-                $orders['order_code'] = $status_code_revel;
+                //$orders['order_code'] = $status_code_revel;
+                $orders['revel_order_id']  = $revel_order_id;
                 $orders=$this->orders_model->order_update($orders, $orders['order_id']);
             }
 
@@ -622,7 +623,7 @@ class Orders extends Crud_Controller
 
         }
 
-        if($orders['order_status'] == 301 &&  $data['on_cake_image_needed'] == 1 ){
+        if($orders['order_status'] != 300 &&  $data['on_cake_image_needed'] == 1 ){
 
             $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
             if($cake_email_photo == 1 ){
