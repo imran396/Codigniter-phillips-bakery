@@ -145,7 +145,7 @@ $(document).ready(function(){
                     alert(n[1]);
                 }else{
                     if(n[0] !=""){
-                        $('#fondant').html(n[0]);
+                       // $('#fondant').html(n[0]);
                     }
 
                 }
@@ -408,7 +408,7 @@ $(document).ready(function(){
 <div class="widget-head">
     <h4 class="heading glyphicons edit"><i></i><?php echo $this->lang->line('cake_information');?></h4>
 </div>
-<?php // print_r($queryup); ?>
+<?php  //print_r($queryup); ?>
 <hr class="separator" />
 <div class="row-fluid">
     <div class="span6">
@@ -442,7 +442,7 @@ $(document).ready(function(){
             <div class="controls">
                 <select class="validate[required] search_dropdown" id="flavourid" style="width: 100%;"  name="flavour_id">
                     <?php
-                    $flavour_id = (isset($queryup->orders_flavour_id))? $queryup->orders_flavour_id:set_value('flavour_id');
+                    $flavour_id = (isset($queryup->flavour_id))? $queryup->flavour_id:set_value('flavour_id');
                             foreach($flvresult as $flavour):
 
                             ?>
