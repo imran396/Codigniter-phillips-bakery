@@ -40,6 +40,7 @@
                     <thead>
                     <tr>
                         <th width="70">Order #</th>
+                        <th width="70">Revel ID</th>
                         <th width="140"><?php echo $this->lang->line('order_created');?></th>
                         <th width="140">Delivery Date</th>
                         <th>Customer Name</th>
@@ -55,6 +56,7 @@
                         ?>
                         <tr>
                             <td class="center"><a href="/admin/productions/details/<?php echo $rows->order_code; ?>" ><?php echo $rows->order_code; ?></a></td>
+                            <td ><?php echo $rows->revel_order_id; ?></td>
                             <td ><?php echo dateFormatStr($rows->order_date); ?></td>
                             <td ><?php echo $rows->delivery_date.' '.$rows->delivery_time; //$this->productions_model->dateFormate($rows->delivery_date); ?></td>
 
@@ -98,7 +100,7 @@
     $(document).ready(function() {
 
         $('.order-sortable').dataTable( {
-            "aaSorting": [[1,'desc']],
+            "aaSorting": [[2,'desc']],
             "aoColumns": [
                 null,
                 {"sTYpe":   "date-mm-dd-yyyy" },
@@ -108,7 +110,7 @@
                 null
             ],
             "aoColumnDefs": [
-             { "bSortable":false, "aTargets": [5] }
+             { "bSortable":false, "aTargets": [6] }
 
              ],
             "bPaginate": false,
