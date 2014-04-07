@@ -578,6 +578,10 @@ class Orders extends Crud_Controller
 
         $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
 
+        echo $orders['order_status'];
+
+        exit;
+
         if(empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] == '303' ){
 
             $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
