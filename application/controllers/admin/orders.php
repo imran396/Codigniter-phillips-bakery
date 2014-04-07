@@ -618,8 +618,9 @@ class Orders extends Crud_Controller
             );
 
             try{
-                $custom =( $orders['cake_id'] > 0 ) ? $orders['cake_id'] :'';
 
+                $custom =( $orders['cake_id'] > 0 ) ? $orders['cake_id'] :'';
+print_r($RevelOrderData);
                 echo $revel_order_id =  $this->revel_order->create($RevelOrderData,$custom);
                 exit;
 
