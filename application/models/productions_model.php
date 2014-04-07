@@ -124,11 +124,15 @@ class Productions_model extends Crud_Model
         $start_time= $data['delivery_start_time'];
         $end_time= $data['delivery_end_time'];
 
+        if (isset($data['fondant']) && $data['fondant'] !=""){
+            $data['orders.fondant'] =  $data['fondant'];
+            unset($data['fondant']);
+        }
+        if (isset($data['flavour_id']) && $data['flavour_id'] !=""){
+            $data['orders.flavour_id'] =  $data['flavour_id'];
+            unset($data['flavour_id']);
 
-        $data['orders.fondant'] =  $data['fondant'];
-        unset($data['fondant']);
-        $data['orders.flavour_id'] =  $data['flavour_id'];
-        unset($data['flavour_id']);
+        }
 
         $this->db->select('orders.*,cakes.title AS cake_name ,flavours.title AS flavour_name, flavours.fondant AS fondant_name, customers.first_name,customers.last_name,order_status.description AS orderstatus');
         $this->db->from('orders');
