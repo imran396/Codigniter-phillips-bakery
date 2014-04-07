@@ -557,8 +557,6 @@ class Orders extends Crud_Controller
                 'override_price',
                 'order_status',
                 'order_date'
-
-
             );
 
             foreach($_REQUEST as $key => $val ){
