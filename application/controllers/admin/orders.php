@@ -616,14 +616,21 @@ class Orders extends Crud_Controller
                 'discount'=> $orders['discount_price'],
                 'subtotal'=> $orders['total_price']
             );
-            print_r($RevelOrderData);
-            exit;
 
             try{
 
                 $custom =( $orders['cake_id'] > 0 ) ? $orders['cake_id'] :'';
 
                 $revel_order_id =  $this->revel_order->create($RevelOrderData,$custom);
+
+                $empolyee_code = $this->logs_model->getEmployeeCode($orders['employee_id']);
+                $log = array(
+                    'employee_id' => $empolyee_code,
+                    'audit_name' => 'Order Revel Send',
+                    'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price']
+                );
+                $this->logs_model->insertAuditLog($log);
+
 
 
             }catch (\Exception $e){
