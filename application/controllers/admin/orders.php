@@ -569,8 +569,7 @@ class Orders extends Crud_Controller
 
             $orders=$this->orders_model->order_update($order_data,$orderID);
             $this->session->set_flashdata('success_msg','Order has been updated successfully');
-            //print_r($order_data);
-            //exit;
+
         }else{
 
             $orders=$this->orders_model->order_insert($data);
@@ -621,7 +620,8 @@ class Orders extends Crud_Controller
             try{
                 $custom =( $orders['cake_id'] > 0 ) ? $orders['cake_id'] :'';
 
-                $revel_order_id =  $this->revel_order->create($RevelOrderData,$custom);
+                echo $revel_order_id =  $this->revel_order->create($RevelOrderData,$custom);
+                exit;
 
             }catch (\Exception $e){
                 $orders['revel_order_id']  = null;
