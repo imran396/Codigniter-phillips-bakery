@@ -210,7 +210,7 @@ class Orders extends API_Controller
 
             $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
             $sync = isset($_REQUEST['sync'])? $_REQUEST['sync']:'';
-            if($mailtouser ==1 || $sync ==1 ){
+            if($mailtouser ==1 || $sync == 1 ){
                 $this->sendEmail($rows->order_code);
             }
 
@@ -223,12 +223,40 @@ class Orders extends API_Controller
 
 
         $array_orders_key =  array(
-            'order_id','cake_id','customer_id','employee_id',
-            'manager_id','location_id','order_date','delivery_type',
-            'pickup_location_id','delivery_zone_id','delivery_zone_surcharge',
-            'delivery_date','delivery_time','flavour_id','fondant','tiers','price_matrix_id','serving_id','matrix_price','cake_email_photo','magic_cake_id','magic_surcharge',
-            'inscription','special_instruction','instructional_email_photo','vaughan_location','order_status','discount_price','total_price',
-            'override_price','printed_image_surcharge','on_cake_image_needed','shape_id'
+            'order_id',
+            'cake_id',
+            'customer_id',
+            'employee_id',
+            'manager_id',
+            'location_id',
+            'order_date',
+            'delivery_type',
+            'pickup_location_id',
+            'delivery_zone_id',
+            'delivery_zone_surcharge',
+            'delivery_date',
+            'delivery_time',
+            'flavour_id',
+            'fondant',
+            'serving_id',
+            'shape_id',
+            'tiers',
+            'matrix_price',
+            'on_cake_image_needed',
+            'cake_email_photo',
+            'magic_cake_id',
+            'magic_surcharge',
+            'inscription',
+            'special_instruction',
+            'instructional_email_photo',
+            'vaughan_location',
+            'order_status',
+            'printed_image_surcharge',
+            'discount_price',
+            'total_price',
+            'override_price',
+            'order_status',
+            'order_date'
         );
 
         $array_delivery_key = array('name','phone','address_1','address_2','postal','city','province','delivery_instruction');
