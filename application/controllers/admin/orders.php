@@ -640,6 +640,8 @@ class Orders extends Crud_Controller
             if($revel_order_id > 0){
 
                 //$orders['order_code'] = $status_code_revel;
+                echo $revel_order_id;
+                exit;
                 $orders['revel_order_id']  = $revel_order_id;
                 $orders=$this->orders_model->order_update($orders, $orders['order_id']);
             }
