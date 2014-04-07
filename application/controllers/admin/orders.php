@@ -576,9 +576,9 @@ class Orders extends Crud_Controller
             $this->session->set_flashdata('success_msg','New order has been added successfully');
         }
 
-        echo $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
+        $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
 
-        if(empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] != '303' ){
+        if(empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] == '303' ){
 
             $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
 
