@@ -561,6 +561,9 @@ class Orders extends Crud_Controller
             }
         }
 
+        print_r($data);
+        exit;
+
         $vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
 
         if($vaughan_location == 1 ){
