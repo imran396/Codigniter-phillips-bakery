@@ -621,16 +621,16 @@ class Orders extends Crud_Controller
 
                 $custom =( $orders['cake_id'] > 0 ) ? $orders['cake_id'] :'';
 
-                $revel_order_id =  $this->revel_order->create($RevelOrderData,$custom);
+                echo $revel_order_id =  $this->revel_order->create($RevelOrderData,$custom);
 
-                $empolyee_code = $this->logs_model->getEmployeeCode($orders['employee_id']);
+               /* $empolyee_code = $this->logs_model->getEmployeeCode($orders['employee_id']);
                 $log = array(
                     'employee_id' => $empolyee_code,
                     'audit_name' => 'Order Revel Send',
                     'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price']
                 );
                 $this->logs_model->insertAuditLog($log);
-
+*/
 
 
             }catch (\Exception $e){
@@ -641,9 +641,11 @@ class Orders extends Crud_Controller
 
                 //$orders['order_code'] = $status_code_revel;
                 echo $revel_order_id;
-                exit;
+
                 $orders['revel_order_id']  = $revel_order_id;
                 $orders=$this->orders_model->order_update($orders, $orders['order_id']);
+
+                 exit;
             }
 
         }
