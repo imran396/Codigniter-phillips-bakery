@@ -416,7 +416,7 @@ $(document).ready(function(){
         <div class="control-group" >
             <label class="control-label" ><?php echo $this->lang->line('bakery_location');?></label>
             <div class="controls">
-                <select  id="location_id" style="width: 100%;"  name="location_id" class="validate[required] search_dropdown">
+                <select disabled="disabled"  id="location_id" style="width: 100%;"  name="location_id" class="validate[required] search_dropdown">
                     <?php
 
                     $location_id = (isset($queryup->location_id))? $queryup->location_id:set_value('location_id');
@@ -429,7 +429,7 @@ $(document).ready(function(){
         <div class="control-group">
             <label class="control-label" for="lastname"><?php echo $this->lang->line('cake_name');?></label>
             <div class="controls">
-                <select class="search_dropdown" id="cake_id" style="width: 100%;"  name="cake_id">
+                <select disabled="disabled" class="search_dropdown" id="cake_id" style="width: 100%;"  name="cake_id">
                     <?php
                     $cake_id = (isset($queryup->cake_id))? $queryup->cake_id:set_value('cake_id');
                     foreach($cakeresult as $cake):?>
@@ -517,7 +517,7 @@ $(document).ready(function(){
         <div class="control-group">
             <label class="control-label" for="firstname"><?php echo $this->lang->line('customer_name');?></label>
             <div class="controls">
-                <select  id="customer_id" style="width: 100%;"  name="customer_id">
+                <select disabled="disabled"  id="customer_id" style="width: 100%;"  name="customer_id">
                     <?php
                     $customer_id = (isset($queryup->customer_id))? $queryup->customer_id:set_value('customer_id');
                     foreach($customerresult as $customer):
@@ -531,7 +531,7 @@ $(document).ready(function(){
         <div class="control-group">
             <label class="control-label" for="lastname"><?php echo $this->lang->line('employee_name');?></label>
             <div class="controls">
-                <select  id="employee_id" style="width: 100%;"  name="employee_id">
+                <select disabled="disabled"  id="employee_id" style="width: 100%;"  name="employee_id">
                     <?php
                     $employee_id = (isset($queryup->employee_id))? $queryup->employee_id:set_value('employee_id');
                     foreach($employeeresult as $employee):
@@ -547,7 +547,7 @@ $(document).ready(function(){
         <div class="control-group">
             <label class="control-label" ><?php echo $this->lang->line('manager_name');?></label>
             <div class="controls">
-                <select  id="manager_id" style="width: 100%;"  name="manager_id">
+                <select disabled="disabled" id="manager_id" style="width: 100%;"  name="manager_id">
                     <?php
                     $manager_id = (isset($queryup->manager_id))? $queryup->manager_id:set_value('manager_id');
                     foreach($managerresult as $manager):
