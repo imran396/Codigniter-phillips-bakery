@@ -576,7 +576,7 @@ class Orders extends Crud_Controller
             $this->session->set_flashdata('success_msg','New order has been added successfully');
         }
 
-        $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
+        echo $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
 
         if(empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] != '303' ){
 
@@ -616,13 +616,15 @@ class Orders extends Crud_Controller
                 'discount'=> $orders['discount_price'],
                 'subtotal'=> $orders['total_price']
             );
+            print_r($RevelOrderData);
+            exit;
 
             try{
 
                 $custom =( $orders['cake_id'] > 0 ) ? $orders['cake_id'] :'';
-print_r($RevelOrderData);
-                echo $revel_order_id =  $this->revel_order->create($RevelOrderData,$custom);
-                exit;
+
+                $revel_order_id =  $this->revel_order->create($RevelOrderData,$custom);
+
 
             }catch (\Exception $e){
                 $orders['revel_order_id']  = null;
