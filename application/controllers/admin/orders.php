@@ -504,10 +504,62 @@ class Orders extends Crud_Controller
         $data['total_price']=isset($_REQUEST['total_price'])? $_REQUEST['total_price']:'';
         $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';
         $pluploadUploader_count=isset($_REQUEST['pluploadUploader_count'])? $_REQUEST['pluploadUploader_count']:'';
-
         $data['order_status'] = isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'300';
         $data['order_date']=time();
 
+
+        $array_orders_key =  array(
+            'order_id',
+            'cake_id',
+            'customer_id',
+            'employee_id',
+            'manager_id',
+            'location_id',
+            'order_date',
+            'delivery_type',
+            'pickup_location_id',
+            'delivery_zone_id',
+            'delivery_zone_surcharge',
+            'delivery_date',
+            'delivery_time',
+            'flavour_id',
+            'fondant',
+            'serving_id',
+            'shape_id',
+            'tiers',
+            'matrix_price',
+            'on_cake_image_needed',
+            'cake_email_photo',
+            'magic_cake_id',
+            'magic_surcharge',
+            'inscription',
+            'special_instruction',
+            'instructional_email_photo',
+            'vaughan_location',
+            'order_status',
+            'printed_image_surcharge',
+            'discount_price',
+            'total_price',
+            'override_price',
+            'order_status',
+            'order_date'
+
+
+        );
+
+        $array_delivery_key = array('name','phone','address_1','address_2','postal','city','province','delivery_instruction');
+
+        foreach($_REQUEST as $key => $val ){
+
+            if(in_array($key,$array_orders_key)){
+                $data[$key] = $val;
+            }
+
+            if(in_array($key,$array_delivery_key)){
+
+                $order_delivery[$key] = $val;
+            }
+        }
 
         $vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
 
