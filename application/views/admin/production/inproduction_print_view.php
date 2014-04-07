@@ -30,11 +30,11 @@
         }
         var start_date =$('#datepicker').val();
 
-        $('input[name="start_date1"]').val(start_date);
+        $('input[name="start_date"]').val(start_date);
 
         var end_date =$('#datepicker2').val();
 
-        $('input[name="end_date1"]').val(end_date);
+        $('input[name="end_date"]').val(end_date);
 
         var delivery_start_time =$('#delivery_start_time').val();
         $('input[name="delivery_start_time"]').val(delivery_start_time);
