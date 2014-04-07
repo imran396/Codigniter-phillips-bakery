@@ -409,7 +409,7 @@ $(document).ready(function(){
 <div class="widget-head">
     <h4 class="heading glyphicons edit"><i></i><?php echo $this->lang->line('cake_information');?></h4>
 </div>
-<?php  //print_r($queryup); ?>
+<?php  print_r($queryup); ?>
 <hr class="separator" />
 <div class="row-fluid">
     <div class="span6">
