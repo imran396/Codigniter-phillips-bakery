@@ -567,11 +567,12 @@ class Orders extends Crud_Controller
                     $order_data[$key] = $val;
                 }
             }
-            print_r($order_data);
+
 
             $orders=$this->orders_model->order_update($order_data,$orderID);
             $this->session->set_flashdata('success_msg','Order has been updated successfully');
-
+            //print_r($order_data);
+            //exit;
         }else{
 
             $orders=$this->orders_model->order_insert($data);
