@@ -508,61 +508,6 @@ class Orders extends Crud_Controller
         $data['order_date']=time();
 
 
-        $array_orders_key =  array(
-            'order_id',
-            'cake_id',
-            'customer_id',
-            'employee_id',
-            'manager_id',
-            'location_id',
-            'order_date',
-            'delivery_type',
-            'pickup_location_id',
-            'delivery_zone_id',
-            'delivery_zone_surcharge',
-            'delivery_date',
-            'delivery_time',
-            'flavour_id',
-            'fondant',
-            'serving_id',
-            'shape_id',
-            'tiers',
-            'matrix_price',
-            'on_cake_image_needed',
-            'cake_email_photo',
-            'magic_cake_id',
-            'magic_surcharge',
-            'inscription',
-            'special_instruction',
-            'instructional_email_photo',
-            'vaughan_location',
-            'order_status',
-            'printed_image_surcharge',
-            'discount_price',
-            'total_price',
-            'override_price',
-            'order_status',
-            'order_date'
-
-
-        );
-
-        $array_delivery_key = array('name','phone','address_1','address_2','postal','city','province','delivery_instruction');
-
-        foreach($_REQUEST as $key => $val ){
-
-            if(in_array($key,$array_orders_key)){
-                $data[$key] = $val;
-            }
-
-            if(in_array($key,$array_delivery_key)){
-
-                $order_delivery[$key] = $val;
-            }
-        }
-
-        print_r($data);
-        //exit;
 
         $vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
 
@@ -577,13 +522,55 @@ class Orders extends Crud_Controller
 
         if($orderID > 0 ){
 
-            $order_data = array(
-                'inscription' => $data['inscription'],
-                'special_instruction' => $data['special_instruction'],
-                'order_status' => $data['order_status']
+            $array_orders_key =  array(
+                'order_id',
+                'cake_id',
+                'customer_id',
+                'employee_id',
+                'manager_id',
+                'location_id',
+                'order_date',
+                'delivery_type',
+                'pickup_location_id',
+                'delivery_zone_id',
+                'delivery_zone_surcharge',
+                'delivery_date',
+                'delivery_time',
+                'flavour_id',
+                'fondant',
+                'serving_id',
+                'shape_id',
+                'tiers',
+                'matrix_price',
+                'on_cake_image_needed',
+                'cake_email_photo',
+                'magic_cake_id',
+                'magic_surcharge',
+                'inscription',
+                'special_instruction',
+                'instructional_email_photo',
+                'vaughan_location',
+                'order_status',
+                'printed_image_surcharge',
+                'discount_price',
+                'total_price',
+                'override_price',
+                'order_status',
+                'order_date'
+
+
             );
-                $orders=$this->orders_model->order_update($data,$orderID);
-                $this->session->set_flashdata('success_msg','Order has been updated successfully');
+
+            foreach($_REQUEST as $key => $val ){
+
+                if(in_array($key,$array_orders_key)){
+                    $order_data[$key] = $val;
+                }
+            }
+            print_r($order_data);
+
+            $orders=$this->orders_model->order_update($order_data,$orderID);
+            $this->session->set_flashdata('success_msg','Order has been updated successfully');
 
         }else{
 
