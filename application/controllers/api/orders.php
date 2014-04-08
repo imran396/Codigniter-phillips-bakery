@@ -747,13 +747,14 @@ class Orders extends API_Controller
         //$revel_order_ids = array();
 
         header("Content-type=> application/json");
-        $result = $this->db->select('revel_order_id')->where('order_status','303')->get('orders')->result();
+        $result = $this->db->select('revel_order_id,order_id')->where('order_status','303')->get('orders')->result();
 
         foreach($result as $rows){
             $revel_order_id = $rows->revel_order_id;
+            $order_id = $rows->order_id;
             $revel = ($this->revel_order->getRevelOrderSold($revel_order_id));
             if(isset($revel->remaining_due) && $revel->remaining_due == 0 ){
-                $this->orders_model->cronOrderSold($revel_order_id);
+                $this->orders_model->cronOrderSold($revel_order_id,$order_id);
                 $this->revel_order->updateOrderUser($revel_order_id);
 
                 //$revel_order_ids[] = $revel_order_id;

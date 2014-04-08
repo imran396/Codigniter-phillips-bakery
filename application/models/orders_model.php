@@ -422,9 +422,22 @@ class Orders_model extends Crud_Model
         $this->db->where(array('order_status'=>300,'order_date <=' =>$days ))->set(array('order_status'=>305,'is_deleted'=>1,'update_date'=>time()))->update('orders');
     }
 
-    function cronOrderSold($revel_order_id){
+    function cronOrderSold($revel_order_id,$order_id){
         if($this->getCronOrderStatus($revel_order_id) > 0){
             $this->db->where(array('revel_order_id'=>$revel_order_id))->set(array('order_status'=>304,'update_date'=>time()))->update('orders');
+
+            if(!empty($order_id)){
+
+                $orders= $this->orderEdit($order_id);
+                $empolyee_code = $this->logs_model->getEmployeeCode($orders->employee_id);
+                $log = array(
+                    'employee_id' => $empolyee_code,
+                    'audit_name' => 'Order Sold',
+                    'description' => 'order_id = '.$orders->order_id.', order_code='. $orders->order_code.', customer_id='. $orders->customer_id .',totalprice ='.$orders->total_price.',overrideprice='.$orders->override_price ,'order_status='.$orders->order_status
+                );
+                $this->logs_model->insertAuditLog($log);
+            }
+
         }
 
     }

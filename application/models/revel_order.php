@@ -284,6 +284,7 @@ class Revel_Order extends Revel_Model
         if ($payment) {
             $order['created_by'] = $payment['created_by'];
             $this->putResource('Order', $order, $orderId);
+
         }
     }
 
