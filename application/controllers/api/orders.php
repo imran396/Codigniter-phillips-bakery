@@ -261,8 +261,6 @@ class Orders extends API_Controller
 
         $array_delivery_key = array('name','phone','address_1','address_2','postal','city','province','delivery_instruction');
 
-
-
         foreach($_REQUEST as $key => $val ){
 
             if(in_array($key,$array_orders_key)){
@@ -276,22 +274,20 @@ class Orders extends API_Controller
         }
 
         $row = $this->orders_model->getOrderStatus($data['order_id']);
-        if($row->order_status < 303 ){
+        $total=((floatval($row->matrix_price)+floatval($row->printed_image_surcharge)+floatval($row->magic_surcharge)+floatval($row->delivery_zone_surcharge))-floatval($row->discount_price));
+        $price = array(
+            'total' => $total
+        );
+        $this->orders_model->order_update($price, $data['order_id']);
 
-            /*$vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
-            if($vaughan_location == 1 ){
-                $vaughan_location = $this->orders_model->getVaughanLocation();
-                $data['kitchen_location_id'] = $vaughan_location;
-            }else{
-                $data['kitchen_location_id'] = isset($_REQUEST['location_id'])? $_REQUEST['location_id']:'';
-            }*/
+        if($row->order_status < 303 ){
 
             $orders=$this->orders_model->order_update($data, $data['order_id']);
             if($orders['order_id']) {
 
-                if(isset($_REQUEST['employee_id'])){
+                if(isset($orders['employee_id'])){
 
-                    $empolyee_code = $this->logs_model->getEmployeeCode($_REQUEST['employee_id']);
+                    $empolyee_code = $this->logs_model->getEmployeeCode($orders['employee_id']);
                     $log = array(
                         'employee_id' => $empolyee_code,
                         'audit_name' => 'order updated',
@@ -329,7 +325,8 @@ class Orders extends API_Controller
 
             $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
 
-            if(empty($revel_order_id) && $orders['order_status'] != '300' ){
+            if(empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] == '303' ){
+
 
                 $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
 
@@ -352,6 +349,7 @@ class Orders extends API_Controller
                 $RevelOrderData = array(
 
                     'order_code' => $orders['order_code'],
+                    'employee_id' => $orders['employee_id'],
                     'revel_customer_id' => $revel_customer,
                     'revel_location_id' => $revel_location_id,
                     'revel_location_create_id' => $revel_location_create_id,
@@ -388,6 +386,7 @@ class Orders extends API_Controller
 
                     $RevelOrderData = array(
                         'revel_order_id' => $revel_order_id,
+                        'employee_id' => $orders['employee_id'],
                         'order_code' => $orders['order_code'],
                         'revel_customer_id' => $revel_customer,
                         'revel_location_id' => $revel_location,
@@ -424,7 +423,7 @@ class Orders extends API_Controller
                 $this->orders_model->instructionalImagesUpload($orders['order_id']);
             }
 
-            if($rows -> order_status == '301' ){
+            if($orders['order_status'] != 300 &&  $data['on_cake_image_needed'] == 1 ){
 
                 $cake_email_photo = isset($rows->cake_email_photo) ? $rows->cake_email_photo:'';
                 if($cake_email_photo == 1 ){

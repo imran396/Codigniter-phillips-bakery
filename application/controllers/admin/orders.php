@@ -322,13 +322,7 @@ class Orders extends Crud_Controller
         $magic_surcharge = $this->input->post('magic_surcharge');
         $delivery_zone_surcharge = $this->input->post('delivery_zone_surcharge');
         $discount_price = $this->input->post('discount_price');
-        $override_price = $this->input->post('override_price');
-        if( floatval($override_price) > 0 ){
-            echo $total=((floatval($override_price)+floatval($printed_image_surcharge)+floatval($magic_surcharge)+floatval($delivery_zone_surcharge))-floatval($discount_price));
-        }else{
-            echo $total=((floatval($matrix_price)+floatval($printed_image_surcharge)+floatval($magic_surcharge)+floatval($delivery_zone_surcharge))-floatval($discount_price));
-
-        }
+        echo $total=((floatval($matrix_price)+floatval($printed_image_surcharge)+floatval($magic_surcharge)+floatval($delivery_zone_surcharge))-floatval($discount_price));
 
 
     }
@@ -578,13 +572,10 @@ class Orders extends Crud_Controller
 
         $revel_order_id = $this->revel_order->getRevelID('orders', $orders['order_id']);
 
-        echo $orders['order_status'];
-
-        exit;
 
         if(empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] == '303' ){
 
-            $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
+
 
             if($orders['pickup_location_id'] > 0 && $orders['delivery_type']=='pickup'){
 
@@ -603,14 +594,14 @@ class Orders extends Crud_Controller
                 $revel_product_id = $this->revel_order->getEstablishmentProductID($revel_establishment_id , $orders['cake_id']);
 
             }
-
+            $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
             $revel_create_location_id = $this->revel_order->getRevelID('locations',$orders['location_id']);
-
             $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
 
             $RevelOrderData = array(
 
                 'order_code' => $orders['order_code'],
+                'employee_id' => $orders['employee_id'],
                 'revel_customer_id' => $revel_customer,
                 'revel_location_id' => $revel_location_id,
                 'revel_location_create_id' => $revel_create_location_id,
@@ -621,38 +612,60 @@ class Orders extends Crud_Controller
                 'subtotal'=> $orders['total_price']
             );
 
+
             try{
 
                 $custom =( $orders['cake_id'] > 0 ) ? $orders['cake_id'] :'';
 
-                echo $revel_order_id =  $this->revel_order->create($RevelOrderData,$custom);
-
-               /* $empolyee_code = $this->logs_model->getEmployeeCode($orders['employee_id']);
-                $log = array(
-                    'employee_id' => $empolyee_code,
-                    'audit_name' => 'Order Revel Send',
-                    'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price']
-                );
-                $this->logs_model->insertAuditLog($log);
-*/
-
+                $revel_order_id =  $this->revel_order->create($RevelOrderData,$custom);
 
             }catch (\Exception $e){
+
                 $orders['revel_order_id']  = null;
             }
 
             if($revel_order_id > 0){
 
-                //$orders['order_code'] = $status_code_revel;
-                echo $revel_order_id;
+                $revel['revel_order_id']  = $revel_order_id;
+                $orders=$this->orders_model->order_update($revel, $orders['order_id']);
 
-                $orders['revel_order_id']  = $revel_order_id;
-                $orders=$this->orders_model->order_update($orders, $orders['order_id']);
-
-                 exit;
             }
 
+
         }
+
+        if(!empty($revel_order_id)){
+
+                if($orders['pickup_location_id'] > 0 && $orders['delivery_type']=='pickup'){
+                    $revel_location_id = $this->revel_order->getRevelID('locations',$orders['pickup_location_id']);
+                }else{
+                    $revel_location_id = $this->revel_order->getRevelID('locations',$orders['location_id']);
+                }
+                $revel_customer = $this->revel_order->getRevelID('customers',$orders['customer_id']);
+                $revel_user = $this->revel_order->getRevelID('meta',$orders['employee_id']);
+
+
+                $RevelOrderData = array(
+                    'revel_order_id' => $revel_order_id,
+                    'employee_id' => $orders['employee_id'],
+                    'order_code' => $orders['order_code'],
+                    'revel_customer_id' => $revel_customer,
+                    'revel_location_id' => $revel_location_id,
+                    'revel_user_id' => $revel_user,
+                    'discount'=> $orders['discount_price'],
+                    'subtotal'=> $orders['total_price'],
+                );
+
+                $this->revel_order->update($RevelOrderData);
+                try{
+                    $this->revel_order->update($RevelOrderData);
+                } catch (\Exception $e){
+                    echo $e->getMessage();
+
+                    die;
+                }
+        }
+
         if(!empty($revel_order_id) && $orders['order_code'] && $orders['order_status'] == '305' ){
 
             $this->revel_order->delete($revel_order_id);
@@ -696,8 +709,8 @@ class Orders extends Crud_Controller
             }
         }
 
-        $this->saveBarcodeImage($orders['order_code']);
-        $this->createPDF($orders['order_code']);
+       // $this->saveBarcodeImage($orders['order_code']);
+       // $this->createPDF($orders['order_code']);
 
         $mailtouser = isset($_REQUEST['mailtouser']) ? $_REQUEST['mailtouser']:'';
         if($mailtouser == 1){
@@ -718,13 +731,13 @@ class Orders extends Crud_Controller
 
         if($orderID > 0 ){
 
-            if(isset($_REQUEST['employee_id'])){
+            if(isset($orders['employee_id'])){
 
-                    $empolyee_code = $this->logs_model->getEmployeeCode($_REQUEST['employee_id']);
+                    $empolyee_code = $this->logs_model->getEmployeeCode($orders['employee_id']);
                     $log = array(
                         'employee_id' => $empolyee_code,
                         'audit_name' => 'order updated',
-                        'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
+                        'description' => 'order_id = '.$orders['order_id'].', order_code='. $orders['order_code'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
                     );
                     $this->logs_model->insertAuditLog($log);
             }
@@ -732,8 +745,8 @@ class Orders extends Crud_Controller
 
         }else{
 
-            if(isset($_REQUEST['employee_id'])){
-                $empolyee_code = $this->logs_model->getEmployeeCode($_REQUEST['employee_id']);
+            if(isset($orders['employee_id'])){
+                $empolyee_code = $this->logs_model->getEmployeeCode($orders['employee_id']);
                 $log = array(
                     'employee_id' => $empolyee_code,
                     'audit_name' => 'order created',

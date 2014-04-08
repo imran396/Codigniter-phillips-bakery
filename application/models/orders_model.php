@@ -82,7 +82,7 @@ class Orders_model extends Crud_Model
 
     public function getOrderStatus($order_id){
 
-        return $row = $this->db->select('order_id,order_code,order_status,')->where('order_id',$order_id)->get('orders')->row();
+        return $row = $this->db->select('order_id,order_code,order_status,matrix_price,printed_image_surcharge,magic_surcharge,delivery_zone_surcharge,discount_price')->where('order_id',$order_id)->get('orders')->row();
     }
 
     function getCakes($category_id=0){
@@ -215,6 +215,7 @@ class Orders_model extends Crud_Model
 
 
         $data['update_date']=time();
+
         $order_id = $this->update($data,$order_id);
             $dbdata =$this->getOrder($order_id);
             $order['order_id']= $dbdata->order_id;

@@ -11,7 +11,6 @@ class Revel_Order extends Revel_Model
     {
         $created = date('Y-m-d') . 'T' . date('H:i:s');
 
-
         $revelData = array(
             "items"     => array(array(
                 "updated_date"           => $created,
@@ -120,7 +119,16 @@ class Revel_Order extends Revel_Model
             )
         );
 
-        $this->postResource('OrderAllInOne', $revelData, true);
+        $message = $this->postResource('OrderAllInOne', $revelData, true);
+        $empolyee_code = $this->logs_model->getEmployeeCode((int)$data['employee_id']);
+        $log = array(
+            'employee_id' => $empolyee_code,
+            'audit_name' => 'Order Revel Create',
+            'description' => $message
+        );
+
+        $this->logs_model->insertAuditLog($log);
+
         return basename($this->headers['location']) ;
     }
 
@@ -181,7 +189,18 @@ class Revel_Order extends Revel_Model
             "web_order"               => true
         );
 
-        return $this->putResource('Order', $revelData, $data['revel_order_id'], true);
+        $message = $this->putResource('Order', $revelData, $data['revel_order_id'], true);
+
+        $empolyee_code = $this->logs_model->getEmployeeCode((int)$data['employee_id']);
+        $log = array(
+            'employee_id' => $empolyee_code,
+            'audit_name' => 'Order Revel Update',
+            'description' => $message
+        );
+
+        $this->logs_model->insertAuditLog($log);
+        return $message;
+
     }
 
     public function delete($revel_order_id){

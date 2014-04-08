@@ -59,7 +59,6 @@
 
         font-size:16px;
         line-height:20px;
-        text-align: center;
 
     }
 

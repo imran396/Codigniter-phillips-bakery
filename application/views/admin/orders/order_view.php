@@ -325,11 +325,10 @@ $(document).ready(function(){
         var printed_image_surcharge = parseFloat($("#printed_image_surcharge").val());
         var magic_surcharge = parseFloat($("#magic_surcharge").val());
         var delivery_zone_surcharge = parseFloat($("#delivery_zone_surcharge").val());
-        var override_price = parseFloat($("#override_price").val());
 
         $.ajax({
             url:"<?php echo site_url('admin/orders/getTotalPrice')?>",
-            data:"matrix_price="+matrix_price+"&discount_price="+discount_price+"&printed_image_surcharge="+printed_image_surcharge+"&magic_surcharge="+magic_surcharge+"&delivery_zone_surcharge="+delivery_zone_surcharge+"&override_price="+override_price,
+            data:"matrix_price="+matrix_price+"&discount_price="+discount_price+"&printed_image_surcharge="+printed_image_surcharge+"&magic_surcharge="+magic_surcharge+"&delivery_zone_surcharge="+delivery_zone_surcharge,
             type:"post",
             success: function(val){
                 //console.log(val);
@@ -1024,6 +1023,10 @@ if($uporder_id > 0){
         <input type="hidden"  name="total_price" id="total_price" value="<?php echo $total_price;?>">
         <td><?php echo $this->lang->line('total_price');?></td><td>$<span id="totalprice"><?php echo $total_price;?></span><span style="float: right; display: inline-block"><button type="button" id="totalPrice" class="btn btn-default"><?php echo $this->lang->line('total');?></button></span></td>
     </tr>
+    <tr>
+        <td>Override Price</td><td>$<span id="totalprice"><input type="text" value="<?php echo $override_price = (isset($queryup->override_price))? $queryup->override_price:'0.00'; ?>" name="override_price" id="override_price"></span></td>
+    </tr>
+
 
 
 </table>

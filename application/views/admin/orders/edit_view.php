@@ -326,12 +326,11 @@ $(document).ready(function(){
         var printed_image_surcharge = parseFloat($("#printed_image_surcharge").val());
         var magic_surcharge = parseFloat($("#magic_surcharge").val());
         var delivery_zone_surcharge = parseFloat($("#delivery_zone_surcharge").val());
-        var override_price = parseFloat($("#override_price").val());
 
 
         $.ajax({
             url:"<?php echo site_url('admin/orders/getTotalPrice')?>",
-            data:"matrix_price="+matrix_price+"&discount_price="+discount_price+"&printed_image_surcharge="+printed_image_surcharge+"&magic_surcharge="+magic_surcharge+"&delivery_zone_surcharge="+delivery_zone_surcharge+"&override_price="+override_price,
+            data:"matrix_price="+matrix_price+"&discount_price="+discount_price+"&printed_image_surcharge="+printed_image_surcharge+"&magic_surcharge="+magic_surcharge+"&delivery_zone_surcharge="+delivery_zone_surcharge,
             type:"post",
             success: function(val){
                 //console.log(val);
@@ -454,15 +453,14 @@ $(document).ready(function(){
             </div>
         </div>
         <?php
-         $tiers = (isset($queryup->orders_tiers))? $queryup->orders_tiers:set_value('tiers');
-
+         $tiers = (isset($queryup->tiers))? $queryup->tiers:set_value('tiers');
         ?>
-        <div class="control-group" <?php if(!$tiers >  0 ){ echo "id='hide_tiers'"; } ?> >
+        <div class="control-group" <?php if($tiers ==  0 ){ echo "id='hide_tiers'"; } ?> >
             <label class="control-label" for="email"><?php echo $this->lang->line('tiers');?></label>
             <div class="controls">
                 <select class="search_dropdown"  id="tiers" style="width: 100%;"  name="tiers">
                     <?php
-                     for($i=1; 7 >= $i ; $i++ ){
+                    for($i=1; 7 >= $i ; $i++ ){
 
                             ?>
                             <option value="<?php echo $i; ?>" <?php if($tiers == $i ){ echo "selected='selected'"; } ?> ><?php echo $i; ?></option>
@@ -665,23 +663,13 @@ $(document).ready(function(){
                 <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('phone_number');?>" value="<?php echo(isset($queryup->phone))? $queryup->phone:set_value('phone'); ?>"  class="validate[required,custom[phone]] span10" name="phone" id="phone"  />
             </div>
         </div>
-        <!--
-        <div class="control-group">
-            <label class="control-label"><?php /*echo $this->lang->line('email');*/ ?></label>
-            <div class="controls">
-                <input type="text" placeholder="<?php /*echo $this->lang->line('enter').' '.$this->lang->line('email');*/ ?>" value="<?php /*echo(isset($queryup->email))? $queryup->email:set_value('email'); */?>"  class="validate[custom[email]] span10" name="email" id="email"  />
-            </div>
-        </div>
-        -->
-
 
         <div class="control-group">
             <label class="control-label"><?php echo $this->lang->line('delivery_instruction');?></label>
             <div class="controls">
-                <textarea rows="" style="width: 320px; height: 95px" class="midium-textarea" cols="" name="delivery_instruction" id="delivery_instruction"> <?php echo (isset($queryup->delivery_instruction))? $queryup->delivery_instruction:set_value('delivery_instruction'); ?></textarea>
+                <textarea rows="" style="width: 320px; height: 95px" class="midium-textarea" cols="" name="delivery_instruction" id="delivery_instruction"><?php echo (isset($queryup->delivery_instruction))? $queryup->delivery_instruction:set_value('delivery_instruction'); ?></textarea>
             </div>
         </div>
-
 
     </div>
     <div class="span6">
@@ -908,9 +896,7 @@ if($this->productions_model->orderNotes($queryup->order_id)){
     <tr>
         <?php $matrix_price = (isset($queryup->matrix_price))? $queryup->matrix_price:'0.00'; ?>
         <input type="hidden" name="matrix_price" id="matrix_price" value="<?php echo $matrix_price; ?>">
-        <td><?php echo $this->lang->line('matrix_price');?></td><td><span id="matrixprice" >$<?php echo $matrix_price; ?></span>
-            <span id="override_price1" ><?php $override_price = (isset($queryup->override_price))? $queryup->override_price:'0.00'; ?><input type="text" value="<?php echo $override_price; ?>" name="override_price" id="override_price"></span>
-            </td>
+        <td><?php echo $this->lang->line('matrix_price');?></td><td><span id="matrixprice" >$<?php echo $matrix_price; ?></span></td>
     </tr>
     <tr>
         <?php $discount_price = (isset($queryup->discount_price))? $queryup->discount_price:'0.00'; ?>
@@ -933,10 +919,14 @@ if($this->productions_model->orderNotes($queryup->order_id)){
         <td><?php echo $this->lang->line('delivery_zone_surcharge');?></td><td id="deliveryzonesurcharge">$<?php echo $delivery_zone_surcharge; ?></td>
     </tr>
 
-<tr>
+    <tr>
     <?php $total_price = (isset($queryup->total_price))? $queryup->total_price:'0.00'; ?>
     <input type="hidden"  name="total_price" id="total_price" value="<?php echo $total_price;?>">
         <td><?php echo $this->lang->line('total_price');?></td><td>$<span id="totalprice"><?php echo $total_price;?></span><span style="float: right; display: inline-block"><button type="button" id="totalPrice" class="btn btn-default"><?php echo $this->lang->line('total');?></button></span></td>
+    </tr>
+
+    <tr>
+    <td>Override Price</td><td>$<span id="totalprice"><input type="text" value="<?php echo $override_price = (isset($queryup->override_price))? $queryup->override_price:'0.00'; ?>" name="override_price" id="override_price"></span></td>
     </tr>
 
 
