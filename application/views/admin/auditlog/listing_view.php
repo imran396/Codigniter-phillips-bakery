@@ -62,7 +62,7 @@
                             <td> <?php echo $rows->id; ?></td>
                             <td> <?php echo $rows->employee_id; ?></td>
                             <td> <?php echo $rows->audit_name; ?></td>
-                            <td> <?php echo wordLimit($rows->description,5); ?></td>
+                            <td> <?php echo $rows->description; ?></td>
                             <td> <?php echo $rows->created_time; ?></td>
                         </tr>
                         <?php $i++; endforeach; ?>
