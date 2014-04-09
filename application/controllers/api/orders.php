@@ -395,9 +395,8 @@ class Orders extends API_Controller
                         'subtotal'=> $orders['total_price'],
                     );
 
-                    $this->revel_order->update($RevelOrderData);
                     try{
-                        $this->revel_order->update($RevelOrderData);
+                        //$this->revel_order->update($RevelOrderData);
                     } catch (\Exception $e){
                         echo $e->getMessage();
 

@@ -646,6 +646,7 @@ class Orders extends Crud_Controller
 
 
                 $RevelOrderData = array(
+
                     'revel_order_id' => $revel_order_id,
                     'employee_id' => $orders['employee_id'],
                     'order_code' => $orders['order_code'],
@@ -656,9 +657,9 @@ class Orders extends Crud_Controller
                     'subtotal'=> $orders['total_price'],
                 );
 
-                $this->revel_order->update($RevelOrderData);
+
                 try{
-                    $this->revel_order->update($RevelOrderData);
+                    //$this->revel_order->update($RevelOrderData);
                 } catch (\Exception $e){
                     echo $e->getMessage();
 
