@@ -561,6 +561,9 @@ class Orders extends Crud_Controller
                 }
             }
 
+            print_r($order_data);
+            exit;
+
             $orders=$this->orders_model->order_update($order_data,$orderID);
 
             if($order_data['delivery_type'] == "pickup" && $orderID > 0 ){
@@ -721,8 +724,8 @@ class Orders extends Crud_Controller
             }
         }
 
-       $this->saveBarcodeImage($orders['order_code']);
-       $this->createPDF($orders['order_code']);
+       //$this->saveBarcodeImage($orders['order_code']);
+       //$this->createPDF($orders['order_code']);
 
         $mailtouser = isset($_REQUEST['mailtouser']) ? $_REQUEST['mailtouser']:'';
         if($mailtouser == 1){
