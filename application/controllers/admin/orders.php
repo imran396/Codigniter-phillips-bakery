@@ -574,7 +574,7 @@ class Orders extends Crud_Controller
 
             }elseif ($order_data['delivery_type'] == "pickup" && $orderID > 0 ){
 
-                $pickup['location_id']  = 0;
+                $pickup['pickup_location_id']  = 0;
                 $this->orders_model->order_update($pickup,$orderID);
 
             }

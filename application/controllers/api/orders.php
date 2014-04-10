@@ -280,7 +280,7 @@ class Orders extends API_Controller
             $orders=$this->orders_model->order_update($data, $data['order_id']);
 
             $row = $this->orders_model->orderEdit($data['order_id']);
-            $order_id = $data['order_id'];
+            $order_id = $row['order_id'];
 
             if($row->delivery_type == "pickup"){
 
@@ -291,7 +291,7 @@ class Orders extends API_Controller
 
             }else{
 
-                $pickup['location_id']  = 0;
+                $pickup['pickup_location_id']  = 0;
                 $this->orders_model->order_update($pickup,$order_id);
 
             }
