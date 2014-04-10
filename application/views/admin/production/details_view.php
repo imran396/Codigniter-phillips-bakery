@@ -43,7 +43,7 @@
         window.print()
     }
 </script>
-<?php echo var_dump($queryup); ?>
+
 <div class="container-fluid fixed container-new">
 <div class="navbar main">
     <div class="icon-wrapper"><a href="/admin/productions" class="icon-home"></a></div>
