@@ -210,26 +210,11 @@ $(document).ready(function(){
     $('#delivery_type').change(function() {
 
         var delivery_type =$("#delivery_type").val();
-        var order_id =$("#order_id").val();
-
-        $.ajax({
-            url:"<?php echo site_url('admin/orders/changeDelivery')?>",
-            data:"order_id="+order_id+"&delivery_type="+delivery_type,
-            type:"post",
-            success: function(val){
-
-            }
-        })
-
-
-        if( delivery_type == 'delivery' ){
-
+        if(delivery_type =='delivery'){
             $("#delivery-info").show();
             $("#locationid").hide();
             $("#deliveryzoneid").show();
-
         }else{
-
             $("#delivery-info").hide();
             $("#deliveryzoneid").hide();
             $("#locationid").show();
