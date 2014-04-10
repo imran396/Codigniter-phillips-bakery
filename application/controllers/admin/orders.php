@@ -422,25 +422,6 @@ class Orders extends Crud_Controller
 
     }
 
-    public function changeDelivery(){
-
-        $getData = $this->input->post();
-
-        $order_id       = $getData['order_id'];
-        $delivery_type  = $getData['delivery_type'];
-
-        if($delivery_type == "pickup" && $order_id > 0 ){
-
-            $data['delivery_zone_id']  = 0;
-            $data['delivery_zone_surcharge']  = '0.00';
-            $this->orders_model->order_update($data,$order_id);
-            $this->db->where('delivery_order_id',$order_id)->delete('order_delivery');
-
-        }
-
-
-    }
-
     public function edit1($order_id){
 
         $this->data['active']=$this->uri->segment(2,0);
@@ -580,8 +561,17 @@ class Orders extends Crud_Controller
                 }
             }
 
-
             $orders=$this->orders_model->order_update($order_data,$orderID);
+
+            if($order_data['delivery_type'] == "pickup" && $orderID > 0 ){
+
+                $data['delivery_zone_id']  = 0;
+                $data['delivery_zone_surcharge']  = '0.00';
+                $this->orders_model->order_update($data,$orderID);
+                $this->db->where('delivery_order_id',$orderID)->delete('order_delivery');
+
+            }
+
             $this->session->set_flashdata('success_msg','Order has been updated successfully');
 
         }else{
@@ -706,6 +696,7 @@ class Orders extends Crud_Controller
 
             $this->orders_model->delivery_order($order_delivery,$orders['order_id']);
         }
+
         if($_FILES['onCakeImage']['name'] !=""){
             $this->orders_model->doUpload($orders['order_id']);
         }
