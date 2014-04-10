@@ -421,6 +421,26 @@ class Orders extends Crud_Controller
         $this->layout->view('admin/orders/edit_view', $this->data);
 
     }
+
+    public function changeDelivery(){
+
+        $getData = $this->input->post();
+
+        $order_id       = $getData['order_id'];
+        $delivery_type  = $getData['delivery_type'];
+
+        if($delivery_type == "pickup" && $order_id > 0 ){
+
+            $data['delivery_zone_id']  = 0;
+            $data['delivery_zone_surcharge']  = '0.00';
+            $this->orders_model->order_update($data,$order_id);
+            $this->db->where('delivery_order_id',$order_id)->delete('order_delivery');
+
+        }
+
+
+    }
+
     public function edit1($order_id){
 
         $this->data['active']=$this->uri->segment(2,0);

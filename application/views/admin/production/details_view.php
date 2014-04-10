@@ -191,9 +191,9 @@
                         <div class="title">Flavor</div><?php echo $queryup->flavour_name; ?>
                     </div>
                 <?php } ?>
-                <?php if( $queryup->shape || $queryup->serving_size ){ ?>
+                <?php if( $queryup->serving_size ){ ?>
                     <div class="line">
-                        <div class="title">Shape</div><?php  echo $queryup->serving_size; ?> <?php if( $queryup->shape){ ?> and  <?php echo $queryup->shape; } ?>
+                        <div class="title">Shape</div><?php  echo $queryup->serving_size; ?>
                     </div>
                 <?php } ?>
                 <?php if( $queryup->serving_title){ ?>

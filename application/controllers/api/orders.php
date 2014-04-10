@@ -273,11 +273,21 @@ class Orders extends API_Controller
             }
         }
 
-        $row = $this->orders_model->getOrderStatus($data['order_id']);
+        $row = $this->orders_model->orderEdit($data['order_id']);
+        if($row->delivery_type == "pickup"){
+
+            $data['delivery_zone_id']  = 0;
+            $data['delivery_zone_surcharge']  = '0.00';
+            $this->orders_model->order_update($data,$row->order_id);
+            $this->db->where('delivery_order_id',$row->order_id)->delete('order_delivery');
+
+        }
+
         $total=((floatval($row->matrix_price)+floatval($row->printed_image_surcharge)+floatval($row->magic_surcharge)+floatval($row->delivery_zone_surcharge))-floatval($row->discount_price));
         $price = array(
             'total' => $total
         );
+
         $this->orders_model->order_update($price, $data['order_id']);
 
         if($row->order_status < 303 ){
