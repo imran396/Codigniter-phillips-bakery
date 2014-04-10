@@ -643,8 +643,10 @@ class Orders extends Crud_Controller
 
             if($revel_order_id > 0){
 
+
                 $revel['revel_order_id']  = $revel_order_id;
                 $orders=$this->orders_model->order_update($revel, $orders['order_id']);
+                $this->saveBarcodeImage($revel_order_id);
 
             }
 

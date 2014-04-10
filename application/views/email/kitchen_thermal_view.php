@@ -1,12 +1,12 @@
 <script>
-   window.print();
+    window.print();
     CheckWindowState();
 
     function CheckWindowState()    {
         if(document.readyState=="complete") {
           window.close();
         } else {
-            setTimeout("CheckWindowState()", 2000)
+           setTimeout("CheckWindowState()", 2000)
         }
     }
 </script>
@@ -98,9 +98,7 @@
         float:right;
         width:55%;
         text-align: right;
-    }
-
-        font-size: 16px;
+        font-size:16px;
     }
     .col_delivery
     {
@@ -130,7 +128,7 @@
         font-weight: bold;
         text-align: right;
     }
-    p span{
+    .col_name{
         float: right;
         display: inline-block;
     }
@@ -145,13 +143,12 @@ if($queryup->delivery_type == 'pickup' ){
   echo "DELIVERY";
 }
 
-
 ?>
 </h1>
 <h2 class="cen" ><?php if( $queryup->order_status !=301 ){ echo strtoupper($queryup ->orderstatus); }else{ echo "ORDER"; } ?></h2>
 
 **********************************************************
-<p><span><?php echo strtoupper($queryup->employee_first_name.' '.$queryup->employee_last_name[0]); ?></span></p>
+<div><span><?php if( $queryup->order_status ==303 &&  $queryup->revel_order_id > 0 ){ echo "SYS ID #".$queryup ->order_code; } ?></span><span class="col_2"><?php echo strtoupper($queryup->employee_first_name.' '.$queryup->employee_last_name[0]); ?></span></div>
 **********************************************************
 
 <div class="clr"></div>
@@ -282,9 +279,13 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id);
 **********************************************************
 </br>
 <p class="cen">
-    <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
+    <?php if( $queryup->order_status ==303 && $queryup->revel_order_id > 0 ){ ?>
+        <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
+    <?php }else{ ?>
+        <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
+    <?php } ?>
 </p>
-    <p class="cen" >ORDER #<?php echo $queryup->order_code; ?></p>
+    <p class="cen" >ORDER #<?php if( $queryup->order_status ==303 && $queryup->revel_order_id > 0 ){  echo $queryup->revel_order_id; }else{ echo $queryup->order_code; }  ?></p>
     <h6 class="cen" ><strong><?php echo ($queryup->first_name.' '.$queryup->last_name); ?></strong></h6>
 
     <br/>
