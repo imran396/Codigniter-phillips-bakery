@@ -279,14 +279,22 @@ class Orders extends API_Controller
 
             $orders=$this->orders_model->order_update($data, $data['order_id']);
 
+            $order_id = $data['order_id'];
+
             if($row->delivery_type == "pickup"){
 
-                $data['delivery_zone_id']  = 0;
-                $data['delivery_zone_surcharge']  = '0.00';
-                $this->orders_model->order_update($data,$row->order_id);
-                $this->db->where('delivery_order_id',$row->order_id)->delete('order_delivery');
+                $delivery['delivery_zone_id']  = 0;
+                $delivery['delivery_zone_surcharge']  = '0.00';
+                $this->orders_model->order_update($delivery,$order_id);
+                $this->db->where('delivery_order_id',$order_id)->delete('order_delivery');
+
+            }else{
+
+                $pickup['location_id']  = 0;
+                $this->orders_model->order_update($pickup,$order_id);
 
             }
+
 
             $total=((floatval($row->matrix_price)+floatval($row->printed_image_surcharge)+floatval($row->magic_surcharge)+floatval($row->delivery_zone_surcharge))-floatval($row->discount_price));
             $price = array(

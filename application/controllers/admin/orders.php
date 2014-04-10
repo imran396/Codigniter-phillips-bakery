@@ -561,17 +561,21 @@ class Orders extends Crud_Controller
                 }
             }
 
-            print_r($order_data);
-            exit;
+
 
             $orders=$this->orders_model->order_update($order_data,$orderID);
 
             if($order_data['delivery_type'] == "pickup" && $orderID > 0 ){
 
-                $data['delivery_zone_id']  = 0;
-                $data['delivery_zone_surcharge']  = '0.00';
-                $this->orders_model->order_update($data,$orderID);
+                $delivery['delivery_zone_id']  = 0;
+                $delivery['delivery_zone_surcharge']  = '0.00';
+                $this->orders_model->order_update($delivery,$orderID);
                 $this->db->where('delivery_order_id',$orderID)->delete('order_delivery');
+
+            }elseif ($order_data['delivery_type'] == "pickup" && $orderID > 0 ){
+
+                $pickup['location_id']  = 0;
+                $this->orders_model->order_update($pickup,$orderID);
 
             }
 
