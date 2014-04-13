@@ -45,9 +45,9 @@
                     <thead>
                     <tr>
                         <th width="70">log #</th>
-                        <th width="">Employee Id</th>
-                        <th width="">Created</th>
-                        <th width="">Log Name</th>
+                        <th width="100">Employee Id</th>
+                        <th width="120">Created</th>
+                        <th width="150">Log Name</th>
                         <th width="">Description</th>
 
                     </tr>
