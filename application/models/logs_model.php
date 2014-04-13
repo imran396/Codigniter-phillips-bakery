@@ -34,7 +34,7 @@ class Logs_model extends Crud_Model
     public function getListing($start)
     {
 
-        $per_page = 10;
+        $per_page = 20;
         $page     = intval($start);
         if ($page <= 0) $page = 1;
 
@@ -60,9 +60,9 @@ class Logs_model extends Crud_Model
                 FROM `auditlog`
                 WHERE(`id` > 0 AND  LOWER(`employee_id`) LIKE '%$search%')
                 || ( `id` > 0 AND LOWER(`audit_name`) LIKE '%$search%')
-                || (`id` > 0 AND `description` LIKE '%$search%')";
+                || (`id` > 0 AND `description` LIKE '%$search%' ORDER BY auditlog.created_time DESC )";
 
-        $per_page=10;
+        $per_page=20;
         $page   = intval($start);
         if($page<=0)  $page  = 1;
         $limit=($page-1)*$per_page;
