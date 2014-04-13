@@ -45,10 +45,11 @@
                     <thead>
                     <tr>
                         <th width="70">log #</th>
-                        <th width="166">Employee Id</th>
-                        <th width="93">Log Name</th>
-                        <th width="93">Description</th>
-                        <th width="93">Created</th>
+                        <th width="">Employee Id</th>
+                        <th width="">Created</th>
+                        <th width="">Log Name</th>
+                        <th width="">Description</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -61,9 +62,10 @@
                         <tr>
                             <td> <?php echo $rows->id; ?></td>
                             <td> <?php echo $rows->employee_id; ?></td>
+                            <td> <?php echo $rows->created_time; ?></td>
                             <td> <?php echo $rows->audit_name; ?></td>
                             <td> <?php echo $rows->description; ?></td>
-                            <td> <?php echo $rows->created_time; ?></td>
+
                         </tr>
                         <?php $i++; endforeach; ?>
 
