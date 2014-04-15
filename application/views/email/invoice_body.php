@@ -1,3 +1,4 @@
+
 <?php echo $this->lang->line('global_email_subject'); ?>  -  Cake <?php if( $queryup->order_status !=301 ){ echo ucfirst( $queryup->orderstatus).PHP_EOL; }else{ echo "Invoice".PHP_EOL; } ?>
 
 <?php

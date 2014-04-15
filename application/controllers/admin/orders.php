@@ -995,4 +995,29 @@ class Orders extends Crud_Controller
         var_dump($data);
     }
 
+    public function  kitchenPrint($order_id=95){
+
+
+        $result= $this->productions_model->orderPrint($order_id=95);
+        $data['queryup']=$result->row();
+        $texttoprint = $this->load->view('email/estimate_body', $data,true);
+//exit;
+        //$texttoprint = "RECIPT TEXT \n NEXT LINE \n MORE STUFF";
+        $texttoprint = stripslashes($texttoprint);
+
+        $fp = fsockopen("192.168.1.250", 9100, $errno, $errstr, 10);
+        if (!$fp) {
+            echo "$errstr ($errno)<br />\n";
+        } else {
+            fwrite($fp, "\033\100");
+            $out = $texttoprint . "\r\n";
+            fwrite($fp, $out);
+            fwrite($fp, "\012\012\012\012\012\012\012\012\012\033\151\010\004\001");
+            fclose($fp);
+        }
+
+
+    }
+
+
 }

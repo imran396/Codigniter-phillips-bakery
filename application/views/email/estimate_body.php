@@ -1,8 +1,9 @@
-<?php echo $this->lang->line('global_email_subject'); ?> Bakery - Cake Estimate
+<?php echo "<font face='arial' size='20'>".$this->lang->line('global_email_subject'); ?> Bakery - Cake Estimate</font>
 
 <?php echo $this->lang->line('global_email_subject'); ?>
 --------------------------
 <?php
+
 $locations=$this->locations_model->getLocations($queryup->location_id);
 ?>
 
@@ -91,8 +92,8 @@ FLAVOUR: 			    <?php echo $queryup->flavour_name.PHP_EOL; ?>
 <?php if($queryup->serving_size){ ?>
 SIZE: 			        <?php echo $queryup->serving_size.PHP_EOL; ?>
 <?php } ?>
-<?php if($queryup->shape){ ?>
-SHAPE: 			        <?php echo $queryup->shape.PHP_EOL; ?>
+<?php if($queryup->shape_id){ ?>
+SHAPE: 			        <?php echo $queryup->shape_id.PHP_EOL; ?>
 <?php } ?>
 <?php if($queryup->serving_title){ ?>
 SERVING: 			    <?php echo $queryup->serving_title.PHP_EOL; ?>
@@ -101,8 +102,8 @@ SERVING: 			    <?php echo $queryup->serving_title.PHP_EOL; ?>
 TIERS: 			        <?php echo $queryup->tiers.PHP_EOL; ?>
 <?php } ?>
 
-<?php if($queryup->printed_imag_surcharge >0 ){ ?>
-PRINTED IMAGE:                                  <?php echo $queryup->printed_imag_surcharge.PHP_EOL; ?>
+<?php if($queryup->printed_image_surcharge > 0 ){ ?>
+PRINTED IMAGE:                                  <?php echo $queryup->printed_image_surcharge.PHP_EOL; ?>
 <?php } ?>
 <?php if($queryup->delivery_zone_surcharge >0 ){ ?>
 DELIVERY:                                       <?php echo $queryup->delivery_zone_surcharge.PHP_EOL; ?>
@@ -117,7 +118,7 @@ DISCOUNT:                                       <?php echo $queryup->discount_pr
 TOTAL:                                         <?php if($queryup->override_price){ echo $queryup->override_price.PHP_EOL;}else{ echo $queryup->total_price.PHP_EOL;} ?>
 
 ------------------------------------------------------------
-
+<img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
 Thank You
 <?php echo $locations[0]->email; ?>
 stphillipsbakery.com

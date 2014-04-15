@@ -774,7 +774,6 @@ class Orders_model extends Crud_Model
                 ON ( OD.delivery_order_id = O.order_id ) WHERE O.is_deleted != 1 && kitchen_location_id = $vaughan_location && vaughan_location = 1  && order_status != 300 && vaughan_print !=1
               GROUP BY O.order_id ORDER BY O.update_date ASC LIMIT 0,10 ";
 
-
         if($insert){
             $inserted = $this->db->query($insert)->result_array();
 
@@ -895,15 +894,16 @@ class Orders_model extends Crud_Model
     }
 
    public function getOtrderAllNotes(){
-        $data = $this->db->select('order_id,employee_id,create_date,notes')->where(array('is_deleted !='=>1))->order_by('order_id','asc')->get('order_notes')->result_array();
+
+       $data = $this->db->select('order_id,employee_id,create_date,notes')->where(array('is_deleted !='=>1))->order_by('order_id','asc')->get('order_notes')->result_array();
         foreach($data as $key=>$val){
             $data[$key]['order_id'] = (int) $data[$key]['order_id'];
             $data[$key]['employee_id'] = (int) $data[$key]['employee_id'];
             $data[$key]['create_date'] = (string) $data[$key]['create_date'];
             $data[$key]['notes'] =  $data[$key]['notes'];
         }
-
         return $data;
+
     }
     public function getLastUpdateAllNotes($lastdate){
 
