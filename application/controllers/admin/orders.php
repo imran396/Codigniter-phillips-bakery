@@ -243,7 +243,7 @@ class Orders extends Crud_Controller
 
         $servings ="";
         foreach($matrix as $priceserv):
-            echo $serving_id;
+           // echo $serving_id;
             $selected = ($serving_id == $priceserv->serving_id && $cake_id == $priceserv->cake_id && $locationid == $priceserv->location_id  ) ? "selected='selected'" : "";
             $servings .= "<option ".$selected." value='".$priceserv->serving_id."'>".$priceserv->servings_title."</option>";
 
@@ -284,21 +284,27 @@ class Orders extends Crud_Controller
             }
 
         endforeach;
+        $query="SELECT servings.printing_surcharge FROM servings
+        WHERE servings.serving_id = $serving_id";
+        if($this->db->query($query)->num_rows() > 0){
 
-        echo $servings."@a&".$size."@a&".$matrix_price."@a&".$s2id_servings."@a&".$s2id_size;
+            $row = $this->db->query($query)->row();
+            $printed_image_surcharge = $row->printing_surcharge;
+        }
+
+        echo $servings."@a&".$size."@a&".$matrix_price."@a&".$s2id_servings."@a&".$s2id_size."@a&".$printed_image_surcharge;
 
     }
 
     function getPrintedImageSurcharge(){
 
-        $price_matrix_id = $this->input->post('price_matrix_id');
-        $query="SELECT servings.printing_surcharge FROM price_matrix
-        LEFT JOIN servings ON price_matrix.serving_id = servings.serving_id
-        WHERE price_matrix.price_matrix_id = $price_matrix_id";
+        $serving_id = $this->input->post('serving_id');
+        $query="SELECT servings.printing_surcharge FROM servings
+        WHERE servings.serving_id = $serving_id";
         if($this->db->query($query)->num_rows() > 0){
 
-            $matrix = $this->db->query($query)->row();
-            echo $matrix->printing_surcharge;
+            $row = $this->db->query($query)->row();
+            echo $row->printing_surcharge;
         }
 
 

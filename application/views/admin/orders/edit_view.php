@@ -161,15 +161,13 @@ $(document).ready(function(){
         var serving_id =$("#serving_id").val();
         var cake_id =$("#cake_id").val();
         var location_id =$("#location_id").val();
-        if(!cake_id > 0 ){
-            return false;
-        }
+
         $.ajax({
             url:"<?php echo site_url('admin/orders/getPrice')?>",
             data:"cake_id="+cake_id+"&serving_id="+serving_id+'&location_id='+location_id,
             type:"post",
             success: function(val){
-                console.log(val);
+               // console.log(val);
                 var n=val.split("@a&");
                 $('#serving_id').html(n[0]);
                 /* $('#size').html(n[1]);*/
@@ -178,6 +176,10 @@ $(document).ready(function(){
                 $('#matrixprice').html("$"+n[2]);
                 // $('#s2id_serving_id a span').html(n[3]);
                 $('#s2id_size_id a span').html(n[4]);
+                if( $('#custom_cake_surcharge').is(':checked') ){
+                    $('#printed_image_surcharge').val(n[5]);
+                    $('#printedimagesurcharge').html("$"+n[5]);
+                }
             }
         })
     });
@@ -269,8 +271,8 @@ $(document).ready(function(){
 
         if( $(this).is(':checked') ){
 
-            var price_matrix_id =$("#servings").val();
-            if(price_matrix_id == 0 ){
+            var serving_id =$("#serving_id").val();
+            if(serving_id == 0 ){
                 alert("Please select servings for printing surcharge");
                 return false;
             }
@@ -278,7 +280,7 @@ $(document).ready(function(){
             $("#cakeemailphoto").show();
             $.ajax({
                 url:"<?php echo site_url('admin/orders/getPrintedImageSurcharge')?>",
-                data:"price_matrix_id="+price_matrix_id,
+                data:"serving_id="+serving_id,
                 type:"post",
                 success: function(val){
                     $('#printed_image_surcharge').val(val);
@@ -286,6 +288,7 @@ $(document).ready(function(){
                 }
             })
         }else{
+
             $('#hideoncake').hide();
             $("#cakeemailphoto").hide();
             $('#printed_image_surcharge').val('');
@@ -311,7 +314,7 @@ $(document).ready(function(){
             data:"zone_id="+zone_id,
             type:"post",
             success: function(val){
-                console.log(val);
+               // console.log(val);
                 $('#delivery_zone_surcharge').val(val);
                 $('#deliveryzonesurcharge').html("$"+val);
             }

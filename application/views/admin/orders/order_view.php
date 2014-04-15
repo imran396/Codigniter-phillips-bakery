@@ -177,6 +177,10 @@ $(document).ready(function(){
                 $('#matrixprice').html("$"+n[2]);
                // $('#s2id_serving_id a span').html(n[3]);
                 $('#s2id_size_id a span').html(n[4]);
+                if( $('#custom_cake_surcharge').is(':checked') ){
+                    $('#printed_image_surcharge').val(n[5]);
+                    $('#printedimagesurcharge').html("$"+n[5]);
+                }
             }
         })
     });
@@ -268,8 +272,8 @@ $(document).ready(function(){
 
         if( $(this).is(':checked') ){
 
-            var price_matrix_id =$("#servings").val();
-            if(price_matrix_id == 0 ){
+            var serving_id =$("#serving_id").val();
+            if(serving_id == 0 ){
                 alert("Please select servings for printing surcharge");
                 return false;
             }
@@ -277,7 +281,7 @@ $(document).ready(function(){
             $("#cakeemailphoto").show();
             $.ajax({
                 url:"<?php echo site_url('admin/orders/getPrintedImageSurcharge')?>",
-                data:"price_matrix_id="+price_matrix_id,
+                data:"serving_id="+serving_id,
                 type:"post",
                 success: function(val){
                     $('#printed_image_surcharge').val(val);
