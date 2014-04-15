@@ -293,9 +293,7 @@ class Orders extends API_Controller
 
                 $pickup['pickup_location_id']  = 0;
                 $this->orders_model->order_update($pickup,$order_id);
-
             }
-
 
             $total=((floatval($row->matrix_price)+floatval($row->printed_image_surcharge)+floatval($row->magic_surcharge)+floatval($row->delivery_zone_surcharge))-floatval($row->discount_price));
             $price = array(
