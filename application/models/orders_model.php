@@ -624,6 +624,7 @@ class Orders_model extends Crud_Model
             foreach($result  as $key => $val){
 
                 $result[$key]['order_id'] = (int) $result[$key]['order_id'];
+                $result[$key]['revel_order_id'] = (int) $result[$key]['revel_order_id'];
                 $result[$key]['order_code'] = (int) $result[$key]['order_code'];
                 $result[$key]['cake_id'] = (int) $result[$key]['cake_id'];
                 $result[$key]['customer_id'] = (int) $result[$key]['customer_id'];
@@ -679,6 +680,7 @@ class Orders_model extends Crud_Model
             foreach($inserted  as $key => $val){
 
                 $inserted[$key]['order_id'] = (int) $inserted[$key]['order_id'];
+                $inserted[$key]['revel_order_id'] = (int) $inserted[$key]['revel_order_id'];
                 $inserted[$key]['order_code'] = (int) $inserted[$key]['order_code'];
                 $inserted[$key]['cake_id'] = (int) $inserted[$key]['cake_id'];
                 $inserted[$key]['customer_id'] = (int) $inserted[$key]['customer_id'];
@@ -724,6 +726,7 @@ class Orders_model extends Crud_Model
             foreach($updated  as $key => $val){
 
                 $updated[$key]['order_id'] = (int) $updated[$key]['order_id'];
+                $updated[$key]['revel_order_id'] = (int) $updated[$key]['revel_order_id'];
                 $updated[$key]['order_code'] = (int) $updated[$key]['order_code'];
                 $updated[$key]['cake_id'] = (int) $updated[$key]['cake_id'];
                 $updated[$key]['customer_id'] = (int) $updated[$key]['customer_id'];
@@ -782,6 +785,7 @@ class Orders_model extends Crud_Model
                 $this->db->set(array('vaughan_print'=>1))->where(array('order_id'=>$inserted[$key]['order_id']))->update('orders');
 
                 $inserted[$key]['order_id'] = (int) $inserted[$key]['order_id'];
+                $inserted[$key]['revel_order_id'] = (int) $inserted[$key]['revel_order_id'];
                 $inserted[$key]['order_code'] = (int) $inserted[$key]['order_code'];
                 $inserted[$key]['cake_id'] = (int) $inserted[$key]['cake_id'];
                 $inserted[$key]['customer_id'] = (int) $inserted[$key]['customer_id'];
@@ -856,6 +860,7 @@ class Orders_model extends Crud_Model
             foreach($result  as $key => $val){
 
                 $result[$key]['order_id'] = (int) $result[$key]['order_id'];
+                $result[$key]['revel_order_id'] = (int) $result[$key]['revel_order_id'];
                 $result[$key]['order_code'] = (int) $result[$key]['order_code'];
                 $result[$key]['cake_id'] = (int) $result[$key]['cake_id'];
                 $result[$key]['customer_id'] = (int) $result[$key]['customer_id'];

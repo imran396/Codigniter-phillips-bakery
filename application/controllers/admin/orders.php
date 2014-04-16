@@ -504,7 +504,7 @@ class Orders extends Crud_Controller
         $data['discount_price']=isset($_REQUEST['discount_price'])? $_REQUEST['discount_price']:'';
         $data['total_price']=isset($_REQUEST['total_price'])? $_REQUEST['total_price']:'';
         $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';
-        $pluploadUploader_count=isset($_REQUEST['pluploadUploader_count'])? $_REQUEST['pluploadUploader_count']:'';
+        $pluploadUploader_count = isset($_REQUEST['pluploadUploader_count'])? $_REQUEST['pluploadUploader_count']:'';
         $data['order_status'] = isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'300';
         $data['order_date']=time();
 
@@ -645,17 +645,22 @@ class Orders extends Crud_Controller
             }catch (\Exception $e){
 
                 $orders['revel_order_id']  = null;
+
             }
 
             if($revel_order_id > 0){
 
-
                 $revel['revel_order_id']  = $revel_order_id;
+                $revel['vaughan_print']  = 0;
                 $orders=$this->orders_model->order_update($revel, $orders['order_id']);
                 $this->saveBarcodeImage($revel_order_id);
+                $this->createPDF($orders['order_code']);
+
+            }else{
+                $revel['order_status']  = 301;
+                $this->orders_model->order_update($revel, $orders['order_id']);
 
             }
-
 
         }
 
@@ -907,7 +912,7 @@ class Orders extends Crud_Controller
             $this->data['queryup']=$result->row();
             $pdfname =$this->data['queryup']->order_code;
 
-            $html          =$this->load->view('email/invoice_view', $this->data,true);
+            $html          = $this->load->view('email/invoice_view', $this->data,true);
             //$invoiceNumber = str_pad($pdfname,8,0,STR_PAD_LEFT);
             $invoiceNumber = ('stpb-'.$pdfname);
             $pdf           = pdf_create($html, $invoiceNumber, false);

@@ -276,7 +276,9 @@
     **********************************************************
     </br>
     <p class="cen">
-        <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
+        <?php if( $queryup->order_status >= 303 && $queryup->revel_order_id > 0 ){ ?>
+            <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->revel_order_id ?>.png" />
+        <?php } ?>
     </p>
     <h2 class="cen">ORDER: #<?php echo $queryup->order_code; ?></h2>
     <p class="cen">stphillipsbakery.com</p>

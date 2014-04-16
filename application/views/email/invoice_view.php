@@ -235,8 +235,12 @@ if($queryup->delivery_type == 'delivery' ){
     <br />
     <br />
     <p class="cen">
-        <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
+        <?php if( $queryup->order_status >= 303 && $queryup->revel_order_id > 0 ){ ?>
+            <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->revel_order_id ?>.png" />
+        <?php } ?>
+
     </p>
+
     <br />
     <p class="cen">Thank You</p>
     <p class="cen"><?php
@@ -258,10 +262,7 @@ if($queryup->delivery_type == 'delivery' ){
         <tr><td>FLAVOUR:</td><td><?php echo $queryup->flavour_name; ?></td></tr>
         <?php } ?>
         <?php if($queryup->serving_size){ ?>
-        <tr><td>SIZE:</td><td><?php echo $queryup->serving_size; ?></td></tr>
-        <?php } ?>
-        <?php if($queryup->shape){ ?>
-        <tr><td>SHAPE:</td><td><?php echo $queryup->shape; ?></td></tr>
+        <tr><td>SHAPE:</td><td><?php echo $queryup->serving_size; ?></td></tr>
         <?php } ?>
         <?php if($queryup->serving_title){ ?>
         <tr><td>SERVING:</td><td><?php echo $queryup->serving_title; ?></td></tr>

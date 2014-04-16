@@ -93,10 +93,7 @@ MAGIC CAKE ID: 			<?php echo $queryup->magic_cake_id.PHP_EOL; ?>
 FLAVOUR: 			    <?php echo $queryup->flavour_name.PHP_EOL; ?>
 <?php } ?>
 <?php if($queryup->serving_size){ ?>
-SIZE: 			        <?php echo $queryup->serving_size.PHP_EOL; ?>
-<?php } ?>
-<?php if($queryup->shape){ ?>
-SHAPE: 			        <?php echo $queryup->shape.PHP_EOL; ?>
+SHAPE: 			        <?php echo $queryup->serving_size.PHP_EOL; ?>
 <?php } ?>
 <?php if($queryup->serving_title){ ?>
 SERVING: 			    <?php echo $queryup->serving_title.PHP_EOL; ?>

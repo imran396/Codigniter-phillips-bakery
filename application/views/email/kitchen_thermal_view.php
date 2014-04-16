@@ -281,10 +281,8 @@ $deliveryInfo = $this->productions_model->deliveryInfo($queryup->order_id);
 <p class="cen">
     <?php if( $queryup->order_status >= 303 && $queryup->revel_order_id > 0 ){ ?>
         <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->revel_order_id ?>.png" />
-    <?php }else{ ?>
-        <img src="<?php echo base_url()?>assets/uploads/orders/barcode<?php echo  $queryup->order_code ?>.png" />
     <?php } ?>
-</p>
+  </p>
     <p class="cen" >ORDER #<?php if( $queryup->order_status >= 303 && $queryup->revel_order_id > 0 ){  echo $queryup->revel_order_id; }else{ echo $queryup->order_code; }  ?></p>
     <h6 class="cen" ><strong><?php echo ($queryup->first_name.' '.$queryup->last_name); ?></strong></h6>
 
