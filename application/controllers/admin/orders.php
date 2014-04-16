@@ -650,8 +650,12 @@ class Orders extends Crud_Controller
 
             if($revel_order_id > 0){
 
+                $vaughan_location = $this->orders_model->getVaughanLocation();
                 $revel['revel_order_id']  = $revel_order_id;
+                $revel['kitchen_location_id']  = $vaughan_location;
+                $revel['vaughan_location']  = 1;
                 $revel['vaughan_print']  = 0;
+
                 $orders=$this->orders_model->order_update($revel, $orders['order_id']);
                 $this->saveBarcodeImage($revel_order_id);
                 $this->createPDF($orders['order_code']);
@@ -727,7 +731,7 @@ class Orders extends Crud_Controller
 
         }
 
-        if($orders['order_status'] != 300 &&  $data['on_cake_image_needed'] == 1 ){
+        if($orders['order_status'] != 300 &&  $data['on_cake_image_needed'] == 1 && $orders['order_status'] < 303 ){
 
             $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
             if($cake_email_photo == 1 ){
@@ -745,7 +749,7 @@ class Orders extends Crud_Controller
         $this->createPDF($orders['order_code']);
 
         $mailtouser = isset($_REQUEST['mailtouser']) ? $_REQUEST['mailtouser']:'';
-        if($mailtouser == 1){
+        if($mailtouser == 1 && $orders['order_status'] < 303 ){
 
             $this->sendEmail($orders['order_code']);
         }
@@ -856,8 +860,6 @@ class Orders extends Crud_Controller
         }
         $this->session->set_flashdata('success_msg','Email has been added successfully');
         redirect('admin/orders/edit/'.$this->data['queryup']->order_id);
-
-
 
     }
 
@@ -1006,7 +1008,6 @@ class Orders extends Crud_Controller
         $result= $this->productions_model->orderPrint($order_id=95);
         $data['queryup']=$result->row();
         $texttoprint = $this->load->view('email/estimate_body', $data,true);
-//exit;
         //$texttoprint = "RECIPT TEXT \n NEXT LINE \n MORE STUFF";
         $texttoprint = stripslashes($texttoprint);
 
@@ -1021,6 +1022,11 @@ class Orders extends Crud_Controller
             fclose($fp);
         }
 
+    }
+
+    public function orderUpdate(){
+
+        $this->db->set(array('revel_order_id' => 0))->where(array('order_status !=' => 303))->update('orders');
 
     }
 
