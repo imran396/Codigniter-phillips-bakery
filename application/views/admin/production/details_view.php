@@ -29,6 +29,7 @@
                 type:"post",
                 success: function(val){
                     alert('Order Changed to: '+val);
+                    $('.filter-option').html(val);
                 }
             })
 

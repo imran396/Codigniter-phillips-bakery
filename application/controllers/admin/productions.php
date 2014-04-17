@@ -1,8 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 set_include_path(get_include_path() . PATH_SEPARATOR . realpath(APPPATH .'libraries'));
 
-//var_dump($loader->register());
-
 class Productions extends Crud_Controller
 {
     public function __construct()
@@ -10,12 +8,10 @@ class Productions extends Crud_Controller
         parent::__construct();
 
         require_once 'Zend/Loader/StandardAutoloader.php';
-        //$this->output->enable_profiler(TRUE);
         $loader = new Zend\Loader\StandardAutoloader(array('autoregister_zf' => true));
         $loader->register();
-        $this->load->helper('sentence_case');
-        //$this->layout->setLayout('layout_admin');
         $this->layout->setLayout('layout_custom');
+        $this->load->helper(array('sentence_case','uploader','idgenerator','util'));
         $this->load->model(array('productions_model','gallery_model','orders_model'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
@@ -34,15 +30,26 @@ class Productions extends Crud_Controller
 
     }
 
+    public function saveBarcodeImage($order_code)
+    {
 
-    function barcode_gen() {
+        define('YOUR_DIRECTORY',realpath(APPPATH . "../web/assets/uploads/orders/barcode/"));
+        $content = file_get_contents(site_url()."/api/orders/barcode_gen/".$order_code);
+        file_put_contents(YOUR_DIRECTORY.$order_code.".png",$content);
+    }
+
+
+    public function barcode_gen($order_code)
+    {
 
         $this->load->library('Zend');
         $this->zend->load('Zend/Barcode/Barcode');
-        $barcodeOptions = array('text' => '3458908123');
+        $barcodeOptions = array('text' => "$order_code",'drawText'=>false);
         $rendererOptions = array();
         Zend\Barcode\Barcode::factory('code39', 'image', $barcodeOptions, $rendererOptions)->render();
+
     }
+
 
     public function location_production($location_id){
 
@@ -137,11 +144,15 @@ class Productions extends Crud_Controller
         $this->productions_model->statusChange($order_code,$order_status);
 
         $result= $this->productions_model->orderDetails($order_code);
-        $row=$result->row();
+        $row = $result->row();
         $revel_order_id =$row->revel_order_id;
 
         if(!empty($revel_order_id) && $order_code && $order_status == '305' ){
             $this->revel_order->delete($revel_order_id);
+        }
+
+        if(empty($revel_order_id) && $order_code && $order_status == '303' ){
+            $order_status = $this->insertRevelOrder($row);
         }
 
         $session_data =  $this->session->all_userdata();
@@ -157,6 +168,86 @@ class Productions extends Crud_Controller
 
         echo $this->productions_model->currentProductionStatus($order_status);
         //redirect('admin/productions/details/'.$order_code);
+
+    }
+
+    function insertRevelOrder($orders = NULL){
+
+        $revel_order_id = $this->revel_order->getRevelID('orders', $orders->order_id);
+
+        if(empty($revel_order_id) && $orders->order_code && $orders->order_status == '303' ){
+
+
+
+            if($orders->pickup_location_id > 0 && $orders->delivery_type =='pickup'){
+
+                $revel_location_id = $this->revel_order->getRevelID('locations',$orders->pickup_location_id);
+
+                $revel_establishment_id = $this->revel_order->getEstablishmentID($orders->pickup_location_id);
+
+                $revel_product_id = $this->revel_order->getEstablishmentProductID($revel_establishment_id , $orders->cake_id);
+
+            }else{
+
+                $revel_location_id = $this->revel_order->getRevelID('locations',$orders->location_id);
+
+                $revel_establishment_id = $this->revel_order->getEstablishmentID($orders->location_id);
+
+                $revel_product_id = $this->revel_order->getEstablishmentProductID($revel_establishment_id , $orders->cake_id);
+
+            }
+            $revel_customer = $this->revel_order->getRevelID('customers',$orders->customer_id);
+            $revel_create_location_id = $this->revel_order->getRevelID('locations',$orders->location_id);
+            $revel_user = $this->revel_order->getRevelID('meta',$orders->employee_id);
+
+            $RevelOrderData = array(
+
+                'order_code' => $orders->order_code,
+                'employee_id' => $orders->employee_id,
+                'revel_customer_id' => $revel_customer,
+                'revel_location_id' => $revel_location_id,
+                'revel_location_create_id' => $revel_create_location_id,
+                'revel_establishment_id' => $revel_establishment_id,
+                'revel_product_id' => $revel_product_id,
+                'revel_user_id' => $revel_user,
+                'discount'=> $orders->discount_price,
+                'subtotal'=> $orders->total_price
+            );
+
+
+            try{
+
+                $custom =( $orders->cake_id > 0 ) ? $orders->cake_id :'';
+
+                $revel_order_id =  $this->revel_order->create($RevelOrderData,$custom);
+
+            }catch (\Exception $e){
+
+                $orders['revel_order_id']  = null;
+
+            }
+
+            if($revel_order_id > 0){
+
+                $vaughan_location = $this->orders_model->getVaughanLocation();
+                $revel['revel_order_id']  = $revel_order_id;
+                $revel['kitchen_location_id']  = $vaughan_location;
+                $revel['vaughan_location']  = 1;
+                $revel['vaughan_print']  = 0;
+
+                $this->orders_model->order_update($revel, $orders->order_id);
+                $this->saveBarcodeImage($revel_order_id);
+                //$this->createPDF($orders->order_code);
+                return 303;
+
+            }else{
+                $revel['order_status']  = 301;
+                $this->orders_model->order_update($revel, $orders->order_id);
+                return 301;
+
+            }
+
+        }
 
     }
 
