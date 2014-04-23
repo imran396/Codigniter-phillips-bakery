@@ -281,17 +281,21 @@ class Orders extends API_Controller
         }
 
         $row = $this->orders_model->orderEdit($data['order_id']);
+        echo $data['order_id'];
+        print_r($row);
 
         if($row->order_status < 303 ){
 
             $vaughan_location = $this->orders_model->getVaughanLocation();
-            if($data['current_location'] == $vaughan_location ){
+            $current_location = isset($data['current_location'])?$data['current_location']:'';
+            if(!empty($data['current_location']) &&  $current_location == $vaughan_location ){
                 $data['vaughan_print'] = 1 ;
             }else{
                 $data['vaughan_print']  = 0;
             }
 
             $orders=$this->orders_model->order_update($data, $data['order_id']);
+
 
             $row = $this->orders_model->orderEdit($data['order_id']);
             $order_id = $row->order_id;
@@ -322,7 +326,6 @@ class Orders extends API_Controller
                 if(isset($orders['employee_id'])){
 
                     $updateRow = $this->orders_model->orderEdit($orders['order_id']);
-
                     $empolyee_code = $this->logs_model->getEmployeeCode($orders['employee_id']);
                     $log = array(
                         'employee_id' => $empolyee_code,
