@@ -325,7 +325,7 @@ class Orders extends API_Controller
                     $log = array(
                         'employee_id' => $empolyee_code,
                         'audit_name' => 'order updated',
-                        'description' => 'order_id = '.$orders['order_id'].', customer_id='. $data['customer_id'].',totalprice ='.$data['total_price'].',overrideprice='.$data['override_price'],
+                        'description' => 'order_id = '.$orders['order_id'].', customer_id='. $row['customer_id'].',totalprice ='.$row['total_price'].',overrideprice='.$row['override_price']
                     );
 
                     $this->logs_model->insertAuditLog($log);
