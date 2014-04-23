@@ -1045,5 +1045,14 @@ class Orders extends Crud_Controller
 
     }
 
+    public function allListing(){
+
+        $rest = $this->db->select('order_id,order_code,revel_order_id')->get('orders');
+        $rows = $rest->result();
+        var_dump($rows);
+
+
+    }
+
 
 }

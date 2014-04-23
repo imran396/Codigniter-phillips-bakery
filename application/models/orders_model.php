@@ -175,6 +175,7 @@ class Orders_model extends Crud_Model
 
         $data['delivery_time']=timeFormatAmPm($data['delivery_time']);
         $orderDbID = $this->checkDuplicateInsert($customer_id , $order_date);
+
         if($orderDbID > 0){
             $data['update_date']=time();
             $order_id = $this->update($data,$orderDbID);
@@ -186,7 +187,6 @@ class Orders_model extends Crud_Model
             }
 
             $order_id = $this->insert($data);
-
             $order_code=(100000+$order_id);
             $this->db->set(array('order_code'=>$order_code))->where('order_id',$order_id)->update('orders');
 
@@ -216,7 +216,7 @@ class Orders_model extends Crud_Model
 
         $data['update_date']=time();
 
-        $order_id = $this->update($data,$order_id);
+            $order_id = $this->update($data,$order_id);
             $dbdata =$this->getOrder($order_id);
             $order['order_id']= $dbdata->order_id;
             $order['order_code']=  $dbdata->order_code;
