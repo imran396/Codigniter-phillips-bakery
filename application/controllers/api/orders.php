@@ -216,7 +216,7 @@ class Orders extends API_Controller
 
             $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
             $sync = isset($_REQUEST['sync'])? $_REQUEST['sync']:'';
-            if($mailtouser ==1 || $sync == 1 ){
+            if( (!empty($_REQUEST['mailtouser']) && $mailtouser ==1 ) || (!empty($_REQUEST['sync']) && $sync ==1 )){
                 $this->sendEmail($rows->order_code);
             }
 
@@ -476,7 +476,7 @@ class Orders extends API_Controller
             $this->createPDF($rows->order_code);
 
             $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
-            if($mailtouser ==1){
+            if( !empty($_REQUEST['mailtouser']) && $mailtouser == 1){
                 $this->sendEmail($rows->order_code);
             }
 
