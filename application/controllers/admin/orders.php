@@ -1038,11 +1038,10 @@ class Orders extends Crud_Controller
 
     public function orderDelete(){
 
-        $this->db->delete('orders');
-        $this->db->delete('instructional_photo');
-        $this->db->delete('order_delivery');
-        $this->db->delete('order_notes');
-
+        $this->db->where('order_id !=',0)->delete('orders');
+        $this->db->where('instructional_order_id !=',0)->delete('instructional_photo');
+        $this->db->where('delivery_order_id !=',0)->delete('order_delivery');
+        $this->db->where('order_id !=',0)->delete('order_notes');
 
     }
 
