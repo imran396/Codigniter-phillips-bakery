@@ -214,11 +214,11 @@ class Orders extends API_Controller
             $this->saveBarcodeImage($rows->order_code);
             $this->createPDF($rows->order_code);
 
-            $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
+            /*$mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
             $sync = isset($_REQUEST['sync'])? $_REQUEST['sync']:'';
             if( (!empty($_REQUEST['mailtouser']) && $mailtouser ==1 ) || (!empty($_REQUEST['sync']) && $sync ==1 )){
                 $this->sendEmail($rows->order_code);
-            }
+            }*/
 
             $this->sendOutput(array('order_id'=> $rows -> order_id ,'order_code'=> $rows->order_code,'order_status' =>  $rows -> order_status));
         }
@@ -475,10 +475,10 @@ class Orders extends API_Controller
             $this->saveBarcodeImage($rows->order_code);
             $this->createPDF($rows->order_code);
 
-            $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
+           /* $mailtouser = isset($_REQUEST['mailtouser'])? $_REQUEST['mailtouser']:'';
             if( !empty($_REQUEST['mailtouser']) && $mailtouser == 1){
                 $this->sendEmail($rows->order_code);
-            }
+            }*/
 
             $this->sendOutput(array('order_id'=> $rows->order_id,'order_code'=> $rows->order_code,'order_status' => $rows->order_status));
 
