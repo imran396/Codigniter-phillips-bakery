@@ -105,10 +105,13 @@ class Orders extends API_Controller
 
         if(!empty($data)){
 
-            if($data['current_location'] == $vaughan_location ){
-                $data['vaughan_print'] = 1 ;
-            }
 
+            $current_location = isset($data['current_location']) ? $data['current_location']:'';
+            if(!empty($data['current_location']) &&  $current_location == $vaughan_location ){
+                $data['vaughan_print'] = 1 ;
+            }else{
+                $data['vaughan_print']  = 0;
+            }
 
             $orders=$this->orders_model->order_insert($data);
             if(strtolower($data['delivery_type']) == 'delivery') {
@@ -293,7 +296,6 @@ class Orders extends API_Controller
             }
 
             $orders=$this->orders_model->order_update($data, $data['order_id']);
-            print_r($orders);
 
 
             $row = $this->orders_model->orderEdit($data['order_id']);
