@@ -575,12 +575,14 @@ class Orders extends Crud_Controller
 
                 $delivery['delivery_zone_id']  = 0;
                 $delivery['delivery_zone_surcharge']  = '0.00';
+                $revel['vaughan_print']  = 0;
                 $this->orders_model->order_update($delivery,$orderID);
                 $this->db->where('delivery_order_id',$orderID)->delete('order_delivery');
 
             }elseif ($order_data['delivery_type'] == "pickup" && $orderID > 0 ){
 
                 $pickup['pickup_location_id']  = 0;
+                $revel['vaughan_print']  = 0;
                 $this->orders_model->order_update($pickup,$orderID);
 
             }
@@ -650,12 +652,9 @@ class Orders extends Crud_Controller
 
             if($revel_order_id > 0){
 
-                $vaughan_location = $this->orders_model->getVaughanLocation();
-                $revel['revel_order_id']  = $revel_order_id;
-                $revel['kitchen_location_id']  = $vaughan_location;
-                $revel['vaughan_location']  = 1;
-                $revel['vaughan_print']  = 0;
 
+                $revel['revel_order_id']  = $revel_order_id;
+                $revel['vaughan_print']  = 0;
                 $orders=$this->orders_model->order_update($revel, $orders['order_id']);
                 $this->saveBarcodeImage($revel_order_id);
                 $this->createPDF($orders['order_code']);
