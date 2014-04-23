@@ -1036,5 +1036,15 @@ class Orders extends Crud_Controller
 
     }
 
+    public function orderDelete(){
+
+        $this->db->delete('orders');
+        $this->db->delete('instructional_photo');
+        $this->db->delete('order_delivery');
+        $this->db->delete('order_notes');
+
+
+    }
+
 
 }

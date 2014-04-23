@@ -233,8 +233,6 @@ class Orders_model extends Crud_Model
             $order['discount_price']=  $dbdata->discount_price;
             $order['override_price']=  $dbdata->override_price;
             $order['total_price']=  $dbdata->total_price;
-       // print_r($data);
-       // exit;
 
         return $order;
     }
