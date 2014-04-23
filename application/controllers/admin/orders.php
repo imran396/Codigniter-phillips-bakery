@@ -490,7 +490,14 @@ class Orders extends Crud_Controller
         $data['fondant']=isset($_REQUEST['fondant'])? $_REQUEST['fondant']:0;
         $data['serving_id']=isset($_REQUEST['serving_id'])? $_REQUEST['serving_id']:'';
         $data['shape_id']=isset($_REQUEST['shape_id'])? $_REQUEST['shape_id']:'';
-        $data['tiers']=isset($_REQUEST['tiers'])? $_REQUEST['tiers']:'';
+
+        if($data['cake_id'] > 0){
+            $data['tiers']=0;
+        }else{
+            $data['tiers']=isset($_REQUEST['tiers'])? $_REQUEST['tiers']:'';
+        }
+
+
         $data['matrix_price']=isset($_REQUEST['matrix_price'])? $_REQUEST['matrix_price']:'';
         $data['on_cake_image_needed']=isset($_REQUEST['on_cake_image_needed'])? $_REQUEST['on_cake_image_needed']:'';
         $data['cake_email_photo']=isset($_REQUEST['cake_email_photo'])? $_REQUEST['cake_email_photo']:'';
