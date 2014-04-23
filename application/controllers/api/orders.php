@@ -321,11 +321,13 @@ class Orders extends API_Controller
 
                 if(isset($orders['employee_id'])){
 
+                    $updateRow = $this->orders_model->orderEdit($orders['order_id']);
+
                     $empolyee_code = $this->logs_model->getEmployeeCode($orders['employee_id']);
                     $log = array(
                         'employee_id' => $empolyee_code,
                         'audit_name' => 'order updated',
-                        'description' => 'order_id = '.$orders['order_id'].', customer_id='. $row['customer_id'].',totalprice ='.$row['total_price'].',overrideprice='.$row['override_price']
+                        'description' => 'order_id = '.$orders['order_id'].', customer_id='. $updateRow->customer_id.',totalprice ='.$updateRow->total_price.',overrideprice='.$updateRow->override_price,
                     );
 
                     $this->logs_model->insertAuditLog($log);
@@ -456,7 +458,7 @@ class Orders extends API_Controller
                 $this->orders_model->instructionalImagesUpload($orders['order_id']);
             }
 
-            if($orders['order_status'] != 300 &&  $data['on_cake_image_needed'] == 1 ){
+            if($orders['order_status'] != 300 &&  !empty($data['on_cake_image_needed'])){
 
                 $cake_email_photo = isset($rows->cake_email_photo) ? $rows->cake_email_photo:'';
                 if($cake_email_photo == 1 ){
