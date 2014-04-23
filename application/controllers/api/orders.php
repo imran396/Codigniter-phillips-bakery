@@ -281,8 +281,6 @@ class Orders extends API_Controller
         }
 
         $row = $this->orders_model->orderEdit($data['order_id']);
-        echo $data['order_id'];
-        print_r($row);
 
         if($row->order_status < 303 ){
 
@@ -295,6 +293,7 @@ class Orders extends API_Controller
             }
 
             $orders=$this->orders_model->order_update($data, $data['order_id']);
+            print_r($orders);
 
 
             $row = $this->orders_model->orderEdit($data['order_id']);
