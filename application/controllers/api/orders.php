@@ -84,6 +84,7 @@ class Orders extends API_Controller
         $data['total_price']=isset($_REQUEST['total_price'])? $_REQUEST['total_price']:'';
         $data['override_price']=isset($_REQUEST['override_price'])? $_REQUEST['override_price']:'';
         $data['order_status']=isset($_REQUEST['order_status'])? $_REQUEST['order_status']:'';
+        $data['current_location']=isset($_REQUEST['current_location'])? $_REQUEST['current_location']:'';
 
         $vaughan_location = isset($_REQUEST['vaughan_location'])? $_REQUEST['vaughan_location']:'';
         if($vaughan_location == 1 ){
@@ -103,6 +104,11 @@ class Orders extends API_Controller
         $order_delivery['delivery_instruction']=isset($_REQUEST['delivery_instruction'])? $_REQUEST['delivery_instruction']:'';
 
         if(!empty($data)){
+
+            if($data['current_location'] == $vaughan_location ){
+                $data['vaughan_print'] = 1 ;
+            }
+
 
             $orders=$this->orders_model->order_insert($data);
             if(strtolower($data['delivery_type']) == 'delivery') {
@@ -256,7 +262,8 @@ class Orders extends API_Controller
             'total_price',
             'override_price',
             'order_status',
-            'order_date'
+            'order_date',
+            'current_location'
         );
 
         $array_delivery_key = array('name','phone','address_1','address_2','postal','city','province','delivery_instruction');
@@ -276,6 +283,13 @@ class Orders extends API_Controller
         $row = $this->orders_model->orderEdit($data['order_id']);
 
         if($row->order_status < 303 ){
+
+            $vaughan_location = $this->orders_model->getVaughanLocation();
+            if($data['current_location'] == $vaughan_location ){
+                $data['vaughan_print'] = 1 ;
+            }else{
+                $revel['vaughan_print']  = 0;
+            }
 
             $orders=$this->orders_model->order_update($data, $data['order_id']);
 
