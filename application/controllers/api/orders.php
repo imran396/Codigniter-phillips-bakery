@@ -288,7 +288,7 @@ class Orders extends API_Controller
             if($data['current_location'] == $vaughan_location ){
                 $data['vaughan_print'] = 1 ;
             }else{
-                $revel['vaughan_print']  = 0;
+                $data['vaughan_print']  = 0;
             }
 
             $orders=$this->orders_model->order_update($data, $data['order_id']);
