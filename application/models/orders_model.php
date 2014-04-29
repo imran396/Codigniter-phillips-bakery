@@ -214,7 +214,7 @@ class Orders_model extends Crud_Model
     public function order_update($data,$order_id){
 
 
-        $data['update_date']=time();
+            $data['update_date']=time();
 
             $order_id = $this->update($data,$order_id);
             $dbdata =$this->getOrder($order_id);
@@ -657,7 +657,7 @@ class Orders_model extends Crud_Model
 
     function getLastUpdateAll($lastdate){
 
-
+        $lastdate = intval($lastdate);
         $imageurlprefix = base_url().'assets';
 
         $insert = "SELECT
