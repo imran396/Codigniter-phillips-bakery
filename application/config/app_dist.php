@@ -34,3 +34,5 @@ $config['revel']['establishment'] = '/enterprise/Establishment/2/';
 
 $config['revel']['customCake']    = "/resources/Product/1/";
 $config['revel']['catalogCake']   = "/resources/Product/2/";
+
+
