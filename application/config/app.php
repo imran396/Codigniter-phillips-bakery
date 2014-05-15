@@ -9,9 +9,12 @@
 // Live Server
 
 $config['revel']['endpoint']   = 'https://stphillips.revelup.com';
+$config['revel']['api_key']    = 'f5f47d376a8c417f8f050e6c7dd25476';
+$config['revel']['api_secret'] = '8a9ee2fd854a41e981ac05012ee19e61109e4581c80e4ece941ce6ac3e25fca0';
+/*
 $config['revel']['api_key']    = 'a17d6fad3bd748aaa7f402b0bc38ad4c';
 $config['revel']['api_secret'] = 'ea7f382f8c10409ca917b91068af830ebd83185bfb90483d834cb66e8687e2c1';
-
+*/
 $config['revel']['user']          = '/enterprise/User/1/';
 $config['revel']['establishment'] = '/enterprise/Establishment/1/';
 $config['revel']['customCake']    = "/resources/Product/2125/";
