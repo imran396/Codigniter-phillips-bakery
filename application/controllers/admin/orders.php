@@ -742,7 +742,7 @@ class Orders extends Crud_Controller
             $cake_email_photo = isset($_REQUEST['cake_email_photo']) ? $_REQUEST['cake_email_photo']:'';
             if($cake_email_photo == 1 ){
 
-               $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'),$this->lang->line('mailgun_cakeonimage_body'));
+               $this->mailgunSendMessage($orders,$this->lang->line('mailgun_cakeonimage_email'),$this->lang->line('mailgun_cakeonimage_name'),$this->lang->line('mailgun_cakeonimage_subject'),$this->lang->line('mailgun_cakeonimage_body'), $this->lang->line('info_email'));
             }
             $instructional_email_photo = isset($_REQUEST['instructional_email_photo']) ? $_REQUEST['instructional_email_photo']:'';
             if($instructional_email_photo == 1){
@@ -871,7 +871,7 @@ class Orders extends Crud_Controller
 
 
 
-    private function mailgunSendMessage($orders, $replyTo,$name,$subject=NULL,$body=NULL)
+    private function mailgunSendMessage($orders, $replyTo,$name,$subject=NULL,$body=NULL, $from=null)
     {
 
         $order_id = $orders['order_id'];
@@ -882,7 +882,9 @@ class Orders extends Crud_Controller
             $data['body']=$body;
             $body = $this->load->view('email/instructional_photo_view', $data,true);
             $this->email->set_newline("\r\n");
-            $this->email->from($this->lang->line('global_email'), $this->lang->line('global_email_subject'));
+            if($from === null) 
+            	$from = $this->lang->line('global_email');
+            $this->email->from($from, $this->lang->line('global_email_subject'));
             $this->email->reply_to($replyTo, $name);
             $this->email->to($data ['rows']->email);
             $this->email->subject($subject.'|'. $data['rows']->order_code);
