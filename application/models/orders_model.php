@@ -579,9 +579,9 @@ class Orders_model extends Crud_Model
                 WHERE(orders.is_deleted != 1 AND ( `order_code` = '$search'
                 ||  `order_id` = '$search'
                 || `revel_order_id` = '$search'
-                || LOWER(customers.first_name) LIKE '%$search'
-                || LOWER(customers.last_name) LIKE '%$search'
-                || LOWER(order_status.description) = '$search'
+                || LOWER(customers.first_name) LIKE '%$search%'
+                || LOWER(customers.last_name) LIKE '%$search%'
+                || LOWER(order_status.description) LIKE '%$search%'
                 || customers.phone_number = '$search')) ORDER BY orders.order_code DESC ";
 
         // || (`order_id` > 0 AND LOWER(`delivery_date`) >= '$search')
