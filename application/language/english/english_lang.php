@@ -29,8 +29,9 @@ $lang['drag'] 		 	    = 'Drag';
 
 /* Mail Gun Information  */
 
-$lang['global_email'] 		 	    = 'info@stphillipsbakery.com';
-$lang['global_email_subject'] 		 	    = 'St. Phillips Bakery';
+$lang['global_email'] 		 	    			= 'donotreply@stphillipsbakery.com';
+$lang['info_email']							= 'info@stphillipsbakery.com';
+$lang['global_email_subject'] 		 	    	= 'St. Phillips Bakery';
 
 $lang['mailgun_cakeonimage_email'] 		 	    = 'oncakeimage@stphillipsbakery.mailgun.org';
 $lang['mailgun_cakeonimage_name'] 		 	    = 'On cake image';
@@ -41,7 +42,7 @@ $lang['mailgun_instructional_email'] 		 	= 'referenceimage@stphillipsbakery.mail
 $lang['mailgun_instructional_name'] 		 	= 'Reference images';
 $lang['mailgun_instructional_subject'] 		 	= 'St Phillips - Attach your reference images';
 $lang['mailgun_instructional_body'] 		 	= 'Reply to this email and attach the example images you would like your baker to reference.';
-$lang['customer_email'] 		 	= 'Customer will email';
+$lang['customer_email'] 		 				= 'Customer will email';
 
 
 /* ---------- Malling Subject information */

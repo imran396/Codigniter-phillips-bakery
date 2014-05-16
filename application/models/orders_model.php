@@ -576,12 +576,13 @@ class Orders_model extends Crud_Model
                 FROM `orders`
                 LEFT JOIN customers ON (customers.customer_id = orders.customer_id)
                 LEFT JOIN order_status ON (order_status.production_status_code = orders.order_status)
-                WHERE(orders.is_deleted != 1 AND  `order_code` = '$search')
-                || (orders.is_deleted != 1 AND  `order_id` = '$search')
-                || (orders.is_deleted != 1 AND  LOWER(customers.first_name) LIKE '%$search')
-                || (orders.is_deleted != 1 AND LOWER(customers.last_name) LIKE '%$search')
-                || (orders.is_deleted != 1 AND LOWER(order_status.description) = '$search')
-                || (orders.is_deleted != 1 AND customers.phone_number = '$search') ORDER BY orders.order_code DESC ";
+                WHERE(orders.is_deleted != 1 AND ( `order_code` = '$search'
+                ||  `order_id` = '$search'
+                || `revel_id` = '$search'
+                || LOWER(customers.first_name) LIKE '%$search'
+                || LOWER(customers.last_name) LIKE '%$search'
+                || LOWER(order_status.description) = '$search'
+                || customers.phone_number = '$search')) ORDER BY orders.order_code DESC ";
 
         // || (`order_id` > 0 AND LOWER(`delivery_date`) >= '$search')
         $per_page=10;
