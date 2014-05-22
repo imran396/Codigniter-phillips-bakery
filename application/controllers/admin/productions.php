@@ -233,7 +233,7 @@ class Productions extends Crud_Controller
                 $revel['revel_order_id']  = $revel_order_id;
                 $revel['kitchen_location_id']  = $vaughan_location;
                 $revel['vaughan_location']  = 1;
-                $revel['vaughan_print']  = 0;
+                $revel['vaughan_print']  = 1;
 
                 $this->orders_model->order_update($revel, $orders->order_id);
                 $this->saveBarcodeImage($revel_order_id);
