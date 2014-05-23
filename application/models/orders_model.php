@@ -764,8 +764,8 @@ class Orders_model extends Crud_Model
 
         $vaughan_location = $this->orders_model->getVaughanLocation();
         $imageurlprefix = base_url().'assets';
-
-        $where =" WHERE ( O.is_deleted != 1 && location_id != $vaughan_location && order_status != 300 && vaughan_print !=1 ) || ( O.is_deleted != 1 && order_status = 303 && vaughan_print != 1 )  ";
+		$vaughan_condition = "";//"&& location_id != $vaughan_location"
+        $where =" WHERE ( O.is_deleted != 1 $vaughan_condition && order_status != 300 && vaughan_print !=1 ) || ( O.is_deleted != 1 && order_status = 303 && vaughan_print != 1 )  ";
 
         //$where =" WHERE O.is_deleted != 1 && kitchen_location_id = $vaughan_location && vaughan_location = 1  && order_status != 300 && vaughan_print !=1 ";
 
@@ -1005,7 +1005,7 @@ class Orders_model extends Crud_Model
 
     function phoneNoFormat($phone)
     {
-        return  $to = sprintf("%s-%s-%s",
+        return  sprintf("%s-%s-%s",
             substr($phone, 0, 3),
             substr($phone, 3, 3),
             substr($phone, 6, 8));
