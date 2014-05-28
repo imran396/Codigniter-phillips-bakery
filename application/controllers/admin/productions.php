@@ -223,7 +223,7 @@ class Productions extends Crud_Controller
 
             }catch (\Exception $e){
 
-                $orders['revel_order_id']  = null;
+                $revel_order_id  = null;
 
             }
 
