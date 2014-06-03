@@ -66,6 +66,7 @@ class Productions extends Crud_Controller
     {
         $this->data['active']=$this->uri->segment(2,0);
         $this->data['paging']=$this->productions_model->getListing($starts);
+        $this->data['refresh'] = 30;
         $this->layout->view('admin/production/inproduction_view', $this->data);
 
     }
