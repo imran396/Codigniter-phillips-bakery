@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <?php  if(isset($this->refresh)) echo "<meta http-equiv='refresh' content='{$this->refresh}'>"; ?>
+    <?php  if(isset($refresh)) echo "<meta http-equiv='refresh' content='{$refresh}'>"; ?>
 
     <!-- Bootstrap -->
     <link href="<?php echo base_url() ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
