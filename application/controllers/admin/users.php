@@ -280,7 +280,7 @@ class users extends Crud_Controller
 
     public function remove($id)
     {
-        $this->users_model->delete($id);
+        $this->users_model->deactivate($id);
         $this->redirectToHome("listing");
 
     }

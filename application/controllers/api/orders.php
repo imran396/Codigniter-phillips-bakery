@@ -226,11 +226,20 @@ class Orders extends API_Controller
             $this->sendOutput(array('order_id'=> $rows -> order_id ,'order_code'=> $rows->order_code,'order_status' =>  $rows -> order_status));
         }
     }
-
+	public function updatePrintStatus() {
+		if(!isset($_REQUEST['vaughan_print']) || !isset($_REQUEST['order_id'])) {
+			$this->sendOutput("error");
+			return "";
+		}
+		
+		$data['vaughan_print'] = $_REQUEST['vaughan_print'];
+		$data['order_id'] = $_REQUEST['order_id'];
+		
+		$row = $this->orders_model->orderEdit($data['order_id']);
+		$orders=$this->orders_model->order_update($data, $data['order_id']);
+	}
     public function update()
     {
-
-
         $array_orders_key =  array(
             'order_id',
             'cake_id',
@@ -266,7 +275,8 @@ class Orders extends API_Controller
             'override_price',
             'order_status',
             'order_date',
-            'current_location'
+            'current_location',
+            'vaughan_print'
         );
 
         $array_delivery_key = array('name','phone','address_1','address_2','postal','city','province','delivery_instruction');
@@ -282,19 +292,14 @@ class Orders extends API_Controller
                 $order_delivery[$key] = $val;
             }
         }
-
+		$data['vaughan_print'] = 0;
         $row = $this->orders_model->orderEdit($data['order_id']);
 
         if($row->order_status < 303 ){
 
             $vaughan_location = $this->orders_model->getVaughanLocation();
             $current_location = isset($data['current_location'])?$data['current_location']:'';
-            if(!empty($data['current_location']) &&  $current_location == $vaughan_location ){
-                $data['vaughan_print'] = 1 ;
-            }else{
-                $data['vaughan_print']  = 0;
-            }
-
+            
             $orders=$this->orders_model->order_update($data, $data['order_id']);
 
 
