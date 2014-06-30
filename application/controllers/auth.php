@@ -15,7 +15,8 @@ class Auth extends Controller {
 		$this->load->library('form_validation');
 		$this->load->database();
 		$this->load->helper('url');
-        $this->output->enable_profiler(TRUE);
+
+        //$this->output->enable_profiler(TRUE);
 	}
 
 	//redirect if needed, otherwise display the user list
@@ -23,13 +24,16 @@ class Auth extends Controller {
 
 	{
 
-		if (!$this->ion_auth->logged_in())
+
+
+        if (!$this->ion_auth->logged_in())
 		{
 			//redirect them to the login page
 			redirect('login');
 		}
 		elseif (!$this->ion_auth->is_admin())
 		{
+
 			//redirect them to the home page because they must be an administrator to view this
 			redirect($this->config->item('base_url'), 'refresh');
 		}
@@ -48,10 +52,8 @@ class Auth extends Controller {
 	//log the user in
 	function login()
 	{
-
-
         $this->data['title'] = "Login";
-		
+        $this->data['query'] = $this->db->select('*')->where(array('status'=>1))->order_by('ordering','asc')->get('locations')->result();
 		if ($this->ion_auth->logged_in())
 		{
 			//already logged in so no need to access this page
@@ -62,16 +64,28 @@ class Auth extends Controller {
 		$this->form_validation->set_rules('username', 'User Name', 'required|trim');
 		$this->form_validation->set_rules('password', 'Password', 'required');
 
+       // exit;
 		if ($this->form_validation->run() == true)
 		{ //check to see if the user is logging in
 			//check for "remember me"
 			$remember = (bool) $this->input->post('remember');
-
+            //exit;
 			if ($this->ion_auth->login($this->input->post('username'), $this->input->post('password'), $remember))
 			{ //if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect($this->config->item('base_url'), 'refresh');
+               $user_id =   $this->session->userdata('user_id');
+               $empolyee_code = $this->logs_model->getEmployeeCode($user_id);
+               $this->session->set_userdata(array('empolyee_code'=> $empolyee_code));
+
+                $log = array(
+                    'employee_id' => $empolyee_code,
+                    'audit_name' => 'login',
+                    'description' => $this->input->post('username'),
+                );
+                $this->logs_model->insertAuditLog($log);
+
+                redirect($this->config->item('base_url'), 'refresh');
 			}
 			else
 			{ //if the login was un-successful
@@ -99,13 +113,50 @@ class Auth extends Controller {
 		}
 	}
 
+    function qrlogin(){
+
+        $employee_id = $this->input->post('employee_id');
+        if($this->ion_auth_model->qr_login($employee_id) == TRUE){
+                $user_id =   $this->session->userdata('user_id');
+                $empolyee_code = $this->logs_model->getEmployeeCode($user_id);
+                $this->session->set_userdata(array('empolyee_code'=> $empolyee_code));
+
+                $log = array(
+                    'employee_id' => $empolyee_code,
+                    'audit_name' => 'login',
+                    'description' => $this->input->post('username'),
+                );
+                $this->logs_model->insertAuditLog($log);
+
+                redirect($this->config->item('base_url'));
+
+        }else{
+
+            $this->session->set_flashdata('message', "sdfgfgdfgdfgdfgdf");
+            redirect('auth'); //use redirects instead of loading views for compatibility with MY_Controller libraries
+        }
+
+    }
+
 	//log the user out
 	function logout()
 	{
-		$this->data['title'] = "Logout";
+
+
+        $this->data['title'] = "Logout";
+        $session_data =  $this->session->all_userdata();
+        $log = array(
+            'employee_id' => $session_data['empolyee_code'],
+            'audit_name' => 'logout',
+            'description' => $session_data['username'],
+        );
 
 		//log the user out
 		$logout = $this->ion_auth->logout();
+
+        if($logout){
+            $this->logs_model->insertAuditLog($log);
+        }
 
 		//redirect them back to the page they came from
 		redirect('auth', 'refresh');
@@ -122,7 +173,8 @@ class Auth extends Controller {
 		{
 			redirect('auth/login', 'refresh');
 		}
-		$user = $this->ion_auth->get_user($this->session->userdata('user_id'));
+
+        $user = $this->ion_auth->get_user($this->session->userdata('user_id'));
 
 		if ($this->form_validation->run() == false)
 		{ //display the form

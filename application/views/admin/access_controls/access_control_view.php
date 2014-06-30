@@ -1,7 +1,7 @@
 <div id="content">
 
         <ul class="breadcrumb">
-            <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
+            <li><a href="<?php echo site_url(); ?>" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
             <li class="divider"></li>
             <li><?php echo $this->lang->line('access_control');?></li>
         </ul>
@@ -19,7 +19,7 @@
                     <?php
                     foreach($groupresult as $group):
                         ?>
-                        <option value="<?php echo site_url('admin/access_controls/access/'.$group->id)?>" <?php if($group_id == $group->id ){ echo "selected='selected'"; } ?> ><?php echo $group->name; ?></option>
+                        <option value="<?php echo site_url('admin/access_controls/access/'.$group->id)?>" <?php if($group_id == $group->id ){ echo "selected='selected'"; } ?> ><?php echo $group->description; ?></option>
                     <?php endforeach; ?>
 
                 </select>

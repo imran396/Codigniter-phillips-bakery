@@ -1,7 +1,7 @@
 <div id="content">
 
     <ul class="breadcrumb">
-        <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
+        <li><a href="<?php echo site_url(); ?>" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
         <li class="divider"></li>
         <li><?php echo $this->lang->line('categories');?></li>
     </ul>
@@ -14,7 +14,7 @@
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('categories');?></h3>
         <div class="buttons pull-right">
-            <a href="/admin/categories" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add page</a>
+            <a href="/admin/categories" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add New Cake Category</a>
         </div>
         <div class="clearfix"></div>
     </div>

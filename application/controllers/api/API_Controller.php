@@ -1,6 +1,8 @@
 <?php
 class API_Controller extends CI_Controller
 {
+    protected $data = array();
+
     protected function sendOutput($data, $code = 200, $content_type = "application/json")
     {
         header("HTTP/1.1: $code");

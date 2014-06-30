@@ -63,11 +63,11 @@
             <div style="text-align: center">
 
 <!--                <img src="/assets/img/bat_logo.png" />-->
-                <h2 style="text-align: center; margin-bottom: 30px; margin-top: 20px;"><?php echo $this->lang->line('site_name');?></h2>
+                <h2 style="text-align: center; margin-bottom: 30px; margin-top: 20px;"><?php echo $this->lang->line('site_login');?></h2>
 
             </div>
 
-            <form class="form-signin" method="POST" action="">
+            <form id="login-id" class="form-signin" method="POST" action="" style="display: none">
 
                 <strong><b style="color:red;"><?php echo $message;?></b></strong>
                 <h4 class="form-signin-heading">&nbsp;</h4>
@@ -77,10 +77,23 @@
                     <input type="password" class="input-block-level" placeholder="Password" name="password">
                     <label class="checkbox"><input type="checkbox" value="1" name="remember">Remember me</label>
                 </div>
+                      <div style="text-align: center"><button class="btn btn-large btn-primary" type="submit">Login</button></div>
 
-                <div style="text-align: center"><button class="btn btn-large btn-primary" type="submit">Login</button></div>
-
+                <p style="margin-top: 30px; margin-left: 110px;" ><a id="qrcode" href="javascript:void(0)">Click for QR login </a></p>
             </form>
+
+            <form id="qr-code" class="form-signin" method="POST" action="auth/qrlogin" >
+
+                <strong><b style="color:red;"><?php echo $message; ?></b></strong>
+                <h4 class="form-signin-heading">&nbsp;</h4>
+                <div class="uniformjs">
+                    <input type="password" class="input-block-level" placeholder="Enter QR Code" id="employee_id" name="employee_id">
+                </div>
+
+                <div style="text-align: center"><button class="btn btn-large btn-primary" id="login_qrcode" type="submit">Login QR Code</button></div>
+                <p style="margin-top: 30px; margin-left: 110px;"><a id="loginid" href="javascript:void(0)">Click for login </a></p>
+            </form>
+
 
         </div>
 
@@ -132,6 +145,26 @@
 
 	<!-- Layout Options -->
 	<script src="/assets/theme/scripts/layout.js"></script>
+    <script type="text/javascript" language="javascript">
+        jQuery(document).ready(function(){
+
+            $('#qrcode').click(function(){
+                $('#login-id').toggle();
+                $('#qr-code').toggle();
+                $("input[name = employee_id]").focus();
+                $("input[name = employee_id]").attr('placeholder','');
+            })
+
+            $('#loginid').click(function(){
+
+                $('#login-id').toggle();
+                $('#qr-code').toggle();
+            })
+
+            $("#location_id").select2();
+        });
+
+    </script>
 
 </body>
 </html>

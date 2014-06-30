@@ -6,10 +6,7 @@ class Zones_model extends Crud_Model
     public function __construct()
     {
         parent::__construct();
-
         $this->loadTable('zones','zone_id');
-
-
     }
 
     public function create($data)
@@ -24,8 +21,8 @@ class Zones_model extends Crud_Model
 
     public function deleteDataExisting($data=0){
 
-        $sql=sprintf("SELECT COUNT(zone_id) AS countValue FROM cakes  WHERE (zone_id = '{$data}' )");
-        return $count=$this->db->query($sql)->result()[0]->countValue;
+        $count=$this->db->select('delivery_zone_id')->where(array('delivery_zone_id'=>$data))->get('orders')->num_rows();
+        return $count;
     }
 
     public function delete($id)
@@ -34,7 +31,7 @@ class Zones_model extends Crud_Model
 
         if(!$this->deleteDataExisting($id) > 0){
             $this->remove($id);
-            $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
+            $this->session->set_flashdata('delete_msg',"Delivery zone has been deleted successfully");
         }else{
 
             $this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
@@ -45,10 +42,10 @@ class Zones_model extends Crud_Model
     public function  checkUniqueTitle($id){
 
         if(!empty($id)){
-            return $dbcatid = $this->db->select('title')
+            $row = $dbcatid = $this->db->select('title')
                 ->where('zone_id',$id)
-                ->get('zones')->result()[0]->title;
-
+                ->get('zones')->row();
+            return $row->title;
         }
 
     }

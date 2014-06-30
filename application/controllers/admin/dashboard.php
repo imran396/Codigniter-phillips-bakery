@@ -8,36 +8,25 @@ class Dashboard extends Crud_Controller
         parent::__construct();
         $this->load->library('ion_auth');
         $this->layout->setLayout('layout_admin');
+        $this->load->model(array('orders_model'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
-        //$this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
+       // $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
 
 
     }
 
     public function index()
     {
-        /*
-         *
-         *
-            $group = $this->session->userdata('group');
 
-            if (!$this->ion_auth->logged_in())
-            {
-                redirect('auth/login', 'refresh');
-            }
-            elseif (!$this->ion_auth->is_group($group))
-            {
-                redirect('/admin', 'refresh');
-            }
-            else
-            {
-                $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-                $this->data['users'] = $this->ion_auth->get_users_array();
-            }
-        */
-        $this->data['active']='dashboard';
-        $this->layout->view('admin/dashboard');
+        if (!$this->ion_auth->logged_in())
+        {
+            redirect('auth/login', 'refresh');
+        }
+
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->data['paging']=$this->orders_model->getListing($starts=0);
+        $this->layout->view('admin/orders/listing_view', $this->data);
 
     }
 

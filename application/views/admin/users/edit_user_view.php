@@ -1,7 +1,7 @@
 <div id="content">
 
         <ul class="breadcrumb">
-            <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
+            <li><a href="<?php echo site_url(); ?>" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
             <li class="divider"></li>
             <li><?php echo $this->lang->line('users');?></li>
         </ul>
@@ -15,48 +15,6 @@
         <div class="clearfix"></div>
     </div>
     <br/>
-    <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/users/change_password" name="form2" id="form2">
-        <div class="widget widget-2">
-            <div class="widget-head">
-                <h4 class="heading glyphicons settings"><i></i><?php echo $this->lang->line('account_settings');?></h4>
-            </div>
-            <div class="widget-body" style="padding-bottom: 0;">
-                <div class="row-fluid">
-                    <div class="span3">
-                        <strong>Change password</strong>
-                        <p class="muted"><?php echo $this->lang->line('account_settings_info');?></p>
-                    </div>
-                    <div class="span9">
-
-                        <label for="inputUsername"><?php echo $this->lang->line('username');?></label>
-                        <input type="hidden" name="username" value="<?php echo(isset($queryup[0]->username))? $queryup[0]->username:set_value('username'); ?>">
-                        <input type="text" id="inputUsername" class="span10" value="<?php echo(isset($queryup[0]->username))? $queryup[0]->username:set_value('username'); ?>" disabled="disabled" />
-                        <span style="margin: 0;" class="btn-action single glyphicons circle_question_mark" data-toggle="tooltip" data-placement="top" data-original-title="Username can't be changed"><i></i></span>
-
-                        <div class="separator"></div>
-
-                        <label for="inputPasswordOld">Old password</label>
-                        <input type="password" id="old" name="old" class="span10" value="" placeholder="Leave empty for no change" />
-                        <span style="margin: 0;" class="btn-action single glyphicons circle_question_mark" data-toggle="tooltip" data-placement="top" data-original-title="Leave empty if you don't wish to change the password"><i></i></span>
-                        <div class="separator"></div>
-
-                        <label for="inputPasswordNew">New password</label>
-                        <input type="password" id="new" name="new" class="span12" value="" placeholder="Leave empty for no change" />
-                        <div class="separator"></div>
-
-                        <label for="inputPasswordNew2">Repeat new password</label>
-                        <input type="password" id="new_confirm" name="new_confirm" class="span12" value="" placeholder="Leave empty for no change" />
-                        <div class="separator"></div>
-                    </div>
-                </div>
-
-
-                <div class="form-actions" style="margin: 0; padding-right: 0;">
-                    <button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok pull-right"><i></i>Save changes</button>
-                </div>
-            </div>
-        </div>
-    </form>
     <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/users/update" name="form1" id="form1">
         <div class="well" style="padding-bottom: 20px; margin: 0;">
             <div class="widget-head">
@@ -73,28 +31,37 @@
                         <label class="control-label" for="lastname"><?php echo $this->lang->line('last_name');?></label>
                         <div class="controls"><input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('last_name');?>" value="<?php echo(isset($queryup[0]->last_name))? $queryup[0]->last_name:set_value('last_name'); ?>"  class="span12" name="last_name" id="last_name"  /></div>
                     </div>
-
-
-
-                </div>
+                    <div class="control-group">
+                        <label class="control-label" for="lastname"><?php echo $this->lang->line('passcode');?></label>
+                        <div class="controls"><input type="text" placeholder="<?php echo $this->lang->line('passcode').' '.$this->lang->line('passcode');?>" value="<?php echo(isset($queryup[0]->employee_id))? $queryup[0]->employee_id:set_value('employee_id'); ?>"  class="span4" name="employee_id" id="employee_id"  /></div>
+                    </div>
+               </div>
                 <div class="span6">
 
                     <div class="control-group">
-                        <label class="control-label" for="email"><?php echo $this->lang->line('email');?></label>
-                        <div class="controls"><input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('email');?>" value="<?php echo(isset($queryup[0]->email))? $queryup[0]->email:set_value('email'); ?>"  class="validate[custom[email]] span12" name="email" id="email"  /></div>
-                    </div>
+                        <label class="control-label" for="username">Revel User</label>
+                        <div class="controls">
+                            <select style="width: 100%;" id="revel_user_id"  name="revel_user_id" >
+                                <?php $revel_user_id = (isset($queryup[0]->revel_user_id))? $queryup[0]->revel_user_id:set_value('revel_user_id');
+                                      foreach($revel_users as $rows): ?>
+                                <option value="<?php echo $rows->id ?>" <?php if($revel_user_id ==  $rows->id ){ echo "selected='selected'"; } ?> ><?php echo $rows->first_name.' '.$rows->last_name; ?></option>
+                                <?php endforeach;?>
+
+                            </select>
+                           </div>
+                    </div
 
                     <div class="control-group">
 
-                        <label class="control-label"><?php echo $this->lang->line('location');?></label>
+                        <label class="control-label">Access Role</label>
                         <div class="controls">
-                            <select onclick="" style="width: 100%;"  name="location_id" >
+                            <select onclick="" style="width: 100%;"  name="group_id" >
                                 <option value="" >---<?php echo $this->lang->line('select_one');?>---</option>
                                 <?php
-                                $location_id = (isset($queryup[0]->location_id))? $queryup[0]->location_id:set_value('location_id');
-                                foreach($locresult as $location):
+                                echo $group_id = (isset($queryup[0]->group_id))? $queryup[0]->group_id:set_value('group_id');
+                                foreach($groupresult as $group):
                                     ?>
-                                    <option value="<?php echo $location->location_id; ?>" <?php if($location_id == $location->location_id){ echo "selected='selected'"; } ?> ><?php echo $location->title; ?></option>
+                                    <option value="<?php echo $group->id; ?>" <?php if($group_id == $group->id){ echo "selected='selected'"; } ?> ><?php echo $group->description; ?></option>
                                 <?php endforeach; ?>
 
                             </select>

@@ -24,8 +24,7 @@ class Roles_model extends Crud_Model
 
     public function deleteDataExisting($data=0){
 
-        $sql="SELECT COUNT(id) AS countValue FROM users  WHERE (group_id = '$data' )";
-        return $count=$this->db->query($sql)->result()[0]->countValue;
+        return $count=$this->db->where(array(group_id => $data))->get()->num_rows();
     }
 
     public function delete($id)
@@ -45,9 +44,11 @@ class Roles_model extends Crud_Model
     public function  checkUniquename($id){
 
         if(!empty($id)){
-            return $dbcatid = $this->db->select('name')
+                $dbcatid = $this->db->select('name')
                 ->where('id',$id)
-                ->get('groups')->result()[0]->name;
+                ->get('groups')->row();
+                $name = $dbcatid ->name;
+                return $name ;
 
         }
 

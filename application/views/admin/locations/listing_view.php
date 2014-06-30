@@ -1,7 +1,7 @@
 <div id="content">
 
         <ul class="breadcrumb">
-            <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
+            <li><a href="<?php echo site_url(); ?>" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
             <li class="divider"></li>
             <li><?php echo $this->lang->line('locations');?></li>
         </ul>
@@ -11,7 +11,7 @@
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('locations');?></h3>
         <div class="buttons pull-right">
-            <a href="/admin/locations" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add page</a>
+            <a href="/admin/locations" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add New Bakery Location</a>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -30,6 +30,7 @@
                     <tr>
                         <th class="center">No.</th>
                         <th><?php echo $this->lang->line('locations');?></th>
+                        <th><?php echo $this->lang->line('vaughan_location');?></th>
                         <th style="width: 1%;" class="center"><?php echo $this->lang->line('drag');?></th>
                         <th><?php echo $this->lang->line('action');?></th>
                     </tr>
@@ -42,12 +43,13 @@
                         <tr class="selectable" id="listItem_<?php echo $rows->location_id; ?>" >
                         <td class="center"><?php echo $i; ?></td>
                         <td><?php echo $rows->title; ?></td>
+                        <td><?php  if($rows->vaughan_location >0){ echo "Yes"; } ?></td>
                         <td class="center js-sortable-handle"><span  class="glyphicons btn-action single move" style="margin-right: 0;"><i></i></span></td>
                         <td>
 
                             <a href="/admin/locations/status/<?php echo $rows->location_id; ?>" class="btn-action glyphicons btn <?php if($rows->status ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
                             <a class="btn-action glyphicons pencil btn-success" href="/admin/locations/edit/<?php echo $rows->location_id; ?>"><i></i></a>
-                            <a class="btn-action glyphicons remove_2 btn-danger" href="/admin/locations/remove/<?php echo $rows->location_id; ?>"><i></i></a>
+                            <a  onclick="return confirm('Are you sure you want to delete?')"  class="btn-action glyphicons remove_2 btn-danger" href="/admin/locations/remove/<?php echo $rows->location_id; ?>"><i></i></a>
 
                         </td>
 
@@ -83,5 +85,7 @@
             }
         });
     });
+
+
 
 </script>

@@ -63,7 +63,7 @@ $autoload['libraries'] = array('database', 'session','xmlrpc','form_validation',
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','file','form','security','string','paging');
+$autoload['helper'] = array('url','file','form','security','string','paging','util');
 
 /*
 | -------------------------------------------------------------------
@@ -78,7 +78,7 @@ $autoload['helper'] = array('url','file','form','security','string','paging');
 |
 */
 
-$autoload['config'] = array();
+$autoload['config'] = array('app');
 
 
 /*
@@ -107,7 +107,7 @@ $autoload['language'] = array('english');
 |
 */
 
-$autoload['model'] = array('access_model');
+$autoload['model'] = array('access_model','logs_model','revel_model','revel_order');
 
 
 /* End of file autoload.php */

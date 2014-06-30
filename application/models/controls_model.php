@@ -25,8 +25,7 @@ class Controls_model extends Crud_Model
 
     public function deleteDataExisting($data=0){
 
-        $sql=sprintf("SELECT COUNT(control_id) AS countValue FROM access_control  WHERE (control_id = '{$data}' )");
-        return $count=$this->db->query($sql)->result()[0]->countValue;
+       return $count=$this->db->where(array('control_id' => $data))->count_all_results('access_control');
     }
 
     public function delete($id)
@@ -35,7 +34,7 @@ class Controls_model extends Crud_Model
 
         if(!$this->deleteDataExisting($id) > 0){
             $this->remove($id);
-            $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
+            $this->session->set_flashdata('delete_msg',"Control has been deleted successfully");
         }else{
 
             $this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
@@ -46,9 +45,10 @@ class Controls_model extends Crud_Model
     public function  checkUniquecontroller_name($id){
 
         if(!empty($id)){
-            return $dbcatid = $this->db->select('controller_name')
+            $dbcatid = $this->db->select('controller_name')
                 ->where('control_id',$id)
-                ->get('user_control')->result()[0]->controller_name;
+                ->get('user_control')->row();
+            return $dbcatid->controller_name;
 
         }
 

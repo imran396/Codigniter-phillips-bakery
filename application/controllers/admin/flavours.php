@@ -84,11 +84,10 @@ class Flavours extends Crud_Controller
 
             $this->flavours_model->insert($data);
 
-            $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
+            $this->session->set_flashdata('success_msg',"New flavour has been added successfully");
         } else {
             $this->flavours_model->update($data, $data['flavour_id']);
-
-            $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
+            $this->session->set_flashdata('success_msg',"Flavour has been updated successfully");
         }
 
     }

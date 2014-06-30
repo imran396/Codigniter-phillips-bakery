@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <?php  if(isset($refresh)) echo "<meta http-equiv='refresh' content='{$refresh}'>"; ?>
 
     <!-- Bootstrap -->
     <link href="<?php echo base_url() ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -43,9 +44,6 @@
     <!-- JQuery v1.8.2 -->
     <script src="<?php echo base_url() ?>assets/theme/scripts/jquery-1.8.2.min.js"></script>
 
-    <!-- Modernizr -->
-    <script src="<?php echo base_url() ?>assets/theme/scripts/modernizr.custom.76094.js"></script>
-
     <!-- MiniColors -->
     <link rel="stylesheet" media="screen" href="<?php echo base_url() ?>assets/theme/scripts/jquery-miniColors/jquery.miniColors.css" />
 
@@ -53,26 +51,29 @@
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/theme/css/style.min.css?1363272430" />
 
     <!-- LESS 2 CSS -->
-    <script src="<?php echo base_url() ?>assets/theme/scripts/less-1.3.3.min.js"></script>
-
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/print.css" media="print"/>
+    <!--<script src="<?php /*echo base_url() */?>assets/theme/scripts/less-1.3.3.min.js"></script>
+-->
 </head>
 <body>
 
 <!-- Start Content -->
-<div class="container-fluid fixed container-new">
-<?php $this->load->view('admin/layouts/top'); ?>
-<div id="wrapper">
-<?php $this->load->view('admin/layouts/left'); ?>
-<?php echo $content_for_layout; ?>
-<!-- End Wrapper -->
-</div>
+<div class="container-fluid container-new">
 
-<!-- Sticky Footer -->
-<div id="footer" class="visible-desktop">
-    <div class="wrap">
+    <?php $this->load->view('admin/layouts/top'); ?>
 
+    <div id="wrapper">
+        <?php $this->load->view('admin/layouts/left'); ?>
+        <?php echo $content_for_layout; ?>
     </div>
-</div>
+    <!-- End Wrapper -->
+
+    <!-- Sticky Footer -->
+    <div id="footer" class="visible-desktop">
+        <div class="wrap" style="color: #ccc; padding: 5px; text-align: right">
+
+        </div>
+    </div>
 
 </div>
 
@@ -84,8 +85,10 @@
 <!--<script src="<?php //echo base_url() ?>/assets/theme/scripts/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>-->
 
 <!-- DataTables -->
-<script src="<?php echo base_url() ?>assets/theme/scripts/DataTables/media/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo base_url() ?>assets/theme/scripts/DataTables/media/js/DT_bootstrap.js"></script>
+<!--<script src="<?php /*echo base_url() */?>assets/theme/scripts/DataTables/media/js/jquery.dataTables.min.js"></script>
+<script src="<?php /*echo base_url() */?>assets/theme/scripts/DataTables/media/js/DT_bootstrap.js"></script>-->
+
+<!--<script type="text/javascript" language="javascript" src="<?php /*echo base_url() */?>assets/media/js/jquery.dataTables.js"></script>-->
 
 <!-- MiniColors -->
 <script src="<?php echo base_url() ?>assets/theme/scripts/jquery-miniColors/jquery.miniColors.js"></script>
@@ -94,21 +97,18 @@
 <script src="<?php echo base_url() ?>assets/theme/scripts/select2/select2.js"></script>
 
 <!-- Themer -->
-<script>
-    var themerPrimaryColor = '#DA4C4C';
-</script>
+<script>var themerPrimaryColor = '#DA4C4C';</script>
 <script src="<?php echo base_url() ?>assets/theme/scripts/jquery.cookie.js"></script>
 <script src="<?php echo base_url() ?>assets/theme/scripts/themer.js"></script>
 
 <!-- jQuery Validate -->
-
-
 <link rel="stylesheet" href="<?php echo base_url()?>/assets/css/validationEngine.jquery.css" type="text/css">
 <script src="<?php echo base_url()?>assets/js/languages/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
 <script src="<?php echo base_url()?>assets/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
 
 <!-- Form Elements Custom script -->
 <script src="<?php echo base_url() ?>assets/theme/scripts/form_elements.js" type="text/javascript"></script>
+
 <!-- Resize Script -->
 <script src="<?php echo base_url() ?>assets/theme/scripts/jquery.ba-resize.js"></script>
 
@@ -127,41 +127,36 @@
 <script src="<?php echo base_url() ?>assets/bootstrap/extend/bootbox.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/bootstrap/extend/bootstrap-wysihtml5/js/wysihtml5-0.3.0_rc2.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/bootstrap/extend/bootstrap-wysihtml5/js/bootstrap-wysihtml5-0.0.2.js" type="text/javascript"></script>
+<script src="<?php echo base_url() ?>assets/multi-datepicker/js/jquery.timepicker.js" type="text/javascript"></script>
+
 <!-- Theme -->
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/custom.css?var=1" />
+
 <!-- Custom Onload Script -->
 <script src="<?php echo base_url() ?>assets/theme/scripts/load.js"></script>
 
 <!--Layout Options-->
-<!--<script src="<?php //echo base_url() ?>/assets/theme/scripts/layout.js"></script>-->
+<!--<script src="/assets/theme/scripts/layout.js"></script>-->
+
 <script type="text/javascript" language="javascript">
-jQuery(document).ready(function(){
 
-    jQuery("#form1").validationEngine(
-        {
-        promptPosition: "topLeft"
-        }
-    );
-    jQuery("#form2").validationEngine(
-        {
-            promptPosition: "topLeft"
-        }
-    );
-    jQuery("#form3").validationEngine(
-        {
-            promptPosition: "topLeft"
-        }
-    );
-    jQuery("#form4").validationEngine(
-        {
-            promptPosition: "topLeft"
-        }
-    );
+    jQuery(document).ready(function () {
 
-    $("#category_id , #location_id , #flavour_id  ").select2();
+        jQuery('#timepicker').timepicker();
 
-});
+        jQuery("#form1, #form2, #form3, #form4").validationEngine({
+            promptPosition: "topLeft"
+        });
+
+        jQuery('.numbersOnly').keyup(function () {
+            this.value = this.value.replace(/[^0-9\.]/g, '');
+        });
+
+        $("#category_id, #location_id, #flavour_id, #customer_id, #employee_id, #manager_id, .search_dropdown").select2();
+
+    });
 
 </script>
+
 </body>
 </html>

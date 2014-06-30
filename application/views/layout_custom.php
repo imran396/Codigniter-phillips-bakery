@@ -8,7 +8,7 @@
 
     <!-- Meta -->
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1, minimum-scale=1.0, maximum-scale=5.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
@@ -56,6 +56,8 @@
     <!-- LESS 2 CSS -->
     <script src="<?php echo base_url() ?>assets/theme/scripts/less-1.3.3.min.js"></script>
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/style.css"/>
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/print.css" media="print"/>
+
 </head>
 <body>
 
@@ -78,8 +80,10 @@
 <!--<script src="<?php //echo base_url() ?>/assets/theme/scripts/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>-->
 
 <!-- DataTables -->
-<script src="<?php echo base_url() ?>assets/theme/scripts/DataTables/media/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo base_url() ?>assets/theme/scripts/DataTables/media/js/DT_bootstrap.js"></script>
+<!--<script src="--><?php //echo base_url() ?><!--assets/theme/scripts/DataTables/media/js/jquery.dataTables.min.js"></script>-->
+<!--<script src="--><?php //echo base_url() ?><!--assets/theme/scripts/DataTables/media/js/DT_bootstrap.js"></script>-->
+
+
 
 <!-- MiniColors -->
 <script src="<?php echo base_url() ?>assets/theme/scripts/jquery-miniColors/jquery.miniColors.js"></script>
@@ -121,6 +125,7 @@
 <script src="<?php echo base_url() ?>assets/bootstrap/extend/bootbox.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/bootstrap/extend/bootstrap-wysihtml5/js/wysihtml5-0.3.0_rc2.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/bootstrap/extend/bootstrap-wysihtml5/js/bootstrap-wysihtml5-0.0.2.js" type="text/javascript"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>/assets/js/jquery.wheelzoom.js"></script>
 
 <!-- Theme -->
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/custom.css?var=1" />
@@ -130,34 +135,17 @@
 <script src="<?php echo base_url() ?>assets/theme/scripts/custom.js"></script>
 <!--Layout Options-->
 <!--<script src="<?php //echo base_url() ?>/assets/theme/scripts/layout.js"></script>-->
-<script type="text/javascript" language="javascript">
-jQuery(document).ready(function(){
+<link rel="stylesheet" type="text/css" href="/assets/multi-datepicker/css/mdp.css">
+<script language="javascript">
+$(document).ready(function(){
+    $('.popup-gallery .current-img img').wheelzoom();
 
-    jQuery("#form1").validationEngine(
-        {
-        promptPosition: "topLeft"
-        }
-    );
-    jQuery("#form2").validationEngine(
-        {
-            promptPosition: "topLeft"
-        }
-    );
-    jQuery("#form3").validationEngine(
-        {
-            promptPosition: "topLeft"
-        }
-    );
-    jQuery("#form4").validationEngine(
-        {
-            promptPosition: "topLeft"
-        }
-    );
+    // or zoom sets the zoom percent.
+    $('.popup-gallery .current-img img').wheelzoom({zoom:0.05});
 
-    $("#category_id , #location_id , #flavour_id  ").select2();
-
+    // zooming out can be triggered by calling 'wheelzoom.reset'
+    $('.popup-gallery .current-img img').trigger('wheelzoom.reset')
 });
-
 </script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <div id="content">
 
         <ul class="breadcrumb">
-            <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
+            <li><a href="<?php echo site_url(); ?>" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
             <li class="divider"></li>
             <li><?php echo $this->lang->line('customers');?></li>
         </ul>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="widget-body" style="padding-bottom: 0;">
                         <div class="row-fluid">
-                            <div class="span6">
+                            <div>
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('first_name');?></label>
                                     <div class="controls">
@@ -45,7 +45,7 @@
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('phone_number');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('phone_number');?>" value="<?php echo(isset($queryup[0]->phone_number))? $queryup[0]->phone_number:set_value('phone_number'); ?>"  class="validate[required,custom[phone]] span10" name="phone_number" id="phone_number"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('phone_number');?>" value="<?php echo(isset($queryup[0]->phone_number))? $queryup[0]->phone_number:set_value('phone_number'); ?>"  class="validate[required,custom[phone]] span10 numbersOnly" name="phone_number" id="phone_number"  />
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -58,13 +58,13 @@
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('address1');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address1');?>" value="<?php echo(isset($queryup[0]->address1))? $queryup[0]->address1:set_value('address1'); ?>"   class="span12" name="address1" id="address1"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address1');?>" value="<?php echo(isset($queryup[0]->address_1))? $queryup[0]->address_1:set_value('address_1'); ?>"   class="span12" name="address_1" id="address_1"  />
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('address2');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address2');?>" value="<?php echo(isset($queryup[0]->address2))? $queryup[0]->address2:set_value('address2'); ?>"  class="span12" name="address2" id="address2"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address2');?>" value="<?php echo(isset($queryup[0]->address_2))? $queryup[0]->address_2:set_value('address_2'); ?>"  class="span12" name="address_2" id="address_2"  />
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -76,7 +76,16 @@
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('province');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('province');?>" value="<?php echo(isset($queryup[0]->province))? $queryup[0]->province:set_value('province'); ?>"   class="span10" name="province" id="province"  />
+                                        <select name="province" id="province">
+                                        <option value="">---Select one---</option>
+                                        <?php
+                                        $data = array("Ontario","Quebec","Nova Scotia", "New Brunswick", "Manitoba","British Columbia","Prince Edward Island","Saskatchewan","Alberta","Newfoundland and Labrador");
+                                        foreach( $data as $rows ):
+                                        $province = (isset($queryup[0]->province))? $queryup[0]->province:set_value('province');
+                                        ?>
+                                        <option value="<?php echo $rows ?>" <?php if($province ==$rows ){ echo "selected='selected'"; } ?>><?php echo $rows ?></option>
+                                        <?php endforeach; ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -88,22 +97,41 @@
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('country');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('country');?>" value="<?php echo(isset($queryup[0]->country))? $queryup[0]->country:set_value('country'); ?>"   class="span10" name="country" id="country"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('country');?>" value="<?php echo(isset($queryup[0]->country))? $queryup[0]->country:"Canada"; ?>"   class="span10" name="country" id="country"  />
                                     </div>
                                 </div>
+                                <?php if(!empty($customernotes)){ ?>
+                                <div class="">
+                                    <table style="width: 100%" class="table table-bordered table-condensed js-table-sortable" style="height: 40px; margin-bottom: 20px;overflow-x: scroll">
+                                        <?php
+                                        $i=1;
+                                        foreach($customernotes as $notes):?>
+
+                                            <tr class="selectable" id="listItem_<?php echo $notes->order_notes_id; ?>" >
+                                                <td><?php echo $i; ?></td>
+                                                <td><?php echo $notes->notes; ?></td>
+                                                <td><?php echo dateFormatStr($notes->create_date); ?></td>
+
+                                                <td>
+                                                    <a onclick="return confirm('Are you sure you want to delete?')" data-original-title="<?php echo $this->lang->line('delete'); ?>" data-placement="top" data-toggle="tooltip" class="btn-action glyphicons remove_2 btn-danger" id="<?php echo $notes->order_notes_id; ?>"><i></i></a></td>
+                                            </tr>
+                                            <?php $i++; endforeach;  ?>
+                                    </table>
+                                </div>
+                                <?php } ?>
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('notes');?></label>
                                     <div class="controls">
-                                        <textarea rows="" class="midium-textarea" cols="" name="notes" id="notes"> <?php echo (isset($queryup[0]->notes))? $queryup[0]->notes:set_value('notes'); ?></textarea>
+                                        <textarea rows="" class="midium-textarea" cols="" name="notes" id="notes"></textarea>
                                     </div>
                                 </div>
-                                <div class="control-group">
-                                    <?php $email_notification = (isset($queryup[0]->email_notification))? $queryup[0]->email_notification:0; ?>
-                                    <label class="control-label"><?php echo $this->lang->line('email_notification');?><input type="checkbox" style="margin-left:20px " name="email_notification" id="email_notification" value="1" <?php if($email_notification ==1){ echo "checked='checked'"; } ?>></label>
+                               <!-- <div class="control-group">
+                                    <?php /*$email_notification = (isset($queryup[0]->email_notification))? $queryup[0]->email_notification:0; */?>
+                                    <label class="control-label"><?php /*echo $this->lang->line('email_notification');*/?><input type="checkbox" style="margin-left:20px " name="email_notification" id="email_notification" value="1" <?php /*if($email_notification ==1){ echo "checked='checked'"; } */?>></label>
                                     <div class="controls">
 
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="control-group uniformjs">
                                     <label class="control-label"><?php echo $this->lang->line('status');?></label>
                                     <div class="separator"></div>
@@ -141,3 +169,18 @@
 <!-- End Content -->
 
 </div>
+<script type="text/javascript">
+$(document).ready(function(){
+    /*$("#phone_number").text(function(i, text) {
+        var phone = $("#phone_number").val();
+        alert(phone);
+        text = phone.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+        return text;
+    });*/
+
+ /*   $("#phone_number").each(function(){
+        $(this).val($(this).val().replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3"));
+    });*/
+
+});
+</script>

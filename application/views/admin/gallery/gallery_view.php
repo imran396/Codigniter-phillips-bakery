@@ -1,18 +1,18 @@
 <div id="content">
 
         <ul class="breadcrumb">
-            <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
+            <li><a href="<?php echo site_url(); ?>" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
             <li class="divider"></li>
             <li><?php echo $this->lang->line('cake_gallery');?></li>
         </ul>
     <br/>
     <?php $this->load->view('admin/layouts/message'); ?>
     <br/>
-    <form method="post" action="/admin/gallery/save_data" name="form1" id="pluploadForm">
+    <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/gallery/insert" name="form1" id="pluploadForm">
         <div class="innerLR">
             <div class="widget widget-2">
                 <div class="widget-head">
-                    <h4 class="heading glyphicons file_import"><i></i>File Manager</h4>
+                    <h4 class="heading glyphicons file_import"><i></i>Manage Cake Gallery</h4>
                 </div>
                 <div class="widget-body">
 
@@ -71,8 +71,7 @@
             unique_names : true,
 
             // Resize images on clientside if we can
-            //resize : {width : 320, height : 240, quality : 90},
-
+            resize : {width : 730, height : 480, quality : 90},
             // Specify what files to browse for
             filters : [
                 {title : "Image files", extensions : "jpg,gif,png"},
@@ -86,25 +85,25 @@
             silverlight_xap_url : 'theme/scripts/plupload/js/plupload.silverlight.xap'
         });
 
-//        // Client side form validation
-//        $('#pluploadForm').submit(function(e) {
-//            var uploader = $('#pluploadUploader').pluploadQueue();
-//
-//            // Files in queue upload them first
-//            if (uploader.files.length > 0) {
-//                // When all files are uploaded submit form
-//                uploader.bind('StateChanged', function() {
-//                    if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
-//                        $('#pluploadForm').submit();
-//                    }
-//                });
-//
-//                uploader.start();
-//            } else {
-//                alert('You must queue at least one file.');
-//            }
-//
-//            return false;
-//        });
+        // Client side form validation
+        /*$('#pluploadForm').submit(function(e) {
+            var uploader = $('#pluploadUploader').pluploadQueue();
+
+            // Files in queue upload them first
+            if (uploader.files.length > 0) {
+                // When all files are uploaded submit form
+                uploader.bind('StateChanged', function() {
+                    if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
+                        $('#pluploadForm').submit();
+                    }
+                });
+
+                uploader.start();
+            } else {
+                alert('You must queue at least one file.');
+            }
+
+            return false;
+        });*/
     });
 </script>

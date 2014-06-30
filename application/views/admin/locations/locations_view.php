@@ -1,7 +1,7 @@
 <div id="content">
 
         <ul class="breadcrumb">
-            <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
+            <li><a href="<?php echo site_url(); ?>" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
             <li class="divider"></li>
             <li><?php echo $this->lang->line('locations');?></li>
         </ul>
@@ -30,6 +30,22 @@
                         <div class="row-fluid">
                             <div class="span6">
                                 <div class="control-group">
+                                    <label class="control-label"><?php echo $this->lang->line('pos_api'); ?></label>
+                                    <div class="controls">
+                                        <select  class="validate[required] span10" id="revel_location_id" name="revel_location_id">
+                                            <option value="">---<?php echo $this->lang->line('select_one'); ?>---</option>
+                                            <?php
+                                             $revel_location_id = (isset($queryup[0]->revel_location_id))? $queryup[0]->revel_location_id:set_value('revel_location_id');
+                                            foreach($revel_location as $rows):
+                                                $establistment = explode('/',$rows->establishment);
+
+                                                ?>
+                                                <option value="<?php echo $rows->id.'|'.$establistment[3] ?>" <?php if($revel_location_id ==  $rows->id ){ echo "selected='selected'"; } ?> ><?php echo $rows->name; ?> | Establishment-<?php echo $establistment[3]; ?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('location_name');?></label>
                                     <div class="controls">
                                         <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('location_name');?>" value="<?php echo(isset($queryup[0]->title))? $queryup[0]->title:set_value('title'); ?>"  class="validate[required] span10" name="title" id="title"  />
@@ -37,15 +53,20 @@
                                 </div>
 
                                 <div class="control-group">
+                                    <label class="control-label"><?php echo $this->lang->line('vaughan_location');?></label>
+                                    <?php $vaughan_location = (isset($queryup[0]->vaughan_location))? $queryup[0]->vaughan_location:set_value('vaughan_location'); ?>
+                                    <div class="controls"><input type="checkbox" name="vaughan_location" id="vaughan_location" value="1" <?php if($vaughan_location ==1){?> checked="checked" <?php } ?>></div>
+                                 </div>
+                                <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('address1');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address1');?>" value="<?php echo(isset($queryup[0]->address1))? $queryup[0]->address1:set_value('address1'); ?>"   class="span12" name="address1" id="address1"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address1');?>" value="<?php echo(isset($queryup[0]->address1))? $queryup[0]->address1:set_value('address1'); ?>"   class="span10" name="address1" id="address1"  />
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label"><?php echo $this->lang->line('address2');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address2');?>" value="<?php echo(isset($queryup[0]->address2))? $queryup[0]->address2:set_value('address2'); ?>"  class="span12" name="address2" id="address2"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('address2');?>" value="<?php echo(isset($queryup[0]->address2))? $queryup[0]->address2:set_value('address2'); ?>"  class="span10" name="address2" id="address2"  />
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -73,9 +94,30 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label"><?php echo $this->lang->line('pos_api');?></label>
+                                    <label class="control-label"><?php echo $this->lang->line('email');?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('pos_api');?>" value="<?php echo(isset($queryup[0]->pos_api))? $queryup[0]->pos_api:set_value('pos_api'); ?>"   class="span12" name="pos_api" id="pos_api"  />
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('email');?>" value="<?php echo(isset($queryup[0]->email))? $queryup[0]->email:set_value('email'); ?>"   class="span10" name="email" id="email"  />
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label"><?php echo $this->lang->line('phone_number');?></label>
+                                    <div class="controls">
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('phone');?>" value="<?php echo(isset($queryup[0]->phone))? $queryup[0]->phone:set_value('phone'); ?>"   class="span10" name="phone" id="phone"  />
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label"><?php echo $this->lang->line('store_print_ip');?></label>
+                                    <div class="controls">
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('store_print_ip');?>" value="<?php echo(isset($queryup[0]->store_print_ip))? $queryup[0]->store_print_ip:set_value('store_print_ip'); ?>"   class="span10" name="store_print_ip" id="store_print_ip"  /><br />
+                                        <?php echo $this->lang->line('print_ip_example'); ?>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label"><?php echo $this->lang->line('kitchen_print_ip');?></label>
+                                    <div class="controls">
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('kitchen_print_ip');?>" value="<?php echo(isset($queryup[0]->kitchen_print_ip))? $queryup[0]->kitchen_print_ip:set_value('kitchen_print_ip'); ?>"   class="span10" name="kitchen_print_ip" id="kitchen_print_ip"  /><br />
+                                        <?php echo $this->lang->line('print_ip_example'); ?>
                                     </div>
                                 </div>
                                 <div class="control-group uniformjs">

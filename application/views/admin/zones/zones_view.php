@@ -1,7 +1,7 @@
 <div id="content">
 
         <ul class="breadcrumb">
-            <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
+            <li><a href="<?php echo site_url(); ?>" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
             <li class="divider"></li>
             <li><?php echo $this->lang->line('zones');?></li>
         </ul>
@@ -47,8 +47,8 @@
                                     <div class="controls">
                                         <div class="input-prepend input-append">
                                             <span class="add-on">$</span>
-                                            <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('surcharge');?>" value="<?php echo(isset($queryup[0]->surcharge))? $queryup[0]->surcharge:set_value('surcharge'); ?>"   class="span10" name="surcharge" id="appendedPrependedInput" class="span12">
-                                            <span class="add-on">.00</span>
+                                            <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('surcharge');?>" value="<?php echo(isset($queryup[0]->surcharge))? $queryup[0]->surcharge :set_value('surcharge'); ?>"   class="span10 numbersOnly" name="surcharge" id="appendedPrependedInput" class="span12">
+
                                         </div>
 
 

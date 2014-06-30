@@ -1,7 +1,7 @@
 <div id="content">
 
         <ul class="breadcrumb">
-            <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
+            <li><a href="<?php echo site_url(); ?>" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
             <li class="divider"></li>
             <li><?php echo $this->lang->line('servings');?></li>
         </ul>
@@ -16,10 +16,6 @@
     </div>
     <br/>
     <!-- End Content -->
-    <?php
-
-    print_r($queryup);
-    ?>
     <div class="separator"></div>
     <form method="post" action="/<?php echo $this->uri->segment(1,NULL)?>/servings/save" name="form1" id="form1">
  <div class="innerLR">
@@ -40,10 +36,17 @@
                                         <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('serving_name');?>" value="<?php echo(isset($queryup[0]->title))? $queryup[0]->title:set_value('title'); ?>"  class="validate[required] span10" name="title" id="title"  />
                                     </div>
                                 </div>
-                                <div class="control-group">
-                                    <label class="control-label"><?php echo $this->lang->line('size');?></label>
+                    <!--            <div class="control-group">
+                                    <label class="control-label"><?php /*echo $this->lang->line('size_shape');*/?></label>
                                     <div class="controls">
-                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('size');?>" value="<?php  echo(isset($queryup[0]->size))? form_prep($queryup[0]->size):set_value('size'); ?>"  class="validate[required] span10" name="size" id="size"  />
+                                        <input type="text" placeholder="<?php /*echo $this->lang->line('enter').' '.$this->lang->line('size_shape');*/?>" value="<?php /* echo(isset($queryup[0]->size))? form_prep($queryup[0]->size):set_value('size'); */?>"  class="validate[required] span10" name="size" id="size"  />
+                                    </div>
+                                </div>-->
+                                <div class="control-group">
+                                    <label class="control-label"><?php echo $this->lang->line('printing_surcharge');?></label>
+                                    <div class="controls">
+                                        <span class="add-on">$</span>
+                                        <input type="text" placeholder="<?php echo $this->lang->line('enter').' '.$this->lang->line('printing_surcharge');?>" value="<?php  echo(isset($queryup[0]->printing_surcharge))? $queryup[0]->printing_surcharge:set_value('printing_surcharge'); ?>"   class="validate[required] span10 numbersOnly" name="printing_surcharge" id="printing_surcharge"  />
                                     </div>
                                 </div>
 

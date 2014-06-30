@@ -57,36 +57,43 @@ class Gallery_model extends CI_Model
                 $this->session->set_flashdata('warning_msg',$this->upload->display_errors());
             }
             $file_name = $upload_data['file_name'];
-            $filePath="assets/uploads/cakes/".$file_name;
+            $filePath="/assets/uploads/cakes/".$file_name;
             $this->db->where(array('cake_id'=>$id))->set(array('image'=>$filePath))->update('cakes');
 
 
     }
 
 
-    function fileDelete($id)
+    function galleryDelete($id)
     {
-        $row = $this->getGallery($id);
-        if (file_exists($row[0]->image))
+        $rows = $this->getGallery($id);
+        if (file_exists($rows->image))
         {
-            unlink($_SERVER['DOCUMENT_ROOT'].$row[0]->image);
+            unlink($_SERVER['DOCUMENT_ROOT'].'/'.$rows->image);
         }
-
+        $this->db->where(array('gallery_id'=>$id))->delete('cake_gallery');
 
     }
 
 
-    public function delete($id)
+    public function imageDelete($cake_id,$id)
     {
 
-        $this->fileDelete($id);
-        $this->remove($id);
-        $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
+        $rows=$this->db->where(array('cake_id'=>$cake_id,'gallery_id'=>$id))->get('cake_gallery')->row();
+        if($rows->image){
+            if (file_exists($rows->image))
+            {
+                unlink($_SERVER['DOCUMENT_ROOT'].'/'.$rows->image);
+            }
+            $this->db->where(array('cake_id'=>$cake_id,'gallery_id'=>$id))->delete('cake_gallery');
+            $this->session->set_flashdata('delete_msg',"Gallery image has been deleted successfully");
+        }else{
+            $this->session->set_flashdata('wrinn_msg',$this->lang->line('delete_msg'));
+        }
+        $insert['update_date']=time();
+        $this->db->set($insert)->where(array('cake_id' => $id))->update('cakes');
     }
 
-    public function remove($id){
-        $this->db->where(array('gallery_id'=>$id))->delete('cake_gallery');
-    }
 
     public function statusChange($id){
 
@@ -100,6 +107,20 @@ class Gallery_model extends CI_Model
 
     }
 
+    public function sortingList($cake_id)
+    {
+
+        $i=1;
+        foreach ($_POST['listItem'] as $position => $item) :
+            $array=array('ordering'=>$i);
+            $this->db->set($array);
+            $this->db->where(array('gallery_id 	'=>$item,'cake_id'=>$cake_id));
+            $this->db->update('cake_gallery');
+            $i++;
+        endforeach;
+    }
+
+
 
     public function getCakeList()
     {
@@ -108,10 +129,53 @@ class Gallery_model extends CI_Model
 
     }
 
-    public function getGallery($gallery_id)
+    public function getCakeGallery($start)
     {
 
-        return $this->db->select('*')->where(array('gallery_id'=>$gallery_id))->get('cake_gallery')->result();
+
+        $per_page = 12;
+        $page     = intval($start);
+        if ($page <= 0) $page = 1;
+        $limit      = ($page - 1) * $per_page;
+        $base_url   = site_url('admin/gallery/listing');
+        $paging = $this->db->select('cakes.cake_id,cakes.title ,cakes.image')
+                ->from('cake_gallery')
+                ->join('cakes','cakes.cake_id = cake_gallery.cake_id')
+                ->group_by('cake_gallery.cake_id')
+                ->get();
+        $total_rows =$paging->num_rows();
+        $paging     = paginate($base_url, $total_rows, $start, $per_page);
+
+        $query = $this->db
+
+            ->select('cakes.cake_id,cakes.title ,cakes.image')
+            ->from('cake_gallery')
+            ->join('cakes','cakes.cake_id = cake_gallery.cake_id')
+            ->group_by('cake_gallery.cake_id')
+            ->limit($per_page, $limit)
+            ->get()
+            ->result();
+
+        return array($query, $paging, $total_rows, $limit);
+
+    }
+
+    public function getGallery($cake_id)
+    {
+
+
+        $result = $this->db->select('*')->where(array('cake_id'=>$cake_id))->order_by('ordering','asc')->get('cake_gallery');
+        if($result ->num_rows() > 0){
+            return $result->result();
+        }else{
+            return false;
+        }
+
+    }
+
+    function fileName($fileName){
+        $filename=explode("/",$fileName);
+        return end($filename);
 
     }
 

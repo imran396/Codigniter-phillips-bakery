@@ -12,9 +12,7 @@ class Shapes extends API_Controller
 
     public function index()
     {
-
-    $data = $this->shapes_model->getAll();
-
-    $this->sendOutput($data);
+        $data = $this->shapes_model->getAll();
+        $this->sendOutput($data);
     }
 }

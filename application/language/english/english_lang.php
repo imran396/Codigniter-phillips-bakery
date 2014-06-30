@@ -16,8 +16,10 @@
 
 
 // Account Changes
+$lang['domain_name'] 		 	    = 'stphillipsbakery.com';
 $lang['site_title'] 		 	    = 'St. Phillips Bakery Admin Panel';
-$lang['site_name'] 		 	        = 'St. P. Bakery';
+$lang['site_name'] 		 	        = 'St. Phillips';
+$lang['site_login'] 		 	    = 'St. Phillips Bakery';
 $lang['admin_panel'] 		 	    = 'Admin Panel';
 $lang['list'] 		 	    = 'List';
 $lang['add_new'] 		 	    = 'Add new';
@@ -25,12 +27,33 @@ $lang['action'] 		 	    = 'Action';
 $lang['list_of'] 		 	    = 'List of';
 $lang['drag'] 		 	    = 'Drag';
 
+/* Mail Gun Information  */
+
+$lang['global_email'] 		 	    			= 'donotreply@stphillipsbakery.com';
+$lang['info_email']							= 'info@stphillipsbakery.com';
+$lang['global_email_subject'] 		 	    	= 'St. Phillips Bakery';
+
+$lang['mailgun_cakeonimage_email'] 		 	    = 'oncakeimage@stphillipsbakery.mailgun.org';
+$lang['mailgun_cakeonimage_name'] 		 	    = 'On cake image';
+$lang['mailgun_cakeonimage_subject'] 		 	= 'St Phillips - Attach your image';
+$lang['mailgun_cakeonimage_body'] 		 	    = 'Reply to this email and attach the image you would like to have printed on your cake.';
+
+$lang['mailgun_instructional_email'] 		 	= 'referenceimage@stphillipsbakery.mailgun.org';
+$lang['mailgun_instructional_name'] 		 	= 'Reference images';
+$lang['mailgun_instructional_subject'] 		 	= 'St Phillips - Attach your reference images';
+$lang['mailgun_instructional_body'] 		 	= 'Reply to this email and attach the example images you would like your baker to reference.';
+$lang['customer_email'] 		 				= 'Customer will email';
+
+
+/* ---------- Malling Subject information */
+
 /* Left menu level*/
+
 
 $lang['menu_level'] 		 	                    = 'Menu Level';
 $lang['dashboard'] 		 	                        = 'Dashboard';
 $lang['settings'] 		 	                        = 'Settings';
-$lang['categories'] 		 	                    = 'Cake Catalogue';
+$lang['categories'] 		 	                    = 'Cake Categories';
 $lang['cakes'] 		 	                            = 'Manage Cakes';
 $lang['locations'] 		 	                        = 'Locations';
 $lang['location'] 		 	                        = 'Location';
@@ -40,6 +63,7 @@ $lang['access_roles'] 		 	                    = 'Access Roles';
 $lang['manage_flavors'] 		 	                = 'Manage Flavors';
 $lang['shapes'] 		 	                        = 'Shapes';
 $lang['flavours'] 		 	                        = 'Flavours';
+$lang['flavour'] 		 	                        = 'Flavour';
 $lang['fondants'] 		 	                        = 'Fondants';
 $lang['servings'] 		 	                        = 'Servings';
 $lang['sizes'] 		 	                            = 'Sizes';
@@ -47,51 +71,55 @@ $lang['tiers'] 		 	                            = 'Tiers';
 $lang['blackouts'] 		 	                        = 'Blackouts';
 $lang['cakes'] 		 	                            = 'Cakes';
 $lang['gallery'] 		 	                    = 'Cake Gallery';
-$lang['zone'] 		 	                    = 'Delivery zone';
+$lang['zone'] 		 	                    = 'Delivery Zones';
 $lang['employee'] 		 	                        = 'Employee';
 $lang['customers'] 		 	                        = 'Customers';
 $lang['orders'] 		 	                    = 'Cake Orders';
-$lang['manage_users'] 		 	                = 'Manage Employers';
-$lang['users'] 		 	                = 'Employers';
+$lang['manage_users'] 		 	                = 'Manage Employees';
+$lang['users'] 		 	                = 'Employees';
 $lang['manage_access'] 		 	                    = 'Manage Access Control';
 $lang['roles'] 		 	                    = 'Manage Roles';
 $lang['access_controller'] 		 	                    = 'Manage Controller';
 $lang['access_control'] 		 	                    = 'Manage Access';
 $lang['role_group'] 		 	                    = 'Role Group';
+$lang['customer_id'] 		 	                    = 'Customer ID';
 
 /*################## Site Message for success  #############*/
 $lang['insert_msg']="Data has been insert successfully";
 $lang['user_update_msg']="User has been updated";
 $lang['update_msg']="Your changes were saved successfully.";
 $lang['remove_second_msg']="The second agent was deleted successfully.";
-$lang['existing_data_msg']="The data related another table";
+$lang['existing_data_msg']="The data is related to another table. Unable to delete.";
 $lang['delete_msg']="Data has been deleted successfully";
 $lang['insert_pic']="Picture has been insert successfully";
 $lang['image_delete_msg']="Image has been deleted successfully";
 $lang['duplicate_msg']="is already taken";
 $lang['admin_delete_msg']="Administer not delete";
 $lang['no_records_msg']="Sorry - No listings founds";
-$lang['no_location_msg']="Must be need location select";
+$lang['no_location_msg']="Location must be selected";
 $lang['no_group_msg']="Must be need group select";
 $lang['status_msg']="The selected flavour has been disabled.";
-
-
+$lang['tag_msg']="Separate tag with a comma in order to use multiple tags. Example tag1,tag2, etc";
+$lang['move'] 		 	    = 'Move';
+$lang['search'] 		 	    = 'Search';
+$lang['none'] 		 	                    = 'None';
 /* User Settings */
 $lang['sign_out'] 		 	    = 'Sign Out';
 $lang['user'] 		 	    = 'User';
+
 
 /*     Action button    */
 $lang['add_categories'] 		 	    = 'Add Categories';
 $lang['add_edit'] 		 	    = 'Add/Edit';
 $lang['save_changes'] 		 	    = 'Save changes';
-$lang['cancel'] 		 	    = 'Cancel';
+$lang['cancel'] 		 	    = 'Reset';
 $lang['enter'] 		 	    = 'Enter';
 
 
 /* Categories */
 
 
-$lang['category_name'] 		 	    = 'Catalogue Name';
+$lang['category_name'] 		 	    = 'Category Name';
 $lang['slug'] 		 	    = 'Slug';
 
 /*  Role */
@@ -104,36 +132,40 @@ $lang['unpublish'] 		 	    = 'Un-publish';
 
 /* Locations */
 
-
-
-$lang['create_location'] 		 	    = 'Create Location';
-$lang['location_title'] 		 	    = 'Location Title';
-$lang['address1'] 		 	    = 'Address 1';
-$lang['address2'] 		 	    = 'Address 2';
-$lang['city'] 		 	    = 'City';
-$lang['province'] 		 	    = 'Province';
-$lang['postal_code'] 		 	    = 'Postal Code';
-$lang['country'] 		 	    = 'Country';
-$lang['surcharge'] 		 	    = 'Sur-charge';
-$lang['pos_api'] 		 	    = 'POS api';
+$lang['create_location']      = 'Create Location';
+$lang['vaughan_location']     = 'Vaughan';
+$lang['location_name']        = 'Location Name';
+$lang['address1']             = 'Address 1';
+$lang['address2']             = 'Address 2';
+$lang['city']                 = 'City';
+$lang['province']             = 'Province';
+$lang['postal_code']          = 'Postal Code';
+$lang['country']              = 'Country';
+$lang['surcharge']            = 'Surcharge';
+$lang['pos_api']              = 'POS Station';
+$lang['store_print_ip']       = 'Store Printer IP and Model';
+$lang['kitchen_print_ip']     = 'Kitchen Printer IP and Model';
+$lang['print_ip_example']     = 'Example: 192.168.1.250|TM-T70';
+$lang['vaughan_location_msg'] = "Another location has been assigned as the Vaughan Location";
 
 /* Cakes */
 
-$lang['category_id'] 		 	    = 'Cake Catalogue';
+$lang['category_id'] 		 	    = 'Cake Category';
+$lang['revel_cake'] 		 	    = 'Revel Cake Name';
 $lang['flavour_id'] 		 	    = 'Flavour Name';
 $lang['location_id'] 		 	    = 'Location Name';
-$lang['cake_title'] 		 	    = 'Cake Title';
+$lang['cake_title'] 		 	    = 'Cake Name';
 $lang['description'] 		 	    = 'Description';
-$lang['meta_tag'] 		 	    = 'Meta Tag';
+$lang['meta_tag'] 		 	        = 'Meta Tag';
 $lang['start_price'] 		 	    = 'Start Price';
-$lang['end_price'] 		 	    = 'End Price';
-$lang['to'] 		 	    = 'To';
+$lang['price'] 		 	            = 'Price';
+$lang['to'] 		 	            = 'To';
 $lang['add_gallery'] 		 	    = 'Add Gallery';
 $lang['list_cakes'] 		 	    = 'List of Cakes';
 
-
-
 $lang['select_one'] 		 	    = 'Select One';
+$lang['select'] 		 	        = 'Select';
+
 $lang['upload_image'] 		 	    = 'Upload Image';
 $lang['create_cake'] 		 	    = 'Create Cake';
 $lang['gallery_image'] 		 	    = 'Gallery Image';
@@ -142,12 +174,14 @@ $lang['gallery_image'] 		 	    = 'Gallery Image';
 $lang['add_flavours'] 		 	    = 'Add Flavours';
 $lang['flavour_name'] 		 	    = 'Flavour Name';
 $lang['cake_shape'] 		 	    = 'Cake Shape';
-$lang['fondant'] 		 	    = 'Fondant';
+$lang['fondant'] 		 	        = 'Fondant';
 
 
 $lang['add_servings'] 		 	    = 'Add Servings';
-$lang['serving_name'] 		 	    = 'Serving Name';
-$lang['size'] 		 	    = 'Size';
+$lang['serving_name'] 		 	    = 'Number of Servings';
+$lang['size'] 		 	            = 'Size';
+$lang['size_shape'] 		 	    = 'Shape';
+$lang['printing_surcharge'] 		 	    = 'Printing Surcharge';
 
 /* price matrix */
 $lang['price_matrix'] 		 	    = 'Price Matrix';
@@ -181,6 +215,8 @@ $lang['country'] 		 	    = 'Country';
 $lang['notes'] 		 	    = 'Notes';
 $lang['email_notification'] 		 	    = 'Email Notification';
 $lang['create_customer'] 		 	    = 'Create Customer';
+$lang['orders'] 		 	    = 'Orders';
+$lang['estimates'] 		 	    = 'Estimates';
 
 /*  Users */
 
@@ -188,7 +224,7 @@ $lang['create_users'] 		 	    = 'Create Users';
 $lang['name'] 		 	    = 'Name';
 $lang['username'] 		 	    = 'User Name';
 $lang['password'] 		 	    = 'Password';
-$lang['con_password'] 		 	    = 'Re-Password';
+$lang['con_password'] 		 	    = 'Retype Password';
 $lang['role'] 		 	    = 'Users Role';
 $lang['active'] 		 	    = 'Active';
 $lang['inactive'] 		 	    = 'Inactive';
@@ -198,6 +234,9 @@ $lang['account_settings'] 		 	    = 'Account Settings';
 $lang['account_settings_info'] 		 	    = 'Account settings instruction';
 $lang['controller_name'] 		 	    = 'Controller name';
 $lang['inactive'] 		 	    = 'Inactive';
+$lang['employee_id'] 		 	    = 'Employee ID';
+
+
 
 /*        ---------------Production------------------    */
 
@@ -205,3 +244,78 @@ $lang['production'] 		 	    = 'Production';
 $lang['inproduction'] 		 	    = 'In Production';
 $lang['blackout'] 		 	    = 'Blackout';
 
+
+/* Manage Orders Label */
+
+$lang['cake_information'] 		 	    = 'Cake Information';
+$lang['customer_information'] 		 	    = 'Customer,Employee & Manager';
+$lang['date_location'] 		 	    = 'Date & Location';
+$lang['delivery_information'] 		 	    = 'Delivery Information';
+$lang['cake_instruction'] 		 	    = 'Custom Cake Instructions';
+$lang['click_for_image'] 		 	    = 'Click for large image';
+
+
+$lang['bakery_location'] 		 	    = 'Bakery Location';
+$lang['cake_name'] 		 	    = 'Cake Name';
+$lang['delivery_type'] 		 	    = 'Pickup/Delivery';
+$lang['pickup'] 		 	    = 'Pickup';
+$lang['delivery'] 		 	    = 'Delivery';
+$lang['pickup_location'] 		 	    = 'Pickup Location';
+$lang['delivery_time'] 		 	    = 'Pickup/Delivery Time';
+$lang['delivery_date'] 		 	    = 'Delivery or pickup';
+$lang['order_created'] 		 	    = 'Order Created';
+$lang['onCakeImage'] 		 	    = 'Image On Cake ';
+$lang['magic_cake_id'] 		 	    = 'Magic Cake ID';
+$lang['magic_surcharge'] 		 	    = 'Magic Cake Surcharge';
+$lang['inscription'] 		 	    = 'Inscription';
+$lang['special_instruction'] 		 	    = 'Special Instructions';
+$lang['delivery_instruction'] 		 	    = 'Delivery Instruction';
+$lang['customer_name'] 		 	    = 'Customer Name';
+$lang['employee_name'] 		 	    = 'Employee Name';
+$lang['manager_name'] 		 	    = 'Manager Name';
+
+$lang['save_print'] 		 	    = 'Save & Print';
+$lang['save_email'] 		 	    = 'Save & Email';
+$lang['is_estimate'] 		 	    = 'Is Estimate';
+$lang['custom_cake_surcharge'] 		 	    = 'Add an image on cake (Applicable surcharge will be added)';
+$lang['is_vaughan_location'] 		= 'Cake made in Vaughan location';
+$lang['instructional_email_photo'] 	= 'Customer will email instructional photo';
+$lang['cake_email_photo'] 		 	= 'Customer will email photo';
+$lang['instructional_photo'] 		 	= 'Instructional photo';
+$lang['delivery_zone'] 		 	    = 'Delivery Zone';
+$lang['order_status'] 		 	    = 'Order Status';
+
+
+$lang['matrix_price'] 		 	            = 'Cake Price';
+$lang['discount_price'] 		 	        = 'Discount';
+$lang['printed_image_surcharge'] 		 	= 'Printed Image Surcharge';
+$lang['magic_surcharge'] 		 	        = 'Magic Surcharge';
+$lang['delivery_zone_surcharge'] 		 	= 'Delivery Zone Surcharge';
+$lang['override_price'] 		 	        = 'Price Override';
+$lang['total_price'] 		 	            = 'Total Price';
+$lang['total'] 		 	                    = 'Total';
+$lang['order_notes'] 		 	            = 'Order Notes';
+$lang['added_by'] 		 	                = 'Added By';
+$lang['notes'] 		 	                    = 'Notes';
+$lang['mailtouser'] 		 	            = 'Mail to user';
+
+/* -------- Orders --------------*/
+$lang['Size and Servings'] = 'Size and Servings';
+$lang['cakes categories'] = 'Cakes Categories';
+$lang['auditlog'] = 'Audit Log';
+
+
+/*-------------------Reports----------------------*/
+
+$lang['reports'] 		 	    = 'Reports';
+$lang['product_reports'] 		 	    = 'Product report';
+$lang['category_reports'] 		 	    = 'Category report';
+$lang['customer_reports'] 		 	    = 'Customer report';
+$lang['enter_start_date'] 		 	    = 'Enter start date[mm/dd/yyyyy]';
+$lang['enter_end_date'] 		 	    = 'Enter end date[mm/dd/yyyy]';
+
+
+$lang['establishments'] 		 	    = 'Establishments Products';
+$lang['establishment_id'] 		 	    = 'Establishments ID';
+$lang['cake_id'] 		 	    = 'Revel Product ID';
+$lang['is_custom_product'] 		 	    = 'Custom Cake';

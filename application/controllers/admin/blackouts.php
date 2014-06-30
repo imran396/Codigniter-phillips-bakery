@@ -9,7 +9,7 @@ class Blackouts extends Crud_Controller
 
         //$this->layout->setLayout('layout_admin');
         $this->layout->setLayout('layout_custom');
-        $this->load->model('servings_model');
+        $this->load->model(array('blackouts_model','orders_model','productions_model'));
         $log_status = $this->ion_auth->logged_in();
         $this->access_model->logged_status($log_status);
         $this->access_model->access_permission($this->uri->segment(2,NULL),$this->uri->segment(3,NULL));
@@ -17,93 +17,99 @@ class Blackouts extends Crud_Controller
 
     }
 
-    public function index()
+    public function index($start=0)
     {
-
-
+        $this->data['paging'] = $this->blackouts_model->getListing($start);
+        $this->data['locations'] = $this->blackouts_model->getLocations();
+        $this->data['flavours'] = $this->blackouts_model->getFlavours();
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/blackouts/blackout_view', $this->data);
 
-
     }
 
-
-    public function listing(){
-
-        $this->data['result'] = $this->servings_model->getListing();
+    public function edit($id,$start=0)
+    {
+        $this->data['paging'] = $this->blackouts_model->getListing($start);
+        $this->data['locations'] = $this->blackouts_model->getLocations();
+        $this->data['flavours'] = $this->blackouts_model->getFlavours();
+        $this->data['queryup'] = $this->db->where('blackout_id',$id)->get('blackouts')->row();
         $this->data['active']=$this->uri->segment(2,0);
-        $this->layout->view('admin/servings/listing_view', $this->data);
+        $this->layout->view('admin/blackouts/blackout_view', $this->data);
 
     }
+
+
+
+    public function listing($start=0)
+    {
+        $this->data['paging'] = $this->blackouts_model->getListing($start);
+        $this->data['locations'] = $this->blackouts_model->getLocations();
+        $this->data['flavours'] = $this->blackouts_model->getFlavours();
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->layout->view('admin/blackouts/blackout_view', $this->data);
+
+    }
+
 
     public function save()
     {
 
-        if (!empty($_POST)) {
-            $this->addValidation();
-            if ($this->form_validation->run()) {
-                $this->saveData();
-                $id =$this->input->post('serving_id');
-                if(!empty($id)) {
-                    $this->redirectToHome('edit/'.$id);
-                }else{
-                    $this->redirectToHome('listing');
-                }
+        $data= $this->input->post();
+        if (!empty($data)) {
 
+               $this->saveData();
 
-            }
         }
-        $this->index();
+        $this->redirectToHome();
 
     }
 
 
-    public function edit($id)
+    public function search($id)
     {
 
-        $this->data['queryup'] = $this->servings_model->getservings($id);
+        $this->data['queryup'] = $this->blackouts_model->getservings($id);
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/servings/servings_view', $this->data);
     }
 
-    private function addValidation()
-    {
-        $this->form_validation->set_rules('title', 'Category', 'required|trim|xss_clean|callback_checkTitle');
-        $this->form_validation->set_rules('serving_id');
-        $this->form_validation->set_rules('status');
+    function checkLessCurrentDate(){
 
+        $curdate=date('m/d/Y');
+        $blackout_date      = explode(',',$this->input->post('blackout_date'));
+        $final          = array();
+
+        foreach($blackout_date as $date){
+
+            if($date < $curdate){
+
+                $final[]=$date;
+            }
+        }
+
+        echo count($final);
     }
+
+
 
 
     private function saveData()
     {
 
         $data = $this->input->post();
-        if (empty($data['serving_id'])) {
+        $flavour_ids      = explode(',',$this->input->post('flavour_ids'));
+        unset($data['flavour_ids']);
+        $data['flavour_id']=$flavour_ids;
+        if (empty($data['blackout_id'])) {
 
-            $this->servings_model->create($data);
-
+            $this->blackouts_model->insert($data);
             $this->session->set_flashdata('success_msg',$this->lang->line('insert_msg'));
-        } else {
-            $this->servings_model->save($data, $data['serving_id']);
 
+        } else {
+            
+            $this->blackouts_model->update($data, $data['blackout_id']);
             $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
         }
-
-    }
-
-    public function status($id){
-
-        $this->servings_model->statusChange($id);
-        $this->session->set_flashdata('success_msg',$this->lang->line('update_msg'));
-        $this->redirectToHome("listing");
-
-    }
-
-    public function sorting(){
-
-        $this->servings_model->sortingList();
-        echo $this->lang->line('update_msg');
 
     }
 
@@ -111,23 +117,16 @@ class Blackouts extends Crud_Controller
 
     public function remove($id)
     {
-        $this->servings_model->delete($id);
-        $this->redirectToHome("listing");
+        $this->blackouts_model->delete($id);
+        $this->redirectToHome();
 
     }
 
-    public function checkTitle($title){
 
-
-        $data = $this->input->post();
-        return  $this->servings_model->checkservings($data['serving_id'],$title);
-
-
-    }
 
     private function redirectToHome($redirect = NULL)
     {
-        redirect('admin/servings/'.$redirect);
+        redirect('admin/blackouts'.$redirect);
     }
 
 }

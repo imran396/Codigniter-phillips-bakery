@@ -24,9 +24,9 @@ class Gallery extends Crud_Controller
 
     }
 
-    public function listing(){
+    public function listing($start=0){
 
-        $this->data['result'] = $this->gallery_model->getListing();
+        $this->data['paging'] = $this->gallery_model->getCakeGallery($start);
         $this->data['active']=$this->uri->segment(2,0);
         $this->layout->view('admin/gallery/listing_view', $this->data);
 
@@ -161,12 +161,12 @@ class Gallery extends Crud_Controller
 
     }
 
-    public function save_data()
+    public function insert()
     {
 
 
-        $cake_id=$this->input->post('cake_id');
-        if (!empty($cake_id)) {
+       $cake_id=$this->input->post('cake_id');
+       if (!empty($cake_id)) {
             $this->addValidation();
             if ($this->form_validation->run()) {
                 $this->saveData();
@@ -206,10 +206,27 @@ class Gallery extends Crud_Controller
     public function remove($id)
     {
 
-        $this->gallery_model->delete($id);
+        $this->gallery_model->galleryDelete($id);
         $this->redirectToHome("listing");
 
     }
+
+    public function single_gallery($id){
+
+        $this->data['active']=$this->uri->segment(2,0);
+        $this->data['galleries']=$this->gallery_model->getGallery($id);
+        $this->layout->view('admin/gallery/single_cake_gallery', $this->data);
+
+    }
+
+    public function single_remove($cake_id,$id)
+    {
+
+        $this->gallery_model->imageDelete($cake_id,$id);
+        redirect("admin/cakes/edit/".$cake_id);
+
+    }
+
 
 
 

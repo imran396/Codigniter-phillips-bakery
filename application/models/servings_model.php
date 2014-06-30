@@ -34,7 +34,7 @@ class Servings_model extends Crud_Model
 
         if(!$this->deleteDataExisting($id) > 0){
             $this->remove($id);
-            $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
+            $this->session->set_flashdata('delete_msg',"Serving has been deleted successfully");
         }else{
 
             $this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
@@ -112,6 +112,18 @@ class Servings_model extends Crud_Model
         }
 
     }
+
+    public function getAll()
+    {
+        $data = $this->db->select('serving_id,title as serving_title ,size,printing_surcharge ')->order_by('title','asc')->get('servings')->result_array();
+
+        foreach($data as $key => $val){
+            $data[$key]['serving_id'] = (int) $data[$key]['serving_id'];
+            $data[$key]['printing_surcharge'] = (float) $data[$key]['printing_surcharge'];
+        }
+        return $data;
+    }
+
 
 
 

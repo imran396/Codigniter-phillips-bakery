@@ -6,10 +6,7 @@ class Categories_model extends Crud_Model
     public function __construct()
     {
         parent::__construct();
-
         $this->loadTable('categories','category_id');
-
-
     }
 
     public function create($data)
@@ -36,7 +33,7 @@ class Categories_model extends Crud_Model
 
         if(!$this->deleteDataExisting($id) > 0){
             $this->remove($id);
-            $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
+            $this->session->set_flashdata('delete_msg',"Category has been deleted successfully");
         }else{
 
             $this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
@@ -68,7 +65,7 @@ class Categories_model extends Crud_Model
     public function getListing()
     {
 
-        return $this->db->select('*')->order_by('ordering','asc')->get('categories')->result();
+        return $this->db->select('*')->order_by('title','asc')->get('categories')->result();
 
     }
 
@@ -119,7 +116,7 @@ class Categories_model extends Crud_Model
 
     public function getAll()
     {
-        $data = $this->db->select('category_id,title')->order_by('ordering','asc')->get('categories')->result_array();
+        $data = $this->db->select('category_id,title')->where('status',1)->order_by('ordering','asc')->get('categories')->result_array();
 
         foreach($data as $key=>$val){
             $data[$key]['category_id'] = (int) $data[$key]['category_id'];
@@ -128,6 +125,13 @@ class Categories_model extends Crud_Model
         return $data;
     }
 
+    public function getCategoryDropDownArray(){
+        $data = $this->getAll();
+        foreach($data as $key => $val){
+            $dropdown_array[$val['category_id']] = $val['title'];
+        }
+        return $dropdown_array;
+    }
 
 
 

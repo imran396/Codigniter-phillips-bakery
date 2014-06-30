@@ -8,40 +8,124 @@ class Customers extends API_Controller
     {
         parent::__construct();
         $this->load->model('customers_model');
+        $this->load->model('revel_customer');
     }
 
     public function index()
     {
-        $data = $this->customers_model->getAll();
-        /*$data = array(
-            array(
-                'customer_id'  => 1,
-                'first_name'   => "Noor",
-                'last_name'    => "Khan",
-                'phone_number' => "(647) 694-2587",
-                'email'        => "nmkhan@emicrograph.com",
-                'address_1'    => "",
-                'address_2'    => "",
-                'city'         => "Missisauga",
-                'province'     => "ON",
-                'postal_code'  => "AB 2341",
-                'country'      => "Canada"
-            ),
-            array(
-                'customer_id'  => 2,
-                'first_name'   => "Emran",
-                'last_name'    => "Hasan",
-                'phone_number' => "(647) 694-2587",
-                'email'        => "emran@emicrograph.com",
-                'address_1'    => "",
-                'address_2'    => "",
-                'city'         => "Missisauga",
-                'province'     => "ON",
-                'postal_code'  => "AB 2342",
-                'country'      => "Canada"
-            )
-        );*/
+
+
+        $lastdate=$this->input->get('lastupdate');
+        if(empty($lastdate)){
+            $data = $this->customers_model->getAll();
+        }else{
+            $data = $this->customers_model->getLastUpdateAll($lastdate);
+        }
+        $this->sendOutput($data);
+    }
+
+
+
+
+    public function insert()
+    {
+
+
+
+        $data = $this->input->post();
+            $data['status']=1;
+
+            if(isset($data)){
+                try{
+                    $data['revel_customer_id']= $this->revel_customer->create($data);
+                }catch (\Exception $e){
+                    $data['revel_customer_id'] = 0;
+                }
+            }
+
+            $customer_id = $this->customers_model->create($data);
+            $data = array(
+                array(
+                    'customer_id' => $customer_id
+                ),
+            );
+
+            if($customer_id) {
+
+                if(isset($_REQUEST['employee_id'])){
+                    $empolyee_code = $this->logs_model->getEmployeeCode($_REQUEST['employee_id']);
+                     if(!empty($empolyee_code)){
+                        $log = array(
+                            'employee_id' => $empolyee_code,
+                            'audit_name' => 'customer created',
+                            'description' =>  'customer_id='. $customer_id
+                        );
+                        $this->logs_model->insertAuditLog($log);
+                    }
+                }
+            }
+
+           $this->sendOutput($data);
+    }
+
+    public function update(){
+
+            $data = $this->input->post();
+            $this->customers_model->save($data, $data['customer_id']);
+            $customerUpdatedData = $this->customers_model->getcustomers($data['customer_id']);
+            $data['revel_customer_id'] = $customerUpdatedData[0]->revel_customer_id;
+            if($data['revel_customer_id'] > 0){
+
+                try{
+                    $this->revel_customer->update($data);
+                }catch (\Exception $e){
+
+                }
+
+            }else{
+
+                if(isset($data)){
+                    try{
+                        $data['revel_customer_id']= $this->revel_customer->create($data);
+                    }catch (\Exception $e){
+                        $data['revel_customer_id'] = 0;
+                    }
+                }
+            }
+
+
+            if($data['customer_id']) {
+
+                if(isset($_REQUEST['employee_id'])){
+                    $empolyee_code = $this->logs_model->getEmployeeCode($_REQUEST['employee_id']);
+                    if(!empty( $empolyee_code )){
+                        $log = array(
+                            'employee_id' => $empolyee_code,
+                            'audit_name' => 'customer created',
+                            'description' =>  'customer_id='. $data['customer_id']
+                        );
+                        $this->logs_model->insertAuditLog($log);
+                    }
+                }
+            }
+            $data = array(
+                array(
+                    'customer_id' => $data['customer_id']
+                ),
+
+            );
 
         $this->sendOutput($data);
     }
+
+    public function search(){
+            $request = $this->input->get();
+
+        if($request){
+                $data = $this->customers_model->search($request);
+                $this->sendOutput($data);
+            }
+
+    }
+
 }

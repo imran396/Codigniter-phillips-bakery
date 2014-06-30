@@ -14,27 +14,52 @@ class Customers_model extends Crud_Model
 
     public function create($data)
     {
-        $this->insert($data);
+
+        $count=$this->db->select('customer_id')->where('phone_number',$data['phone_number'])->get('customers');
+        if($count-> num_rows() > 0){
+            $row = $count->row();
+            $id = $row ->customer_id;
+            $data['is_deleted']=0;
+            $this->save($data, $id);
+
+        }else{
+
+            $data['insert_date']=isset($data['insert_date']) ? $data['insert_date']:time();
+            $data['update_date']=isset($data['insert_date']) ? $data['insert_date']:time();
+            $id = $this->insert($data);
+
+            if(!empty($data['notes'])){
+                $this->db->set(array('customer_id'=>$id,'notes'=>$data['notes'],'create_date'=>time()))->insert('customer_notes');
+            }
+        }
+        return $id;
     }
 
     public function save($data, $id)
     {
+        $data['update_date']=time();
         $this->update($data, $id);
+        if(!empty($data['notes'])){
+        $this->db->set(array('customer_id'=>$id,'notes'=>$data['notes'],'create_date'=>time()))->insert('customer_notes');
+        }
     }
 
     public function deleteDataExisting($data=0){
-
-        $sql=sprintf("SELECT COUNT(customer_id) AS countValue FROM orders  WHERE (customer_id = '{$data}' )");
-        return $count=$this->db->query($sql)->result()[0]->countValue;
+            $order_status=array(301,3021,303);
+            $this->db->where(array('customer_id' => $data));
+            $this->db->where_in('order_status',$order_status);
+            return $count= $this->db->count_all_results('orders');
     }
 
     public function delete($id)
     {
 
-
         if(!$this->deleteDataExisting($id) > 0){
-            $this->remove($id);
-            $this->session->set_flashdata('delete_msg',$this->lang->line('delete_msg'));
+
+            $this->revel_customer->delete($id);
+            $this->db->set(array('is_deleted'=>1,'update_date'=>time()))->where('customer_id',$id)->update('customers');
+            $this->session->set_flashdata('delete_msg',"Customer has been deleted successfully");
+
         }else{
 
             $this->session->set_flashdata('warning_msg',$this->lang->line('existing_data_msg'));
@@ -45,9 +70,10 @@ class Customers_model extends Crud_Model
     public function  checkUniqueTitle($id){
 
         if(!empty($id)){
-            return $dbcatid = $this->db->select('title')
+             $dbcatid = $this->db->select('phone_number')
                 ->where('customer_id',$id)
-                ->get('customers')->result()[0]->title;
+                ->get('customers')->row();
+            return $dbcatid->phone_number;
 
         }
 
@@ -59,24 +85,32 @@ class Customers_model extends Crud_Model
 
     }
 
+    function getCustomerNotes($customer_id){
+        return $this->db->select('*')->where(array('customer_id'=>$customer_id))->order_by('create_date','desc')->get('customer_notes')->result();
+    }
+
     public function getListing($start)
     {
-
         $per_page=10;
-        $num_link=3;
         $page   = intval($start);
         if($page<=0)  $page  = 1;
         $limit=($page-1)*$per_page;
-        $base_url = site_url('admin/users/listing');
-        $total_rows = $this->db->count_all_results('users');
+        $base_url = site_url('admin/customers/listing');
+        $total_rows = $this->db->where('is_deleted !=',1)->count_all_results('customers');
         $paging = paginate($base_url, $total_rows,$start,$per_page);
         $this->db->select('customers.*');
         $this->db->from('customers');
+        $this->db->where('is_deleted !=',1);
         $this->db->limit($per_page,$limit);
-        $this->db->order_by("customers.customer_id", "desc");
+        $this->db->order_by("customers.first_name", "asc");
         $query =$this->db->get();
         return array($query,$paging,$total_rows,$limit);
 
+    }
+
+    function orderCount($customer_id,$order_status){
+
+        return $this->db->where(array('customer_id'=>$customer_id,'order_status'=>$order_status))->get('orders')->num_rows();
     }
 
     public function statusChange($id){
@@ -96,9 +130,10 @@ class Customers_model extends Crud_Model
 
 
         $dbtitle = $this->checkUniqueTitle($id);
+
         if($title != $dbtitle ){
 
-            $sql=sprintf("SELECT COUNT(customer_id) AS countValue FROM customers WHERE (LOWER(title) = LOWER('{$title}'))");
+            $sql="SELECT COUNT(customer_id) AS countValue FROM customers WHERE phone_number = $title ";
             $count=$this->db->query($sql)->result();
             if($count[0]->countValue > 0 )
             {
@@ -113,13 +148,106 @@ class Customers_model extends Crud_Model
 
     public function getAll()
     {
-        $data = $this->db->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('customer_id','asc')->get('customers')->result_array();
+        $data = $this->db->where('is_deleted !=',1)->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('first_name','asc')->get('customers')->result_array();
         foreach($data as $key => $val){
               $data[$key]['customer_id'] = (int) $data[$key]['customer_id'];
         }
         return $data;
     }
 
+    public function search($data){
+        $data = $this->getSearchField($data);
+        if(isset($data['customer_id'])){
+            $customer_id = $data['customer_id'];
+            $this->db->where('customer_id', $customer_id);
+            unset($data['customer_id']);
+        }
+        $this->db->where('is_deleted !=',1);
+        $this->db->like($data);
+        $res = $this->db->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->get('customers');
+        if($res){
+            $result =  $res->result_array();
+            foreach($result  as $key => $val){
+                $result[$key]['customer_id'] = (int) $result[$key]['customer_id'];
+            }
+           return $result;
 
+        }else{
+            return array();
+        }
+    }
+
+    function getLastUpdateAll($lastdate){
+
+        $inserted = $this->db->where(array('is_deleted !=' =>1,'insert_date >'=> $lastdate))->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('first_name','asc')->get('customers')->result_array();
+        foreach($inserted as $key => $val){
+            $inserted[$key]['customer_id'] = (int) $inserted[$key]['customer_id'];
+        }
+
+        $updated = $this->db->where(array('is_deleted !=' =>1,'insert_date < '=> $lastdate ,'update_date >'=> $lastdate))->select('customer_id,first_name,last_name,phone_number,email,address_1,address_2,city,province,postal_code,country')->order_by('first_name','asc')->get('customers')->result_array();
+        foreach($updated as $key => $val){
+            $updated[$key]['customer_id'] = (int) $updated[$key]['customer_id'];
+        }
+
+        $deleted = $this->db->where(array('is_deleted'=> 1,'insert_date < '=> $lastdate , 'update_date >'=> $lastdate))->select('customer_id')->order_by('first_name','asc')->get('customers')->result();
+
+        foreach($deleted as  $val){
+            $delete[] =  (int)$val->customer_id;
+        }
+        $delete = isset($delete) ? $delete:array();
+        return array('inserted'=>$inserted,'updated'=>$updated,'deleted'=>$delete);
+
+    }
+
+    private function getSearchField($data){
+        foreach ($data as $key => $value) {
+            if (array_search($key, $this->fields) === false) {
+                unset($data[$key]);
+            }
+        }
+        return $data;
+
+    }
+
+    function searching($search,$start){
+
+        $search=strtolower($search);
+        $query="SELECT customer_id,revel_customer_id,first_name,last_name,phone_number,status
+                FROM `customers`
+                WHERE(is_deleted !=1 AND  LOWER(`first_name`) LIKE '%$search%')
+                || (is_deleted !=1 AND LOWER(`last_name`) LIKE '%$search%')
+                || (is_deleted !=1 AND `phone_number` = '$search')";
+
+        $per_page=10;
+        $page   = intval($start);
+        if($page<=0)  $page  = 1;
+        $limit=($page-1)*$per_page;
+        $base_url = site_url('admin/customers/search/'.$search);
+        $num = $this->db->query($query);
+        $total_rows = $num->num_rows();
+        $paging = paginate($base_url, $total_rows,$start,$per_page);
+        $limit = "LIMIT $limit , $per_page";
+        $pagequery=$query.$limit;
+        $query = $this->db->query($pagequery);
+        return array($query,$paging,$total_rows,$limit);
+
+    }
+
+    function orderList($customer_id,$order_status){
+
+        $result = $this->db->where(array('customer_id'=>$customer_id,'order_status'=>$order_status,'is_deleted !='=>1))->order_by('delivery_date','desc')->get('orders');
+        if($result->num_rows() > 0){
+            $data="";
+            $data .="<table class='table table-bordered table-primary' >";
+            $data .="<thead><tr><th>Order Code</th><th>Delivery Date & Time</th><th>Delivery Type</th></tr></thead>";
+            foreach($result->result() as $rows ):
+            $data .="<tr><td><a href='/admin/orders/edit/".$rows->order_id."'>".$rows->order_code."</a></td><td>".$rows->delivery_date."</td><td>".$rows->delivery_type."</td></tr>";
+            endforeach;
+            $data .="</table>";
+            return  $data;
+
+
+        }
+    }
 
 }

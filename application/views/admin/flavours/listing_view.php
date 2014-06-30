@@ -1,7 +1,7 @@
 <div id="content">
 
         <ul class="breadcrumb">
-            <li><a href="dashboard" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
+            <li><a href="<?php echo site_url(); ?>" class="glyphicons home"><i></i> <?php echo $this->lang->line('admin_panel'); ?></a></li>
             <li class="divider"></li>
             <li><?php echo $this->lang->line('flavours');?></li>
         </ul>
@@ -13,7 +13,7 @@
     <div class="heading-buttons">
         <h3 class="glyphicons sort"><i></i><?php echo $this->lang->line('flavours');?></h3>
         <div class="buttons pull-right">
-            <a href="/admin/flavours" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add page</a>
+            <a href="/admin/flavours" class="btn btn-primary btn-icon glyphicons circle_plus"><i></i>Add New Flavour</a>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -25,11 +25,12 @@
         <div class="widget widget-gray widget-body-white">
 
             <div class="widget-body" style="padding: 10px 0;">
-                <table class="table table-bordered table-primary js-table-sortable">
+                <table class="table table-bordered table-primary js-table-sortable flavour-sortable">
                     <thead>
                     <tr>
                         <th class="center">No.</th>
                         <th><?php echo $this->lang->line('flavours');?></th>
+                        <th><?php echo $this->lang->line('fondant');?></th>
                         <th style="width: 1%;" class="center"><?php echo $this->lang->line('drag');?></th>
                         <th><?php echo $this->lang->line('action');?></th>
                     </tr>
@@ -42,6 +43,7 @@
                         <tr class="selectable" id="listItem_<?php echo $rows->flavour_id; ?>" >
                             <td class="center"><?php echo $i; ?></td>
                             <td><?php echo $rows->title; ?></td>
+                            <td><?php if($rows->fondant ==1) echo "Yes"; else echo "No"; ?></td>
                             <td class="center js-sortable-handle"><span  class="glyphicons btn-action single move" style="margin-right: 0;"><i></i></span></td>
                             <td>
                                 <a href="/admin/flavours/status/<?php echo $rows->flavour_id; ?>" class="btn-action glyphicons btn <?php if($rows->status ==1 ){ echo 'btn-success'; }else{ echo 'btn-danger';}?> " type="button" name="includeicon"><i class="icon-ok icon-ok-custom"></i></a>
@@ -60,6 +62,29 @@
 
 </div>
 </div>
+<style type="text/css">
+    .row-fluid {
+        display: none;
+    }
+</style>
+<script type="text/javascript" language="javascript" src="<?php echo base_url() ?>/assets/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+    $(document).ready(function() {
+
+        $('.flavour-sortable').dataTable( {
+            "aaSorting": [[1,'asc']],
+            "aoColumnDefs": [
+                { "bSortable":false, "aTargets": [3,4 ] }
+
+            ],
+            "iDisplayLength": 50,
+            "bPaginate": false
+        } );
+
+    } );
+
+</script>
 <script type="text/javascript">
 
     $(document).ready(function() {

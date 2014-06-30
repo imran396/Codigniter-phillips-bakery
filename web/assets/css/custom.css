@@ -138,3 +138,213 @@ div.dataTables_info {
 .input-mini{
     width: 45px;
 }
+
+
+/*added by imran*/
+.print_button{
+    margin-left:70px;
+}
+
+.print_button .button{
+    background: linear-gradient(to bottom, #8b8b8b 50%,#5c5c5c 50%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8b8b8b', endColorstr='#5c5c5c',GradientType=0 );
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    padding: 0 13px;
+    margin: 8px 0 0 0 !important;
+    font-family: Helvetica, Ariel, sans-serif;
+    font-size: 15px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: #6f6f6f 0 -1px 0;
+    line-height: 33px;
+    height: 33px;
+    vertical-align: middle;
+}
+
+.print_button .button .icon {
+    margin-right: 10px;
+    display: inline-block;
+}
+.print_button .icon-print {
+    background-image: url(../images/icon-print.png);
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    width: 23px;
+    height: 22px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.gallery-img {
+    height: 100%;
+    margin: -28px 11px 3px 13px;
+    overflow: hidden;
+    padding: 15px 0 15px 12px;
+}
+
+
+.gallery-img ul li {
+    margin: 0 45px 45px 0;
+    width: 148px;
+    height: 99px;
+    float: left;
+    position: relative;
+    list-style: none;
+}
+
+.gallery-img ul li .select-image {
+    border: #fafcfd 7px solid;
+    box-shadow: #afadaf 0 0 4px;
+    -moz-box-shadow: #afadaf 0 0 4px;
+    -webkit-box-shadow: #afadaf 0 0 4px;
+    width: 134px;
+    height: 85px;
+    display: block;
+    position: relative;
+    cursor: pointer;
+}
+
+.gallery-img ul li .select-image img {
+    width: 134px;
+    height: 85px;
+}
+
+.gallery-img ul li .plus {
+    background-image: url("../images/icon-plus.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    width: 44px;
+    height: 44px;
+    display: inline-block;
+    top: -18px;
+    right: -20px;
+    position: absolute;
+    z-index: 10;
+}
+
+.gallery-img ul li .desc {
+    background-image: url("../images/slider-desc.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    padding: 5px 12px;
+    font-family: Helvetica, Ariel, sans-serif;
+    font-weight: bold;
+    font-size: 13px;
+    color: #606060;
+    line-height: 31px;
+    text-align: center;
+    width: 95px;
+    height: 31px;
+    display: none;
+    bottom: -24px;
+    left: 8px;
+    position: absolute;
+    z-index: 10;
+}
+
+.gallery-img ul li a:hover .desc, .gallery-img ul li a:active .desc {
+    display: block;
+}
+
+.gallery-img ul li a:hover, .gallery-img ul li a:active, .gallery-img ul li a:focus  {
+    border-color: #9ed75a;
+}
+
+
+
+.hidden-paging div.dataTables_info, .hidden-paging div.dataTables_filter, .hidden-paging div.dataTables_length, .hidden-paging div.dataTables_paginate, .hidden-paging .dataTables_wrapper .row-fluid:first-child, .hidden-paging .dataTables_wrapper .row-fluid {
+    display: none;
+}
+.row-fluid-custom{ display: block; width: 100%}
+.left-custom-paging{
+    float: left;
+    margin: 0px;
+    width: 220px;
+    line-height: 30px;
+    font-size: 11px;
+}
+.custom-pagination{
+    float: right;
+    margin: 0px;
+}
+
+#filterResult{
+    min-height: 400px;
+}
+.list-code{
+    display: none;
+}
+#delivery_start_time , #delivery_end_time , .hasDatepicker
+{
+    cursor: pointer!important;
+}
+
+.pagination ul > li > a, .pagination ul > li > span {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #FFFFFF;
+    border-color: #DDDDDD;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px 1px 1px 0;
+    float: left;
+    line-height: 20px;
+    padding: 4px;
+    text-decoration: none;
+}
+
+
+.control-group-ul{
+    height: 80px
+}
+.control-group-ul ul{
+    list-style: none;
+}
+.control-group-ul ul li{
+    float: left;
+    width: 65px;
+}
+.control-group-ul ul li img {
+    border: 1px solid #CCCCCC;
+    float: left;
+    height: 50px;
+    width: 50px;
+}
+
+.mbutton {
+    margin-top: -10px;
+}
+
+.navbar.main .appbrand {
+    border-right: 1px solid #424243;
+    color: #DEDEDE;
+    display: inline-block;
+    font-family: 'Raleway',sans-serif;
+    font-size: 18pt;
+    font-weight: 700;
+    height: 42px;
+    line-height: normal;
+    padding: 0 0 0 10px;
+    text-decoration: none;
+    text-transform: none!important;
+    width: 216px;
+}
+
+.radio, .checkbox {
+    min-height: 20px;
+    padding-left: 20px!important;
+}
+.dataTables_filter{ display: none!important;}
+
+.control-label {
+    font-weight: bold;
+}
+
+div.dataTables_length ,div.dataTables_info,div.dataTables_filter {
+    display: none!important;
+}
